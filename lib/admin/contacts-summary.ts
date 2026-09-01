@@ -8,7 +8,7 @@ import { humanize } from "@/lib/admin/format";
 const ROW_LIMIT = 5000;
 
 // Persona order for a stable donut; "Unset" (null persona) renders muted last.
-const PERSONA_ORDER = ["job_seeker", "prospect", "client", "employee"] as const;
+const PERSONA_ORDER = ["job_seeker", "prospect", "client", "customer", "employee"] as const;
 
 // Messy free-text source collapsed into a handful of channels.
 function sourceBucket(raw: string | null): string {
