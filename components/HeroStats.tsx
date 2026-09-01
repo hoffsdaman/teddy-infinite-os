@@ -18,7 +18,7 @@ const STATS = [
     target: 16,
     label: 'Leadership Teams',
     sub: 'certified to run AI on their own',
-    href: '/training-and-certification',
+    href: '/workflows',
   },
   {
     target: 46,

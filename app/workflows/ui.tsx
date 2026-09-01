@@ -170,9 +170,9 @@ export function DetailFooter() {
       <Link href="/workflows/method" className="wf-back">
         How we design workflows →
       </Link>
-      <Link href="/contact" className="btn btn-secondary">
-        Build this with Edge8 →
-      </Link>
+      <a href="mailto:support@teddybed.com.au" className="btn btn-secondary">
+        Build this with us →
+      </a>
     </div>
   )
 }

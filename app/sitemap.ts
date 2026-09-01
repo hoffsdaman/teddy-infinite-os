@@ -1,5 +1,4 @@
 import type { MetadataRoute } from 'next'
-import { allCaseStudies } from '@/lib/caseStudies'
 import { allWorkflows } from '@/lib/workflowsData'
 import { getActiveJobs } from '@/lib/jobs'
 import { getAllPublishedPosts } from '@/lib/blog'
@@ -15,15 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }[] = [
     { path: '/', priority: 1.0, changeFrequency: 'weekly' },
-    { path: '/about/', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/contact/', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/ai-programs/', priority: 0.9, changeFrequency: 'weekly' },
-    { path: '/8-edges-app/', priority: 0.9, changeFrequency: 'weekly' },
-    { path: '/8-edges-app/install/', priority: 0.7, changeFrequency: 'monthly' },
-    { path: '/caio-leadership/', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/global-staffing/', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/training-and-certification/', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/your-first-ai-hire/', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/blog/', priority: 0.8, changeFrequency: 'daily' },
     { path: '/careers/', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/workflows/', priority: 0.7, changeFrequency: 'monthly' },
@@ -37,13 +27,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
     changeFrequency,
     priority,
-  }))
-
-  const caseStudyEntries: MetadataRoute.Sitemap = allCaseStudies.map((cs) => ({
-    url: `${BASE}/case-studies/${cs.slug}/`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.8,
   }))
 
   // Static + DB-published posts. getAllPublishedPosts degrades to static-only on
@@ -72,5 +55,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticEntries, ...caseStudyEntries, ...postEntries, ...workflowEntries, ...jobEntries]
+  return [...staticEntries, ...postEntries, ...workflowEntries, ...jobEntries]
 }

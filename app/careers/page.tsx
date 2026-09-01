@@ -38,9 +38,6 @@ export default async function CareersPage() {
               <a href="#open-roles" className="btn btn-secondary">
                 See Open Roles ↓
               </a>
-              <Link href="/about" className="btn btn-ghost">
-                About Edge8
-              </Link>
             </div>
           </div>
         </div>
