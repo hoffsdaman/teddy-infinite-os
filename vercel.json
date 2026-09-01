@@ -1,6 +1,10 @@
 {
   "crons": [
     {
+      "path": "/api/cron/shopify-sync/",
+      "schedule": "0 16 * * *"
+    },
+    {
       "path": "/api/trip-passport-cleanup/",
       "schedule": "0 3 * * *"
     },
