@@ -133,8 +133,8 @@ async function syncCustomers(full: boolean): Promise<EntityResult> {
       }),
       (data) => (data as { customers: { edges: { node: CustomerNode }[]; pageInfo: { hasNextPage: boolean; endCursor: string | null } } }).customers,
     )) {
-      if (!node.email) continue; // people.email is NOT NULL; skip email-less customers
-      nodes.push(node);
+      nodes.push(node); // email may be null (phone-only customers) — people.email is optional
+
       if (!highWater || node.updatedAt > highWater) highWater = node.updatedAt;
     }
 
@@ -344,13 +344,13 @@ async function syncOrders(full: boolean): Promise<EntityResult> {
     // customer not already synced (orders.person_id is NOT NULL).
     for (const o of orders) {
       const gid = o.customer?.id;
-      if (gid && !personByGid.has(gid) && o.customer?.email) {
+      if (gid && !personByGid.has(gid)) {
         const { data: prow, error } = await companyOs
           .from("people")
           .upsert(
             {
               shopify_customer_id: gid,
-              email: o.customer.email,
+              email: o.customer?.email ?? null, // phone-only customers have no email
               source: "shopify",
               persona: "customer",
               marketing_consent_source: "shopify",
