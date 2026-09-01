@@ -57,9 +57,9 @@ export default function WorkflowsPage() {
             Every system on this page was designed, built, and put into production by Edge8. We do the same for our
             clients.
           </p>
-          <Link href="/contact" className="btn btn-secondary">
-            Talk to Edge8 →
-          </Link>
+          <a href="mailto:support@teddybed.com.au" className="btn btn-secondary">
+            Talk to us →
+          </a>
         </div>
       </section>
     </main>

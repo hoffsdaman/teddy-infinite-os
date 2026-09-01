@@ -166,8 +166,8 @@ export default function CertificationWorkflowPage() {
           </div>
           <p style={{ marginTop: 32, fontSize: 15, color: 'var(--body-text)' }}>
             This is the same method documented across this whole section.{' '}
-            <Link href="/training-and-certification" style={{ color: 'var(--blue)' }}>
-              Explore the Training &amp; Certification program →
+            <Link href="/workflows/method" style={{ color: 'var(--blue)' }}>
+              See how we design workflows →
             </Link>
           </p>
           <DetailFooter />

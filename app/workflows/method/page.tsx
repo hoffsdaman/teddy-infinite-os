@@ -230,12 +230,12 @@ export default function MethodPage() {
             clients. Either way, your invisible processes become systems.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/training-and-certification" className="btn btn-ghost-light">
+            <Link href="/workflows/certification" className="btn btn-ghost-light">
               Explore certification
             </Link>
-            <Link href="/contact" className="btn btn-secondary">
-              Talk to Edge8 →
-            </Link>
+            <a href="mailto:support@teddybed.com.au" className="btn btn-secondary">
+              Talk to us →
+            </a>
           </div>
           <p style={{ marginTop: 32 }}>
             <Link href="/workflows" className="wf-back" style={{ color: 'var(--grey-mid)', textDecoration: 'none' }}>

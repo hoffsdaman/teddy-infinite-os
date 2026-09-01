@@ -24,25 +24,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="footer-col-title">Services</div>
+            <div className="footer-col-title">Company</div>
             <div className="footer-links">
-              <Link href="/your-first-ai-hire">Your First AI Hire</Link>
-              <Link href="/caio-leadership">CAIO Leadership</Link>
-              <Link href="/global-staffing">Global Staffing</Link>
-              <Link href="/training-and-certification">Training &amp; Certification</Link>
-            </div>
-          </div>
-
-          <div>
-            <div className="footer-col-title">Case Studies</div>
-            <div className="footer-links">
-              <Link href="/ai-programs">AI Programs</Link>
-            </div>
-            <div className="footer-col-title" style={{ marginTop: 28 }}>Company</div>
-            <div className="footer-links">
-              <Link href="/about">About</Link>
               <Link href="/blog">Blog</Link>
               <Link href="/workflows">Workflows</Link>
+              <Link href="/careers">Careers</Link>
             </div>
           </div>
 
@@ -78,7 +64,6 @@ export default function Footer() {
           <div className="footer-bottom-links">
             <Link href="/legal/privacy">Privacy Policy</Link>
             <Link href="/legal/eula">Terms of Service</Link>
-            <a href="/llms.txt" title="Site map for LLMs and AI search engines">llms.txt</a>
           </div>
         </div>
       </div>

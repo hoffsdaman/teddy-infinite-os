@@ -6,11 +6,12 @@ import Nav from './Nav'
 import Footer from './Footer'
 
 // Routes that render standalone, without the site nav/footer (e.g. full-screen decks, the /admin CRM, the /team portal).
-const BARE_ROUTES = ['/blueprints/team-onboarding', '/reserve', '/admin', '/team', '/portal', '/surveys']
+const BARE_ROUTES = ['/blueprints/team-onboarding', '/admin', '/team', '/portal', '/surveys']
 
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const bare = BARE_ROUTES.some((route) => pathname?.startsWith(route))
+  // The homepage is the standalone entry point into the OS consoles and carries its own nav/footer.
+  const bare = pathname === '/' || BARE_ROUTES.some((route) => pathname?.startsWith(route))
 
   return (
     <>
