@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 // Slim nav for the surviving public pages (blog, workflows, careers, events).
 // The Edge8 marketing dropdowns and retreat-funnel CTA logic went with the
-// marketing pages; the CTA now feeds the OS sign-in.
+// marketing pages; the CTA now feeds the OS sign-in. The wordmark is set in
+// Roca Two (--font-display) rather than a logo image, matching the homepage.
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -34,8 +34,32 @@ export default function Nav() {
       >
         <div className="container">
           <div className="nav-inner">
-            <Link href="/" className="nav-logo">
-              <Image src="/logo.png" alt="Edge8" width={120} height={36} style={{ width: 'auto', height: '36px' }} priority />
+            <Link href="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '24px',
+                  fontWeight: 400,
+                  color: 'var(--dark)',
+                  letterSpacing: '-0.5px',
+                }}
+              >
+                TeddyBed
+              </span>
+              <span
+                style={{
+                  background: 'var(--mint)',
+                  color: 'var(--dark)',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  padding: '3px 7px',
+                  borderRadius: '40px',
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                OS
+              </span>
             </Link>
 
             <ul className="nav-links">
