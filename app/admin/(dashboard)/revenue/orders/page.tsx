@@ -28,6 +28,7 @@ type Order = {
   payment_method: string | null;
   refunded_cents: number | null;
   stripe_session_id: string | null;
+  order_number: string | null;
   created_at: string;
   person_id: string | null;
   people: P | P[] | null;
@@ -47,6 +48,7 @@ const STATUS_OPTIONS = [
 const METHOD_OPTIONS = [
   { value: "stripe", label: "Stripe" },
   { value: "offline_vn", label: "Offline (VN)" },
+  { value: "shopify", label: "Shopify" },
 ];
 
 export default async function OrdersPage({ searchParams }: { searchParams: SearchParamsObj }) {
@@ -69,7 +71,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
   const [{ rows, total, pageSize, error }, totalRes, revRes, paidCount, pendingCount] = await Promise.all([
     listEntity<Order>(
       "orders",
-      "id, amount_cents, amount_usd_cents, currency, status, payment_method, refunded_cents, stripe_session_id, created_at, person_id, people(full_name, email), products(title)",
+      "id, amount_cents, amount_usd_cents, currency, status, payment_method, refunded_cents, stripe_session_id, order_number, created_at, person_id, people(full_name, email), products(title)",
       { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["stripe_session_id"], sort, dir, filters },
     ),
     companyOs.from("orders").select("amount_usd_cents").eq("status", "paid"),
@@ -97,7 +99,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
         return <span className={label ? "admin-cell-strong" : "admin-cell-muted"}>{label || "—"}</span>;
       },
     },
-    { key: "product", header: "Product", cell: (r) => one(r.products)?.title || <span className="admin-cell-muted">—</span> },
+    { key: "product", header: "Product", cell: (r) => one(r.products)?.title || r.order_number || <span className="admin-cell-muted">—</span> },
     { key: "amount_usd_cents", header: "Amount", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_usd_cents, "usd") },
     { key: "status", header: "Status", sortable: true, cell: (r) => (r.status ? <Badge tone={statusTone(r.status)}>{humanize(r.status)}</Badge> : <span className="admin-cell-muted">—</span>) },
     { key: "payment_method", header: "Method", sortable: true, cell: (r) => (r.payment_method ? humanize(r.payment_method) : <span className="admin-cell-muted">—</span>) },
@@ -149,7 +151,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
                   <dt>Contact</dt>
                   <dd>{p?.full_name || p?.email || "—"}</dd>
                   <dt>Product</dt>
-                  <dd>{one(r.products)?.title || "—"}</dd>
+                  <dd>{one(r.products)?.title || r.order_number || "—"}</dd>
                   <dt>Amount</dt>
                   <dd className="admin-cell-mono">{formatCents(r.amount_usd_cents, "usd")}</dd>
                   {(r.currency ?? "usd").toLowerCase() !== "usd" && (

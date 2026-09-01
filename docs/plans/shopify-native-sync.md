@@ -1,6 +1,9 @@
 # Shopify → Company OS: native sync
 
-*Development plan. Written 2026-09-01. Status: approved for build, not started.*
+*Development plan. Written 2026-09-01. Status: all five stages built and merged
+to `main` (PRs #1–5). Remaining work is credentialed execution — apply the
+migration, add the Shopify token, run the backfill, verify the DoD — captured in
+[shopify-native-sync-runbook.md](shopify-native-sync-runbook.md).*
 
 ## Philosophy
 

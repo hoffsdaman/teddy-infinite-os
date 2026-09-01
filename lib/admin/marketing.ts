@@ -326,6 +326,7 @@ const PERSONA_LABELS: Record<string, string> = {
   job_seeker: "Job seeker",
   prospect: "Prospect",
   client: "Client",
+  customer: "Customer",
   employee: "Employee",
   vendor: "Vendor",
   student: "Student",
