@@ -1,8 +1,8 @@
 # Customer Support Product
 
 *Development plan. Written 2026-09-01. Status: built 2026-09-01 on branch
-`support-product` (PRs 1–4 + 6). PR 5 deferred by design. Companion HTML
-overview lives in the "Customer Support Product" artifact.*
+`support-product` (PRs 1–6). Companion HTML overview lives in the "Customer
+Support Product" artifact.*
 
 ## Build status (2026-09-01)
 
@@ -192,6 +192,57 @@ Surface, don't alert:
 duration and the header median moves; an unresolved ticket shows a growing age,
 never a resolve time; a ticket dragged back out of Resolved clears its resolve
 time.
+
+### PR 7 (built) — Gmail poller (pull intake) + Shopify order match
+
+An alternative email intake that connects directly to the Google Workspace
+support inbox instead of routing mail through Resend. A Vercel Cron
+(`*/5 * * * *`) hits `app/api/cron/support-email`, which lists inbox messages the
+agent has not yet labelled, files each through the **same** `intakeInboundEmail()`
+path as the Resend webhook (threading + person link are shared, never
+duplicated), then stamps an `Ingested` Gmail label.
+
+- **Read state is never touched.** The poll query is `in:inbox -label:Ingested`,
+  not `is:unread` — humans still see every email as unread; the label is the
+  agent's bookmark. So a human opening an email before the cron runs does not
+  hide it from intake.
+- **Idempotent two ways:** the `Ingested` label keeps a message out of the query,
+  and `intakeInboundEmail()` dedupes on the message id (RFC822 `Message-Id` when
+  present, else the Gmail id) even in a pre-label race.
+- **Shopify order match** is free: filing links the sender to their `people` row
+  by email, and `getSupportBoardData()` reads `company_os.orders` (populated by
+  the daily Shopify sync) via that link. Each ticket in `/admin/support` shows a
+  "Shopify customer" badge and the matched order number(s) + amount. No Shopify
+  API call at intake.
+- **Auth:** OAuth2 refresh token for `support@teddybed.com.au`, exchanged for a
+  short-lived access token per run. No token is persisted by the app.
+
+**Operator setup (secrets are the mailbox owner's to enter — never pasted in
+chat):**
+1. Google Cloud console → new project → enable the **Gmail API**.
+2. Create an **OAuth 2.0 Client ID** (type: Web application). Add
+   `https://developers.google.com/oauthplayground` as an authorized redirect URI
+   for the one-time token mint.
+3. In the [OAuth Playground](https://developers.google.com/oauthplayground),
+   gear icon → "Use your own OAuth credentials" → paste the client id/secret →
+   authorize scope `https://mail.google.com/` **signed in as
+   support@teddybed.com.au** → exchange for tokens → copy the **refresh token**.
+4. In Vercel → project → Settings → Environment Variables, add (encrypted):
+   `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`. Add the same
+   to a gitignored `.env.local` for local runs. Redeploy.
+5. Until those are set the cron is a scheduled no-op (`skipped: "Gmail not
+   configured"`), so shipping this before the token exists is safe.
+
+**Choosing pull vs. push:** run **one** email intake, not both — either the
+Resend webhook (PR 4) or this poller. They share `intakeInboundEmail()`, so
+switching is just which transport is wired. The poller keeps mail inside the
+Workspace and needs no forwarding rule; the webhook is near-instant.
+
+**Verify:** `POST /api/cron/support-email` with `Authorization: Bearer
+$CRON_SECRET` → returns a `{scanned, created, threaded, duplicate}` summary; a
+fresh inbox email becomes a new ticket and gets the `Ingested` label while
+staying unread; a reply with `[TD-####]` threads onto the ticket; a second run
+files nothing new.
 
 ## What we are not building
 
