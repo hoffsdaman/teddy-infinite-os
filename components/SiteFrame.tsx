@@ -10,7 +10,8 @@ const BARE_ROUTES = ['/blueprints/team-onboarding', '/reserve', '/admin', '/team
 
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const bare = BARE_ROUTES.some((route) => pathname?.startsWith(route))
+  // The homepage is the standalone entry point into the OS consoles and carries its own nav/footer.
+  const bare = pathname === '/' || BARE_ROUTES.some((route) => pathname?.startsWith(route))
 
   return (
     <>
