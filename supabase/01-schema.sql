@@ -567,7 +567,8 @@ CREATE TABLE "company_os"."admins" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "created_by" "text",
     "can_view_sensitive" boolean DEFAULT false NOT NULL,
-    "person_id" "uuid"
+    "person_id" "uuid",
+    "role" "text" DEFAULT 'full'::"text" NOT NULL
 );
 
 
@@ -1653,7 +1654,7 @@ CREATE TABLE "company_os"."leave_policies" (
 
 CREATE TABLE "company_os"."people" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
-    "email" "extensions"."citext" NOT NULL,
+    "email" "extensions"."citext",
     "full_name" "text",
     "first_name" "text",
     "last_name" "text",
@@ -15155,3 +15156,24 @@ GRANT SELECT,INSERT,UPDATE ON TABLE "company_os"."order_lines" TO "chatbot_write
 GRANT SELECT ON TABLE "company_os"."order_lines" TO "team_chatbot_reader";
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "company_os"."shopify_sync_state" TO "service_role";
+
+
+--
+-- Customer Support (additive) — ticket-number sequence + RPC. Tickets are tasks;
+-- there is no support table. See docs/db/2026-09-01-customer-support.sql and
+-- docs/plans/customer-support-product.md. The Support board + columns are seeded
+-- as data at runtime by lib/support.ts (not schema). admins.role above marks
+-- support-only agents.
+--
+
+CREATE SEQUENCE IF NOT EXISTS "company_os"."support_ticket_no_seq" START WITH 1001;
+
+CREATE OR REPLACE FUNCTION "company_os"."next_support_ticket_no"() RETURNS "text"
+    LANGUAGE "sql" SECURITY DEFINER
+    SET "search_path" TO 'company_os'
+    AS $$
+  select 'TD-' || nextval('company_os.support_ticket_no_seq')::text;
+$$;
+
+GRANT USAGE ON SEQUENCE "company_os"."support_ticket_no_seq" TO "service_role";
+GRANT EXECUTE ON FUNCTION "company_os"."next_support_ticket_no"() TO "service_role";

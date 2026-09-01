@@ -1,0 +1,95 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { companyOs } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/admin-auth";
+import { recordAudit } from "@/lib/admin/audit";
+import { type Result } from "@/lib/admin/mutations";
+import { createSupportTicket, ensureSupportBoard } from "@/lib/support";
+
+// Both full and support-role admins work tickets, so these gate on requireAdmin
+// (the support-only role is a containment concern handled in middleware, not an
+// extra permission). Every action re-derives the Support board so a caller can
+// never move a card onto a column that isn't on it.
+
+function refresh() {
+  revalidatePath("/admin/support");
+}
+
+export async function createManualTicket(input: {
+  customerEmail: string;
+  customerName?: string;
+  subject: string;
+  message?: string;
+}): Promise<Result & { ticketNo?: string }> {
+  const admin = await requireAdmin();
+  const res = await createSupportTicket({
+    channel: "manual",
+    customerEmail: input.customerEmail,
+    customerName: input.customerName || null,
+    subject: input.subject,
+    message: input.message || null,
+    createdByLabel: admin.email,
+  });
+  if (!res.ok) return { ok: false, error: res.error };
+  await recordAudit({ table: "tasks", recordId: res.taskId, operation: "insert", actor: admin.email, newData: { support: true, ticketNo: res.ticketNo } });
+  refresh();
+  return { ok: true, ticketNo: res.ticketNo };
+}
+
+export async function moveTicket(taskId: string, toColumnId: string): Promise<Result> {
+  const admin = await requireAdmin();
+  const board = await ensureSupportBoard();
+  const column = board.columns.find((c) => c.id === toColumnId);
+  if (!column) return { ok: false, error: "That column is not on the Support board." };
+
+  const { data: task } = await companyOs
+    .from("tasks")
+    .select("id, board_id, board_column_id")
+    .eq("id", taskId)
+    .maybeSingle();
+  const t = task as { id: string; board_id: string; board_column_id: string | null } | null;
+  if (!t || t.board_id !== board.id) return { ok: false, error: "Ticket not found on the Support board." };
+  if (t.board_column_id === toColumnId) return { ok: true };
+
+  // Resolution timestamp is the whole point of the metric: stamp completed_at
+  // when the card lands on a done column, clear it when it moves back out.
+  const updates = {
+    board_column_id: toColumnId,
+    status: column.is_done ? "done" : "open",
+    completed_at: column.is_done ? new Date().toISOString() : null,
+  };
+  const { error } = await companyOs.from("tasks").update(updates).eq("id", taskId);
+  if (error) return { ok: false, error: error.message };
+
+  // Audit history is free: log the column move.
+  await companyOs.from("task_stage_log").insert({
+    task_id: taskId,
+    from_column_id: t.board_column_id,
+    to_column_id: toColumnId,
+    kind: "move",
+    moved_by: null,
+    note: null,
+  });
+  await recordAudit({ table: "tasks", recordId: taskId, operation: "update", actor: admin.email, newData: updates });
+  refresh();
+  return { ok: true };
+}
+
+export async function commentOnTicket(taskId: string, body: string): Promise<Result> {
+  const admin = await requireAdmin();
+  const board = await ensureSupportBoard();
+  const text = body?.trim();
+  if (!text) return { ok: false, error: "Write a reply first." };
+
+  const { data: task } = await companyOs.from("tasks").select("id, board_id").eq("id", taskId).maybeSingle();
+  const t = task as { id: string; board_id: string } | null;
+  if (!t || t.board_id !== board.id) return { ok: false, error: "Ticket not found on the Support board." };
+
+  const { error } = await companyOs
+    .from("task_comments")
+    .insert({ task_id: taskId, author_person_id: null, author_label: admin.email, body: text });
+  if (error) return { ok: false, error: error.message };
+  refresh();
+  return { ok: true };
+}

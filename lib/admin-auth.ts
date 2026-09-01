@@ -161,3 +161,42 @@ export async function requireSuperAdmin(): Promise<AdminUser> {
   if (!(await isSuperAdmin(user.email))) redirect("/admin");
   return user;
 }
+
+// ── Support-only role ────────────────────────────────────────────────────────
+//
+// A support agent (Daniel, Carla) is a real admin — a row in company_os.admins,
+// so requireAdmin() authenticates them — but is CONTAINED to /admin/support and
+// sees nothing else. Two sources, mirroring every other role gate here:
+//   1. the SUPPORT_ADMINS env allowlist (works with zero schema change; the
+//      pattern the rest of this file already uses), checked first, then
+//   2. company_os.admins.role = 'support' — the durable form once the column in
+//      docs/db/2026-09-01-customer-support.sql is applied. Read defensively so
+//      this works whether or not that column exists yet.
+//
+// Containment itself is enforced at the edge in middleware.ts (it redirects a
+// support-only admin away from any /admin path outside /admin/support, covering
+// RSC loads AND server-action POSTs); this helper drives that and the nav.
+
+export function supportOnlyEnvAllowlist(): Set<string> {
+  return new Set(
+    (process.env.SUPPORT_ADMINS ?? "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
+export const isSupportOnlyAdmin = cache(async (email: string | null | undefined): Promise<boolean> => {
+  const normalized = email?.trim().toLowerCase();
+  if (!normalized) return false;
+  if (supportOnlyEnvAllowlist().has(normalized)) return true;
+  // The role column may not exist yet — a "column does not exist" error must
+  // read as "not a support-only admin", never throw.
+  const { data, error } = await companyOs
+    .from("admins")
+    .select("role")
+    .eq("email", normalized)
+    .maybeSingle();
+  if (error) return false;
+  return (data as { role?: string } | null)?.role === "support";
+});

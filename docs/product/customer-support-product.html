@@ -1,0 +1,316 @@
+<title>Customer Support Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F7F5F1;
+    --surface: #FFFFFF;
+    --ink: #26312C;
+    --muted: #68746E;
+    --accent: #2E6E52;
+    --accent-soft: #E3EEE8;
+    --honey: #B57E2F;
+    --honey-soft: #F4E8D5;
+    --line: #E4E0D7;
+    --card-shadow: 0 1px 2px rgba(38,49,44,.05), 0 4px 14px rgba(38,49,44,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #171D1A;
+      --surface: #1F2723;
+      --ink: #E7EAE5;
+      --muted: #96A29B;
+      --accent: #6FBE97;
+      --accent-soft: #24382F;
+      --honey: #D9A45B;
+      --honey-soft: #3A2F1D;
+      --line: #2D3732;
+      --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #171D1A;
+    --surface: #1F2723;
+    --ink: #E7EAE5;
+    --muted: #96A29B;
+    --accent: #6FBE97;
+    --accent-soft: #24382F;
+    --honey: #D9A45B;
+    --honey-soft: #3A2F1D;
+    --line: #2D3732;
+    --card-shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: 'Outfit', 'Avenir Next', 'Segoe UI', sans-serif;
+    font-size: 16.5px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 56px 28px 96px; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace; }
+
+  /* ---------- header ---------- */
+  .eyebrow {
+    font-size: 12.5px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(34px, 5.5vw, 48px); font-weight: 800; line-height: 1.06;
+    letter-spacing: -.015em; margin: 0 0 16px; text-wrap: balance;
+  }
+  .lede { font-size: 19px; color: var(--muted); max-width: 62ch; margin: 0 0 22px; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .chip {
+    font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+  }
+  .chip.hot { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 60px; }
+  h2 {
+    font-size: 24px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  .sub { color: var(--muted); margin: 0 0 24px; max-width: 66ch; }
+  p { max-width: 68ch; }
+
+  /* ---------- flow diagram ---------- */
+  .flow {
+    display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center; gap: 10px; margin: 28px 0 8px;
+  }
+  .flow-col { display: flex; flex-direction: column; gap: 10px; }
+  .node {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; box-shadow: var(--card-shadow);
+  }
+  .node b { display: block; font-size: 14.5px; font-weight: 600; }
+  .node span { font-size: 12.5px; color: var(--muted); }
+  .node.core { border-color: var(--accent); border-width: 1.5px; }
+  .node.core b { color: var(--accent); }
+  .arrow { color: var(--muted); font-size: 18px; text-align: center; }
+  @media (max-width: 640px) {
+    .flow { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); padding: 2px 0; }
+  }
+  .zero {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 18px;
+    background: var(--honey-soft); color: var(--honey); font-weight: 600;
+    font-size: 14px; padding: 8px 14px; border-radius: 10px;
+  }
+
+  /* ---------- board strip ---------- */
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; }
+  .col {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px 14px; box-shadow: var(--card-shadow);
+  }
+  .col h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+  .col p { margin: 0; font-size: 12.5px; color: var(--muted); }
+  .col.done { border-top: 3px solid var(--accent); }
+  @media (max-width: 640px) { .board { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- metadata code ---------- */
+  pre {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; overflow-x: auto; font-size: 13.5px; line-height: 1.7;
+    box-shadow: var(--card-shadow); margin: 20px 0 0;
+  }
+  code { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .k { color: var(--accent); }
+  .v { color: var(--honey); }
+
+  /* ---------- PR timeline ---------- */
+  .prs { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+  .pr {
+    display: grid; grid-template-columns: 52px 1fr; gap: 18px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; box-shadow: var(--card-shadow);
+  }
+  .pr-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500;
+    color: var(--accent); background: var(--accent-soft); border-radius: 10px;
+    height: 44px; width: 52px; display: grid; place-items: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .pr.later .pr-num { color: var(--muted); background: var(--ground); }
+  .pr h3 { margin: 0 0 6px; font-size: 17.5px; font-weight: 700; letter-spacing: -.005em; }
+  .pr h3 .tag {
+    font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--honey); background: var(--honey-soft); border-radius: 999px;
+    padding: 3px 9px; margin-left: 8px; vertical-align: 2px;
+  }
+  .pr p { margin: 0 0 10px; font-size: 15px; color: var(--muted); max-width: none; }
+  .pr p b { color: var(--ink); font-weight: 600; }
+  .verify {
+    font-size: 13.5px; border-left: 3px solid var(--accent); padding: 2px 0 2px 12px;
+    color: var(--muted);
+  }
+  .verify b { color: var(--accent); font-weight: 600; }
+
+  /* ---------- assumptions + scope ---------- */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+  @media (max-width: 700px) { .twocol { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; box-shadow: var(--card-shadow);
+  }
+  .panel h3 { margin: 0 0 12px; font-size: 15px; font-weight: 700; }
+  .panel ul { margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--muted); }
+  .panel li { margin-bottom: 8px; }
+  .panel li:last-child { margin-bottom: 0; }
+  .panel li b { color: var(--ink); font-weight: 600; }
+  .panel.no h3 { color: var(--honey); }
+  .panel.no ul { list-style: none; padding-left: 0; }
+  .panel.no li { padding-left: 22px; position: relative; }
+  .panel.no li::before { content: "✕"; position: absolute; left: 0; color: var(--honey); font-size: 12px; top: 3px; }
+
+  /* ---------- DoD ---------- */
+  .dod {
+    margin-top: 60px; background: var(--accent); color: #F4F8F5;
+    border-radius: 16px; padding: 30px 32px;
+  }
+  .dod h2 { color: inherit; }
+  .dod p { color: rgba(244,248,245,.88); font-size: 17px; margin: 8px 0 0; max-width: 64ch; }
+  .dod b { color: #fff; }
+
+  footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
+  a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Teddy · Company OS</p>
+    <h1>Customer Support Product</h1>
+    <p class="lede">Support for TeddyBed, run entirely inside the company database. A ticket is a <strong>task on one board</strong> — every channel is just a different way of creating one. <strong>Zero new tables.</strong></p>
+    <div class="chips">
+      <span class="chip hot">Status: planned</span>
+      <span class="chip">5 PRs</span>
+      <span class="chip">Operators: Daniel &amp; Carla</span>
+      <span class="chip">Plan: docs/plans/customer-support-product.md</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>How it works</h2>
+    <p class="sub">Three intake channels feed one helper, which writes to the tables the company already runs on. The admin view is the board UI that already ships.</p>
+    <div class="flow">
+      <div class="flow-col">
+        <div class="node"><b>Admin form</b><span>manual · /admin/support</span></div>
+        <div class="node"><b>Website form</b><span>web_form · teddybed.com.au</span></div>
+        <div class="node"><b>Support inbox</b><span>email · Gmail → Resend inbound</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flow-col">
+        <div class="node core"><b class="mono">createSupportTicket()</b><span>lib/support.ts — the one place the convention lives</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flow-col">
+        <div class="node"><b>tasks</b><span>Support board · ticket = task</span></div>
+        <div class="node"><b>task_comments</b><span>thread, incl. customer emails</span></div>
+        <div class="node"><b>people</b><span>matched on email → full customer history</span></div>
+      </div>
+    </div>
+    <span class="zero">Single source of truth · nothing lives in Gmail or a form tool</span>
+
+    <div class="board">
+      <div class="col"><h4>New</h4><p>Everything lands here</p></div>
+      <div class="col"><h4>In Progress</h4><p>Assigned, being worked</p></div>
+      <div class="col"><h4>Waiting on Customer</h4><p>Ball in their court</p></div>
+      <div class="col done"><h4>Resolved</h4><p>is_done — closes the ticket</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The one design decision</h2>
+    <p class="sub">Every channel writes the same shape into <code>tasks.metadata</code>. Ticket numbers come from a sequence, not a table. A matching <code>people.email</code> links the ticket to the customer's existing record — same join key the Shopify sync uses.</p>
+    <pre><code>{
+  <span class="k">"channel"</span>:        <span class="v">"web_form" | "email" | "manual"</span>,
+  <span class="k">"customer_email"</span>: <span class="v">"jane@example.com"</span>,
+  <span class="k">"customer_name"</span>:  <span class="v">"Jane Doe"</span>,
+  <span class="k">"ticket_no"</span>:      <span class="v">"TD-1042"</span>
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>The PRs</h2>
+    <p class="sub">Each one independently shippable and verified before the next starts. PR 1 is the usable v1 — everything after it is intake automation.</p>
+    <div class="prs">
+      <div class="pr">
+        <div class="pr-num">1</div>
+        <div>
+          <h3>Seed board + support view + manual intake</h3>
+          <p>Migration seeds the Support board, four columns, and the ticket-number sequence. <b>/admin/support</b> wraps the existing board machinery: customer email on the card, comment thread front and center, a "New ticket" form.</p>
+          <div class="verify"><b>Verify:</b> ticket for a known + unknown email · drag through all four columns · stage log records moves · existing boards untouched.</div>
+        </div>
+      </div>
+      <div class="pr">
+        <div class="pr-num">2</div>
+        <div>
+          <h3>Scoped logins for Daniel &amp; Carla</h3>
+          <p><b>admins.role</b> column: <span class="mono">support</span> sees only /admin/support, gated server-side in the layout. Two admin rows + board membership. Magic-link login already exists — zero new auth code.</p>
+          <div class="verify"><b>Verify:</b> support role renders /admin/support · /admin/revenue and /admin/contacts redirect · Dave's login unchanged.</div>
+        </div>
+      </div>
+      <div class="pr">
+        <div class="pr-num">3</div>
+        <div>
+          <h3>Public endpoint + Teddy site form</h3>
+          <p><b>POST /api/support</b> — validated, rate-limited, honeypot, CORS for teddybed.com.au. Same helper as everything else. Small embeddable form for the Shopify theme.</p>
+          <div class="verify"><b>Verify:</b> allowed vs. disallowed origins · honeypot silently drops · submission appears in New within seconds.</div>
+        </div>
+      </div>
+      <div class="pr">
+        <div class="pr-num">4</div>
+        <div>
+          <h3>Email ingest</h3>
+          <p>Gmail forwarding rule → Resend inbound → webhook. Replies thread onto the open ticket via the <span class="mono">[TD-1042]</span> subject token or sender match; everything else opens a new ticket. Idempotent on message id. No Gmail API, no OAuth, no token-refresh cron.</p>
+          <div class="verify"><b>Verify:</b> fresh email → new ticket · reply → comment on same ticket · webhook replay → no duplicates.</div>
+        </div>
+      </div>
+      <div class="pr later">
+        <div class="pr-num">5</div>
+        <div>
+          <h3>Reply from the admin <span class="tag">later</span></h3>
+          <p>Outbound replies via Resend from the task drawer, token in the subject so PR 4 threads the response. Carla never opens Gmail. Deferred until the first four prove themselves in use.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="twocol">
+      <div class="panel">
+        <h3>Assumptions — said out loud</h3>
+        <ul>
+          <li><b>Scoped access</b> for Daniel &amp; Carla, not the full admin. If full access is fine, PR 2 shrinks to two INSERTs.</li>
+          <li><b>Website form lives on the Shopify storefront</b>, posting cross-origin here. If not, only the CORS allowlist changes.</li>
+          <li><b>Support email is Google-hosted</b> — forwarding rule beats OAuth polling.</li>
+        </ul>
+      </div>
+      <div class="panel no">
+        <h3>Not building</h3>
+        <ul>
+          <li>SLA timers, canned responses, CSAT surveys</li>
+          <li>Auto-assignment or tagging taxonomy</li>
+          <li>Customer-facing ticket portal</li>
+          <li>A <span class="mono">support_tickets</span> table</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="dod">
+    <h2>Definition of done</h2>
+    <p>Carla logs in with a magic link, sees only the Support board, and works tickets that arrived from the website and the support inbox — with each customer's <b>full history one click away</b>, because the ticket links to the same <b>people</b> row as their Shopify orders. Single source of truth, zero new tables.</p>
+  </div>
+
+  <footer>Written 2026-09-01 · full plan in <a href="../plans/customer-support-product.md">docs/plans/customer-support-product.md</a> · schema facts read from supabase/01-schema.sql</footer>
+</div>

@@ -94,6 +94,7 @@ const NAV: NavSection[] = [
           { label: "Companies", href: "/admin/revenue/companies", ico: "▣", enabled: true },
           { label: "Clients", href: "/admin/revenue/clients", ico: "★", enabled: true },
           { label: "Contacts", href: "/admin/contacts", ico: "⚇", enabled: true },
+          { label: "Support", href: "/admin/support", ico: "☎", enabled: true },
           { label: "Meeting Notes", href: "/admin/revenue/meetings", ico: "☰", enabled: true },
           { label: "Sales Intelligence", href: "/admin/revenue/sales-intelligence", ico: "◭", enabled: true },
         ],
@@ -280,17 +281,35 @@ function initials(email: string): string {
   return raw.toUpperCase();
 }
 
+// Support-role admins are contained to /admin/support (enforced in middleware).
+// Their sidebar shows only that surface — the full NAV is not just hidden but
+// never rendered for them.
+const SUPPORT_ONLY_NAV: NavSection[] = [
+  {
+    section: null,
+    groups: [
+      {
+        label: null,
+        items: [{ label: "Support", href: "/admin/support", ico: "☎", enabled: true }],
+      },
+    ],
+  },
+];
+
 export function AdminSidebar({
   user,
   avatarUrl,
   canSwitchToTeam,
   isSuperAdmin,
+  isSupportOnly = false,
 }: {
   user: { email: string };
   avatarUrl: string | null;
   canSwitchToTeam: boolean;
   isSuperAdmin: boolean;
+  isSupportOnly?: boolean;
 }) {
+  const nav = isSupportOnly ? SUPPORT_ONLY_NAV : NAV;
   const pathname = usePathname() ?? "";
   const [navOpen, setNavOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -502,7 +521,7 @@ export function AdminSidebar({
         )}
 
         <div className="admin-nav" onClick={() => setNavOpen(false)}>
-          {NAV.map((sect, si) => (
+          {nav.map((sect, si) => (
             <div key={sect.section ?? `s${si}`}>
               {sect.section && <div className="admin-nav-sectlabel">{sect.section}</div>}
               {sect.groups.map((group, gi) => {
