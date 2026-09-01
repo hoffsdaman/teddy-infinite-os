@@ -103,18 +103,6 @@ const CRON_META: Record<string, CronMeta> = {
     content: ["1-1 transcripts"],
     apps: ["Supabase", "Lark", "Claude"],
   },
-  "/api/cron/qbo-refresh/": {
-    name: "QuickBooks token refresh",
-    description: "Weekly QuickBooks token keepalive per connected company, so a connection never idles out. Lark-warns on failure or near-expiry.",
-    content: ["QBO connections"],
-    apps: ["QuickBooks", "Lark"],
-  },
-  "/api/cron/qbo-invoice-sync/": {
-    name: "QuickBooks invoice sync",
-    description: "Weekly read-from-QBO, upsert-into-Supabase invoice mirror per connected company. Never deletes. Runs after the token keepalive.",
-    content: ["QBO invoices"],
-    apps: ["QuickBooks", "Supabase", "Lark"],
-  },
   "/api/cron/ideas-digest/": {
     name: "Ideas digest",
     description: "Daily. Emails the founder and pings Lark ops with everything the team submitted to the idea box.",
@@ -297,18 +285,6 @@ export const LOCAL_ROUTINES: Routine[] = [
     content: ["Project status", "Weekly progress"],
     skill: "product-manager",
     apps: ["Lark"],
-    status: "active",
-  },
-  {
-    id: "quickbooks-invoice-sync",
-    name: "QuickBooks invoice sync (local)",
-    description: "Weekly sync of QuickBooks invoices into company_os.invoices. Overlaps the Vercel qbo-invoice-sync cron; reconcile before moving.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Weekly",
-    content: ["QBO invoices"],
-    skill: "quickbooks-invoice-sync",
-    apps: ["QuickBooks", "Supabase"],
     status: "active",
   },
 ];

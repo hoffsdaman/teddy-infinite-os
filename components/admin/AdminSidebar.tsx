@@ -221,7 +221,6 @@ const NAV: NavSection[] = [
         subheading: "Configuration",
         items: [
           { label: "Pipelines", href: "/admin/settings/pipelines", ico: "⇶" },
-          { label: "QuickBooks", href: "/admin/settings/quickbooks", ico: "⌁", enabled: true },
         ],
       },
     ],

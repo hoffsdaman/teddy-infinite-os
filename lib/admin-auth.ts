@@ -60,9 +60,9 @@ export async function isAdminEmail(email: string | null | undefined): Promise<bo
 // signature check — it decodes the cookie and returns whatever is in it — so
 // that arrangement was only ever as strong as the middleware matcher. The
 // matcher covers "/admin/:path*", "/team/:path*", "/portal/:path*" and does NOT
-// cover /api, yet eight /api routes call these gates (admin chat, team chat,
-// publish-editor, both QBO routes, the portal assistants, the conversation
-// store). On those routes nothing revalidated the cookie, so a forged one was
+// cover /api, yet several /api routes call these gates (admin chat, team chat,
+// publish-editor, the portal assistants, the conversation store). On those
+// routes nothing revalidated the cookie, so a forged one was
 // accepted — and lib/admin-chat/privileged.ts treats a single email address as
 // the write-privileged user.
 //

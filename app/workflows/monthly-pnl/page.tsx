@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { WorkflowHero, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
 const title = 'Monthly P&L | Edge8 Workflows'
 const description =
-  'Invoices and expenses sync from QuickBooks all month, then close into a published P&L days after month end. Financial truth on a rhythm.'
+  'Invoices and expenses are kept current in QuickBooks all month, then close into a published P&L days after month end. Financial truth on a rhythm.'
 
 export const metadata: Metadata = {
   title,
@@ -114,9 +113,8 @@ export default function MonthlyPnlWorkflowPage() {
                 actor: 'system',
                 body: (
                   <p>
-                    The <Link href="/workflows/invoice-sync">invoice sync</Link> and the expense sync pull from
-                    QuickBooks throughout the month. There is no data-gathering scramble at close because the data was
-                    never allowed to pile up.
+                    Invoices and expenses are kept current in QuickBooks throughout the month. There is no
+                    data-gathering scramble at close because the data was never allowed to pile up.
                   </p>
                 ),
               },

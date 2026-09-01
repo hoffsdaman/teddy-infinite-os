@@ -19,8 +19,8 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Inputs', assignment: 'both', desc: "The client's brief plus the contractor's estimate: hours, timeline, and a definition of done." },
   { name: 'Decision', assignment: 'human', desc: 'Both gates belong to the client: approve the estimate before work starts, accept the work before billing.' },
   { name: 'Routing', assignment: 'machine', desc: 'Every transition notifies the right person automatically: the contractor gets the brief, the client gets the decision, the accountant gets every billing outcome.' },
-  { name: 'Output', assignment: 'machine', desc: 'Accepted work and a QuickBooks invoice, created the moment the client says yes.' },
-  { name: 'Delivery', assignment: 'machine', desc: 'QuickBooks emails the invoice and the CRM mirrors it instantly, so the account page is current before the weekly sync runs.' },
+  { name: 'Output', assignment: 'machine', desc: 'Accepted work, with the billable amount computed and flagged for the accountant to invoice.' },
+  { name: 'Delivery', assignment: 'human', desc: 'The accountant raises the invoice in QuickBooks and emails the client; the CRM reflects accepted work instantly.' },
   { name: 'Measurement', assignment: 'machine', desc: 'An event log stamps who decided what and when, and every request carries a billing status, so nothing invoiced slips and nothing failed hides.' },
 ]
 
@@ -30,7 +30,7 @@ export default function ClientWorkRequestsWorkflowPage() {
       <WorkflowHero
         category="Revenue"
         title="Client Work Requests"
-        tldr="A client briefs work in the portal, a contractor scopes it, and the client holds both gates: approve the estimate before anything starts, accept the work before anything bills. The moment they accept, the invoice is created in QuickBooks and lands in their inbox."
+        tldr="A client briefs work in the portal, a contractor scopes it, and the client holds both gates: approve the estimate before anything starts, accept the work before anything bills. The moment they accept, the billable amount is computed and the accountant is flagged to raise the invoice in QuickBooks."
         meta={[
           { label: 'Client decisions', value: '2' },
           { label: 'Ways to start', value: '3' },
@@ -47,8 +47,8 @@ export default function ClientWorkRequestsWorkflowPage() {
           </h2>
           <p className="section-sub" style={{ marginTop: 12 }}>
             This is the client side of the loop. The contractor side runs on{' '}
-            <Link href="/workflows/contractor-payments">Contractor Payments</Link>, and the invoice lands in the ledger
-            kept true by <Link href="/workflows/invoice-sync">QuickBooks Invoice Sync</Link>.
+            <Link href="/workflows/contractor-payments">Contractor Payments</Link>, and on acceptance the work is flagged
+            for the accountant to raise the client invoice in QuickBooks.
           </p>
           <FlowRail
             steps={[
@@ -160,13 +160,13 @@ export default function ClientWorkRequestsWorkflowPage() {
               },
               {
                 num: '06',
-                title: 'The invoice writes itself',
+                title: 'Billing is teed up',
                 actor: 'system',
                 body: (
                   <p>
-                    The moment the work is accepted, an invoice is created in QuickBooks at the agreed rate and emailed
-                    to the client, then mirrored into the CRM so the account view is current immediately. If anything is
-                    off, the system flags a human instead of guessing. A billing problem never blocks acceptance.
+                    The moment the work is accepted, the system computes the billable amount at the agreed rate and
+                    flags the request for the accountant to raise the invoice in QuickBooks and send it to the client.
+                    If anything is off, it says so instead of guessing. A billing problem never blocks acceptance.
                   </p>
                 ),
               },

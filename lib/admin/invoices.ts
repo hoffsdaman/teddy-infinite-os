@@ -1,7 +1,6 @@
 import { companyOs } from "@/lib/supabase";
 
-// Reads for company_os.invoices (synced from QuickBooks) and the
-// company -> QBO-customer mapping stored on companies.metadata.qbo_customer_ids.
+// Reads for company_os.invoices (historical QuickBooks-originated ledger).
 // Admin surfaces only; /portal reads through lib/portal/invoices.ts instead
 // (which never selects `memo`).
 
@@ -26,14 +25,4 @@ export async function getInvoicesForCompany(companyId: string): Promise<AdminInv
     .neq("status", "voided")
     .order("txn_date", { ascending: false });
   return (data ?? []) as AdminInvoice[];
-}
-
-export async function getQboCustomerIds(companyId: string): Promise<string[]> {
-  const { data } = await companyOs
-    .from("companies")
-    .select("metadata")
-    .eq("id", companyId)
-    .maybeSingle();
-  const meta = (data?.metadata ?? {}) as { qbo_customer_ids?: unknown };
-  return Array.isArray(meta.qbo_customer_ids) ? meta.qbo_customer_ids.map(String) : [];
 }
