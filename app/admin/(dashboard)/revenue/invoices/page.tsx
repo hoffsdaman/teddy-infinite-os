@@ -9,13 +9,12 @@ import { formatCents, formatDate, humanize } from "@/lib/admin/format";
 import { firstParam, type SearchParamsObj } from "@/lib/admin/url";
 import { INVOICE_SELECT, ENTITY_LABEL, type InvoiceListRow, type InvoiceEntity } from "./invoice-shared";
 import { InvoicesShelfProvider, InvoiceShelfRow } from "./InvoicesShelf";
-import { SyncButton } from "./SyncButton";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Invoices",
-  description: "QuickBooks invoice ledger — read-only mirror, synced weekly.",
+  description: "QuickBooks invoice ledger — read-only historical record.",
 };
 
 const PAGE_SIZES = [25, 50, 100];
@@ -132,8 +131,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Sea
       <PageHead
         eyebrow="Revenue"
         title="Invoices"
-        sub={`${total.toLocaleString()} ${total === 1 ? "invoice" : "invoices"} · ${formatCents(outstandingCents)} outstanding · synced from QuickBooks`}
-        action={<SyncButton />}
+        sub={`${total.toLocaleString()} ${total === 1 ? "invoice" : "invoices"} · ${formatCents(outstandingCents)} outstanding · historical QuickBooks ledger`}
       />
       {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
       <InvoicesShelfProvider>

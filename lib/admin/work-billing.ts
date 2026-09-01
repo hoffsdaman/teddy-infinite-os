@@ -1,20 +1,20 @@
 import { companyOs } from "@/lib/supabase";
-import { createQboInvoice, sendQboInvoice } from "@/lib/qbo";
 import { sendTransactionalEmail } from "@/lib/email";
 import { notifyOps } from "@/lib/lark";
 
-// Client billing for portal-origin contractor work requests: on acceptance,
-// invoice the client in QuickBooks at the contractor's BILLABLE rate
-// (compensation comp_type 'billable' — default 100% markup on internal
-// hourly). Never throws and never blocks acceptance: every failure path
-// degrades to a billing_status flag + accountant email + ops Lark so a human
-// can invoice manually. Contractor pay (contractor_payments roll-up at the
-// internal rate) is untouched by any of this.
+// Client billing for portal-origin contractor work requests. The automated
+// QuickBooks integration was removed (2026-09; see
+// docs/plans/shopify-native-sync.md), so acceptance now always routes to the
+// manual path: it computes the billable amount (contractor's 'billable'
+// comp rate — default 100% markup on internal hourly), flags the request
+// manual_required, and emails the accountant the hours/rate/amount so a human
+// raises the invoice in QuickBooks. Never throws and never blocks acceptance.
+// Contractor pay (contractor_payments roll-up at the internal rate) is
+// untouched by any of this.
 // Plan: docs/plans/2026-07-18-client-work-requests.md
 
 export type BillingOutcome =
   | { status: "skipped"; reason: string }
-  | { status: "invoiced"; docNumber: string | null; amountCents: number }
   | { status: "manual_required" | "failed"; reason: string };
 
 const ACCOUNTING_EMAIL = process.env.ACCOUNTING_EMAIL;
@@ -139,108 +139,21 @@ async function runBilling(requestId: string): Promise<BillingOutcome> {
 
   const { data: company } = await companyOs
     .from("companies")
-    .select("id, name, metadata")
+    .select("id, name")
     .eq("id", req.client_company_id)
     .maybeSingle();
-  const qboIds = ((company?.metadata as Record<string, unknown> | null)?.qbo_customer_ids ?? []) as string[];
-  const customerId = Array.isArray(qboIds) && qboIds.length > 0 ? String(qboIds[0]) : null;
-  if (!customerId)
-    return flagManual(req, "manual_required", `${company?.name ?? "The client company"} has no QuickBooks customer mapping.`, [
-      `Hours: ${hours} × $${(rateCents / 100).toFixed(2)}/h = $${(amountCents / 100).toFixed(2)}`,
-    ]);
 
-  const description = `Contractor work: ${req.title}`;
-  const created = await createQboInvoice({
-    customerId,
-    hours,
-    rateCents,
-    description,
-    memo: `work_request:${req.id}`,
-  });
-  if (!created.ok)
-    return flagManual(req, "failed", created.error, [
-      `Customer: ${company?.name ?? customerId}`,
-      `Hours: ${hours} × $${(rateCents / 100).toFixed(2)}/h = $${(amountCents / 100).toFixed(2)}`,
-    ]);
-
-  const inv = created.invoice;
-
-  // Mirror into the synced ledger so the portal invoices page shows it
-  // immediately; the weekly QBO sync then updates this same row (unique on
-  // source + external_id).
-  const { data: ledgerRow, error: ledgerErr } = await companyOs
-    .from("invoices")
-    .upsert(
-      {
-        company_id: req.client_company_id,
-        source: "quickbooks",
-        external_id: inv.id,
-        doc_number: inv.docNumber,
-        txn_date: inv.txnDate,
-        due_date: inv.dueDate,
-        currency: inv.currency,
-        amount_cents: inv.totalCents,
-        balance_cents: inv.totalCents,
-        status: "open",
-        lines: [
-          {
-            description,
-            quantity: hours,
-            rate: rateCents / 100,
-            amount: inv.totalCents / 100,
-            item_name: "Contractor Services",
-          },
-        ],
-        synced_at: new Date().toISOString(),
-      },
-      { onConflict: "source,external_id" },
-    )
-    .select("id")
-    .maybeSingle();
-  if (ledgerErr) console.error("[work-billing] invoice ledger upsert failed:", ledgerErr.message);
-
-  // Stamp the request. A crash between QBO create and this stamp leaves a
-  // real invoice unstamped — the accountant email below carries the doc
-  // number, and the weekly sync lands the ledger row regardless.
-  await companyOs
-    .from("contractor_work_requests")
-    .update({
-      billing_status: "invoiced",
-      billing_error: null,
-      billed_invoice_id: ledgerRow?.id ?? null,
-      billed_amount_cents: inv.totalCents,
-      billed_rate_cents: rateCents,
-      billed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", req.id);
-
-  // QBO emails the client their invoice; a send failure is non-fatal (the
-  // invoice exists — accountant just resends from QBO).
-  const sent = await sendQboInvoice(inv.id);
-
-  const amountLabel = `$${(inv.totalCents / 100).toFixed(2)}`;
-  await addSystemEvent(
-    req.id,
-    `Invoice ${inv.docNumber ? `#${inv.docNumber}` : inv.id} created for ${amountLabel} (${hours}h × $${(rateCents / 100).toFixed(2)}/h)${sent.ok ? " and emailed to the client" : " — QBO email send failed, resend from QuickBooks"}.`,
-    { qbo_invoice_id: inv.id, amount_cents: inv.totalCents },
+  // The automated QuickBooks invoice path was removed; every accepted request
+  // is flagged for a human to raise the invoice manually, with the full
+  // calculation carried to the accountant.
+  const amountLabel = `$${(amountCents / 100).toFixed(2)}`;
+  return flagManual(
+    req,
+    "manual_required",
+    "Raise this client invoice manually in QuickBooks.",
+    [
+      `Client: ${company?.name ?? req.client_company_id}`,
+      `Hours: ${hours} × $${(rateCents / 100).toFixed(2)}/h = ${amountLabel} (contractor billable rate, 100% markup)`,
+    ],
   );
-  if (ACCOUNTING_EMAIL) {
-    await sendTransactionalEmail({
-      to: ACCOUNTING_EMAIL,
-      subject: `Invoice created: ${req.title} (${amountLabel})`,
-      html: [
-        `<p>Contractor work "${req.title}" was accepted by the client and invoiced automatically.</p>`,
-        `<p>QuickBooks invoice ${inv.docNumber ? `#${inv.docNumber}` : inv.id} — ${amountLabel} (${hours}h × $${(rateCents / 100).toFixed(2)}/h, 100% markup rate) for ${company?.name ?? "the client"}.</p>`,
-        sent.ok ? `<p>QBO has emailed it to the client.</p>` : `<p><strong>QBO could not email it — please send it from QuickBooks.</strong></p>`,
-        `<p>Request: https://www.edge8.ai/admin/operations/contractor-requests?open=${req.id}</p>`,
-      ].join("\n"),
-      replyTo: "dave@edge8.co",
-    });
-  }
-  await notifyOps(
-    `🧾 Invoice ${inv.docNumber ? `#${inv.docNumber}` : inv.id} created: "${req.title}" — ${amountLabel} for ${company?.name ?? "client"}${sent.ok ? ", emailed via QBO" : " (QBO email failed — resend manually)"}.`,
-  );
-
-  return { status: "invoiced", docNumber: inv.docNumber, amountCents: inv.totalCents };
 }

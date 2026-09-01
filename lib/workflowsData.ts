@@ -99,15 +99,6 @@ export const allWorkflows: Workflow[] = [
     steps: 5,
   },
   {
-    slug: 'invoice-sync',
-    title: 'QuickBooks Invoice Sync',
-    category: 'Operations',
-    excerpt:
-      'A weekly sync pulls every invoice out of QuickBooks and maps it to the CRM, so revenue truth lives in one place.',
-    date: '2026-07-16',
-    steps: 4,
-  },
-  {
     slug: 'monthly-expenses',
     title: 'Monthly Expense Entry',
     category: 'Operations',
