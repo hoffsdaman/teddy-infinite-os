@@ -36,202 +36,56 @@ function buildCollapsed(): Record<string, boolean> {
   return map;
 }
 
-// Three labeled sections (agreed 2026-08-09, see
-// docs/product/eight-edges/eight-edges-engineering-plan.md): 8 EDGES points
-// the company (Company Dashboard = the unchanged /admin home, plus the Edges
-// pages), FOUR OFFICES runs it (the nested-by-office IA: every feature lives
-// under a System inside an Office, see
-// docs/product/four-offices-of-the-future.md), WORKSPACE configures it.
-// Offices and Systems both collapse. Rows open the shared 360s.
+// Lean support-focused nav (see docs/plans/ux-clean-up-hide-nav.md): only
+// customers, orders, and access management are linked. Every other route
+// stays live and reachable by URL — the full three-section nav is in git
+// history if a hidden area needs to come back.
 const NAV: NavSection[] = [
   {
-    section: "Operating System",
+    section: null,
     groups: [
       {
-        label: "Edges",
-        collapsible: true,
+        label: null,
         items: [
-          { label: "Company Dashboard", href: "/admin", ico: "◈", enabled: true },
-          // Client Hubs replaces the standalone Work Boards + Client Roadmaps:
-          // pick a client, land on their hub (board + roadmap now editable there).
-          { label: "Client Hubs", href: "/admin/client-hubs", ico: "▦", enabled: true },
-          // Goals editing moved to the Company group below (single place; the
-          // old /admin/edges/goals cascade board is unlinked but still routable).
-          { label: "Sync", href: "/admin/edges/sync", ico: "☰", enabled: true },
-          { label: "Issues", href: "/admin/edges/issues", ico: "◉", enabled: true },
-          { label: "Reviews", href: "/admin/edges/reviews", ico: "✓" },
-        ],
-      },
-      {
-        // The company-visible pages the team reads under /team (Strategy →
-        // Company Goals → individual goals), edited here. Shared components
-        // render both surfaces; see components/company/*.
-        label: "Company",
-        collapsible: true,
-        items: [
-          { label: "Strategy", href: "/admin/company/strategy", ico: "◆", enabled: true },
-          { label: "Company Goals", href: "/admin/company/goals", ico: "⊚", enabled: true },
-          { label: "Core Values", href: "/admin/company/values", ico: "♥", enabled: true },
-          { label: "Org Chart", href: "/admin/company/org", ico: "⌥", enabled: true },
-        ],
-      },
-    ],
-  },
-  {
-    section: "Four Offices",
-    groups: [
-  {
-    label: "Revenue",
-    collapsible: true,
-    items: [
-      {
-        subheading: "CRM",
-        items: [
-          { label: "Cockpit", href: "/admin/revenue", ico: "◎", enabled: true },
-          { label: "Deals", href: "/admin/revenue/deals", ico: "$", enabled: true },
-          { label: "Leads", href: "/admin/revenue/leads", ico: "◉", enabled: true },
-          { label: "Inquiries", href: "/admin/revenue/inquiries", ico: "☰", enabled: true },
-          { label: "Companies", href: "/admin/revenue/companies", ico: "▣", enabled: true },
-          { label: "Clients", href: "/admin/revenue/clients", ico: "★", enabled: true },
-          { label: "Contacts", href: "/admin/contacts", ico: "⚇", enabled: true },
-          { label: "Meeting Notes", href: "/admin/revenue/meetings", ico: "☰", enabled: true },
-          { label: "Sales Intelligence", href: "/admin/revenue/sales-intelligence", ico: "◭", enabled: true },
-        ],
-      },
-      {
-        subheading: "Commerce",
-        items: [
+          { label: "Dashboard", href: "/admin", ico: "◈", enabled: true },
+          { label: "Customers", href: "/admin/contacts", ico: "⚇", enabled: true },
           { label: "Orders", href: "/admin/revenue/orders", ico: "⛁", enabled: true },
-          { label: "Invoices", href: "/admin/revenue/invoices", ico: "¤", enabled: true },
-          { label: "AIO Pad", href: "/admin/revenue/aio-pad", ico: "⌂", enabled: true },
-          { label: "Events", href: "/admin/revenue/events", ico: "✓", enabled: true },
-          { label: "Products", href: "/admin/revenue/products", ico: "▦", enabled: true },
-          { label: "Affiliates", href: "/admin/revenue/affiliates", ico: "%", enabled: true },
         ],
       },
       {
-        subheading: "Marketing",
+        label: "Operations",
+        collapsible: true,
         items: [
-          { label: "Overview", href: "/admin/revenue/marketing", ico: "◑", enabled: true },
-          { label: "Campaigns", href: "/admin/revenue/marketing/campaigns", ico: "◎", enabled: true },
-          { label: "Broadcasts", href: "/admin/revenue/marketing/broadcasts", ico: "✉", enabled: true },
-          { label: "Brands", href: "/admin/revenue/marketing/brands", ico: "◈", enabled: true },
-          { label: "Books", href: "/admin/revenue/marketing/books", ico: "❒", enabled: true },
+          {
+            subheading: "Time Off",
+            items: [
+              { label: "Requests", href: "/admin/operations/time-off/requests", ico: "☼", enabled: true },
+              { label: "Policies", href: "/admin/operations/time-off/policies", ico: "☑", enabled: true },
+              { label: "Time Off History", href: "/admin/operations/time-off/history", ico: "☷", enabled: true },
+            ],
+          },
+          {
+            subheading: "Contractors",
+            items: [
+              { label: "Work Requests", href: "/admin/operations/contractor-requests", ico: "✎", enabled: true },
+              { label: "Contractors", href: "/admin/operations/contractors", ico: "⚒", enabled: true },
+              { label: "Payments", href: "/admin/operations/contractor-payments", ico: "$", enabled: true },
+            ],
+          },
         ],
       },
-    ],
-  },
-  {
-    label: "Talent",
-    collapsible: true,
-    items: [
-      { label: "Cockpit", href: "/admin/talent", ico: "◎", enabled: true },
-      {
-        subheading: "People",
-        items: [
-          { label: "Team", href: "/admin/talent/team", ico: "☷", enabled: true },
-          { label: "Onboarding", href: "/admin/talent/onboarding", ico: "◐", enabled: true },
-          { label: "Probation", href: "/admin/talent/probation", ico: "◔", enabled: true },
-        ],
-      },
-      {
-        subheading: "ATS",
-        superAdmin: true,
-        items: [
-          { label: "Applications", href: "/admin/talent/applications", ico: "⇉", enabled: true },
-          { label: "Job Reqs", href: "/admin/talent/jobs", ico: "▤", enabled: true },
-          { label: "Candidate Pool", href: "/admin/talent/candidate-pool", ico: "↥", enabled: true },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Operations",
-    collapsible: true,
-    items: [
-      { label: "Cockpit", href: "/admin/operations", ico: "◎", enabled: true },
-      {
-        subheading: "Time Off",
-        items: [
-          { label: "Requests", href: "/admin/operations/time-off/requests", ico: "☼", enabled: true },
-          { label: "Policies", href: "/admin/operations/time-off/policies", ico: "☑", enabled: true },
-          { label: "Time Off History", href: "/admin/operations/time-off/history", ico: "☷", enabled: true },
-        ],
-      },
-      {
-        subheading: "Contractors",
-        items: [
-          { label: "Work Requests", href: "/admin/operations/contractor-requests", ico: "✎", enabled: true },
-          { label: "Contractors", href: "/admin/operations/contractors", ico: "⚒", enabled: true },
-          { label: "Payments", href: "/admin/operations/contractor-payments", ico: "$", enabled: true },
-        ],
-      },
-      {
-        subheading: "Retreats",
-        items: [
-          { label: "Retreats P&L", href: "/admin/operations/retreats", ico: "◇", enabled: true },
-        ],
-      },
-      {
-        subheading: "Workplace",
-        items: [
-          { label: "Equipment", href: "/admin/operations/equipment", ico: "▤", enabled: true },
-          { label: "Vendors", href: "/admin/operations/vendors", ico: "▥", enabled: true },
-          { label: "Gallery", href: "/admin/operations/gallery", ico: "▦", enabled: true },
-          { label: "Documents", href: "/admin/operations/documents", ico: "⎙" },
-          { label: "Surveys", href: "/admin/operations/surveys", ico: "✎", enabled: true },
-        ],
-      },
-      {
-        subheading: "Insights",
-        items: [
-          { label: "Analytics", href: "/admin/operations/analytics", ico: "▲", enabled: true },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Innovation",
-    collapsible: true,
-    items: [
-      { label: "Cockpit", href: "/admin/innovation", ico: "◎", enabled: true },
-      {
-        subheading: "Ideas",
-        items: [{ label: "Idea backlog", href: "/admin/innovation/ideas", ico: "✦", enabled: true }],
-      },
-    ],
-  },
     ],
   },
   {
     section: "Workspace",
     groups: [
-  {
-    label: "Settings",
-    collapsible: true,
-    items: [
       {
-        subheading: "Access",
+        label: null,
         items: [
           { label: "Admins", href: "/admin/settings/admins", ico: "⚿", enabled: true },
-          { label: "Assume", href: "/admin/settings/assume", ico: "⧉", enabled: true },
+          { label: "Agents", href: "/admin/settings/agents", ico: "⟳", enabled: true, superAdmin: true },
         ],
       },
-      {
-        subheading: "Configuration",
-        items: [
-          { label: "Pipelines", href: "/admin/settings/pipelines", ico: "⇶" },
-        ],
-      },
-    ],
-  },
-  // Agents sits at the top level of Workspace, a peer of Settings rather than
-  // buried under it. Still super-admin only (Dave & Mai); the route is gated
-  // server-side regardless.
-  {
-    label: null,
-    items: [{ label: "Agents", href: "/admin/settings/agents", ico: "⟳", enabled: true, superAdmin: true }],
-  },
     ],
   },
 ];
