@@ -4,7 +4,7 @@ import { WorkflowHero, FlowRail, SevenElements, DetailFooter, type WorkflowEleme
 import { WorkflowGraph, GraphLegend } from '../graph'
 import { BOOKING_AGENT, CALL_AGENT, LEAD_STATES } from './graphs'
 
-const title = 'Lark Scheduler to CRM Updates | Edge8 Workflows'
+const title = 'Lark Scheduler to CRM Updates | TeddyBed Workflows'
 const description =
   'Two scheduled agents bracket every sales call: one turns each external calendar booking into a CRM lead before the call, and one turns each recorded call into a complete CRM record, a drafted follow-up, and a coaching note after it. Full control flow, state machine, and failure paths included.'
 

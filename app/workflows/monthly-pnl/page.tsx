@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WorkflowHero, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'Monthly P&L | Edge8 Workflows'
+const title = 'Monthly P&L | TeddyBed Workflows'
 const description =
   'Invoices and expenses are kept current in QuickBooks all month, then close into a published P&L days after month end. Financial truth on a rhythm.'
 

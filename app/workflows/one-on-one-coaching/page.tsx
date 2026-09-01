@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WorkflowHero, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'The Biweekly 1-1 Coaching Cycle | Edge8 Workflows'
+const title = 'The Biweekly 1-1 Coaching Cycle | TeddyBed Workflows'
 const description =
   'Our 1-1 coaching system: AI preps every meeting, a human holds it, and AI drafts a two-tier recap that publishes only after the coach reviews it. Check-ins loop into the next prep, and monthly trends feed the coaching focus back in.'
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WorkflowHero, ActorChip, StepCards, SevenElements, DetailFooter, type Actor, type WorkflowElement } from '../ui'
 
-const title = 'Edge8 Onboarding Cycle | Edge8 Workflows'
+const title = 'Edge8 Onboarding Cycle | TeddyBed Workflows'
 const description =
   'Every new hire moves through six onboarding stages on a kanban board that runs itself: the system chases the plan, sends the surveys, triggers the reviews, and flips the status. Humans hold the sessions and make the one call that matters.'
 

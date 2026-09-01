@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WorkflowHero, FlowRail, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'Survey Collection | Edge8 Workflows'
+const title = 'Survey Collection | TeddyBed Workflows'
 const description =
   'Create a survey, share one link, and watch responses land in the admin in real time. Structured feedback without the spreadsheet.'
 

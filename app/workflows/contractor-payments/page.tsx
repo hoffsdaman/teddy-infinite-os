@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'Estimates versus actuals per contractor over time, the number that makes the next estimate honest.' },
 ]
 
-const title = 'Contractor Hours + Payment | Edge8 Workflows'
+const title = 'Contractor Hours + Payment | TeddyBed Workflows'
 const description =
   'Every piece of contractor work moves through one loop: request, estimate, approval, delivery, and a monthly payment run. Notifications land in Lark and email.'
 

@@ -18,14 +18,14 @@ const EMPLOYMENT_SCHEMA: Record<string, string> = {
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const job = (await getActiveJobs()).find((j) => j.slug === params.slug)
-  if (!job) return { title: 'Role not found | Edge8 Careers' }
+  if (!job) return { title: 'Role not found | TeddyBed Careers' }
   return {
-    title: `${job.title} | Edge8 Careers`,
-    description: job.excerpt || `${job.title} at Edge8. ${job.location}, ${job.type}.`,
+    title: `${job.title} | TeddyBed Careers`,
+    description: job.excerpt || `${job.title} at TeddyBed. ${job.location}, ${job.type}.`,
     alternates: { canonical: `https://teddy-infinite-os.vercel.app/careers/${job.slug}/` },
     openGraph: {
-      title: `${job.title} | Edge8 Careers`,
-      description: job.excerpt || `${job.title} at Edge8. ${job.location}, ${job.type}.`,
+      title: `${job.title} | TeddyBed Careers`,
+      description: job.excerpt || `${job.title} at TeddyBed. ${job.location}, ${job.type}.`,
       url: `https://teddy-infinite-os.vercel.app/careers/${job.slug}/`,
       type: 'article',
     },
@@ -51,7 +51,7 @@ export default async function JobPage({ params }: { params: { slug: string } }) 
     employmentType: EMPLOYMENT_SCHEMA[job.type] ?? 'FULL_TIME',
     hiringOrganization: {
       '@type': 'Organization',
-      name: 'Edge8',
+      name: 'TeddyBed',
       sameAs: 'https://teddy-infinite-os.vercel.app',
     },
     jobLocation: {

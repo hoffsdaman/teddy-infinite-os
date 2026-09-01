@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const jobs = await getActiveJobs()
   const job = jobs.find((j) => j.slug === params.slug)
   return {
-    title: job ? `Apply: ${job.title} | Edge8 Careers` : 'Apply | Edge8 Careers',
+    title: job ? `Apply: ${job.title} | TeddyBed Careers` : 'Apply | TeddyBed Careers',
   }
 }
 

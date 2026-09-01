@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WorkflowHero, FlowRail, DetailFooter } from '../ui'
 
-const title = 'The Leadership Coach: AI Program Plan | Edge8 Workflows'
+const title = 'The Leadership Coach: AI Program Plan | TeddyBed Workflows'
 const description =
   'The 5D program plan behind our 1-1 coaching system: the problem, the data, the workflow design, the ROI, and the deployment, with two-tier privacy enforced in code instead of discipline.'
 

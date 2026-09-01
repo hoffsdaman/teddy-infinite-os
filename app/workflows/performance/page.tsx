@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'both', desc: 'Before-and-after numbers on the metric that mattered. Machines produce them, a person decides whether the win is real. If it is not measured, it did not improve.' },
 ]
 
-const title = 'How We Think About Speed | Edge8 Workflows'
+const title = 'How We Think About Speed | TeddyBed Workflows'
 const description =
   'When the product feels slow, we measure before we optimize and prove the win after. A human sets the target, AI finds and adversarially verifies the real bottleneck.'
 

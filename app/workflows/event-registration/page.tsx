@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'Registrations against capacity and revenue per event, visible as they happen.' },
 ]
 
-const title = 'Event Registration | Edge8 Workflows'
+const title = 'Event Registration | TeddyBed Workflows'
 const description =
   'Admin creates an event, the public signs up, Stripe takes payment, a webhook confirms the seat. No human in the middle of the money.'
 
