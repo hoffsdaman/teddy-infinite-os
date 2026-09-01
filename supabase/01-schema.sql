@@ -1687,8 +1687,9 @@ CREATE TABLE "company_os"."people" (
     "marketing_consent_at" timestamp with time zone,
     "marketing_consent_source" "text",
     "github_login" "extensions"."citext",
+    "shopify_customer_id" "text",
     CONSTRAINT "people_marketing_consent_check" CHECK (("marketing_consent" = ANY (ARRAY['subscribed'::"text", 'unsubscribed'::"text", 'never_asked'::"text"]))),
-    CONSTRAINT "people_persona_check" CHECK ((("persona" IS NULL) OR ("persona" = ANY (ARRAY['vendor'::"text", 'prospect'::"text", 'client'::"text", 'job_seeker'::"text", 'employee'::"text", 'student'::"text"]))))
+    CONSTRAINT "people_persona_check" CHECK ((("persona" IS NULL) OR ("persona" = ANY (ARRAY['vendor'::"text", 'prospect'::"text", 'client'::"text", 'job_seeker'::"text", 'employee'::"text", 'student'::"text", 'customer'::"text"]))))
 );
 
 
@@ -3111,7 +3112,11 @@ CREATE TABLE "company_os"."orders" (
     "stripe_fee_cents" bigint,
     "fx_rate" numeric,
     "vnd_amount" bigint,
-    CONSTRAINT "orders_payment_method_check" CHECK (("payment_method" = ANY (ARRAY['stripe'::"text", 'offline_vn'::"text", 'manual'::"text"]))),
+    "shopify_order_id" "text",
+    "order_number" "text",
+    "fulfillment_status" "text",
+    "shipping_cents" bigint,
+    CONSTRAINT "orders_payment_method_check" CHECK (("payment_method" = ANY (ARRAY['stripe'::"text", 'offline_vn'::"text", 'manual'::"text", 'shopify'::"text"]))),
     CONSTRAINT "orders_status_check" CHECK (("status" = ANY (ARRAY['pending'::"text", 'awaiting_offline_payment'::"text", 'paid'::"text", 'failed'::"text", 'refunded'::"text", 'partial_refund'::"text", 'expired'::"text"])))
 );
 
@@ -3398,7 +3403,8 @@ CREATE TABLE "company_os"."products" (
     "amount_usd_cents" bigint,
     "event_id" "uuid",
     "sort_order" integer DEFAULT 0 NOT NULL,
-    CONSTRAINT "products_type_check" CHECK (("type" = ANY (ARRAY['event'::"text", 'membership'::"text", 'private_sprint'::"text", 'course'::"text", 'service'::"text", 'digital'::"text", 'other'::"text"])))
+    "shopify_product_id" "text",
+    CONSTRAINT "products_type_check" CHECK (("type" = ANY (ARRAY['event'::"text", 'membership'::"text", 'private_sprint'::"text", 'course'::"text", 'service'::"text", 'digital'::"text", 'other'::"text", 'physical'::"text"])))
 );
 
 
@@ -3479,25 +3485,6 @@ CREATE VIEW "company_os"."public_retreats" AS
    FROM "company_os"."products" "pr"
   WHERE (("pr"."type" = 'event'::"text") AND ("pr"."cohort_slug" IS NOT NULL))
   GROUP BY "pr"."cohort_slug";
-
-
---
--- Name: qbo_connection; Type: TABLE; Schema: company_os; Owner: -
---
-
-CREATE TABLE "company_os"."qbo_connection" (
-    "id" "text" DEFAULT 'edge8'::"text" NOT NULL,
-    "realm_id" "text" NOT NULL,
-    "access_token" "text" NOT NULL,
-    "refresh_token" "text" NOT NULL,
-    "access_token_expires_at" timestamp with time zone NOT NULL,
-    "refresh_token_expires_at" timestamp with time zone NOT NULL,
-    "environment" "text" DEFAULT 'production'::"text" NOT NULL,
-    "connected_by" "text" NOT NULL,
-    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    CONSTRAINT "qbo_connection_environment_check" CHECK (("environment" = ANY (ARRAY['sandbox'::"text", 'production'::"text"])))
-);
 
 
 --
@@ -5478,14 +5465,6 @@ ALTER TABLE ONLY "company_os"."program_documents"
 
 ALTER TABLE ONLY "company_os"."program_plans"
     ADD CONSTRAINT "program_plans_pkey" PRIMARY KEY ("id");
-
-
---
--- Name: qbo_connection qbo_connection_pkey; Type: CONSTRAINT; Schema: company_os; Owner: -
---
-
-ALTER TABLE ONLY "company_os"."qbo_connection"
-    ADD CONSTRAINT "qbo_connection_pkey" PRIMARY KEY ("id");
 
 
 --
@@ -12843,12 +12822,6 @@ ALTER TABLE "company_os"."program_documents" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "company_os"."program_plans" ENABLE ROW LEVEL SECURITY;
 
 --
--- Name: qbo_connection; Type: ROW SECURITY; Schema: company_os; Owner: -
---
-
-ALTER TABLE "company_os"."qbo_connection" ENABLE ROW LEVEL SECURITY;
-
---
 -- Name: requisition_loop_steps; Type: ROW SECURITY; Schema: company_os; Owner: -
 --
 
@@ -14648,15 +14621,6 @@ GRANT SELECT,INSERT,UPDATE ON TABLE "company_os"."public_retreats" TO "chatbot_w
 
 
 --
--- Name: TABLE "qbo_connection"; Type: ACL; Schema: company_os; Owner: -
---
-
-GRANT SELECT ON TABLE "company_os"."qbo_connection" TO "chatbot_reader";
-GRANT SELECT,INSERT,UPDATE ON TABLE "company_os"."qbo_connection" TO "chatbot_writer";
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "company_os"."qbo_connection" TO "service_role";
-
-
---
 -- Name: TABLE "requisition_loop_steps"; Type: ACL; Schema: company_os; Owner: -
 --
 
@@ -15083,3 +15047,111 @@ ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "company_os" GRANT SELECT
 
 \unrestrict cqXJ73dt0Qr7HbA24BUFRRY9ENvzwozpbfMEdaDocYuX3QVAAp8Ordaa34J7kWf
 
+
+--
+-- Shopify native sync (2026-09-01). New tables + constraints for the child
+-- objects; the column additions and CHECK updates on people/products/orders
+-- are inline in their CREATE TABLE blocks above. Mirror of
+-- docs/db/2026-09-01-shopify-native-sync.sql. See docs/plans/shopify-native-sync.md.
+--
+
+CREATE TABLE "company_os"."product_variants" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "product_id" "uuid" NOT NULL,
+    "shopify_variant_id" "text",
+    "sku" "text",
+    "title" "text",
+    "amount_cents" integer DEFAULT 0 NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
+    "inventory_quantity" integer,
+    "active" boolean DEFAULT true NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+CREATE TABLE "company_os"."order_lines" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "order_id" "uuid" NOT NULL,
+    "product_id" "uuid",
+    "variant_id" "uuid",
+    "shopify_line_id" "text",
+    "title" "text" NOT NULL,
+    "sku" "text",
+    "quantity" integer DEFAULT 1 NOT NULL,
+    "unit_amount_cents" bigint DEFAULT 0 NOT NULL,
+    "total_amount_cents" bigint DEFAULT 0 NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+CREATE TABLE "company_os"."shopify_sync_state" (
+    "entity" "text" NOT NULL,
+    "last_sync" timestamp with time zone,
+    "last_run_at" timestamp with time zone,
+    "last_status" "text",
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
+);
+
+ALTER TABLE ONLY "company_os"."product_variants"
+    ADD CONSTRAINT "product_variants_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "company_os"."product_variants"
+    ADD CONSTRAINT "product_variants_shopify_variant_id_key" UNIQUE ("shopify_variant_id");
+ALTER TABLE ONLY "company_os"."order_lines"
+    ADD CONSTRAINT "order_lines_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "company_os"."order_lines"
+    ADD CONSTRAINT "order_lines_shopify_line_id_key" UNIQUE ("shopify_line_id");
+ALTER TABLE ONLY "company_os"."shopify_sync_state"
+    ADD CONSTRAINT "shopify_sync_state_pkey" PRIMARY KEY ("entity");
+
+ALTER TABLE ONLY "company_os"."people"
+    ADD CONSTRAINT "people_shopify_customer_id_key" UNIQUE ("shopify_customer_id");
+ALTER TABLE ONLY "company_os"."products"
+    ADD CONSTRAINT "products_shopify_product_id_key" UNIQUE ("shopify_product_id");
+ALTER TABLE ONLY "company_os"."orders"
+    ADD CONSTRAINT "orders_shopify_order_id_key" UNIQUE ("shopify_order_id");
+
+ALTER TABLE ONLY "company_os"."product_variants"
+    ADD CONSTRAINT "product_variants_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "company_os"."products"("id") ON DELETE CASCADE;
+ALTER TABLE ONLY "company_os"."order_lines"
+    ADD CONSTRAINT "order_lines_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "company_os"."orders"("id") ON DELETE CASCADE;
+ALTER TABLE ONLY "company_os"."order_lines"
+    ADD CONSTRAINT "order_lines_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "company_os"."products"("id");
+ALTER TABLE ONLY "company_os"."order_lines"
+    ADD CONSTRAINT "order_lines_variant_id_fkey" FOREIGN KEY ("variant_id") REFERENCES "company_os"."product_variants"("id");
+
+CREATE INDEX "product_variants_product_idx" ON "company_os"."product_variants" USING "btree" ("product_id");
+CREATE INDEX "product_variants_sku_idx" ON "company_os"."product_variants" USING "btree" ("sku");
+CREATE INDEX "order_lines_order_idx" ON "company_os"."order_lines" USING "btree" ("order_id");
+CREATE INDEX "order_lines_product_idx" ON "company_os"."order_lines" USING "btree" ("product_id");
+CREATE INDEX "order_lines_variant_idx" ON "company_os"."order_lines" USING "btree" ("variant_id");
+CREATE INDEX "orders_order_number_idx" ON "company_os"."orders" USING "btree" ("order_number");
+
+CREATE TRIGGER "set_product_variants_updated_at" BEFORE UPDATE ON "company_os"."product_variants" FOR EACH ROW EXECUTE FUNCTION "company_os"."handle_updated_at"();
+CREATE TRIGGER "set_shopify_sync_state_updated_at" BEFORE UPDATE ON "company_os"."shopify_sync_state" FOR EACH ROW EXECUTE FUNCTION "company_os"."handle_updated_at"();
+
+ALTER TABLE "company_os"."product_variants" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "company_os"."order_lines" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "company_os"."shopify_sync_state" ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "chatbot_reader_select" ON "company_os"."product_variants" FOR SELECT TO "chatbot_reader" USING (true);
+CREATE POLICY "chatbot_writer_select" ON "company_os"."product_variants" FOR SELECT TO "chatbot_writer" USING (true);
+CREATE POLICY "chatbot_writer_insert" ON "company_os"."product_variants" FOR INSERT TO "chatbot_writer" WITH CHECK (true);
+CREATE POLICY "chatbot_writer_update" ON "company_os"."product_variants" FOR UPDATE TO "chatbot_writer" USING (true) WITH CHECK (true);
+CREATE POLICY "team_chatbot_reader_select" ON "company_os"."product_variants" FOR SELECT TO "team_chatbot_reader" USING (true);
+
+CREATE POLICY "chatbot_reader_select" ON "company_os"."order_lines" FOR SELECT TO "chatbot_reader" USING (true);
+CREATE POLICY "chatbot_writer_select" ON "company_os"."order_lines" FOR SELECT TO "chatbot_writer" USING (true);
+CREATE POLICY "chatbot_writer_insert" ON "company_os"."order_lines" FOR INSERT TO "chatbot_writer" WITH CHECK (true);
+CREATE POLICY "chatbot_writer_update" ON "company_os"."order_lines" FOR UPDATE TO "chatbot_writer" USING (true) WITH CHECK (true);
+CREATE POLICY "team_chatbot_reader_select" ON "company_os"."order_lines" FOR SELECT TO "team_chatbot_reader" USING (true);
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "company_os"."product_variants" TO "service_role";
+GRANT SELECT ON TABLE "company_os"."product_variants" TO "chatbot_reader";
+GRANT SELECT,INSERT,UPDATE ON TABLE "company_os"."product_variants" TO "chatbot_writer";
+GRANT SELECT ON TABLE "company_os"."product_variants" TO "team_chatbot_reader";
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "company_os"."order_lines" TO "service_role";
+GRANT SELECT ON TABLE "company_os"."order_lines" TO "chatbot_reader";
+GRANT SELECT,INSERT,UPDATE ON TABLE "company_os"."order_lines" TO "chatbot_writer";
+GRANT SELECT ON TABLE "company_os"."order_lines" TO "team_chatbot_reader";
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "company_os"."shopify_sync_state" TO "service_role";
