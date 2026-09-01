@@ -6,7 +6,7 @@ export default function AdminLoginPage() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges
+          TeddyBed
         </div>
         <p className="admin-auth-sub">Sign in to the Company OS.</p>
         <Suspense>

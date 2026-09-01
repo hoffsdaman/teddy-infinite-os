@@ -21,26 +21,26 @@ import { setMyPriority, proposeMyItem, reorderMyGroup } from "./actions";
 import { ProposeAssist } from "./ProposeAssist";
 
 const STYLES = `
-.cbp { --pri-now:#287BE8; --pri-next:#0b8f63; --pri-later:#4a505a; --pri-park:#b06508; max-width: 880px; }
-.cbp .cbp-intro { background:rgba(40,123,232,.08); border-radius:10px; padding:14px 16px; font-size:14px; margin:0 0 16px; }
+.cbp { --pri-now:var(--color-primary-blue); --pri-next:#0b8f63; --pri-later:#4a505a; --pri-park:#b06508; max-width: 880px; }
+.cbp .cbp-intro { background:rgba(24,64,75,.08); border-radius:10px; padding:14px 16px; font-size:14px; margin:0 0 16px; }
 .cbp .cbp-counts { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 18px; }
 .cbp .cbp-count { font-size:12px; font-weight:600; color:#797c82; padding:4px 11px; border-radius:99px; background:#f2f4f7; }
 .cbp .cbp-group { margin-bottom:22px; }
 .cbp .cbp-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 4px; }
-.cbp .cbp-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:99px; background:rgba(40,123,232,.1); color:#287BE8; }
+.cbp .cbp-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:99px; background:rgba(24,64,75,.1); color:var(--color-primary-blue); }
 .cbp .cbp-group-title { font-weight:700; font-size:15px; }
 .cbp .cbp-group-intro { color:#797c82; font-size:13px; margin:2px 0 12px; }
 .cbp .cbp-item { border:1px solid var(--admin-border,#E6E6E6); border-radius:12px; padding:13px 15px 13px 12px; margin-bottom:9px; background:#fff; display:flex; gap:10px; align-items:flex-start; }
-.cbp .cbp-item.dragging { box-shadow:0 8px 24px rgba(16,16,20,.14); border-color:#287BE8; }
+.cbp .cbp-item.dragging { box-shadow:0 8px 24px rgba(16,16,20,.14); border-color:var(--color-primary-blue); }
 .cbp .cbp-handle { flex:none; cursor:grab; color:#b8bfc9; font-size:16px; line-height:1.2; padding:2px 2px 0; user-select:none; touch-action:none; }
-.cbp .cbp-handle:hover { color:#287BE8; }
+.cbp .cbp-handle:hover { color:var(--color-primary-blue); }
 .cbp .cbp-main { flex:1; min-width:0; }
 .cbp .cbp-item-top { display:flex; gap:9px; align-items:flex-start; flex-wrap:wrap; }
-.cbp .cbp-ref { flex:none; font-size:12px; font-weight:700; color:#287BE8; background:rgba(40,123,232,.1); border-radius:6px; padding:3px 7px; }
+.cbp .cbp-ref { flex:none; font-size:12px; font-weight:700; color:var(--color-primary-blue); background:rgba(24,64,75,.1); border-radius:6px; padding:3px 7px; }
 .cbp .cbp-title { font-weight:650; font-size:14px; flex:1 1 220px; }
 .cbp .cbp-pills { display:flex; gap:4px; flex-wrap:wrap; }
 .cbp .cbp-pill { font-size:12px; font-weight:600; padding:4px 11px; border-radius:99px; border:1px solid var(--admin-border,#E6E6E6); background:#fff; color:#797c82; cursor:pointer; font-family:inherit; }
-.cbp .cbp-pill:hover { border-color:#287BE8; color:#287BE8; }
+.cbp .cbp-pill:hover { border-color:var(--color-primary-blue); color:var(--color-primary-blue); }
 .cbp .cbp-pill.on-now { background:var(--pri-now); border-color:var(--pri-now); color:#fff; }
 .cbp .cbp-pill.on-next { background:rgba(11,143,99,.15); border-color:var(--pri-next); color:var(--pri-next); }
 .cbp .cbp-pill.on-later { background:#f2f4f7; border-color:#b8bfc9; color:var(--pri-later); }
@@ -49,15 +49,15 @@ const STYLES = `
 .cbp .cbp-body .k { color:#797c82; font-weight:600; }
 .cbp .cbp-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
 .cbp .cbp-chip { font-size:11px; font-weight:600; color:#797c82; border:1px solid #EAEEF2; border-radius:99px; padding:2px 9px; }
-.cbp .cbp-chip.tok { color:#287BE8; border-color:rgba(40,123,232,.15); background:rgba(40,123,232,.08); }
+.cbp .cbp-chip.tok { color:var(--color-primary-blue); border-color:rgba(24,64,75,.15); background:rgba(24,64,75,.08); }
 .cbp .cbp-chip.mine { color:#0b8f63; border-color:rgba(11,143,99,.25); background:rgba(11,143,99,.1); }
 .cbp .cbp-chip.proposed { color:#b06508; border-color:#d8871f; background:#fff4e5; }
 .cbp .cbp-hint { font-size:11px; color:#9aa0a6; margin-top:6px; }
 .cbp .cbp-propose { margin-top:8px; border:1px dashed var(--admin-border,#C9CDD3); border-radius:12px; padding:12px 14px; }
 .cbp .cbp-propose input, .cbp .cbp-propose textarea, .cbp .cbp-propose select { width:100%; font-family:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--admin-border,#E6E6E6); border-radius:8px; box-sizing:border-box; margin-bottom:8px; }
-.cbp .cbp-btn { font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:99px; padding:8px 16px; border:1px solid #287BE8; background:#287BE8; color:#fff; }
-.cbp .cbp-btn.ghost { background:#fff; color:#287BE8; }
-.cbp .cbp-link { font-size:12px; font-weight:600; color:#287BE8; background:none; border:none; cursor:pointer; padding:0; font-family:inherit; }
+.cbp .cbp-btn { font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:99px; padding:8px 16px; border:1px solid var(--color-primary-blue); background:var(--color-primary-blue); color:#fff; }
+.cbp .cbp-btn.ghost { background:#fff; color:var(--color-primary-blue); }
+.cbp .cbp-link { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:none; border:none; cursor:pointer; padding:0; font-family:inherit; }
 .cbp .cbp-err { color:#c0392b; font-size:12px; margin-top:6px; }
 /* Touch: the reorder handle and the four priority pills are the whole point of
    this page for account admins, and both were ~20-25px targets. Grow them, and

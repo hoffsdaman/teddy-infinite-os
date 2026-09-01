@@ -55,7 +55,7 @@ export default function AdminVerify() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges
+          TeddyBed
         </div>
         {state === "failed" ? (
           <>
