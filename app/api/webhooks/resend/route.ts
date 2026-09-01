@@ -9,7 +9,7 @@ export const fetchCache = "force-no-store";
 // Resend delivery webhooks -> company_os.email_events.
 //
 // Register this in the Resend dashboard as:
-//   https://www.edge8.ai/api/webhooks/resend/
+//   https://teddy-infinite-os.vercel.app/api/webhooks/resend/
 // The TRAILING SLASH is required. next.config sets trailingSlash: true, so the
 // slashless URL answers 308 and Resend does not follow redirects — every event
 // would be silently dropped, the same failure mode that killed the crons.

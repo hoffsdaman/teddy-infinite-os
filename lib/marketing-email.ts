@@ -15,7 +15,7 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const DEFAULT_FROM = process.env.MARKETING_EMAIL_FROM || "Edge8 <hello@edge8.ai>";
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.edge8.ai").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://teddy-infinite-os.vercel.app").replace(/\/$/, "");
 
 // CAN-SPAM requires a physical postal address on commercial email.
 const POSTAL_ADDRESS = process.env.MARKETING_POSTAL_ADDRESS || "Edge8, Ho Chi Minh City, Vietnam";

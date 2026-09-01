@@ -64,7 +64,7 @@ async function flagManual(
     `Work request "${req.title}" was accepted but could not be invoiced automatically.`,
     `Reason: ${reason}`,
     ...details,
-    `Review: https://www.edge8.ai/admin/operations/contractor-requests?open=${req.id}`,
+    `Review: https://teddy-infinite-os.vercel.app/admin/operations/contractor-requests?open=${req.id}`,
   ];
   if (ACCOUNTING_EMAIL) {
     await sendTransactionalEmail({

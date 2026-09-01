@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${job.title} | Edge8 Careers`,
     description: job.excerpt || `${job.title} at Edge8. ${job.location}, ${job.type}.`,
-    alternates: { canonical: `https://www.edge8.ai/careers/${job.slug}/` },
+    alternates: { canonical: `https://teddy-infinite-os.vercel.app/careers/${job.slug}/` },
     openGraph: {
       title: `${job.title} | Edge8 Careers`,
       description: job.excerpt || `${job.title} at Edge8. ${job.location}, ${job.type}.`,
-      url: `https://www.edge8.ai/careers/${job.slug}/`,
+      url: `https://teddy-infinite-os.vercel.app/careers/${job.slug}/`,
       type: 'article',
     },
   }
@@ -52,7 +52,7 @@ export default async function JobPage({ params }: { params: { slug: string } }) 
     hiringOrganization: {
       '@type': 'Organization',
       name: 'Edge8',
-      sameAs: 'https://www.edge8.ai',
+      sameAs: 'https://teddy-infinite-os.vercel.app',
     },
     jobLocation: {
       '@type': 'Place',

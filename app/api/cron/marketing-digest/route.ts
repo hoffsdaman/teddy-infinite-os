@@ -14,7 +14,7 @@ export const fetchCache = "force-no-store";
 // posted. Email is excluded: it sends itself via the campaign engine. Sends
 // nothing when nothing is due.
 const FOUNDER_EMAIL = "dave@edge8.ai";
-const CALENDAR_URL = "https://www.edge8.ai/admin/revenue/marketing/calendar";
+const CALENDAR_URL = "https://teddy-infinite-os.vercel.app/admin/revenue/marketing/calendar";
 const MANUAL_CHANNELS = ["blog", "linkedin", "facebook"];
 const CHANNEL_LABEL: Record<string, string> = {
   blog: "Blog",

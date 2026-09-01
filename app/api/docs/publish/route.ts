@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     slug,
-    url: `https://www.edge8.ai/workflows/private/e8/${slug}`,
+    url: `https://teddy-infinite-os.vercel.app/workflows/private/e8/${slug}`,
     publishedAt,
   })
 }

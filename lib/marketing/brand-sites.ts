@@ -20,7 +20,7 @@ export type BrandSite = {
 export const SELF_BRAND_SLUG = "edge8";
 
 const SITES: Record<string, BrandSite> = {
-  edge8: { slug: "edge8", domain: "https://www.edge8.ai", self: true, blogEnabled: true },
+  edge8: { slug: "edge8", domain: "https://teddy-infinite-os.vercel.app", self: true, blogEnabled: true },
   // ai-officer.com is a separate repo (aio-website) that reads these posts from
   // the shared DB (brand-scoped to ai-officer) and renders them on its own site.
   "ai-officer": { slug: "ai-officer", domain: "https://ai-officer.com", self: false, blogEnabled: true },
