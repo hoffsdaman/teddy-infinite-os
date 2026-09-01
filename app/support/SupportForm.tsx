@@ -13,6 +13,7 @@ export function SupportForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
 
@@ -23,7 +24,7 @@ export function SupportForm() {
       const res = await fetch("/api/support/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message, website }),
+        body: JSON.stringify({ name, email, subject, orderNumber, message, website }),
       });
       const body = await res.json().catch(() => ({}));
       if (res.ok && body?.ok) {
@@ -31,6 +32,7 @@ export function SupportForm() {
         setName("");
         setEmail("");
         setSubject("");
+        setOrderNumber("");
         setMessage("");
       } else {
         setStatus({ kind: "err", message: body?.error || "Something went wrong. Please try again." });
@@ -102,10 +104,16 @@ export function SupportForm() {
           <input style={inputStyle} type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
       </div>
-      <label style={labelStyle}>
-        Subject <span style={{ color: "#d33" }}>*</span>
-        <input style={inputStyle} type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g. Mattress warranty question" />
-      </label>
+      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
+        <label style={labelStyle}>
+          Subject <span style={{ color: "#d33" }}>*</span>
+          <input style={inputStyle} type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g. Mattress warranty question" />
+        </label>
+        <label style={labelStyle}>
+          Order number <span style={{ fontWeight: 400, color: "rgba(0,0,0,0.45)" }}>(optional)</span>
+          <input style={inputStyle} type="text" value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="e.g. #1234" />
+        </label>
+      </div>
       <label style={labelStyle}>
         How can we help? <span style={{ color: "#d33" }}>*</span>
         <textarea style={{ ...inputStyle, resize: "vertical" }} rows={6} required value={message} onChange={(e) => setMessage(e.target.value)} />

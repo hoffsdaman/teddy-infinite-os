@@ -37,7 +37,7 @@ function Metric({ label, value, sub }: { label: string; value: string; sub?: str
 }
 
 export default async function SupportPage() {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const { tickets, board, metrics } = await getSupportBoardData();
 
   return (
@@ -61,7 +61,7 @@ export default async function SupportPage() {
         <Metric label="Resolved" value={String(metrics.resolvedInWindow)} sub={`last ${metrics.windowDays} days`} />
       </div>
 
-      <SupportBoard tickets={tickets} columns={board.columns} />
+      <SupportBoard tickets={tickets} columns={board.columns} currentUserLabel={admin.email} />
     </>
   );
 }

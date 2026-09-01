@@ -32,6 +32,8 @@ export type SupportMeta = {
   customer_email: string;
   customer_name: string | null;
   ticket_no: string;
+  // Shopify/store order the ticket is about, if the customer gave one.
+  order_number?: string | null;
   // Idempotency key for email intake — the Resend/provider message id, so a
   // retried webhook does not create a duplicate ticket.
   source_message_id?: string;
@@ -140,6 +142,7 @@ export type CreateTicketInput = {
   customerName?: string | null;
   subject: string;
   message?: string | null;
+  orderNumber?: string | null;
   sourceMessageId?: string | null;
   createdByLabel?: string | null; // audit label for manual intake
 };
@@ -174,6 +177,7 @@ export async function createSupportTicket(input: CreateTicketInput): Promise<Cre
     customer_email: email,
     customer_name: input.customerName?.trim() || null,
     ticket_no: ticketNo,
+    ...(input.orderNumber?.trim() ? { order_number: input.orderNumber.trim() } : {}),
     ...(input.sourceMessageId ? { source_message_id: input.sourceMessageId } : {}),
   };
 
@@ -220,6 +224,7 @@ export type SupportTicket = {
   channel: SupportChannel | null;
   customerEmail: string | null;
   customerName: string | null;
+  orderNumber: string | null;
   personId: string | null;
   isResolved: boolean;
   createdAt: string;
@@ -317,6 +322,7 @@ export async function getSupportBoardData(windowDays = 30): Promise<SupportBoard
       channel: (t.metadata?.channel as SupportChannel) ?? null,
       customerEmail: t.metadata?.customer_email ?? person?.email ?? null,
       customerName: t.metadata?.customer_name ?? person?.full_name ?? person?.display_name ?? null,
+      orderNumber: t.metadata?.order_number ?? null,
       personId: t.subject_type === "person" ? t.subject_id : null,
       isResolved: t.board_column_id ? doneColumnIds.has(t.board_column_id) : t.status === "done",
       createdAt: t.created_at,

@@ -19,6 +19,9 @@
   <label>Subject <span aria-hidden="true">*</span>
     <input type="text" name="subject" required />
   </label>
+  <label>Order number (optional)
+    <input type="text" name="orderNumber" />
+  </label>
   <label>How can we help? <span aria-hidden="true">*</span>
     <textarea name="message" rows="5" required></textarea>
   </label>
@@ -45,6 +48,7 @@
       name: form.name.value,
       email: form.email.value,
       subject: form.subject.value,
+      orderNumber: form.orderNumber.value,
       message: form.message.value,
       website: form.website.value
     };

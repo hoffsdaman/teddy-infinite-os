@@ -15,13 +15,14 @@ export function NewTicketForm() {
   const [customerEmail, setEmail] = useState("");
   const [customerName, setName] = useState("");
   const [subject, setSubject] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
   const [message, setMessage] = useState("");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
     setError(null);
-    const res = await createManualTicket({ customerEmail, customerName, subject, message });
+    const res = await createManualTicket({ customerEmail, customerName, subject, orderNumber, message });
     setSaving(false);
     if (!res.ok) {
       setError(res.error);
@@ -30,6 +31,7 @@ export function NewTicketForm() {
     setEmail("");
     setName("");
     setSubject("");
+    setOrderNumber("");
     setMessage("");
     setOpen(false);
     router.refresh();
@@ -73,16 +75,27 @@ export function NewTicketForm() {
           />
         </label>
       </div>
-      <label className="admin-field">
-        <span className="admin-label">Subject</span>
-        <input
-          className="admin-input"
-          required
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          placeholder="Mattress warranty question"
-        />
-      </label>
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "2fr 1fr" }}>
+        <label className="admin-field">
+          <span className="admin-label">Subject</span>
+          <input
+            className="admin-input"
+            required
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="Mattress warranty question"
+          />
+        </label>
+        <label className="admin-field">
+          <span className="admin-label">Order number</span>
+          <input
+            className="admin-input"
+            value={orderNumber}
+            onChange={(e) => setOrderNumber(e.target.value)}
+            placeholder="#1234"
+          />
+        </label>
+      </div>
       <label className="admin-field">
         <span className="admin-label">Message</span>
         <textarea

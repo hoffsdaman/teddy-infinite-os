@@ -65,6 +65,7 @@ const BodySchema = z.object({
   email: z.string().trim().email().max(320),
   subject: z.string().trim().min(1).max(300),
   message: z.string().trim().max(10_000).optional().default(""),
+  orderNumber: z.string().trim().max(64).optional().default(""),
   // Honeypot: real users never fill this. Any value = bot.
   website: z.string().optional(),
 });
@@ -84,7 +85,7 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Please provide a valid email and subject." }, { status: 400, headers: cors });
   }
-  const { name, email, subject, message, website } = parsed.data;
+  const { name, email, subject, message, orderNumber, website } = parsed.data;
 
   // Honeypot: feign success, create nothing (mirrors the contact form).
   if (website) {
@@ -103,6 +104,7 @@ export async function POST(req: NextRequest) {
     customerName: name || null,
     subject,
     message: message || null,
+    orderNumber: orderNumber || null,
   });
   if (!res.ok) {
     console.error(`${LOG} ticket create failed: ${res.error}`);

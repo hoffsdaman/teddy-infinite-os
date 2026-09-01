@@ -22,6 +22,7 @@ export async function createManualTicket(input: {
   customerName?: string;
   subject: string;
   message?: string;
+  orderNumber?: string;
 }): Promise<Result & { ticketNo?: string }> {
   const admin = await requireAdmin();
   const res = await createSupportTicket({
@@ -30,6 +31,7 @@ export async function createManualTicket(input: {
     customerName: input.customerName || null,
     subject: input.subject,
     message: input.message || null,
+    orderNumber: input.orderNumber || null,
     createdByLabel: admin.email,
   });
   if (!res.ok) return { ok: false, error: res.error };
