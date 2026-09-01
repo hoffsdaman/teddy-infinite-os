@@ -1,7 +1,34 @@
 # Customer Support Product
 
-*Development plan. Written 2026-09-01. Status: not started. Companion HTML
+*Development plan. Written 2026-09-01. Status: built 2026-09-01 on branch
+`support-product` (PRs 1–4 + 6). PR 5 deferred by design. Companion HTML
 overview lives in the "Customer Support Product" artifact.*
+
+## Build status (2026-09-01)
+
+Implemented and verified against the live database (board self-seeds, an intake
+round-tripped through `POST /api/support` created a correctly-linked ticket,
+and move→resolve / email-threading / idempotency / metrics were exercised
+directly). Two deliberate deviations from the sketch above, both to work without
+a manual migration:
+
+- **The Support board self-seeds** from `lib/support.ts` (`ensureSupportBoard`)
+  the first time the code runs, so no seed step is required. The durable SQL
+  seed still lives in `docs/db/2026-09-01-customer-support.sql`.
+- **Ticket numbers** prefer the `next_support_ticket_no()` sequence RPC when the
+  migration is applied and otherwise fall back to a max-scan, so numbering works
+  immediately.
+- **Support-role containment** runs off the `SUPPORT_ADMINS` env allowlist (the
+  same idiom as `ADMIN_ALLOWLIST` / `SENSITIVE_VIEWERS`); the durable
+  `admins.role` column is honoured when present. Enforced at the edge in
+  `middleware.ts` so it covers RSC loads and server-action POSTs.
+
+Operator steps to reach the full definition of done: deploy the branch; add the
+two support agents to `company_os.admins` and list their emails in
+`SUPPORT_ADMINS`; set `SUPPORT_EMAIL_WEBHOOK_SECRET` and point Resend inbound at
+`/api/webhooks/support-email/`; paste `docs/embeds/teddy-support-form.html` into
+the storefront with the app origin filled in. Applying
+`docs/db/2026-09-01-customer-support.sql` is optional but recommended.
 
 ## Philosophy
 
