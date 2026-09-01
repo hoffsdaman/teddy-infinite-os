@@ -1,11 +1,13 @@
 /* Homepage — standalone entry point into the TeddyBed OS consoles.
-   All values come from the canonical brand tokens in globals.css / the design
-   system doc (Manrope, pill buttons 40px radius, cards 20px radius). */
+   Styled to the Teddy Brand Guidelines (V.1): warm & cosy, deep-teal (YOGI) on
+   cream (POLAR), Roca Two rounded-serif headings, Outfit body, tan (BOO-BOO) &
+   golden (WINNIE) accents. Palette + font tokens live in globals.css. */
 
 .os-home {
-  background: var(--color-bg-primary);
-  color: var(--color-primary-dark);
-  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  background: var(--teddy-polar);
+  color: var(--teddy-yogi);
+  font-family: var(--font-brand-body);
+  font-weight: 300;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -19,42 +21,51 @@
 .os-btn {
   display: inline-block;
   border-radius: 40px;
-  padding: 16px 24px;
+  padding: 15px 26px;
+  font-family: var(--font-brand-body);
   font-size: 15px;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--teddy-polar);
   text-align: center;
-  transition: background 0.3s ease;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 .os-btn-primary {
-  background: var(--color-primary-dark);
+  background: var(--teddy-yogi);
+  color: var(--teddy-polar);
 }
 .os-btn-primary:hover {
-  background: var(--color-primary-blue);
+  background: var(--teddy-yogi-hover);
+  transform: translateY(-1px);
 }
 .os-btn-secondary {
-  background: var(--color-primary-blue);
+  background: var(--teddy-booboo);
+  color: var(--teddy-yogi);
 }
 .os-btn-secondary:hover {
-  background: var(--color-primary-dark);
+  background: #cd9563;
+  transform: translateY(-1px);
 }
 
 .os-badge {
-  display: inline-block;
-  background: var(--color-accent-mint);
-  color: var(--color-primary-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teddy-winnie);
+  color: var(--teddy-yogi);
   font-size: 13px;
-  font-weight: 700;
-  padding: 6px 14px;
+  font-weight: 600;
+  padding: 7px 16px;
   border-radius: 40px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
 .os-eyebrow {
   font-size: 13px;
-  font-weight: 700;
-  color: var(--color-primary-blue);
-  letter-spacing: 1.5px;
+  font-weight: 600;
+  color: var(--teddy-booboo);
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
@@ -74,22 +85,25 @@
 .os-wordmark {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 .os-wordmark-text {
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--teddy-yogi);
   letter-spacing: -0.5px;
 }
 .os-wordmark-chip {
-  background: var(--color-accent-mint);
-  color: var(--color-primary-dark);
-  font-size: 12px;
+  background: var(--teddy-winnie);
+  color: var(--teddy-yogi);
+  font-family: var(--font-brand-body);
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 4px 9px;
   border-radius: 40px;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .os-nav-links {
   display: flex;
@@ -98,17 +112,20 @@
 }
 .os-nav-links a {
   font-size: 15px;
-  font-weight: 600;
-  color: var(--color-primary-dark);
+  font-weight: 500;
+  color: var(--teddy-yogi);
 }
 .os-nav-links a.os-nav-external {
-  color: var(--color-primary-blue);
+  color: var(--teddy-booboo);
 }
 .os-nav-links a:hover {
-  color: var(--color-primary-blue-hover);
+  color: var(--teddy-yogi-hover);
+}
+.os-nav-links a.os-nav-external:hover {
+  color: #cd9563;
 }
 .os-nav-links a.os-btn {
-  color: #ffffff;
+  color: var(--teddy-polar);
 }
 
 /* ── Hero ── */
@@ -117,25 +134,27 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 22px;
-  padding: 80px 80px 72px;
+  gap: 24px;
+  padding: 88px 80px 76px;
 }
 .os-hero h1 {
   margin: 0;
-  max-width: 900px;
-  font-size: 56px;
-  line-height: 1.12;
-  font-weight: 700;
-  letter-spacing: -1px;
-  color: var(--color-primary-dark);
+  max-width: 920px;
+  font-family: var(--font-display);
+  font-size: 60px;
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: var(--teddy-yogi);
   text-wrap: balance;
 }
 .os-hero p {
   margin: 0;
-  max-width: 640px;
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--color-text-body);
+  max-width: 620px;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #4c5a5e;
 }
 
 /* ── Sections ── */
@@ -143,27 +162,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-align: center;
 }
 .os-section-head h2 {
   margin: 0;
   max-width: 760px;
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+  color: var(--teddy-yogi);
   text-wrap: balance;
 }
 
 /* ── Consoles ── */
 .os-consoles {
-  background: var(--color-bg-secondary);
-  padding: 72px 80px;
+  background: var(--teddy-sand);
+  padding: 80px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 44px;
 }
 .os-console-grid {
   display: grid;
@@ -173,58 +193,73 @@
   max-width: 1180px;
 }
 .os-console-card {
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-card-border);
-  border-radius: 20px;
-  padding: 36px 32px;
+  background: var(--teddy-polar);
+  border: 1px solid var(--teddy-booboo);
+  border-radius: 24px;
+  padding: 38px 32px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.os-console-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(24, 64, 75, 0.12);
 }
 .os-console-card svg {
-  color: var(--color-primary-blue);
+  color: var(--teddy-yogi);
+  background: var(--teddy-winnie);
+  padding: 12px;
+  border-radius: 16px;
+  box-sizing: content-box;
+  width: 26px;
+  height: 26px;
 }
 .os-console-card h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-primary-dark);
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 400;
+  color: var(--teddy-yogi);
 }
 .os-console-tag {
   margin: 0;
   font-size: 14px;
-  font-weight: 700;
-  color: var(--color-primary-dark);
+  font-weight: 600;
+  color: var(--teddy-booboo);
 }
 .os-console-card > p:not(.os-console-tag) {
   margin: 0;
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-body);
+  font-weight: 300;
+  line-height: 1.65;
+  color: #4c5a5e;
   flex-grow: 1;
 }
 .os-console-actions {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 .os-console-note {
   font-size: 13px;
-  color: var(--color-text-body);
+  color: #6b7a7e;
 }
 .os-console-note a {
   font-weight: 600;
-  color: var(--color-primary-blue);
+  color: var(--teddy-yogi);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ── Unique ── */
 .os-unique {
-  padding: 88px 80px;
+  padding: 92px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 44px;
+  gap: 48px;
 }
 .os-unique-grid {
   display: grid;
@@ -239,29 +274,33 @@
   gap: 12px;
 }
 .os-unique-num {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--color-primary-blue);
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--teddy-winnie);
+  line-height: 1;
 }
 .os-unique-item h3 {
-  margin: 0;
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--color-primary-dark);
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--teddy-yogi);
 }
 .os-unique-item p {
   margin: 0;
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-body);
+  font-weight: 300;
+  line-height: 1.65;
+  color: #4c5a5e;
 }
 
 /* ── Newsletter ── */
 .os-newsletter {
-  margin: 0 80px 88px;
-  background: var(--color-bg-secondary);
-  border-radius: 20px;
-  padding: 48px 56px;
+  margin: 0 80px 92px;
+  background: var(--teddy-yogi);
+  border-radius: 28px;
+  padding: 52px 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -269,16 +308,18 @@
 }
 .os-newsletter h2 {
   margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.4px;
-  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+  color: var(--teddy-polar);
 }
 .os-newsletter p {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   font-size: 16px;
+  font-weight: 300;
   line-height: 1.6;
-  color: var(--color-text-body);
+  color: var(--teddy-sand);
 }
 .os-newsletter-form {
   display: flex;
@@ -287,29 +328,34 @@
   flex-shrink: 0;
 }
 .os-newsletter-form input {
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-input-border);
+  background: var(--teddy-polar);
+  border: 1px solid transparent;
   border-radius: 40px;
   padding: 16px 24px;
   font-size: 15px;
-  font-family: inherit;
-  color: var(--color-primary-dark);
+  font-family: var(--font-brand-body);
+  color: var(--teddy-yogi);
   min-width: 240px;
 }
 .os-newsletter-form input::placeholder {
-  color: var(--color-text-body);
+  color: #6b7a7e;
 }
 .os-newsletter-form .os-btn {
   white-space: nowrap;
   border: none;
   cursor: pointer;
-  font-family: inherit;
+  background: var(--teddy-winnie);
+  color: var(--teddy-yogi);
+  font-weight: 600;
+}
+.os-newsletter-form .os-btn:hover {
+  background: var(--teddy-winnie-hover);
 }
 
 /* ── Footer ── */
 .os-footer {
-  background: var(--color-primary-dark);
-  padding: 56px 80px 40px;
+  background: var(--teddy-yogi);
+  padding: 60px 80px 40px;
   display: flex;
   flex-direction: column;
   gap: 36px;
@@ -327,41 +373,44 @@
   flex-direction: column;
   gap: 10px;
   font-size: 14px;
+  font-weight: 300;
   line-height: 1.6;
-  color: var(--color-bg-secondary);
+  color: var(--teddy-sand);
 }
 .os-footer-col a {
-  color: var(--color-bg-secondary);
+  color: var(--teddy-sand);
 }
 .os-footer-col a:hover {
-  color: var(--color-accent-mint);
+  color: var(--teddy-winnie);
 }
 .os-footer-heading {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--color-accent-mint);
-  letter-spacing: 1px;
+  color: var(--teddy-winnie);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 .os-footer-blurb {
   margin: 0;
   font-size: 14px;
+  font-weight: 300;
   line-height: 1.6;
-  color: var(--color-text-body);
+  color: var(--teddy-sand);
   max-width: 340px;
 }
 .os-footer-muted {
-  color: var(--color-text-body);
+  color: rgba(237, 220, 199, 0.6);
 }
 .os-footer-bottom {
-  border-top: 1px solid rgba(234, 238, 242, 0.1);
+  border-top: 1px solid rgba(237, 220, 199, 0.15);
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
   font-size: 13px;
-  color: var(--color-text-body);
+  font-weight: 300;
+  color: rgba(237, 220, 199, 0.6);
 }
 
 /* ── Responsive ── */
@@ -373,39 +422,39 @@
     display: none;
   }
   .os-hero {
-    padding: 44px 24px 48px;
+    padding: 48px 24px 52px;
   }
   .os-hero h1 {
-    font-size: 34px;
-    letter-spacing: -0.7px;
+    font-size: 38px;
+    letter-spacing: -0.3px;
   }
   .os-hero p {
-    font-size: 16px;
+    font-size: 17px;
   }
   .os-consoles {
-    padding: 48px 24px;
-    gap: 28px;
+    padding: 52px 24px;
+    gap: 30px;
   }
   .os-console-grid,
   .os-unique-grid {
     grid-template-columns: minmax(0, 1fr);
   }
   .os-section-head h2 {
-    font-size: 24px;
+    font-size: 28px;
   }
   .os-unique {
-    padding: 56px 24px;
-    gap: 32px;
+    padding: 60px 24px;
+    gap: 34px;
   }
   .os-unique-grid {
-    gap: 28px;
+    gap: 30px;
   }
   .os-newsletter {
-    margin: 0 24px 56px;
-    padding: 32px 28px;
+    margin: 0 24px 60px;
+    padding: 34px 28px;
     flex-direction: column;
     align-items: stretch;
-    gap: 18px;
+    gap: 20px;
   }
   .os-newsletter-form {
     flex-direction: column;
@@ -415,7 +464,7 @@
     min-width: 0;
   }
   .os-footer {
-    padding: 40px 24px 28px;
+    padding: 44px 24px 28px;
   }
   .os-footer-cols {
     flex-direction: column;
