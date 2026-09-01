@@ -69,6 +69,28 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
+    // Support-role containment: an admin listed in SUPPORT_ADMINS is confined to
+    // /admin/support. Enforced here at the edge so it covers RSC loads AND
+    // server-action POSTs (which target the current path), not just hidden nav
+    // links. Env-only so it needs no schema change; the durable admins.role form
+    // is honoured server-side by isSupportOnlyAdmin() for the nav. Non-/admin
+    // surfaces (/team, /portal) are unaffected.
+    if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/support")) {
+      const email = user.email?.toLowerCase();
+      const supportOnly = new Set(
+        (process.env.SUPPORT_ADMINS ?? "")
+          .split(",")
+          .map((e) => e.trim().toLowerCase())
+          .filter(Boolean),
+      );
+      if (email && supportOnly.has(email)) {
+        const home = request.nextUrl.clone();
+        home.pathname = "/admin/support";
+        home.search = "";
+        return NextResponse.redirect(home);
+      }
+    }
+
     return response;
   } catch {
     // Auth backend unreachable or misconfigured: fail safe to the login page

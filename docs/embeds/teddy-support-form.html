@@ -1,0 +1,71 @@
+<!--
+  Teddy support form — paste into a Shopify page/section (Custom Liquid block).
+
+  Before pasting: replace OS_ORIGIN below with this app's public origin, e.g.
+  https://teddy-infinite-os.vercel.app  (NO trailing slash on the origin — the
+  script adds the required trailing slash on /api/support/ itself).
+
+  The endpoint only accepts cross-origin POSTs from the storefront origins in
+  the app's SUPPORT_ALLOWED_ORIGINS env (defaults to teddybed.com.au). The
+  hidden "website" field is a honeypot — leave it exactly as is.
+-->
+<form id="teddy-support-form" class="teddy-support">
+  <label>Your name
+    <input type="text" name="name" autocomplete="name" />
+  </label>
+  <label>Email <span aria-hidden="true">*</span>
+    <input type="email" name="email" autocomplete="email" required />
+  </label>
+  <label>Subject <span aria-hidden="true">*</span>
+    <input type="text" name="subject" required />
+  </label>
+  <label>How can we help? <span aria-hidden="true">*</span>
+    <textarea name="message" rows="5" required></textarea>
+  </label>
+  <!-- Honeypot: hidden from humans, catches bots. Do not remove. -->
+  <input type="text" name="website" tabindex="-1" autocomplete="off"
+         style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true" />
+  <button type="submit">Send</button>
+  <p class="teddy-support__status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+(function () {
+  var OS_ORIGIN = "https://OS_ORIGIN_HERE"; // <-- replace me
+  var form = document.getElementById("teddy-support-form");
+  if (!form) return;
+  var status = form.querySelector(".teddy-support__status");
+  var button = form.querySelector("button[type=submit]");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    status.textContent = "";
+    button.disabled = true;
+    var payload = {
+      name: form.name.value,
+      email: form.email.value,
+      subject: form.subject.value,
+      message: form.message.value,
+      website: form.website.value
+    };
+    fetch(OS_ORIGIN + "/api/support/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, body: b }; }); })
+      .then(function (res) {
+        if (res.ok && res.body && res.body.ok) {
+          form.reset();
+          status.textContent = res.body.ticketNo
+            ? "Thanks — we've got it. Your reference is " + res.body.ticketNo + "."
+            : "Thanks — we've got it. We'll be in touch shortly.";
+        } else {
+          status.textContent = (res.body && res.body.error) || "Something went wrong. Please try again.";
+        }
+      })
+      .catch(function () { status.textContent = "Network error. Please try again."; })
+      .finally(function () { button.disabled = false; });
+  });
+})();
+</script>

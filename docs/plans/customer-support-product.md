@@ -138,10 +138,39 @@ drawer, `[TD-xxxx]` token in the subject so PR 4 threads the response. Carla
 never opens Gmail. Deliberately deferred: the first four PRs must prove
 themselves in use before we invest here.
 
+### PR 6 (later, optional) — Time-to-resolve metric
+
+A passive reporting metric, not an SLA. Every ticket already carries the
+timestamps we need, so this is read-only math over existing columns — **still
+zero new tables.**
+
+- **Arrival:** `tasks.created_at`.
+- **Resolution:** `tasks.completed_at` (set when the card lands on Resolved —
+  wire the Resolved column move to stamp it if not already). Time to resolve =
+  `completed_at − created_at`. Null `completed_at` = still open, so an open
+  ticket's "age" is `now() − created_at`.
+- **Per-stage time (optional):** `task_stage_log.moved_at` between column moves
+  gives time spent in each stage (e.g. how long in Waiting on Customer),
+  letting us separate our time from the customer's.
+
+Surface, don't alert:
+
+- On each card in `/admin/support`: age for open tickets, resolve time for
+  closed ones (`lib/admin/format.ts: timeAgo`/`formatDate` already exist).
+- One board-header summary: median time to resolve and count resolved over a
+  trailing window (default 30 days), computed in the server component — no new
+  endpoint. Median, not mean, so one stale ticket doesn't skew it.
+
+**Verify:** open a ticket, resolve it, confirm the card shows a resolve
+duration and the header median moves; an unresolved ticket shows a growing age,
+never a resolve time; a ticket dragged back out of Resolved clears its resolve
+time.
+
 ## What we are not building
 
-No SLA timers, no canned responses, no CSAT surveys, no auto-assignment, no
-tagging taxonomy, no customer-facing ticket portal. Every one of these is a
+No SLA timers or breach alerts (PR 6 measures resolution time but sets no
+targets and pages no one), no canned responses, no CSAT surveys, no
+auto-assignment, no tagging taxonomy, no customer-facing ticket portal. Every one of these is a
 feature request away, and every one is cheap *because* tickets are tasks. The
 system that does less, on data you already have, beats the system that does
 more on data nobody trusts.
