@@ -4952,7 +4952,7 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 
 /* ═══ Client-roadmap surfaces: former private <style> blocks (design-debt #9) ═══ */
 
-/* Client roadmap backlog editor (was .cbe in a <style> block) */
+/* Client roadmap backlog editor (former private style block) */
 .admin-backlog-group { margin-bottom:16px; border:1px solid color-mix(in srgb, var(--admin-accent) 22%, transparent); border-radius:14px; background:var(--admin-surface); overflow:hidden; }
 .admin-backlog-group.archived { opacity:.55; }
 .admin-backlog-group.neutral { border-color:var(--admin-line); }
@@ -5005,7 +5005,7 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-backlog-newgroup { border:1px dashed var(--admin-line-strong); border-radius:12px; padding:14px 16px; margin-bottom:20px; }
 @media (max-width:640px){ .admin-backlog-form { grid-template-columns:1fr; } }
 
-/* Client portal roadmap backlog (was .cbp) */
+/* Client portal roadmap backlog (former private style block) */
 .admin-pbacklog-intro { background:color-mix(in srgb, var(--admin-accent) 8%, transparent); border-radius:10px; padding:14px 16px; font-size:14px; margin:0 0 16px; }
 .admin-pbacklog-counts { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 18px; }
 .admin-pbacklog-count { font-size:12px; font-weight:600; color:var(--admin-ink-2); padding:4px 10px; border-radius:99px; background:var(--admin-surface-2); }
@@ -5054,7 +5054,7 @@ a.admin-list-row { text-decoration: none; color: inherit; }
   .admin-pbacklog-propose input, .admin-pbacklog-propose textarea, .admin-pbacklog-propose select { font-size:16px; }
 }
 
-/* Team client roadmap tab (was .tcr, shared styles.ts) */
+/* Team client roadmap tab (former shared styles.ts) */
 .admin-roadmap-group { margin-bottom: 22px; }
 .admin-roadmap-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 4px; }
 .admin-roadmap-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:99px; background:color-mix(in srgb, var(--admin-accent) 10%, transparent); color:var(--admin-accent); }
