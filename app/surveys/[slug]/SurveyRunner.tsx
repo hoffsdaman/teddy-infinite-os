@@ -405,7 +405,7 @@ export function SurveyRunner({
   return (
     <>
       <div className={styles.progressTrack} aria-hidden>
-        <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+        <div className={styles.progressFill} style={{ width: `${progress}%` }} /* layout-ok: data-driven width */ />
       </div>
 
       <div className={styles.card}>

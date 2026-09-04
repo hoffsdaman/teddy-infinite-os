@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 function Section({ title, sub, children }: { title: string; sub?: string; children: ReactNode }) {
   return (
     <section className="admin-card admin-section-card admin-pat-section">
-      <h2 className="admin-card-title" style={{ marginBottom: sub ? 4 : 14 }}>{title}</h2>
+      <h2 className={`admin-card-title ${sub ? "u-mb-1" : "u-mb-4"}`}>{title}</h2>
       {sub && <p className="admin-pat-caption u-mt-0 u-mb-4">{sub}</p>}
       {children}
     </section>
@@ -27,7 +27,7 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
 function Swatch({ name, varName }: { name: string; varName: string }) {
   return (
     <div className="admin-pat-swatch">
-      <div className="admin-pat-swatch-chip" style={{ background: `var(${varName})` }} />
+      <div className="admin-pat-swatch-chip" style={{ background: `var(${varName})` }} /* layout-ok: swatch renders the token it documents */ />
       <div>
         <div className="admin-pat-swatch-name">{name}</div>
         <div className="admin-pat-swatch-meta">{varName}</div>
@@ -40,7 +40,7 @@ function TypeRow({ meta, size, weight, children }: { meta: string; size: number;
   return (
     <div className="admin-pat-type-row">
       <span className="admin-pat-type-meta">{meta}</span>
-      <span style={{ fontSize: size, fontWeight: weight ?? 400, color: "var(--admin-ink)", lineHeight: 1.3 }}>
+      <span className="admin-pat-type-sample" style={{ fontSize: size, fontWeight: weight ?? 400 }} /* layout-ok: type-ramp demo takes its step from props */>
         {children}
       </span>
     </div>
@@ -70,7 +70,7 @@ export default function PatternsPage() {
             <TypeRow meta="12 / 600" size={12} weight={600}>UPPERCASE EYEBROW</TypeRow>
           </div>
           <div className="admin-pat-row">
-            <span style={{ fontFamily: "var(--admin-font-mono)", fontSize: 14, color: "var(--admin-ink)", fontVariantNumeric: "tabular-nums" }}>
+            <span className="admin-pat-mono-sample">
               $12,480.00 · 1,204 · 2026-07-06 · #E8-1042
             </span>
             <span className="admin-pat-swatch-meta">Manrope, tabular numerics</span>
@@ -142,19 +142,19 @@ export default function PatternsPage() {
         <Section title="Radius">
           <div className="admin-pat-grid">
             <div className="admin-pat-swatch">
-              <div className="admin-pat-radius-chip" style={{ borderRadius: "var(--admin-radius-xs)" }} />
+              <div className="admin-pat-radius-chip admin-pat-radius-chip--xs" />
               <div className="admin-pat-swatch-name">6px · xs<div className="admin-pat-swatch-meta">--admin-radius-xs</div></div>
             </div>
             <div className="admin-pat-swatch">
-              <div className="admin-pat-radius-chip" style={{ borderRadius: "var(--admin-radius-sm)" }} />
+              <div className="admin-pat-radius-chip admin-pat-radius-chip--sm" />
               <div className="admin-pat-swatch-name">8px · sm<div className="admin-pat-swatch-meta">--admin-radius-sm</div></div>
             </div>
             <div className="admin-pat-swatch">
-              <div className="admin-pat-radius-chip" style={{ borderRadius: "var(--admin-radius)" }} />
+              <div className="admin-pat-radius-chip admin-pat-radius-chip--lg" />
               <div className="admin-pat-swatch-name">12px · lg<div className="admin-pat-swatch-meta">--admin-radius</div></div>
             </div>
             <div className="admin-pat-swatch">
-              <div className="admin-pat-radius-chip" style={{ borderRadius: "var(--admin-radius-pill)" }} />
+              <div className="admin-pat-radius-chip admin-pat-radius-chip--pill" />
               <div className="admin-pat-swatch-name">pill<div className="admin-pat-swatch-meta">--admin-radius-pill</div></div>
             </div>
           </div>
@@ -163,15 +163,15 @@ export default function PatternsPage() {
         <Section title="Shadow" sub="Navy-tinted. Drawer and modal shadows appear on their overlays.">
           <div className="admin-pat-grid">
             <div className="admin-pat-swatch">
-              <div className="admin-pat-shadow-chip" style={{ boxShadow: "var(--admin-shadow)" }} />
+              <div className="admin-pat-shadow-chip admin-pat-shadow-chip--card" />
               <div className="admin-pat-swatch-name">Card<div className="admin-pat-swatch-meta">--admin-shadow</div></div>
             </div>
             <div className="admin-pat-swatch">
-              <div className="admin-pat-shadow-chip" style={{ boxShadow: "var(--admin-shadow-md)" }} />
+              <div className="admin-pat-shadow-chip admin-pat-shadow-chip--raised" />
               <div className="admin-pat-swatch-name">Raised<div className="admin-pat-swatch-meta">--admin-shadow-md</div></div>
             </div>
             <div className="admin-pat-swatch">
-              <div className="admin-pat-shadow-chip" style={{ boxShadow: "var(--admin-shadow-modal)" }} />
+              <div className="admin-pat-shadow-chip admin-pat-shadow-chip--modal" />
               <div className="admin-pat-swatch-name">Modal<div className="admin-pat-swatch-meta">--admin-shadow-modal</div></div>
             </div>
           </div>
@@ -386,7 +386,7 @@ export default function PatternsPage() {
           <div className="u-max-4">
             <div className="admin-kanban-col">
               <div className="admin-kanban-col-head">
-                <span className="admin-kanban-col-dot" style={{ background: "var(--admin-accent)" }} />
+                <span className="admin-kanban-col-dot admin-kanban-col-dot--accent" />
                 <span className="admin-kanban-col-label">Discovery</span>
                 <span className="admin-kanban-col-count">2</span>
               </div>
@@ -434,7 +434,7 @@ export default function PatternsPage() {
         </Section>
 
         <Section title="Drawer header" sub="The live drawer slides in from the right; the header pattern is shown here.">
-          <div className="admin-card" style={{ maxWidth: 460, overflow: "hidden" }}>
+          <div className="admin-card u-max-6 u-clip">
             <div className="admin-drawer-head">
               <div>
                 <div className="admin-drawer-eyebrow">Contact</div>
@@ -455,7 +455,7 @@ export default function PatternsPage() {
 
         {/* ─── Danger zone ────────────────────────────── */}
         <Section title="Danger zone">
-          <div className="admin-danger-zone" style={{ maxWidth: 560 }}>
+          <div className="admin-danger-zone u-max-8">
             <div className="admin-danger-zone-title">Danger zone</div>
             <div className="admin-danger-row">
               <div className="admin-danger-row-text">Permanently erase this person and all associated records. This cannot be undone.</div>

@@ -6,7 +6,7 @@
     "app/admin/(dashboard)/company/goals/CompanyGoalsEditor.tsx": 1,
     "app/admin/(dashboard)/company/goals/IndividualGoalsEditor.tsx": 1,
     "app/admin/(dashboard)/operations/surveys/[id]/results/page.tsx": 1,
-    "app/admin/(dashboard)/patterns/page.tsx": 15,
+    "app/admin/(dashboard)/patterns/page.tsx": 3,
     "app/admin/(dashboard)/revenue/companies/CompanyDetailsCard.tsx": 1,
     "app/admin/(dashboard)/revenue/companies/[id]/programs/[programId]/page.tsx": 1,
     "app/admin/(dashboard)/revenue/events/[id]/AgendaTab.tsx": 1,
