@@ -31,7 +31,7 @@ export default function LeadershipCoachProgramPage() {
       {/* The guardrail */}
       <section className="section" style={{ background: 'var(--dark)', padding: '64px 0' }}>
         <div className="container">
-          <span className="section-label" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+          <span className="section-label section-label--on-dark">
             The rule above the whole plan
           </span>
           <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>

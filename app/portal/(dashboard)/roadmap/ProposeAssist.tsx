@@ -74,13 +74,13 @@ export function ProposeAssist({ onDraft }: { onDraft: (draft: RoadmapDraft) => v
   }
 
   return (
-    <div style={{ border: "1px solid var(--admin-border, #E6E6E6)", borderRadius: 10, padding: 10, marginBottom: 10, background: "#fafbfc" }}>
+    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: 10, marginBottom: 10, background: "var(--admin-surface-2)" }}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 6 }}>
         <strong style={{ fontSize: 12.5, flex: 1 }}>Draft assistant</strong>
         <button type="button" className="cbp-link" onClick={() => setOpen(false)}>Close</button>
       </div>
       {messages.length === 0 && (
-        <p style={{ fontSize: 12.5, color: "#797c82", margin: "0 0 8px" }}>
+        <p style={{ fontSize: 12.5, color: "var(--admin-ink-2)", margin: "0 0 8px" }}>
           Tell me the problem or idea in a sentence. I&apos;ll ask a question or two, then fill in the form for you to review.
         </p>
       )}
@@ -94,8 +94,8 @@ export function ProposeAssist({ onDraft }: { onDraft: (draft: RoadmapDraft) => v
                 lineHeight: 1.5,
                 padding: "6px 9px",
                 borderRadius: 8,
-                background: m.role === "user" ? "rgba(40,123,232,.08)" : "#fff",
-                border: m.role === "user" ? "none" : "1px solid #EAEEF2",
+                background: m.role === "user" ? "var(--admin-accent-soft)" : "var(--admin-surface)",
+                border: m.role === "user" ? "none" : "1px solid var(--admin-line-soft)",
                 justifySelf: m.role === "user" ? "end" : "start",
                 maxWidth: "90%",
               }}
@@ -103,12 +103,12 @@ export function ProposeAssist({ onDraft }: { onDraft: (draft: RoadmapDraft) => v
               {m.content}
             </div>
           ))}
-          {busy && <div style={{ fontSize: 12.5, color: "#797c82" }}>Thinking…</div>}
+          {busy && <div style={{ fontSize: 12.5, color: "var(--admin-ink-2)" }}>Thinking…</div>}
         </div>
       )}
       <div style={{ display: "flex", gap: 6 }}>
         <input
-          style={{ flex: 1, fontFamily: "inherit", fontSize: 13, padding: "7px 9px", border: "1px solid var(--admin-border,#E6E6E6)", borderRadius: 8 }}
+          style={{ flex: 1, fontFamily: "inherit", fontSize: 13, padding: "7px 9px", border: "1px solid var(--admin-line)", borderRadius: 8 }}
           value={input}
           placeholder={messages.length === 0 ? "e.g. our returns process is chaos" : "Your answer…"}
           disabled={busy}

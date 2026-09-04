@@ -190,7 +190,7 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
         {items.map((item, i) => {
           if (item.kind === "user") {
             return (
-              <div key={i} style={{ alignSelf: "flex-end", maxWidth: "85%", background: "var(--admin-accent-soft, #eef1f6)", padding: "8px 12px", borderRadius: 12 }}>
+              <div key={i} style={{ alignSelf: "flex-end", maxWidth: "85%", background: "var(--admin-accent-soft)", padding: "8px 12px", borderRadius: 12 }}>
                 {item.text}
               </div>
             );
@@ -210,7 +210,7 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
       </div>
 
       {brief && (
-        <div className="admin-card admin-section-card" style={{ marginTop: 14, borderColor: "var(--admin-ok-ink, #2e7d32)" }}>
+        <div className="admin-card admin-section-card" style={{ marginTop: 14, borderColor: "var(--admin-ok-ink)" }}>
           <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Your AI Program Brief is ready</h2>
           <label className="admin-label" htmlFor="plan-name">Program name</label>
           <input

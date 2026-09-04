@@ -24,13 +24,12 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
   );
 }
 
-function Swatch({ name, value, varName }: { name: string; value: string; varName: string }) {
+function Swatch({ name, varName }: { name: string; varName: string }) {
   return (
     <div className="pat-swatch">
-      <div className="pat-swatch-chip" style={{ background: value }} />
+      <div className="pat-swatch-chip" style={{ background: `var(${varName})` }} />
       <div>
         <div className="pat-swatch-name">{name}</div>
-        <div className="pat-swatch-meta">{value}</div>
         <div className="pat-swatch-meta">{varName}</div>
       </div>
     </div>
@@ -60,7 +59,7 @@ export default function PatternsPage() {
 
       <div className="pat-stack">
         {/* ─── Typography ─────────────────────────────── */}
-        <Section title="Typography" sub="DM Sans for UI, JetBrains Mono for numerics and IDs. Dense 13px base.">
+        <Section title="Typography" sub="Manrope everywhere. Numerics align with tabular-nums, not a second face. 13px base; steps are --admin-text-xs … --admin-text-kpi in app/styles/tokens.css.">
           <div style={{ marginBottom: 16 }}>
             <TypeRow meta="26 / 600" size={26} weight={600}>Page title</TypeRow>
             <TypeRow meta="18 / 600" size={18} weight={600}>Drawer / modal title</TypeRow>
@@ -74,58 +73,68 @@ export default function PatternsPage() {
             <span style={{ fontFamily: "var(--admin-font-mono)", fontSize: 14, color: "var(--admin-ink)", fontVariantNumeric: "tabular-nums" }}>
               $12,480.00 · 1,204 · 2026-07-06 · #E8-1042
             </span>
-            <span className="pat-swatch-meta">JetBrains Mono, tabular numerics</span>
+            <span className="pat-swatch-meta">Manrope, tabular numerics</span>
           </div>
         </Section>
 
         {/* ─── Color ──────────────────────────────────── */}
-        <Section title="Color — accent" sub="Default accent is blue. Per-section themes override --admin-accent only.">
+        <Section title="Brand primitives" sub="The Teddy palette (Brand Guidelines V.1), §1 of app/styles/tokens.css. Every role token below aliases onto one of these.">
           <div className="pat-swatches">
-            <Swatch name="Accent" value="#287be8" varName="--admin-accent" />
-            <Swatch name="Accent strong" value="#1d6ad4" varName="--admin-accent-strong" />
-            <Swatch name="Accent soft" value="#eaf2ff" varName="--admin-accent-soft" />
+            <Swatch name="Yogi" varName="--teddy-yogi" />
+            <Swatch name="Booboo" varName="--teddy-booboo" />
+            <Swatch name="Sand" varName="--teddy-sand" />
+            <Swatch name="Polar" varName="--teddy-polar" />
+            <Swatch name="Winnie" varName="--teddy-winnie" />
+          </div>
+        </Section>
+
+        <Section title="Color — accent" sub="Default accent is Yogi teal (there is no blue in-brand). Per-section themes override --admin-accent only.">
+          <div className="pat-swatches">
+            <Swatch name="Accent" varName="--admin-accent" />
+            <Swatch name="Accent strong" varName="--admin-accent-strong" />
+            <Swatch name="Accent soft" varName="--admin-accent-soft" />
           </div>
         </Section>
 
         <Section title="Color — office accents" sub="Four brand steps for per-office themes and badges. Legacy var names kept.">
           <div className="pat-swatches">
-            <Swatch name="Blue" value="#287be8" varName="--admin-accent-blue" />
-            <Swatch name="Deep blue" value="#1d6ad4" varName="--admin-accent-green" />
-            <Swatch name="Near-black" value="#101014" varName="--admin-accent-pink" />
-            <Swatch name="Gray" value="#9ca3af" varName="--admin-accent-gold" />
+            <Swatch name="Teal" varName="--admin-accent-blue" />
+            <Swatch name="Deep teal" varName="--admin-accent-green" />
+            <Swatch name="Yogi" varName="--admin-accent-pink" />
+            <Swatch name="Gray" varName="--admin-accent-gold" />
           </div>
         </Section>
 
         <Section title="Color — neutrals">
           <div className="pat-swatches">
-            <Swatch name="Ink" value="#101014" varName="--admin-ink" />
-            <Swatch name="Ink 2" value="#797c82" varName="--admin-ink-2" />
-            <Swatch name="Muted" value="#9ca3af" varName="--admin-muted" />
-            <Swatch name="Faint" value="#bcc1c7" varName="--admin-faint" />
-            <Swatch name="Line" value="#e6e6e6" varName="--admin-line" />
-            <Swatch name="Line soft" value="#f0f1f3" varName="--admin-line-soft" />
-            <Swatch name="Background" value="#f1f3f5" varName="--admin-bg" />
-            <Swatch name="Surface" value="#ffffff" varName="--admin-surface" />
+            <Swatch name="Ink" varName="--admin-ink" />
+            <Swatch name="Ink 2" varName="--admin-ink-2" />
+            <Swatch name="Muted" varName="--admin-muted" />
+            <Swatch name="Faint" varName="--admin-faint" />
+            <Swatch name="Line" varName="--admin-line" />
+            <Swatch name="Line soft" varName="--admin-line-soft" />
+            <Swatch name="Background" varName="--admin-bg" />
+            <Swatch name="Surface" varName="--admin-surface" />
           </div>
         </Section>
 
         <Section title="Color — sidebar chrome">
           <div className="pat-swatches">
-            <Swatch name="Sidebar bg" value="#101014" varName="--admin-sidebar-bg" />
-            <Swatch name="Sidebar strong" value="#ffffff" varName="--admin-sidebar-strong" />
-            <Swatch name="Sidebar ink" value="#c4c7cc" varName="--admin-sidebar-ink" />
-            <Swatch name="Sidebar muted" value="#7c8189" varName="--admin-sidebar-muted" />
+            <Swatch name="Sidebar bg" varName="--admin-sidebar-bg" />
+            <Swatch name="Sidebar strong" varName="--admin-sidebar-strong" />
+            <Swatch name="Sidebar ink" varName="--admin-sidebar-ink" />
+            <Swatch name="Sidebar muted" varName="--admin-sidebar-muted" />
           </div>
         </Section>
 
         <Section title="Color — status">
           <div className="pat-swatches">
-            <Swatch name="Success" value="#d8f3e8" varName="--admin-ok-bg" />
-            <Swatch name="Warning" value="#fbf0cf" varName="--admin-warn-bg" />
-            <Swatch name="Error" value="#fde4e4" varName="--admin-err-bg" />
-            <Swatch name="Info" value="#e2ecfd" varName="--admin-info-bg" />
-            <Swatch name="Pink" value="#fbe6f1" varName="--admin-pink-bg" />
-            <Swatch name="Neutral" value="#eef0f6" varName="--admin-muted-bg" />
+            <Swatch name="Success" varName="--admin-ok-bg" />
+            <Swatch name="Warning" varName="--admin-warn-bg" />
+            <Swatch name="Error" varName="--admin-err-bg" />
+            <Swatch name="Info" varName="--admin-info-bg" />
+            <Swatch name="Pink" varName="--admin-pink-bg" />
+            <Swatch name="Neutral" varName="--admin-muted-bg" />
           </div>
         </Section>
 

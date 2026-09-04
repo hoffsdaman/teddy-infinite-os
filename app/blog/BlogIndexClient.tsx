@@ -67,7 +67,7 @@ export default function BlogIndexClient({ posts, tabs }: { posts: UnifiedPostMet
       <section className="blog-hero">
         <div className="container">
           <div className="blog-hero-inner">
-            <h1 className="section-title" style={{ color: '#fff' }}>AI Insights &amp; Business Intelligence</h1>
+            <h1 className="section-title" style={{ color: 'var(--white)' }}>AI Insights &amp; Business Intelligence</h1>
             <p className="blog-hero-sub">Expert perspectives on AI strategy, leadership, and implementation from the Edge8 team.</p>
 
             {featured && (

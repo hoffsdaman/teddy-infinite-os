@@ -17,7 +17,7 @@ export type StageMap = Record<string, Record<string, string>>;
 // Role tags cycle a fixed hex palette (no CSS vars — the tint needs an alpha
 // suffix). Assignment is by sorted req id, so a req keeps its color between
 // renders regardless of row order.
-const ROLE_COLORS = ["#8b5cf6", "#D1458B", "#0ea5a4", "#f59e0b", "#1a9e74", "#6b7194"];
+const ROLE_COLORS = ["var(--admin-chart-3)", "var(--admin-chart-4)", "var(--admin-chart-2)", "var(--admin-warn-strong)", "var(--admin-ok-strong)", "var(--admin-muted)"];
 
 type BoardCard = { id: string; columnId: string; row: AppRow };
 

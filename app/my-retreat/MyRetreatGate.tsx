@@ -130,16 +130,16 @@ const card: React.CSSProperties = {
   maxWidth: 420,
   margin: "0 auto",
   padding: "28px 26px",
-  border: "1px solid rgba(0,0,0,0.1)",
+  border: "1px solid color-mix(in srgb, var(--dark) 10%, transparent)",
   borderRadius: 14,
-  background: "var(--paper, #fff)",
+  background: "var(--white)",
 };
 const form: React.CSSProperties = { display: "flex", flexDirection: "column", gap: 10 };
 const input: React.CSSProperties = {
   padding: "12px 14px",
   fontSize: 16,
   borderRadius: 10,
-  border: "1px solid rgba(0,0,0,0.18)",
+  border: "1px solid color-mix(in srgb, var(--dark) 18%, transparent)",
   width: "100%",
   boxSizing: "border-box",
 };
@@ -148,15 +148,15 @@ const button: React.CSSProperties = {
   fontSize: 16,
   borderRadius: 10,
   border: "none",
-  background: "var(--ink, #111)",
-  color: "#fff",
+  background: "var(--dark)",
+  color: "var(--white)",
   cursor: "pointer",
 };
 const alert: React.CSSProperties = {
   marginBottom: 12,
   padding: "10px 12px",
   borderRadius: 10,
-  background: "rgba(200,0,0,0.08)",
-  color: "#a01212",
+  background: "var(--color-err-bg)",
+  color: "var(--color-err-deep)",
   fontSize: 14,
 };

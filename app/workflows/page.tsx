@@ -8,7 +8,7 @@ export default function WorkflowsPage() {
       <section className="wf-hero">
         <div className="container">
           <div className="wf-hero-inner">
-            <span className="section-label" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+            <span className="section-label section-label--on-dark">
               Operations, in the open
             </span>
             <h1 className="section-title">Workflows</h1>
@@ -25,7 +25,7 @@ export default function WorkflowsPage() {
 
       <section className="section" style={{ background: 'var(--dark)', padding: '72px 0' }}>
         <div className="container">
-          <span className="section-label" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+          <span className="section-label section-label--on-dark">
             The method
           </span>
           <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>

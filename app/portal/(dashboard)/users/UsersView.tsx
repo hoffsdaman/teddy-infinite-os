@@ -72,7 +72,7 @@ export function UsersView({
       </div>
 
       {showInvite && (
-        <div style={{ border: "1px dashed var(--admin-border, #C9CDD3)", borderRadius: 12, padding: 14, marginBottom: 14, maxWidth: 480 }}>
+        <div style={{ border: "1px dashed var(--admin-line)", borderRadius: 12, padding: 14, marginBottom: 14, maxWidth: 480 }}>
           <label className="admin-label" htmlFor="inv-name">Name</label>
           <input id="inv-name" className="admin-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Alex Chen" disabled={pending} />
           <div style={{ marginTop: 10 }}>

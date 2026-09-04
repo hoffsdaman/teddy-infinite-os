@@ -35,10 +35,10 @@ export const STATUSES: { id: CalendarStatus; label: string; accent: string }[] =
 // Channel accents are the platform's own identity color, used only as a chip
 // tint so a month grid is scannable by channel. Raw hex mirrors stageColors.
 export const CHANNELS: { id: CalendarChannel; label: string; accent: string }[] = [
-  { id: "blog", label: "Blog", accent: "#6b7194" },
+  { id: "blog", label: "Blog", accent: "var(--admin-muted)" },
   { id: "email", label: "Email", accent: "var(--admin-accent)" },
-  { id: "linkedin", label: "LinkedIn", accent: "#0a66c2" },
-  { id: "facebook", label: "Facebook", accent: "#1877f2" },
+  { id: "linkedin", label: "LinkedIn", accent: "var(--admin-chart-3)" },
+  { id: "facebook", label: "Facebook", accent: "var(--admin-chart-6)" },
 ];
 
 export const STATUS_LABEL: Record<CalendarStatus, string> = Object.fromEntries(

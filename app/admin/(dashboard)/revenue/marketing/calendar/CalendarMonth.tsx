@@ -99,7 +99,7 @@ export function CalendarMonth({
                     key={e.id}
                     type="button"
                     className="admin-cal-chip"
-                    style={{ background: CHANNEL_ACCENT[e.channel], color: "#fff", cursor: "pointer", border: "none" }}
+                    style={{ background: CHANNEL_ACCENT[e.channel], color: "var(--color-bg-primary)", cursor: "pointer", border: "none" }}
                     title={`${e.title} · ${CHANNEL_LABEL[e.channel]}${e.brandName ? ` · ${e.brandName}` : ""} · ${STATUS_LABEL[e.status]}`}
                     onClick={() => onSelect(e.id)}
                   >
@@ -117,7 +117,7 @@ export function CalendarMonth({
           <span
             key={id}
             className="admin-cal-chip"
-            style={{ background: CHANNEL_ACCENT[id as keyof typeof CHANNEL_ACCENT], color: "#fff" }}
+            style={{ background: CHANNEL_ACCENT[id as keyof typeof CHANNEL_ACCENT], color: "var(--color-bg-primary)" }}
           >
             {label}
           </span>

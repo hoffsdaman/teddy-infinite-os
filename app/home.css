@@ -43,7 +43,7 @@
   color: var(--teddy-yogi);
 }
 .os-btn-secondary:hover {
-  background: #cd9563;
+  background: var(--teddy-booboo-hover);
   transform: translateY(-1px);
 }
 
@@ -122,7 +122,7 @@
   color: var(--teddy-yogi-hover);
 }
 .os-nav-links a.os-nav-external:hover {
-  color: #cd9563;
+  color: var(--teddy-booboo-hover);
 }
 .os-nav-links a.os-btn {
   color: var(--teddy-polar);
@@ -154,7 +154,7 @@
   font-size: 19px;
   font-weight: 300;
   line-height: 1.65;
-  color: #4c5a5e;
+  color: var(--teddy-slate);
 }
 
 /* ── Sections ── */
@@ -204,7 +204,7 @@
 }
 .os-console-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(24, 64, 75, 0.12);
+  box-shadow: 0 18px 40px var(--blue-glow);
 }
 .os-console-card svg {
   color: var(--teddy-yogi);
@@ -233,7 +233,7 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 1.65;
-  color: #4c5a5e;
+  color: var(--teddy-slate);
   flex-grow: 1;
 }
 .os-console-actions {
@@ -244,7 +244,7 @@
 }
 .os-console-note {
   font-size: 13px;
-  color: #6b7a7e;
+  color: var(--teddy-slate-soft);
 }
 .os-console-note a {
   font-weight: 600;
@@ -292,7 +292,7 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 1.65;
-  color: #4c5a5e;
+  color: var(--teddy-slate);
 }
 
 /* ── Newsletter ── */
@@ -338,7 +338,7 @@
   min-width: 240px;
 }
 .os-newsletter-form input::placeholder {
-  color: #6b7a7e;
+  color: var(--teddy-slate-soft);
 }
 .os-newsletter-form .os-btn {
   white-space: nowrap;
@@ -399,10 +399,10 @@
   max-width: 340px;
 }
 .os-footer-muted {
-  color: rgba(237, 220, 199, 0.6);
+  color: color-mix(in srgb, var(--teddy-sand) 60%, transparent);
 }
 .os-footer-bottom {
-  border-top: 1px solid rgba(237, 220, 199, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--teddy-sand) 15%, transparent);
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
@@ -410,7 +410,7 @@
   flex-wrap: wrap;
   font-size: 13px;
   font-weight: 300;
-  color: rgba(237, 220, 199, 0.6);
+  color: color-mix(in srgb, var(--teddy-sand) 60%, transparent);
 }
 
 /* ── Responsive ── */

@@ -21,7 +21,7 @@ const grid: React.CSSProperties = {
 const cardBase: React.CSSProperties = {
   display: "block",
   padding: "16px 18px",
-  border: "1px solid rgba(0,0,0,0.12)",
+  border: "1px solid color-mix(in srgb, var(--dark) 12%, transparent)",
   borderRadius: 12,
   textDecoration: "none",
   color: "inherit",
@@ -39,8 +39,8 @@ export function SurveyCards({ items }: { items: SurveyCard[] }) {
             href={s.href}
             style={{
               ...cardBase,
-              background: s.completed ? "rgba(20,140,80,0.06)" : "var(--paper, #fff)",
-              borderColor: s.completed ? "rgba(20,140,80,0.4)" : "rgba(0,0,0,0.12)",
+              background: s.completed ? "var(--color-ok-bg)" : "var(--white)",
+              borderColor: s.completed ? "var(--color-ok-strong)" : "color-mix(in srgb, var(--dark) 12%, transparent)",
             }}
           >
             <div style={{ fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", opacity: 0.6 }}>
@@ -48,7 +48,7 @@ export function SurveyCards({ items }: { items: SurveyCard[] }) {
             </div>
             <div style={{ fontWeight: 600, margin: "4px 0 6px" }}>{s.title}</div>
             <p style={{ margin: "0 0 10px", fontSize: 14, opacity: 0.8, lineHeight: 1.5 }}>{s.description}</p>
-            <span style={{ fontWeight: 600, fontSize: 14, color: s.completed ? "#148c50" : "var(--ink, #111)" }}>
+            <span style={{ fontWeight: 600, fontSize: 14, color: s.completed ? "var(--color-ok-ink)" : "var(--dark)" }}>
               {s.completed ? "✓ Completed. Edit your answers" : "Open survey →"}
             </span>
           </a>
@@ -68,7 +68,7 @@ export function ResourceCards({ resources }: { resources: RetreatResource[] }) {
           <a
             key={r.href}
             href={r.href}
-            style={{ ...cardBase, background: "var(--paper, #fff)" }}
+            style={{ ...cardBase, background: "var(--white)" }}
             target={r.href.startsWith("http") ? "_blank" : undefined}
             rel={r.href.startsWith("http") ? "noopener noreferrer" : undefined}
           >

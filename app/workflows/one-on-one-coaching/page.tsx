@@ -36,11 +36,11 @@ const PROBLEMS = [
 // transcript fallback, the review-then-publish gate, the private layer that
 // never opens, and monthly trends feeding back into the next prep.
 function CoachingCycleFlowchart() {
-  const ink = '#0f172a'
-  const sub = '#64748b'
-  const line = '#64748b'
-  const nodeStroke = '#cbd5e1'
-  const halo = { paintOrder: 'stroke' as const, stroke: '#ffffff', strokeWidth: 4 }
+  const ink = 'var(--dark)'
+  const sub = 'var(--grey-mid)'
+  const line = 'var(--grey-mid)'
+  const nodeStroke = 'var(--tint-deep)'
+  const halo = { paintOrder: 'stroke' as const, stroke: 'var(--white)', strokeWidth: 4 }
   return (
     <div style={{ overflowX: 'auto', margin: '40px 0 8px' }}>
       <svg
@@ -56,7 +56,7 @@ function CoachingCycleFlowchart() {
         </defs>
 
         {/* ── The private coach layer ───────────────────────────────────── */}
-        <rect x="686" y="120" width="224" height="560" rx="16" fill="#f8fafc" stroke={nodeStroke} />
+        <rect x="686" y="120" width="224" height="560" rx="16" fill="var(--color-grey-50)" stroke={nodeStroke} />
         <text x="798" y="158" textAnchor="middle" fontSize="13.5" fontWeight="700" letterSpacing="1" fill={ink}>THE PRIVATE COACH LAYER</text>
         <text x="798" y="188" textAnchor="middle" fontSize="12.5" fill={sub}>Preps, transcripts, private</text>
         <text x="798" y="206" textAnchor="middle" fontSize="12.5" fill={sub}>summaries, mode splits,</text>
@@ -79,30 +79,30 @@ function CoachingCycleFlowchart() {
 
         {/* ── Spine ─────────────────────────────────────────────────────── */}
         {/* 1. AI prep */}
-        <rect x="200" y="24" width="260" height="64" rx="12" fill="#eff6ff" stroke="#bfdbfe" />
+        <rect x="200" y="24" width="260" height="64" rx="12" fill="var(--color-accent-soft)" stroke="var(--color-accent-line)" />
         <text x="330" y="52" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>AI prep lands</text>
         <text x="330" y="72" textAnchor="middle" fontSize="12" fill={sub}>GROW openers · mode to use · retention check</text>
         <path d="M 330 88 L 330 124" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 2. The 1-1 */}
-        <rect x="200" y="124" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="124" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="152" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>The 1-1 (human)</text>
         <text x="330" y="172" textAnchor="middle" fontSize="12" fill={sub}>mode chosen deliberately: coach · mentor · direct</text>
         <path d="M 330 188 L 330 224" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 3. Transcript */}
-        <rect x="200" y="224" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="224" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="252" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Transcript arrives</text>
         <text x="330" y="272" textAnchor="middle" fontSize="12" fill={sub}>Lark Minutes, matched by date + participants</text>
         {/* fallback branch */}
-        <rect x="30" y="228" width="140" height="56" rx="10" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="30" y="228" width="140" height="56" rx="10" fill="var(--white)" stroke={nodeStroke} />
         <text x="100" y="251" textAnchor="middle" fontSize="12.5" fontWeight="700" fill={ink}>No Minutes found</text>
         <text x="100" y="269" textAnchor="middle" fontSize="12" fill={sub}>paste a link or text</text>
         <path d="M 170 256 L 196 256" fill="none" stroke={line} strokeWidth="1.6" strokeDasharray="5 5" markerEnd="url(#carr)" />
         <path d="M 330 288 L 330 324" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 4. AI drafts both tiers */}
-        <rect x="200" y="324" width="260" height="76" rx="12" fill="#eff6ff" stroke="#bfdbfe" />
+        <rect x="200" y="324" width="260" height="76" rx="12" fill="var(--color-accent-soft)" stroke="var(--color-accent-line)" />
         <text x="330" y="350" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>AI drafts the recap, both tiers</text>
         <text x="330" y="370" textAnchor="middle" fontSize="12" fill={sub}>private summary · shared recap</text>
         <text x="330" y="388" textAnchor="middle" fontSize="12" fill={sub}>commitments · mode split estimate</text>
@@ -111,7 +111,7 @@ function CoachingCycleFlowchart() {
         <path d="M 330 400 L 330 436" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 5. Review gate */}
-        <polygon points="330,436 470,516 330,596 190,516" fill="#ffffff" stroke="#94a3b8" />
+        <polygon points="330,436 470,516 330,596 190,516" fill="var(--white)" stroke="var(--grey-light)" />
         <text x="330" y="510" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>Coach reviews</text>
         <text x="330" y="530" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>both tiers</text>
         {/* edit loop */}
@@ -124,13 +124,13 @@ function CoachingCycleFlowchart() {
         <path d="M 330 596 L 330 634" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 6. Shared recap publishes */}
-        <rect x="200" y="634" width="260" height="64" rx="12" fill="#ecfdf5" stroke="#a7f3d0" />
+        <rect x="200" y="634" width="260" height="64" rx="12" fill="var(--color-ok-bg)" stroke="var(--color-ok-strong)" />
         <text x="330" y="662" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Shared recap publishes</text>
         <text x="330" y="682" textAnchor="middle" fontSize="12" fill={sub}>member sees recap + commitments</text>
         <path d="M 330 698 L 330 734" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#carr)" />
 
         {/* 7. Mid-cycle check-in */}
-        <rect x="200" y="734" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="734" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="762" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Mid-cycle check-in</text>
         <text x="330" y="782" textAnchor="middle" fontSize="12" fill={sub}>off week · a nudge per open commitment</text>
 
@@ -139,7 +139,7 @@ function CoachingCycleFlowchart() {
         <text x="52" y="822" fontSize="12.5" fill={sub} style={halo}>the loop: the next prep reads everything above</text>
 
         {/* Monthly trends */}
-        <rect x="200" y="904" width="260" height="76" rx="12" fill="#eff6ff" stroke="#bfdbfe" />
+        <rect x="200" y="904" width="260" height="76" rx="12" fill="var(--color-accent-soft)" stroke="var(--color-accent-line)" />
         <text x="330" y="932" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Monthly trend analysis</text>
         <text x="330" y="952" textAnchor="middle" fontSize="12" fill={sub}>trajectory · themes · follow-through</text>
         <text x="330" y="968" textAnchor="middle" fontSize="12" fill={sub}>coaching opportunities · flags</text>
@@ -581,7 +581,7 @@ export default function OneOnOneCoachingWorkflowPage() {
       {/* The guardrail */}
       <section className="section" style={{ background: 'var(--dark)', padding: '72px 0' }}>
         <div className="container">
-          <span className="section-label" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+          <span className="section-label section-label--on-dark">
             The guardrail
           </span>
           <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>

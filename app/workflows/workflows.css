@@ -2,9 +2,10 @@
    All rules are scoped under .wf- to keep globals.css clean. */
 
 :root {
-  --wf-green: #2FBF71;
-  --wf-red: #E5484D;
-  --wf-amber: #E89B28;
+  --wf-green: var(--color-ok-strong);
+  --wf-red: var(--color-err-strong);
+  --wf-amber: var(--color-warn-strong);
+  --wf-purple: var(--color-pink-ink); /* contractor lane; no purple in-brand */
 }
 
 /* Dark-background sections use the higher-contrast link tokens (see globals.css). */
@@ -35,7 +36,7 @@
 .wf-hero .section-title { color: var(--white); max-width: 720px; }
 .wf-hero-sub {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--white) 70%, transparent);
   margin-top: 16px;
   max-width: 640px;
   line-height: 1.7;
@@ -45,10 +46,10 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.55);
+  color: color-mix(in srgb, var(--white) 55%, transparent);
   margin-bottom: 20px;
 }
-.wf-breadcrumb a { color: rgba(255, 255, 255, 0.55); text-decoration: none; }
+.wf-breadcrumb a { color: color-mix(in srgb, var(--white) 55%, transparent); text-decoration: none; }
 .wf-breadcrumb a:hover { color: var(--mint); }
 .wf-hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
 .wf-meta-chip {
@@ -56,8 +57,8 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: color-mix(in srgb, var(--white) 75%, transparent);
+  border: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
   border-radius: 40px;
   padding: 5px 14px;
 }
@@ -74,10 +75,10 @@
   border-radius: 40px;
   padding: 4px 12px;
 }
-.wf-cat-talent { background: rgba(40, 123, 232, 0.12); color: var(--blue); }
-.wf-cat-operations { background: rgba(111, 242, 193, 0.25); color: #0E8A5F; }
-.wf-cat-revenue { background: rgba(232, 155, 40, 0.14); color: var(--wf-amber); }
-.wf-cat-innovation { background: rgba(122, 92, 250, 0.12); color: #7A5CFA; }
+.wf-cat-talent { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
+.wf-cat-operations { background: color-mix(in srgb, var(--mint) 25%, transparent); color: var(--color-ok-ink); }
+.wf-cat-revenue { background: color-mix(in srgb, var(--wf-amber) 14%, transparent); color: var(--wf-amber); }
+.wf-cat-innovation { background: color-mix(in srgb, var(--wf-purple) 12%, transparent); color: var(--wf-purple); }
 
 .wf-actor {
   display: inline-flex;
@@ -90,10 +91,10 @@
   white-space: nowrap;
 }
 .wf-actor::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.wf-actor-ai { background: rgba(40, 123, 232, 0.12); color: var(--blue); }
-.wf-actor-human { background: rgba(16, 16, 20, 0.08); color: var(--dark); }
-.wf-actor-system { background: rgba(111, 242, 193, 0.28); color: #0E8A5F; }
-.wf-actor-contractor { background: rgba(122, 92, 250, 0.12); color: #7A5CFA; }
+.wf-actor-ai { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
+.wf-actor-human { background: color-mix(in srgb, var(--dark) 8%, transparent); color: var(--dark); }
+.wf-actor-system { background: color-mix(in srgb, var(--mint) 28%, transparent); color: var(--color-ok-ink); }
+.wf-actor-contractor { background: color-mix(in srgb, var(--wf-purple) 12%, transparent); color: var(--wf-purple); }
 
 /* ─── INDEX CARD GRID ──────────────────────────────── */
 .wf-grid {
@@ -112,7 +113,7 @@
   text-decoration: none;
   transition: var(--transition);
 }
-.wf-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(16, 16, 20, 0.08); }
+.wf-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 12px 32px color-mix(in srgb, var(--dark) 8%, transparent); }
 .wf-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .wf-card-date { font-size: 13px; color: var(--grey-light); }
 .wf-card-title {
@@ -172,7 +173,7 @@
 .wf-rail-num-ai { border: 2px solid var(--blue); color: var(--blue); }
 .wf-rail-num-human { border: 2px solid var(--dark); color: var(--dark); }
 .wf-rail-num-system { border: 2px solid var(--wf-green); color: var(--wf-green); }
-.wf-rail-num-contractor { border: 2px solid #7A5CFA; color: #7A5CFA; }
+.wf-rail-num-contractor { border: 2px solid var(--wf-purple); color: var(--wf-purple); }
 .wf-rail-cadence {
   display: block;
   font-size: 12px;
@@ -314,9 +315,9 @@
   padding: 12px;
   border-radius: 12px;
 }
-.wf-lane-label-admin { background: rgba(16, 16, 20, 0.06); color: var(--dark); }
-.wf-lane-label-system { background: rgba(111, 242, 193, 0.28); color: #0E8A5F; }
-.wf-lane-label-contractor { background: rgba(122, 92, 250, 0.1); color: #7A5CFA; }
+.wf-lane-label-admin { background: color-mix(in srgb, var(--dark) 6%, transparent); color: var(--dark); }
+.wf-lane-label-system { background: color-mix(in srgb, var(--mint) 28%, transparent); color: var(--color-ok-ink); }
+.wf-lane-label-contractor { background: color-mix(in srgb, var(--wf-purple) 10%, transparent); color: var(--wf-purple); }
 .wf-lanes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -344,7 +345,7 @@
 }
 .wf-node-admin { grid-column: 1; border-top-color: var(--dark); }
 .wf-node-system { grid-column: 2; border-top-color: var(--mint); }
-.wf-node-contractor { grid-column: 3; border-top-color: #7A5CFA; }
+.wf-node-contractor { grid-column: 3; border-top-color: var(--wf-purple); }
 .wf-node-badge {
   display: inline-flex;
   align-items: center;
@@ -367,9 +368,9 @@
   border-radius: 40px;
   padding: 4px 12px;
 }
-.wf-outcome-approve { background: rgba(47, 191, 113, 0.12); color: var(--wf-green); }
-.wf-outcome-reject { background: rgba(229, 72, 77, 0.1); color: var(--wf-red); }
-.wf-outcome-info { background: rgba(232, 155, 40, 0.12); color: var(--wf-amber); }
+.wf-outcome-approve { background: color-mix(in srgb, var(--wf-green) 12%, transparent); color: var(--wf-green); }
+.wf-outcome-reject { background: color-mix(in srgb, var(--wf-red) 10%, transparent); color: var(--wf-red); }
+.wf-outcome-info { background: color-mix(in srgb, var(--wf-amber) 12%, transparent); color: var(--wf-amber); }
 .wf-loop-note {
   display: flex;
   align-items: flex-start;
@@ -400,7 +401,7 @@
 
 /* Problem-card variants (training pages) */
 .wf-problem-ok svg { stroke: var(--wf-green); }
-.wf-problem-warn { border-color: rgba(229, 72, 77, 0.35); }
+.wf-problem-warn { border-color: color-mix(in srgb, var(--wf-red) 35%, transparent); }
 .wf-problem-warn svg { stroke: var(--wf-red); }
 
 /* ─── REFERENCE TABLE + TAGS (training pages) ──────── */
@@ -420,9 +421,9 @@
 .wf-table td { padding: 14px 20px; border-top: 1px solid var(--card-border); color: var(--body-text); line-height: 1.5; vertical-align: top; }
 .wf-table td:first-child { color: var(--dark); font-weight: 600; white-space: nowrap; }
 .wf-tag { display: inline-flex; font-size: 12px; font-weight: 600; border-radius: 40px; padding: 3px 11px; white-space: nowrap; }
-.wf-tag-expense { background: rgba(40, 123, 232, 0.12); color: var(--blue); }
-.wf-tag-pass { background: rgba(232, 155, 40, 0.14); color: var(--wf-amber); }
-.wf-tag-never { background: rgba(229, 72, 77, 0.1); color: var(--wf-red); }
+.wf-tag-expense { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
+.wf-tag-pass { background: color-mix(in srgb, var(--wf-amber) 14%, transparent); color: var(--wf-amber); }
+.wf-tag-never { background: color-mix(in srgb, var(--wf-red) 10%, transparent); color: var(--wf-red); }
 
 /* ─── OPEN ITEMS CARD (training pages) ─────────────── */
 .wf-open { margin-top: 36px; background: var(--white); border: 1px solid var(--card-border); border-left: 4px solid var(--wf-amber); border-radius: 14px; padding: 28px 32px; }
@@ -466,9 +467,9 @@
   padding: 3px 10px;
   white-space: nowrap;
 }
-.wf-assign-machine { background: rgba(40, 123, 232, 0.12); color: var(--blue); }
-.wf-assign-human { background: rgba(16, 16, 20, 0.08); color: var(--dark); }
-.wf-assign-both { background: rgba(111, 242, 193, 0.28); color: #0E8A5F; }
+.wf-assign-machine { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
+.wf-assign-human { background: color-mix(in srgb, var(--dark) 8%, transparent); color: var(--dark); }
+.wf-assign-both { background: color-mix(in srgb, var(--mint) 28%, transparent); color: var(--color-ok-ink); }
 .wf-element-desc { font-size: 13px; color: var(--body-text); line-height: 1.55; }
 
 /* ─── STAGE GATES (method page) ────────────────────── */
@@ -489,7 +490,7 @@
 }
 .wf-stage strong { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--dark); }
 .wf-stage span { font-size: 12px; color: var(--grey-mid); }
-.wf-stage-active { border-color: var(--blue); background: rgba(40, 123, 232, 0.06); }
+.wf-stage-active { border-color: var(--blue); background: color-mix(in srgb, var(--blue) 6%, transparent); }
 .wf-stage-arrow { font-size: 18px; color: var(--grey-light); }
 
 /* ─── FRAMEWORKS CTA (method page) ─────────────────── */
@@ -513,7 +514,7 @@
 }
 .wf-frameworks-cta p {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--white) 70%, transparent);
   line-height: 1.6;
   max-width: 480px;
 }

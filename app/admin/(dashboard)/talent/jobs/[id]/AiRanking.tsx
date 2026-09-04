@@ -157,9 +157,9 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
                     </tr>
                     {open && (
                       <tr>
-                        <td colSpan={7} style={{ background: "var(--admin-bg, #fafbfd)" }}>
+                        <td colSpan={7} style={{ background: "var(--admin-bg)" }}>
                           {r.aiStatus === "failed" && r.aiError && (
-                            <div style={{ fontSize: 13, color: "#b42318", padding: "10px 4px" }}>
+                            <div style={{ fontSize: 13, color: "var(--admin-err-ink)", padding: "10px 4px" }}>
                               Scan failed: {r.aiError}
                             </div>
                           )}

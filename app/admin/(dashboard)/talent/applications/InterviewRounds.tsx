@@ -663,7 +663,7 @@ function ScoreButtons({ value, onChange }: { value: number | null; onChange: (v:
               borderRadius: 6,
               border: "1px solid var(--admin-line-strong)",
               background: on ? "var(--admin-accent)" : "transparent",
-              color: on ? "#fff" : "var(--admin-ink)",
+              color: on ? "var(--color-bg-primary)" : "var(--admin-ink)",
               cursor: "pointer",
               fontSize: 13,
               fontWeight: 600,

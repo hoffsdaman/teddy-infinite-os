@@ -17,7 +17,7 @@ const timeStyle: React.CSSProperties = {
   fontFamily: "var(--font-mono, ui-monospace, monospace)",
   fontSize: 13,
   letterSpacing: "0.02em",
-  color: "var(--admin-muted, #6b6b76)",
+  color: "var(--admin-muted)",
 };
 
 export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "guest" | "ops" }) {
@@ -33,7 +33,7 @@ export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "
           <header style={{ marginBottom: 8, display: "flex", alignItems: "baseline", gap: 10 }}>
             <span
               aria-hidden
-              style={{ width: 8, height: 8, borderRadius: 999, background: "var(--accent-2, #111)", flexShrink: 0 }}
+              style={{ width: 8, height: 8, borderRadius: 999, background: "var(--admin-ink)", flexShrink: 0 }}
             />
             <div style={{ fontWeight: 700, fontSize: 17, letterSpacing: "-0.01em" }}>
               {day.dayLabel || `Day ${day.dayIndex}`}
@@ -50,7 +50,7 @@ export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "
                   gridTemplateColumns: "180px 1fr",
                   gap: 16,
                   padding: "12px 0",
-                  borderTop: "1px solid var(--admin-border, #e2e2e8)",
+                  borderTop: "1px solid var(--admin-line)",
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -65,8 +65,8 @@ export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "
                             fontSize: 11,
                             padding: "1px 6px",
                             borderRadius: 999,
-                            background: "var(--admin-chip-bg, #f0f0f4)",
-                            color: "var(--admin-ink, #2b2b33)",
+                            background: "var(--admin-tint)",
+                            color: "var(--admin-ink)",
                           }}
                         >
                           {s.personName ?? "Unknown"} · {STAFF_ROLE_LABELS[s.role]}
@@ -75,7 +75,7 @@ export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "
                     </div>
                   )}
                   {view === "ops" && !b.guestVisible && (
-                    <span style={{ fontSize: 11, color: "var(--admin-muted, #6b6b76)" }}>ops only</span>
+                    <span style={{ fontSize: 11, color: "var(--admin-muted)" }}>ops only</span>
                   )}
                 </div>
 

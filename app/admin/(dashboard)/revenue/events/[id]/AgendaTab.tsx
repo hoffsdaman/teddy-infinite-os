@@ -154,7 +154,7 @@ export function AgendaTab({
         <div className="admin-empty">No agenda blocks yet. Add the first block, or clone from another retreat.</div>
       ) : (
         days.map((day) => (
-          <section key={day.dayIndex} style={{ border: "1px solid var(--admin-border, #e2e2e8)", borderRadius: 10, padding: 14 }}>
+          <section key={day.dayIndex} style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: 14 }}>
             <div style={{ fontWeight: 600, marginBottom: 8 }}>
               {day.dayLabel || `Day ${day.dayIndex}`}
               {day.dayDate ? <span style={{ opacity: 0.6, fontWeight: 400 }}> · {day.dayDate}</span> : null}
@@ -236,7 +236,7 @@ function BlockFormCard({
 }) {
   const set = (patch: Partial<BlockForm>) => setForm({ ...form, ...patch });
   return (
-    <div style={{ border: "1px solid var(--admin-border, #e2e2e8)", borderRadius: 10, padding: 14, display: "grid", gap: 10 }}>
+    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: 14, display: "grid", gap: 10 }}>
       <div style={{ fontWeight: 600 }}>{form.id ? "Edit block" : "New block"}</div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 }}>
         <Field label="Day #">
@@ -312,7 +312,7 @@ function BlockCard({
 }) {
   const time = block.timeLabel || (block.period ? PERIOD_LABELS[block.period] : "");
   return (
-    <div style={{ border: "1px solid var(--admin-border, #e2e2e8)", borderRadius: 8, padding: "10px 12px" }}>
+    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 8, padding: "10px 12px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 12, opacity: 0.65 }}>
@@ -347,7 +347,7 @@ function BlockCard({
               fontSize: 11,
               padding: "2px 8px",
               borderRadius: 999,
-              background: "var(--admin-chip-bg, #f0f0f4)",
+              background: "var(--admin-tint)",
               display: "inline-flex",
               gap: 6,
               alignItems: "center",

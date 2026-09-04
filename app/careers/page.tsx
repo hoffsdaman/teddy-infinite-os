@@ -21,8 +21,7 @@ export default async function CareersPage() {
         <div className="container">
           <div className="careers-hero-inner reveal">
             <span
-              className="section-label"
-              style={{ background: 'rgba(40,123,232,0.15)', color: 'rgba(255,255,255,0.75)' }}
+              className="section-label section-label--glow"
             >
               Join Edge8
             </span>
@@ -252,8 +251,7 @@ export default async function CareersPage() {
         <div className="container">
           <div className="careers-cta-inner reveal">
             <span
-              className="section-label"
-              style={{ background: 'rgba(40,123,232,0.15)', color: 'rgba(255,255,255,0.7)' }}
+              className="section-label section-label--glow"
             >
               Stay Connected
             </span>

@@ -324,7 +324,7 @@ function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterReg
       <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => setEditing(false)}>
         ✕
       </button>
-      {err && <span style={{ color: "#a01212", fontSize: 12 }}>{err}</span>}
+      {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
     </span>
   );
 }

@@ -439,7 +439,7 @@ function KrForm({
         <label className="admin-label">Key result (a measurable outcome, not an activity)</label>
         <input className="admin-input" value={d.title} onChange={(e) => set("title", e.target.value)} placeholder="e.g. Client retention from 78% to 90%" required />
         {activity && (
-          <p className="admin-hint" style={{ color: "#d97706" }}>
+          <p className="admin-hint" style={{ color: "var(--admin-warn-strong)" }}>
             This starts with a doing-verb, which usually means an activity. A key result is the outcome the activity should produce.
           </p>
         )}

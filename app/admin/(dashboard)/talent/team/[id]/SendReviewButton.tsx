@@ -65,7 +65,7 @@ export function SendReviewButton({
         <span
           style={{
             fontSize: 12,
-            color: result.ok ? "var(--admin-muted, #797c82)" : "var(--admin-danger, #b91c1c)",
+            color: result.ok ? "var(--admin-muted)" : "var(--admin-danger)",
           }}
         >
           {result.message}

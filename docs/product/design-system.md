@@ -1,17 +1,70 @@
-# Design system — migration to the 8 Edges token system
+# Design system — how it works now
 
-This repo is moving onto the one-token-file design system already running in
-`pr-hub-company-os` (PRs #21–#32 there). Sequence, one PR each, merged to
-`main` in order: measure → foundation (tokens, utilities, guardrail; no
-visible change) → rename every per-feature class prefix into
-`.admin-<component>-*` by exact class name → per surface, run
-`scripts/design/inline-to-classes.pl` then `scripts/design/smart-inline.pl`,
-hand-finish the colour / border / font leftovers as component classes → after
-each surface refresh the inline-layout baseline, lower the styled ceiling,
-build, eyeball, merge → close out when `admin.css` carries only `.admin-*`
-and `.u-*`.
+One system, one place for every visual decision. This page is the contract;
+the older `edge8-design-system*.md` files describe the look and are still the
+reference for *why*, but where they disagree with this page on *where things
+live*, this page wins.
 
-## Baseline (main, 4 Sep 2026, before the foundation PR)
+## Where things live
+
+| What | Where | Rule |
+|---|---|---|
+| Colours, type ramp, spacing, radii, shadows | `app/styles/tokens.css` | The **only** file allowed to contain a raw colour. Change a value here and it changes everywhere. |
+| Brand hex for non-browser renderers (OG images, QR, email) | `lib/design/palette.ts` | Mirrors §1 of `tokens.css`. Keep in sync by hand. |
+| App component classes (`.admin-*`, `.u-*`) | `app/admin/admin.css` | Reads tokens by name. No hex, no rgba. Loaded by admin, team and portal. |
+| Public-site classes | `app/globals.css`, `app/home.css`, `app/workflows/workflows.css` | Same rule. Translucent colours use `color-mix()` over a token. |
+| Pattern library | `/admin/patterns` | Renders every token and component. If a screen doesn't look like this page, the screen is wrong. |
+| Guardrail | `npm run check:tokens` (runs as `prebuild`) | Fails on any raw colour outside `tokens.css` / `palette.ts`, and on the styled-inline count rising above its ceiling. |
+
+## Token layers
+
+1. `--teddy-*` and `--color-*` — the palette itself. The five Teddy swatches
+   (Yogi, Booboo, Sand, Polar, Winnie) plus their hover tints, the neutral
+   ramp and the status hues. Raw values. Never used directly by a component;
+   only by the layers below. There is no blue in-brand: Yogi teal carries the
+   `--color-primary-blue` role and Winnie gold carries the `--color-accent-mint`
+   role, so the role names stay stable across the 8 Edges family of repos.
+2. `--blue`, `--mint`, `--dark`, `--tint` … — short aliases the public
+   marketing pages use. `--font-display` is Roca Two, `--font-body` Manrope,
+   `--font-brand-body` Outfit.
+3. `--admin-*` — semantic roles for the operating-system surfaces (admin,
+   team, portal). **Components use these.** Examples: `--admin-ink`,
+   `--admin-muted`, `--admin-line`, `--admin-surface-2`, `--admin-accent`,
+   `--admin-ok-bg` / `--admin-ok-ink`, `--admin-radius-sm`,
+   `--admin-space-3`, `--admin-text-sm`, `--admin-shadow-md`.
+
+The former `--data-*` layer is gone; its values are now the `--admin-*`
+definitions themselves.
+
+## Writing UI
+
+- **Use the shared components first**: `PageHead`, `Tabs`, `MetricCard`
+  (KPI), `Badge`, `DataTable`, `DetailDrawer`, `KanbanBoard`, `InlineEdit`,
+  `PersonSelect`, `ConfirmButton`. Buttons are `.admin-btn` with
+  `--primary`, `--danger`, `--sm`. Chips are `.admin-chip`; pills `.admin-pill`.
+- **Layout without inline styles**: `.u-row`, `.u-stack`, `.u-wrap`,
+  `.u-between`, `.u-grow`, `.u-grid-2/3/4`, `.u-gap-1…6`, `.u-mt-*`, `.u-mb-*`,
+  `.u-muted`, `.u-sm`, `.u-strong`, `.u-truncate`, `.u-label`. Spacing steps are
+  4 / 8 / 12 / 16 / 24 / 32.
+- **No inline `style={{ color | background | border | borderRadius | fontFamily | boxShadow }}`.**
+  Put it in a class. Layout-only inline styles are tolerated during the
+  migration; the check reports the count and it must not go up.
+- **A new feature gets no new prefix.** Compose from the classes above; if a
+  genuinely new component is needed, add it to `admin.css` under the
+  Components section and to `/admin/patterns` in the same PR.
+
+## Migration — in progress
+
+Sequence, one PR each, merged to `main` in order: measure → foundation
+(tokens, utilities, guardrail; no visible change) → rename every per-feature
+class prefix into `.admin-<component>-*` by exact class name → per surface,
+run `scripts/design/inline-to-classes.pl` then `scripts/design/smart-inline.pl`,
+hand-finish the colour / border / font leftovers as component classes →
+after each surface refresh the inline-layout baseline, lower the styled
+ceiling, build, eyeball, merge → close out when `admin.css` carries only
+`.admin-*` and `.u-*`.
+
+### Baseline (main, 4 Sep 2026, before the foundation PR)
 
 | Measure | Count |
 |---|---|
@@ -32,10 +85,12 @@ workflows (public) 223, components 190, operations 180, boards 117, edges 43,
 patterns 36, support (admin) 36, my-retreat 26, company 26, support (public)
 22, settings 20, innovation 16, contacts 16, careers 11, other 12.
 
-How these were counted:
+## Rolling out to another repo
 
-```bash
-grep -rn 'style={{' app components --include='*.tsx' | wc -l
-grep -oE '^\.[a-z][a-z0-9]*-' app/admin/admin.css | sort | uniq -c | sort -rn
-grep -oE '#[0-9a-fA-F]{3,8}\b' app/globals.css app/admin/admin.css app/home.css app/workflows/workflows.css | wc -l
-```
+`scripts/design/inline-to-classes.pl` (exact patterns) and
+`scripts/design/smart-inline.pl` (maps any fully-recognised `style={{}}` to
+utilities and merges it into the element's className) do most of the work.
+Sequence per repo: measure → foundation PR (tokens, utilities,
+`check:tokens` as prebuild) → rename prefixes by exact class name → run both
+converters per surface → hand-finish the colour/border leftovers as component
+classes → refresh baselines, build, eyeball, merge.

@@ -35,7 +35,7 @@ export function ContractStartForm({
         </span>
       )}
       {state && !state.ok && (
-        <span style={{ color: "var(--admin-danger, #b91c1c)", fontSize: 12 }}>{state.error}</span>
+        <span style={{ color: "var(--admin-danger)", fontSize: 12 }}>{state.error}</span>
       )}
     </form>
   );
