@@ -4964,3 +4964,14 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-assist-box { border: 1px solid var(--admin-line); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--admin-surface-2); }
 .admin-assist-msg { font-size: var(--admin-text-sm); line-height: 1.5; padding: 6px 9px; border-radius: var(--admin-radius-sm); background: var(--admin-surface); border: 1px solid var(--admin-line-soft); justify-self: start; max-width: 90%; }
 .admin-assist-msg--me { background: var(--admin-accent-soft); border: none; justify-self: end; }
+/* ─── Pattern library demos (design-debt #5) ─────────────────────────────── */
+.admin-pat-type-sample { color: var(--admin-ink); line-height: 1.3; }
+.admin-pat-mono-sample { font-family: var(--admin-font-mono); font-size: var(--admin-text-md); color: var(--admin-ink); font-variant-numeric: tabular-nums; }
+.admin-pat-radius-chip--xs { border-radius: var(--admin-radius-xs); }
+.admin-pat-radius-chip--sm { border-radius: var(--admin-radius-sm); }
+.admin-pat-radius-chip--lg { border-radius: var(--admin-radius); }
+.admin-pat-radius-chip--pill { border-radius: var(--admin-radius-pill); }
+.admin-pat-shadow-chip--card { box-shadow: var(--admin-shadow); }
+.admin-pat-shadow-chip--raised { box-shadow: var(--admin-shadow-md); }
+.admin-pat-shadow-chip--modal { box-shadow: var(--admin-shadow-modal); }
+.admin-kanban-col-dot--accent { background: var(--admin-accent); }
