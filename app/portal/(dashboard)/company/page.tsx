@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Company Profile",
-  description: "Your company's details as Edge8 holds them.",
+  description: "Your company's details as TeddyBed OS holds them.",
 };
 
 // Admin-only, same rule as Users: non-admins never see the nav item and a
@@ -31,7 +31,7 @@ export default async function CompanyProfilePage() {
       <PageHead
         eyebrow="Account"
         title="Company Profile"
-        sub="What Edge8 holds about your company. Changes here update your account record and the address we bill to."
+        sub="What TeddyBed OS holds about your company. Changes here update your account record and the address we bill to."
       />
       {profiles.map((p) => (
         <CompanyForm key={p.companyId} initial={p} />

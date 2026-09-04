@@ -77,7 +77,7 @@ export async function purchaseTokenPacks(
             currency: "usd",
             unit_amount: PACK_PRICE_CENTS,
             product_data: {
-              name: `Edge8 human-token pack (${PACK_TOKENS} tokens)`,
+              name: `TeddyBed OS human-token pack (${PACK_TOKENS} tokens)`,
               description: "1 token = 1 hour of skilled work",
             },
           },

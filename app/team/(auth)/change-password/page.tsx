@@ -10,7 +10,7 @@ export default async function TeamChangePasswordPage() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges Team
+          TeddyBed OS Team
         </div>
         <p className="admin-auth-sub">
           Choose a password for your account. You can always sign in with a link instead.

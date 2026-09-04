@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Org Chart",
-  description: "How Edge8 fits together: the reporting tree, live from the directory.",
+  description: "How TeddyBed OS fits together: the reporting tree, live from the directory.",
 };
 
 // /team/org — the reporting tree, read-only and company-visible like the

@@ -13,9 +13,9 @@ export default function WorkflowsPage() {
             </span>
             <h1 className="section-title">Workflows</h1>
             <p className="wf-hero-sub">
-              The operating workflows we run Edge8 on, organized around our four offices: Revenue, Talent, Operations,
+              The operating workflows we run TeddyBed OS on, organized around our four offices: Revenue, Talent, Operations,
               and Innovation. Real systems documented end to end: who does what, when it happens, and where AI does the
-              heavy lifting. This is how we run Edge8, and everything here is something we can build for you.
+              heavy lifting. This is how we run TeddyBed OS, and everything here is something we can build for you.
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function WorkflowsPage() {
             Want workflows like these in your company?
           </h2>
           <p className="section-sub u-mx-auto u-mb-6">
-            Every system on this page was designed, built, and put into production by Edge8. We do the same for our
+            Every system on this page was designed, built, and put into production by TeddyBed OS. We do the same for our
             clients.
           </p>
           <a href="mailto:support@teddybed.com.au" className="btn btn-secondary">

@@ -94,7 +94,7 @@ export async function getAssignedTimeOff(actor: PortalActor): Promise<PortalTime
 export type PortalLeaveDirectoryRow = {
   id: string;
   fullName: string | null;
-  // The client-side approver named on the placement, or null. Never the Edge8
+  // The client-side approver named on the placement, or null. Never the TeddyBed OS
   // manager chain — internal reporting lines don't belong in a client portal
   // (Dave, 2026-08-26: no "Dave Hajdu" in On Target's records).
   approverName: string | null;
@@ -131,7 +131,7 @@ export async function getAssignedLeaveDirectory(actor: PortalActor): Promise<Por
 
   // Client-side approver per member: the client_manager named on this client's
   // own active placement (oldest wins, same tie-break as resolveLeaveApprover).
-  // Members without one get null; the page renders "Edge8" so the client still
+  // Members without one get null; the page renders "TeddyBed OS" so the client still
   // sees the leave is handled, without naming internal staff.
   const { data: assignmentRows } = await companyOs
     .from("staff_assignments")
@@ -243,7 +243,7 @@ export type DecisionResult = { ok: true } | { ok: false; error: string };
 // Records a client manager's decision. Two independent checks before any
 // write: the request must belong to someone this actor manages, and it must
 // still be pending. The decision is stamped on client_approved_by (people.id),
-// never approved_by (team_members.id) — a client manager is not an Edge8
+// never approved_by (team_members.id) — a client manager is not an TeddyBed OS
 // employee and must not be recorded as one.
 export async function decideAssignedTimeOff(
   actor: PortalActor,

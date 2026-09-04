@@ -655,10 +655,10 @@ export async function resendPortalInvite(teamMemberId: string): Promise<Result> 
 
   await sendTransactionalEmail({
     to: t.email,
-    subject: "Your 8 Edges Team sign-in link",
+    subject: "Your TeddyBed OS Team sign-in link",
     html: `
-      <p>Here is your sign-in link for the 8 Edges Team workspace:</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the 8 Edges Team workspace</a></p>
+      <p>Here is your sign-in link for the TeddyBed OS Team workspace:</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the TeddyBed OS Team workspace</a></p>
       <p style="font-size:13px;color:${P.inkBody};">The button takes you to a sign-in page. Press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/team/login">${siteOrigin()}/team/login</a>.</p>
     `,
   });

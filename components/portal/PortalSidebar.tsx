@@ -52,9 +52,9 @@ const NAV: NavGroup[] = [
   {
     label: "People",
     items: [
-      // "Edge8 Team" not "Team": this is the Edge8 staff assigned to the client,
+      // "TeddyBed OS Team" not "Team": this is the TeddyBed OS staff assigned to the client,
       // not the client's own portal users (that's Account \u2192 Users).
-      { label: "Edge8 Team", href: "/portal/team", ico: "\u2637", built: true, entitlementKey: "team" },
+      { label: "TeddyBed OS Team", href: "/portal/team", ico: "\u2637", built: true, entitlementKey: "team" },
       { label: "Time Off", href: "/portal/time-off", ico: "\u263c", built: true, entitlementKey: "timeOff" },
     ],
   },
@@ -145,14 +145,14 @@ export function PortalSidebar({
         >
           ☰
         </button>
-        <strong>8 Edges Client Portal</strong>
+        <strong>TeddyBed OS Client Portal</strong>
       </div>
 
       {navOpen && <div className="admin-scrim" onClick={() => setNavOpen(false)} />}
 
       <nav className={`admin-sidebar admin-portal-sidebar${navOpen ? " is-open" : ""}`} aria-label="Portal">
         <div className="admin-brand">
-          <span className="admin-brand-lead">8 Edges Client Portal</span>
+          <span className="admin-brand-lead">TeddyBed OS Client Portal</span>
           <span className="admin-brand-actions">
             <button
               type="button"

@@ -9,8 +9,8 @@ import "../admin.css";
 import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
-  title: { template: "%s · 8 Edges", default: "8 Edges" },
-  description: "Edge8 Company OS — the internal admin for contacts, revenue, talent, and operations.",
+  title: { template: "%s · TeddyBed OS", default: "TeddyBed OS" },
+  description: "TeddyBed OS — the internal admin for contacts, revenue, talent, and operations.",
   robots: { index: false, follow: false },
 };
 

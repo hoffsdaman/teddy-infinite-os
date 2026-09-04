@@ -14,7 +14,7 @@ import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = 'nodejs'
 
-const FROM = 'Edge8 Careers <contact@edge8.ai>'
+const FROM = 'TeddyBed OS Careers <contact@edge8.ai>'
 const DEFAULT_RECIPIENTS = ['mai@edge8.ai']
 const MAX_RESUME_BYTES = 10 * 1024 * 1024
 const MAX_TEXT_CHARS = 10_000

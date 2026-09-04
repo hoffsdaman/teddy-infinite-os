@@ -19,7 +19,7 @@ export type TimeOffStatus = "requested" | "approved" | "rejected" | "cancelled" 
 
 // Day Off leave type name (lowercased) -> our category. Fail-open to 'other'
 // with a report warning; the mapping is reviewed by the admin in the report.
-// "Schedule" is Edge8's single Day Off type = the vacation allowance.
+// "Schedule" is TeddyBed OS's single Day Off type = the vacation allowance.
 export const TYPE_NAME_MAP: Record<string, LeaveCategory> = {
   schedule: "vacation",
   vacation: "vacation",
@@ -38,7 +38,7 @@ export const TYPE_NAME_MAP: Record<string, LeaveCategory> = {
 // Day Off request status name (lowercased) -> our status. FAIL-CLOSED: any
 // status encountered on a request that is not in this map aborts the request
 // import with a clear error, so nothing lands with a guessed status.
-// Edge8's live status list (from /leaveRequestStatuses): Pending Approver1,
+// TeddyBed OS's live status list (from /leaveRequestStatuses): Pending Approver1,
 // Pending Approver2, Accepted, Rejected Approver1, Rejected Approver2,
 // Deleted Request, Skipped Step 1, Skipped Step 2. The two "Skipped" statuses
 // are deliberately unmapped (semantics unverified) so they fail closed.

@@ -1,6 +1,6 @@
 // Lark tenant-app API client: DMs to team members and Minutes transcript
 // pulls for the coaching cycle. Distinct from lib/lark.ts (incoming webhooks
-// to group channels) — this one authenticates as the Edge8 Lark app and can
+// to group channels) — this one authenticates as the TeddyBed OS Lark app and can
 // message individuals and read Minutes.
 //
 // FAIL-SOFT EVERYWHERE: when LARK_APP_ID / LARK_APP_SECRET are unset, or a

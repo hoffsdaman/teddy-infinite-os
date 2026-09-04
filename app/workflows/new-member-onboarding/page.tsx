@@ -12,7 +12,7 @@ import {
 
 const title = 'New Member Onboarding | TeddyBed Workflows'
 const description =
-  'A recruiter marks an applicant hired, and the paperwork and the welcome start together: a self-serve form promotes the same record to pre-boarding while a 30-day nurture drip introduces Edge8, landing the new member at Day 1 with a portal account waiting.'
+  'A recruiter marks an applicant hired, and the paperwork and the welcome start together: a self-serve form promotes the same record to pre-boarding while a 30-day nurture drip introduces TeddyBed OS, landing the new member at Day 1 with a portal account waiting.'
 
 export const metadata: Metadata = {
   title,
@@ -48,7 +48,7 @@ const NODES: LaneNode[] = [
     actor: 'human',
     actorLabel: 'Recruiter',
     title: 'Set up the Lark email',
-    desc: 'In parallel, the recruiter creates the @edge8.ai Lark account by hand and records it in 8 Edges. It runs alongside and never holds up the portal invite.',
+    desc: 'In parallel, the recruiter creates the @edge8.ai Lark account by hand and records it in TeddyBed OS. It runs alongside and never holds up the portal invite.',
   },
   {
     num: '3',
@@ -64,7 +64,7 @@ const NODES: LaneNode[] = [
     actor: 'system',
     actorLabel: 'System',
     title: 'Run the 30-day nurture drip',
-    desc: 'Alongside the paperwork, a scheduled drip of seven touches introduces Edge8 across the notice period. Fully automated, with two human touches. Detailed below.',
+    desc: 'Alongside the paperwork, a scheduled drip of seven touches introduces TeddyBed OS across the notice period. Fully automated, with two human touches. Detailed below.',
   },
   {
     num: '5',
@@ -134,7 +134,7 @@ const DRIP: Touch[] = [
     actorLabel: 'System',
     body: (
       <p>
-        An automated note that tells the Edge8 story: the operator lineage from Microsoft to Vinasource to TINYpulse,
+        An automated note that tells the TeddyBed OS story: the operator lineage from Microsoft to Vinasource to TINYpulse,
         and the point of view that it is not an AI problem, it is the data. Context and something to be proud of, well
         before Day 1.
       </p>
@@ -217,7 +217,7 @@ const ELEMENTS: WorkflowElement[] = [
   {
     name: 'Inputs',
     assignment: 'both',
-    desc: 'The record the applicant built during hiring, the onboarding details only they can supply, the Lark @edge8.ai email the recruiter provisions, and the ready-made intro-to-Edge8 content the drip sends.',
+    desc: 'The record the applicant built during hiring, the onboarding details only they can supply, the Lark @edge8.ai email the recruiter provisions, and the ready-made intro-to-TeddyBed OS content the drip sends.',
   },
   {
     name: 'Decision',
@@ -252,7 +252,7 @@ export default function NewMemberOnboardingWorkflowPage() {
       <WorkflowHero
         category="Talent"
         title="New Member Onboarding"
-        tldr="Hiring ends where onboarding begins. The moment a recruiter marks an applicant hired, the paperwork and the welcome start together. A self-serve form promotes the same record to pre-boarding with a portal account waiting, while a 30-day nurture drip introduces Edge8 across the notice period. Seven touches, fully automated, with a recruiter welcome to open and a manager note to close. Both land the new member at Day 1 ready to start."
+        tldr="Hiring ends where onboarding begins. The moment a recruiter marks an applicant hired, the paperwork and the welcome start together. A self-serve form promotes the same record to pre-boarding with a portal account waiting, while a 30-day nurture drip introduces TeddyBed OS across the notice period. Seven touches, fully automated, with a recruiter welcome to open and a manager note to close. Both land the new member at Day 1 ready to start."
         meta={[
           { label: 'Lifecycle stages', value: '3' },
           { label: 'Probation', value: '60 days' },
@@ -308,7 +308,7 @@ export default function NewMemberOnboardingWorkflowPage() {
             </svg>
             <span>
               The two tracks run in parallel through the notice window. The transactional track promotes the record and
-              issues the portal account; the nurture track, shown next, keeps the new member warm and introduces Edge8.
+              issues the portal account; the nurture track, shown next, keeps the new member warm and introduces TeddyBed OS.
               Both converge at first login on Day 1.
             </span>
           </div>
@@ -371,7 +371,7 @@ export default function NewMemberOnboardingWorkflowPage() {
             <h3>Recruiter, by hand</h3>
             <p>Run alongside the automated flow, per new hire.</p>
             <ul>
-              <li>Create the Lark @edge8.ai account and record it in 8 Edges</li>
+              <li>Create the Lark @edge8.ai account and record it in TeddyBed OS</li>
               <li>Send the Day 0 welcome, the onboarding email personalized under their name</li>
               <li>Confirm the onboarding form is submitted; chase it personally if the drip goes quiet</li>
               <li>Verify portal access and tools work before Day 1</li>

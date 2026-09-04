@@ -13,7 +13,7 @@ export const maxDuration = 300;
 // Vercel cron (see vercel.json): daily. Auto-publishes blog assets that were
 // queued by moving them to `status='scheduled'` once their publish_date has
 // arrived. Runs the SAME deterministic publishBlogAsset the admin button uses,
-// so validation, brand routing (Edge8 -> edge8.ai; brands without a live blog
+// so validation, brand routing (TeddyBed OS -> edge8.ai; brands without a live blog
 // are refused), normalization, revalidation, and live-URL verification all
 // apply. Because a cron runs in a request context, revalidatePath('/blog')
 // works here — the index updates the moment a post goes live. Publishes nothing

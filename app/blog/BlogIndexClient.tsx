@@ -68,7 +68,7 @@ export default function BlogIndexClient({ posts, tabs }: { posts: UnifiedPostMet
         <div className="container">
           <div className="blog-hero-inner">
             <h1 className="section-title section-title--on-dark">AI Insights &amp; Business Intelligence</h1>
-            <p className="blog-hero-sub">Expert perspectives on AI strategy, leadership, and implementation from the Edge8 team.</p>
+            <p className="blog-hero-sub">Expert perspectives on AI strategy, leadership, and implementation from the TeddyBed OS team.</p>
 
             {featured && (
               <Link href={`/post/${featured.slug}`} className="hero-featured-card">

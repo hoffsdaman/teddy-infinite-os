@@ -103,7 +103,7 @@ export default function EventRegistrationWorkflowPage() {
                 body: (
                   <p>
                     Registration and payment are one motion. The attendee checks out through Stripe, which handles
-                    cards, receipts, and compliance. Nobody at Edge8 ever sees or handles card details.
+                    cards, receipts, and compliance. Nobody at TeddyBed OS ever sees or handles card details.
                   </p>
                 ),
               },
@@ -144,7 +144,7 @@ export default function EventRegistrationWorkflowPage() {
               <ul>
                 <li>The event record is the single source for page, price, and capacity</li>
                 <li>No payment, no seat: registrations exist only after Stripe confirms</li>
-                <li>Card details never touch Edge8 systems</li>
+                <li>Card details never touch TeddyBed OS systems</li>
                 <li>The attendee list is read from the system, never kept in a spreadsheet</li>
               </ul>
             </div>

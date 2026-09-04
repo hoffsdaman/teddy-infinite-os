@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 // Operations → Time Off → Policies. One row per leave policy: who's on it and
-// whether requests auto-approve at submission (Edge8 Core Team) or wait for a
+// whether requests auto-approve at submission (TeddyBed OS Core Team) or wait for a
 // decision on the Requests board (On Target). The toggle is the single control
 // for that behavior — no code change needed when a policy switches mode.
 

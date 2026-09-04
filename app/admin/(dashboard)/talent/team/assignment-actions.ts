@@ -93,7 +93,7 @@ export async function setAssignmentVisibility(id: string, clientVisible: boolean
 // Names (or clears) the person at the client who approves this placement's
 // leave. Approval power follows this field, not the portal role, so it is an
 // admin-only write and every change is audited. Clearing it hands approval
-// back to the Edge8 manager (lib/time-off/approver.ts).
+// back to the TeddyBed OS manager (lib/time-off/approver.ts).
 export async function setAssignmentClientManager(
   id: string,
   clientManagerPersonId: string | null,

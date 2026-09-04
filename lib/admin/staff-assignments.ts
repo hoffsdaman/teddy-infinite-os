@@ -22,7 +22,7 @@ export type AssignmentForCompany = {
   team_member_id: string;
   role_title: string | null;
   // Person at the client who approves this placement's leave (null = the
-  // Edge8 manager keeps it). See lib/time-off/approver.ts.
+  // TeddyBed OS manager keeps it). See lib/time-off/approver.ts.
   client_manager_person_id: string | null;
   client_manager_name: string | null;
   client_visible: boolean;

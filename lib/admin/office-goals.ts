@@ -1,5 +1,5 @@
 // Per-office goal health for the admin dashboard panels and the office cockpits.
-// One read of the 8 Edges goal tree, sliced by office. Both the master
+// One read of the TeddyBed OS goal tree, sliced by office. Both the master
 // dashboard (which shows KR-status chips per office) and each cockpit (which
 // lists that office's key results) build from this.
 //

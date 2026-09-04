@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Issues",
-  description: "8 Edges: anything blocking a goal, diagnosed before blamed.",
+  description: "TeddyBed OS: anything blocking a goal, diagnosed before blamed.",
 };
 
 export default async function IssuesPage() {
@@ -33,7 +33,7 @@ export default async function IssuesPage() {
   return (
     <>
       <PageHead
-        eyebrow="8 Edges"
+        eyebrow="TeddyBed OS"
         title="Issues"
         sub="Anything blocking a goal, diagnosed before blamed: goal problem, system problem, or execution problem. Agents file them automatically when numbers slip."
       />

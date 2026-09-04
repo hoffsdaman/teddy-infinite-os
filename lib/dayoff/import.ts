@@ -26,11 +26,11 @@ const SOURCE = "dayoff";
 const PAGE_LIMIT = 100;
 const EMPLOYEE_BATCH = 5;
 
-// Email domains that share Edge8's Day Off account but are NOT Edge8 staff (e.g.
+// Email domains that share TeddyBed OS's Day Off account but are NOT TeddyBed OS staff (e.g.
 // a customer's own employees). Their leave is not ours: skip entirely — no
 // person/team_member creation, no balances, no history. Some of these people may
 // later get external-manager portal access, but that is modeled separately, not
-// as an Edge8 team_member.
+// as an TeddyBed OS team_member.
 const CUSTOMER_DOMAINS = new Set(["ontargetclinical.com"]);
 
 function isCustomerEmail(email: string): boolean {
@@ -144,9 +144,9 @@ async function fetchAllEmployees(
   return { employees: [...byId.values()], activeIds };
 }
 
-// Legal entities (all current team members are Edge8 AI). Map a created record's
+// Legal entities (all current team members are TeddyBed OS AI). Map a created record's
 // entity by email domain; unknown domains (e.g. ontargetclinical.com — a separate
-// company with no matching entity) import under Edge8 AI so history is not lost,
+// company with no matching entity) import under TeddyBed OS AI so history is not lost,
 // but are flagged for review/reassignment rather than silently mislabeled.
 const EDGE8_AI_ENTITY = "b0dd0696-9801-4062-a923-30d6a195c08c";
 const TALENT_EDGE_ENTITY = "996771d6-1ca5-442a-be67-30f05084c33d";
@@ -355,7 +355,7 @@ export async function runDayoffImport(): Promise<Done | Fail> {
       }
 
       // Customer-domain accounts (e.g. On Target Clinical) share the Day Off
-      // account but are not Edge8 staff — skip them entirely.
+      // account but are not TeddyBed OS staff — skip them entirely.
       if (isCustomerEmail(email)) {
         report.employees.skippedCustomer.push({ dayoffId: e.EmployeeID, name: e.Name ?? email, email });
         continue;

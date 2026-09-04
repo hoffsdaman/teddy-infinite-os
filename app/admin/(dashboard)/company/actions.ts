@@ -177,7 +177,7 @@ export async function deleteMemberGoal(goalId: string): Promise<Result> {
 
 // ---- Company objectives + key results -----------------------------------
 // Inline editing on /admin/company/goals. The underlying writes (requireAdmin,
-// validation, audit) live in the 8 Edges actions; these thin wrappers add the
+// validation, audit) live in the TeddyBed OS actions; these thin wrappers add the
 // company + team revalidation so both surfaces refresh. Objectives here are
 // always company-level (the only level in use); the cascade board's deeper
 // office/executor levels are unaffected.

@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Requests",
-  description: "Request work from your Edge8 team.",
+  description: "Request work from your TeddyBed OS team.",
 };
 
 // Statuses waiting on the CLIENT float a call-to-action.
@@ -52,7 +52,7 @@ export default async function PortalRequestsPage() {
         <div className="admin-card admin-section-card u-stack">
           <h2 className="admin-card-title u-mb-2">General request</h2>
           <p className="admin-page-sub u-m-0 u-minh-40">
-            Not sure who you need? Describe it and the Edge8 team will pick it up.
+            Not sure who you need? Describe it and the TeddyBed OS team will pick it up.
           </p>
           <div className="u-mt-auto u-pt-4">
             <GeneralRequest />

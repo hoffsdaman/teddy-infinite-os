@@ -101,7 +101,7 @@ async function generateViaOpenRouter(
       "Content-Type": "application/json",
       // Attribution headers OpenRouter asks apps to send.
       "HTTP-Referer": "https://teddy-infinite-os.vercel.app",
-      "X-Title": "Edge8 AI Programs",
+      "X-Title": "TeddyBed OS AI Programs",
     },
     body: JSON.stringify({
       model: OPENROUTER_MODEL,

@@ -75,7 +75,7 @@ export async function getCompanyHubTeam(companyId: string): Promise<HubTeam> {
 
   const edge8 = assignments
     .filter((a) => a.client_visible)
-    .map((a) => ({ name: a.full_name || a.email || "Edge8", roleTitle: a.role_title || a.position_title }));
+    .map((a) => ({ name: a.full_name || a.email || "TeddyBed OS", roleTitle: a.role_title || a.position_title }));
 
   const rows = (peopleRows ?? []) as Array<{
     role: string | null;

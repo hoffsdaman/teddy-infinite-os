@@ -16,10 +16,10 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const event = await getEventBySlug(params.slug);
-  if (!event || event.status === "draft") return { title: "Event — Edge8", robots: { index: false } };
+  if (!event || event.status === "draft") return { title: "Event — TeddyBed OS", robots: { index: false } };
   const indexable = event.visibility === "public" && (event.status === "open" || event.status === "published");
   return {
-    title: `${event.title} — Edge8`,
+    title: `${event.title} — TeddyBed OS`,
     description: event.blurb ?? event.description?.slice(0, 160) ?? undefined,
     robots: indexable ? undefined : { index: false },
     openGraph: {
@@ -87,7 +87,7 @@ export default async function PublicEventPage({ params }: { params: { slug: stri
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       )}
       <div className={styles.card}>
-        <div className={`${styles.eyebrow} brand-label`}>Edge8 event</div>
+        <div className={`${styles.eyebrow} brand-label`}>TeddyBed OS event</div>
         <h1 className={styles.title}>{event.title}</h1>
         <p className={styles.meta}>
           {dateLabel}

@@ -1,4 +1,4 @@
-// How a goal's 8 Edges ladder is encoded for a <select>: "<kind>:<id>",
+// How a goal's TeddyBed OS ladder is encoded for a <select>: "<kind>:<id>",
 // or "" for no ladder.
 //
 // These two helpers live OUTSIDE components/coaching/LadderSelect.tsx on

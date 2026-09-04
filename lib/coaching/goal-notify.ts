@@ -111,7 +111,7 @@ export function notifyGoalChange(
           ${
             action === "deleted"
               ? "<p>The goal has been removed from their list.</p>"
-              : "<p>See it in the 8 Edges Team workspace under My Team &gt; Coaching, and talk it through in your next 1-1.</p>"
+              : "<p>See it in the TeddyBed OS Team workspace under My Team &gt; Coaching, and talk it through in your next 1-1.</p>"
           }
         `,
         logMeta: { source: "team-fast-goals", action },

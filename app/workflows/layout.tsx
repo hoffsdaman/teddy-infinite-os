@@ -4,7 +4,7 @@ import '@/app/styles/utilities.css'
 
 const title = 'Workflows | TeddyBed'
 const description =
-  'The operating workflows we run Edge8 on. Real systems documented end to end: who does what, when it happens, and where AI does the heavy lifting.'
+  'The operating workflows we run TeddyBed OS on. Real systems documented end to end: who does what, when it happens, and where AI does the heavy lifting.'
 
 export const metadata: Metadata = {
   title,

@@ -15,11 +15,11 @@ import { PALETTE as P } from "@/lib/design/palette";
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-const DEFAULT_FROM = process.env.MARKETING_EMAIL_FROM || "Edge8 <hello@edge8.ai>";
+const DEFAULT_FROM = process.env.MARKETING_EMAIL_FROM || "TeddyBed OS <hello@edge8.ai>";
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://teddy-infinite-os.vercel.app").replace(/\/$/, "");
 
 // CAN-SPAM requires a physical postal address on commercial email.
-const POSTAL_ADDRESS = process.env.MARKETING_POSTAL_ADDRESS || "Edge8, Ho Chi Minh City, Vietnam";
+const POSTAL_ADDRESS = process.env.MARKETING_POSTAL_ADDRESS || "TeddyBed OS, Ho Chi Minh City, Vietnam";
 
 // ------------------------------------------------------------------- tokens
 
@@ -143,12 +143,12 @@ ${preheader}
   <tr><td align="center">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:${P.white};border-radius:12px;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:${P.dark};font-size:15px;">
       <tr><td>
-        <div style="font-weight:700;font-size:18px;letter-spacing:-0.01em;margin-bottom:24px;">Edge8</div>
+        <div style="font-weight:700;font-size:18px;letter-spacing:-0.01em;margin-bottom:24px;">TeddyBed OS</div>
         <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">${esc(opts.subject)}</h1>
         ${renderMarkdown(opts.bodyMd)}
         <hr style="border:none;border-top:1px solid ${P.line};margin:32px 0 16px;" />
         <p style="margin:0;font-size:12px;line-height:1.6;color:${P.greyMid};">
-          You are receiving this because you are a client or contact of Edge8.<br />
+          You are receiving this because you are a client or contact of TeddyBed OS.<br />
           ${esc(POSTAL_ADDRESS)}<br />
           ${footerUnsub}
         </p>

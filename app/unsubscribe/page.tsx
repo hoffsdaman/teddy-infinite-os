@@ -7,8 +7,8 @@ import { UnsubscribeForm } from './UnsubscribeForm'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Edge8 · Unsubscribe',
-  description: 'Stop receiving marketing email from Edge8.',
+  title: 'TeddyBed OS · Unsubscribe',
+  description: 'Stop receiving marketing email from TeddyBed OS.',
   robots: { index: false, follow: false },
 }
 
@@ -25,13 +25,13 @@ export default function UnsubscribePage({
     <div className="xp-page">
       <article className="xp-article">
         <Link href="/" className="xp-backlink">
-          ← Edge8
+          ← TeddyBed OS
         </Link>
 
         <PageHeader
           eyebrow="Email preferences"
           title="Unsubscribe"
-          lead="Manage the marketing email you receive from Edge8."
+          lead="Manage the marketing email you receive from TeddyBed OS."
         />
 
         <div className="xp-blocks">

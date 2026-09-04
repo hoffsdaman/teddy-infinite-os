@@ -1,6 +1,6 @@
 "use client";
 
-// The 8 Edges ladder picker: which company key result a goal hangs off. Shared
+// The TeddyBed OS ladder picker: which company key result a goal hangs off. Shared
 // by the coach page (CoachProfileView) and the member's own page (/team/goals)
 // so both offer the same company goals, in the same shape. Objectives are only
 // grouping headers here; a goal ladders to a key result.
@@ -37,7 +37,7 @@ export function LadderSelect({
       disabled={disabled}
       required={required}
       onChange={(e) => onChange(e.target.value)}
-      aria-label="Ladders to (8 Edges)"
+      aria-label="Ladders to (TeddyBed OS)"
     >
       <option value="">{emptyLabel}</option>
       {edges.objectives.map((o, i) => (

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     .eq("slug", params.slug)
     .maybeSingle();
   return {
-    title: data ? `${data.name} — Edge8` : "Survey — Edge8",
+    title: data ? `${data.name} — TeddyBed OS` : "Survey — TeddyBed OS",
     description: data?.description ?? undefined,
     robots: { index: false },
   };

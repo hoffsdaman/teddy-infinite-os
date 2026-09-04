@@ -322,7 +322,7 @@ export async function addScopeForActor(
 }
 
 // Clients can cancel only before work is approved — once the contractor may
-// be mid-work, cancellation goes through Edge8 (admin backstop).
+// be mid-work, cancellation goes through TeddyBed OS (admin backstop).
 const CLIENT_CANCELLABLE = ["awaiting_estimate", "estimate_submitted", "changes_requested"];
 
 export async function cancelWorkRequestForActor(
@@ -333,7 +333,7 @@ export async function cancelWorkRequestForActor(
   const req = await loadOwnedRequest(actor, id);
   if (!req) return { ok: false, error: "Request not found." };
   if (!CLIENT_CANCELLABLE.includes(req.status)) {
-    return { ok: false, error: "Work is already underway — reply to your Edge8 contact to cancel this request." };
+    return { ok: false, error: "Work is already underway — reply to your TeddyBed OS contact to cancel this request." };
   }
   const r = await applyCancel(req, decider(actor), note);
   if (r.ok) {

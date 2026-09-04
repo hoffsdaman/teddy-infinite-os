@@ -9,7 +9,7 @@ import type Anthropic from "@anthropic-ai/sdk";
 export const QUERY_TOOL: Anthropic.Tool = {
   name: "query_database",
   description:
-    "Run a single read-only SQL SELECT against the Edge8 Company OS database " +
+    "Run a single read-only SQL SELECT against the TeddyBed OS database " +
     "(schema company_os). Use this for every question about business data — " +
     "contacts, deals, leads, invoices, expenses, hiring, staff, time off, " +
     "events, surveys. Also use it to introspect information_schema.columns when " +

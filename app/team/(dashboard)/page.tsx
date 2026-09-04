@@ -69,13 +69,13 @@ const HUB_LIVE: HubItem[] = [
   },
   {
     title: "Team Directory",
-    sub: "Find anyone at Edge8 and who they report to.",
+    sub: "Find anyone at TeddyBed OS and who they report to.",
     ico: "☷",
     href: "/team/directory",
   },
   {
     title: "Org Chart",
-    sub: "How Edge8 fits together — who reports to whom, at a glance.",
+    sub: "How TeddyBed OS fits together — who reports to whom, at a glance.",
     ico: "⌥",
     href: "/team/org",
   },
@@ -88,7 +88,7 @@ const HUB_LIVE: HubItem[] = [
 ];
 
 const HUB_SOON: HubItem[] = [
-  { title: "Company Announcements", sub: "What's happening across Edge8, in one feed.", ico: "◈" },
+  { title: "Company Announcements", sub: "What's happening across TeddyBed OS, in one feed.", ico: "◈" },
   { title: "HR Handbook", sub: "Policies, ways of working, and how we do things.", ico: "▤" },
   { title: "Health Insurance", sub: "Your coverage and how to make a claim.", ico: "♥" },
   { title: "1-1 Schedule", sub: "Your biweekly time with your manager, prepped and tracked.", ico: "◷" },
@@ -198,7 +198,7 @@ export default async function TeamHome() {
           <span className="admin-glance-value">{profile?.managerName || "—"}</span>
         </div>
         <div className="admin-glance-cell">
-          <span className="admin-glance-label brand-label">With Edge8 since</span>
+          <span className="admin-glance-label brand-label">With TeddyBed OS since</span>
           <span className="admin-glance-value">{profile?.start_date ? formatDate(profile.start_date) : "—"}</span>
         </div>
       </div>

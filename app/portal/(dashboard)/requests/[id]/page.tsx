@@ -105,7 +105,7 @@ export default async function PortalRequestDetailPage({ params }: { params: { id
                 <div className="u-row">
                   <strong>{EVENT_LABEL[e.type] ?? humanize(e.type)}</strong>
                   <span className="admin-cell-muted">
-                    {e.actorType === "client" ? "You" : e.actorType === "contractor" ? r.contractorName ?? "Contractor" : "Edge8"} ·{" "}
+                    {e.actorType === "client" ? "You" : e.actorType === "contractor" ? r.contractorName ?? "Contractor" : "TeddyBed OS"} ·{" "}
                     {timeAgo(e.createdAt)}
                   </span>
                 </div>

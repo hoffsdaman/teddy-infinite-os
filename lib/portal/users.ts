@@ -1,15 +1,15 @@
 // Client-side user management (PR 3): a portal ADMIN manages their own
 // company's users. Every function re-checks the caller holds the admin role
 // for the target company (lib/portal/roles.ts) before touching anything, and
-// all provisioning runs through the same engine the Edge8 admin UI uses
+// all provisioning runs through the same engine the TeddyBed OS admin UI uses
 // (lib/admin/portal-invite.ts): auth user minted once, scanner-proof invite
 // email via /portal/verify, revoke bans the auth user on last membership.
 //
 // Guards beyond the role gate:
 //   - a client admin can only ever act inside their own company scope
-//   - invites can never target Edge8 admins or active team members
+//   - invites can never target TeddyBed OS admins or active team members
 //     (loadPortalTarget refuses both)
-//   - you cannot revoke or re-role yourself (no self-lockout; Edge8 does that)
+//   - you cannot revoke or re-role yourself (no self-lockout; TeddyBed OS does that)
 
 import { companyOs } from "@/lib/supabase";
 import type { PortalActor } from "@/lib/portal-auth";
@@ -119,7 +119,7 @@ export async function inviteCompanyUser(
   if (existing && !existing.archived_at) {
     personId = existing.id as string;
   } else if (existing?.archived_at) {
-    return { ok: false, error: "This email belongs to an archived contact. Ask Edge8 to restore it." };
+    return { ok: false, error: "This email belongs to an archived contact. Ask TeddyBed OS to restore it." };
   } else {
     const { data: created, error } = await companyOs
       .from("people")
@@ -166,7 +166,7 @@ export async function revokeCompanyUser(
 ): Promise<Result> {
   if (!isPortalAdmin(actor, input.companyId)) return { ok: false, error: ROLE_DENIED };
   if (input.personId === actor.personId) {
-    return { ok: false, error: "You cannot revoke your own access. Ask Edge8." };
+    return { ok: false, error: "You cannot revoke your own access. Ask TeddyBed OS." };
   }
   if (!(await memberOfCompany(input.personId, input.companyId))) {
     return { ok: false, error: "Not a member of your company." };
@@ -181,7 +181,7 @@ export async function setCompanyUserRole(
   if (!isPortalAdmin(actor, input.companyId)) return { ok: false, error: ROLE_DENIED };
   if (!isAssignableRole(input.role)) return { ok: false, error: "Unknown role." };
   if (input.personId === actor.personId) {
-    return { ok: false, error: "You cannot change your own role. Ask Edge8." };
+    return { ok: false, error: "You cannot change your own role. Ask TeddyBed OS." };
   }
   const { data, error } = await companyOs
     .from("portal_members")

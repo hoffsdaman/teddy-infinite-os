@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 // submissions, and admin notes. Never listed, never indexed.
 
 export const metadata: Metadata = {
-  title: "Work request — Edge8",
+  title: "Work request — TeddyBed OS",
   robots: { index: false },
 };
 
@@ -45,11 +45,11 @@ const EVENT_LABEL: Record<string, string> = {
   estimate_resubmitted: "You resubmitted your estimate",
   approved: "Estimate approved — go ahead",
   rejected: "Request closed (not approved)",
-  info_requested: "Edge8 asked for changes",
+  info_requested: "TeddyBed OS asked for changes",
   scope_added: "New scope added",
   work_submitted: "You submitted your work",
   accepted: "Work accepted",
-  message: "Note from Edge8",
+  message: "Note from TeddyBed OS",
   cancelled: "Request cancelled",
 };
 
@@ -93,7 +93,7 @@ export default async function WorkRequestPage({ params }: { params: { token: str
   return (
     <main className={styles.page}>
       <div className={styles.card}>
-        <div className={`${styles.eyebrow} brand-label`}>Edge8 work request</div>
+        <div className={`${styles.eyebrow} brand-label`}>TeddyBed OS work request</div>
         <h1 className={styles.title}>{req.title}</h1>
         <p className={styles.meta}>Hi {first} — this page is your private workspace for this job.</p>
 
@@ -104,7 +104,7 @@ export default async function WorkRequestPage({ params }: { params: { token: str
 
         {req.status === "changes_requested" && (
           <div className={`${styles.notice} ${styles.noticeWarn}`}>
-            Edge8 asked for changes to your estimate{latestAdminNote ? ":" : "."}
+            TeddyBed OS asked for changes to your estimate{latestAdminNote ? ":" : "."}
             {latestAdminNote && <div className={styles.adminNote}>{latestAdminNote}</div>}
           </div>
         )}
@@ -128,7 +128,7 @@ export default async function WorkRequestPage({ params }: { params: { token: str
 
         {req.status === "estimate_submitted" && (
           <div className={styles.notice}>
-            Your estimate ({formatHours(req.estimated_hours)}) is in — Edge8 is reviewing it. You&rsquo;ll get an
+            Your estimate ({formatHours(req.estimated_hours)}) is in — TeddyBed OS is reviewing it. You&rsquo;ll get an
             email when there&rsquo;s a decision.
           </div>
         )}
@@ -150,7 +150,7 @@ export default async function WorkRequestPage({ params }: { params: { token: str
           <div className={styles.notice}>
             Your work ({formatHours(req.actual_hours)}
             {Number(req.actual_overtime_hours) > 0 ? ` + ${formatHours(req.actual_overtime_hours)} OT` : ""}) is
-            submitted — Edge8 is reviewing it. You&rsquo;ll get an email when it&rsquo;s accepted.
+            submitted — TeddyBed OS is reviewing it. You&rsquo;ll get an email when it&rsquo;s accepted.
           </div>
         )}
 

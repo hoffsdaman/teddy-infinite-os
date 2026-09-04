@@ -13,14 +13,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await getUnifiedPostBySlug(params.slug)
   if (!post) return {}
-  // DB posts carry a purpose-built title tag; static posts keep the "| Edge8 Blog" convention.
-  const title = post.titleTag && post.titleTag.length > 0 ? post.titleTag : `${post.title} | Edge8 Blog`
+  // DB posts carry a purpose-built title tag; static posts keep the "| TeddyBed OS Blog" convention.
+  const title = post.titleTag && post.titleTag.length > 0 ? post.titleTag : `${post.title} | TeddyBed OS Blog`
   // Prefer a real meta description / excerpt; fall back so Google never sees "8 min read · Innovation"
   const description = (post.metaDescription && post.metaDescription.length > 30)
     ? post.metaDescription.slice(0, 160)
     : (post.excerpt && post.excerpt.length > 30)
       ? post.excerpt.slice(0, 160)
-      : `${post.title}. ${post.readTime} on AI and business by Edge8.`
+      : `${post.title}. ${post.readTime} on AI and business by TeddyBed OS.`
   const canonical = `/post/${post.slug}/`
   return {
     title,

@@ -23,10 +23,10 @@ type MeetingRowLike = {
 };
 
 // Client Hub meetings tab. Read-only list of meetings with their publish state.
-// When `publishAction` is supplied (Edge8 surfaces), each row gets a Publish /
+// When `publishAction` is supplied (TeddyBed OS surfaces), each row gets a Publish /
 // Unpublish control; on client-facing surfaces it is omitted and the caller
 // passes only already-published meetings. When `programAction` and
-// `programOptions` are also supplied (same Edge8 surfaces), each row gets a
+// `programOptions` are also supplied (same TeddyBed OS surfaces), each row gets a
 // small AI Program select ("Company-wide" = no tag), the same pattern as the
 // documents tab. Client-facing renders show a tagged row's program name as
 // muted text instead.

@@ -114,7 +114,7 @@ export async function GET(req: Request) {
     </div>`;
     const ok = await sendTransactionalEmail({
       to: person.email,
-      subject: `Your Edge8 boards: ${n} open task${n === 1 ? "" : "s"}`,
+      subject: `Your TeddyBed OS boards: ${n} open task${n === 1 ? "" : "s"}`,
       html,
       logMeta: { kind: "board-digest", count: n },
     });

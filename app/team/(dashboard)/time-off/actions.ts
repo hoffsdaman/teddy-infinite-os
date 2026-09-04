@@ -56,7 +56,7 @@ export async function requestOwnTimeOff(input: {
   if (input.isHalfDay && input.startDate !== input.endDate)
     return { ok: false, error: "A half day must be a single date." };
 
-  // Approval mode follows the actor's leave policy (Edge8 Core Team
+  // Approval mode follows the actor's leave policy (TeddyBed OS Core Team
   // auto-approves; On Target stays manual). Resolved server-side — the client
   // never gets to pick its own approval path. Auto-approved rows are stamped
   // approved_at with approved_by left null: "approved by policy, not a person"
@@ -92,7 +92,7 @@ export async function requestOwnTimeOff(input: {
   ).catch(() => {});
 
   // The approver is the client manager on this person's placement when there
-  // is one, else their Edge8 manager (lib/time-off/approver.ts). The client's
+  // is one, else their TeddyBed OS manager (lib/time-off/approver.ts). The client's
   // portal admins are copied for visibility only — and their copy carries NO
   // reason: the plan's privacy line is that the free-text reason reaches the
   // one person deciding, nobody else.
@@ -125,8 +125,8 @@ export async function requestOwnTimeOff(input: {
         html: body({
           withReason: true,
           where: isClient
-            ? "It is waiting for your decision in the Edge8 client portal, under Time Off."
-            : "It is awaiting approval in the Edge8 admin under Operations &gt; Time Off.",
+            ? "It is waiting for your decision in the TeddyBed OS client portal, under Time Off."
+            : "It is awaiting approval in the TeddyBed OS admin under Operations &gt; Time Off.",
           link: isClient ? portalLink : "",
         }),
       });

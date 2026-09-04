@@ -21,7 +21,7 @@ export function OnboardingWalkthrough({
   const steps: Step[] = [
     {
       ico: "◈",
-      title: `Welcome to 8 Edges, ${name}`,
+      title: `Welcome to TeddyBed OS, ${name}`,
       body: "This is your workspace — time off, your profile, the team, and the ideas that shape what we build. Two minutes and you're set up.",
     },
     {

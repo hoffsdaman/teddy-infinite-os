@@ -13,7 +13,7 @@ const SIZE_LABEL: Record<string, string> = {
 };
 
 // One card per company the actor administers. Everything here is shared with
-// Edge8: the same row powers invoicing and your account team's view, so the
+// TeddyBed OS: the same row powers invoicing and your account team's view, so the
 // page says so rather than pretending it is a private copy.
 export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
   const router = useRouter();
@@ -60,7 +60,7 @@ export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
         <h2 className="admin-card-title">{initial.name}</h2>
         {(since || initial.clientTypes.length > 0) && (
           <p className="admin-page-sub u-mt-0">
-            {since && `With Edge8 since ${since}.`}
+            {since && `With TeddyBed OS since ${since}.`}
             {initial.clientTypes.length > 0 && ` ${initial.clientTypes.join(" · ")}`}
           </p>
         )}

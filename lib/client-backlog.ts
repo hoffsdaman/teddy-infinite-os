@@ -41,7 +41,7 @@ export type RoadmapGroup = {
 export const ROADMAP_GROUPS_SELECT =
   "id, company_id, ai_program_id, key, step_label, title, intro, sort_order, archived_at";
 
-// The classic Edge8 5-milestone roadmap, offered as a one-click starting point for a
+// The classic TeddyBed OS 5-milestone roadmap, offered as a one-click starting point for a
 // new client. Not a constraint: any group can be renamed or archived after
 // seeding, and roadmaps can be built from scratch without it.
 export const ROADMAP_TEMPLATE: Array<
@@ -124,13 +124,13 @@ export const BACKLOG_SELECT =
   "status, sort_order, client_sort_order, archived_at, created_at, updated_at";
 
 // The order an item sits at in the client's view: their dragged order when set,
-// otherwise Edge8's sort_order.
+// otherwise TeddyBed OS's sort_order.
 export function effectiveSort(item: Pick<BacklogItem, "sort_order" | "client_sort_order">): number {
   return item.client_sort_order ?? item.sort_order;
 }
 
 // The priority actually in effect for a row: the client's choice wins when set,
-// otherwise Edge8's proposal stands.
+// otherwise TeddyBed OS's proposal stands.
 export function effectivePriority(item: Pick<BacklogItem, "edge8_priority" | "client_priority">): BacklogPriority {
   return item.client_priority ?? item.edge8_priority;
 }

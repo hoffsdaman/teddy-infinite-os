@@ -35,7 +35,7 @@ export type InvoiceListRow = {
 export const INVOICE_SELECT =
   "id, external_id, entity, doc_number, txn_date, due_date, currency, amount_cents, balance_cents, status, memo, customer_name, lines, company_id, companies(name, person_companies(is_primary, people(id, full_name)))";
 
-export const ENTITY_LABEL: Record<InvoiceEntity, string> = { edge8: "Edge8", aio: "AIO" };
+export const ENTITY_LABEL: Record<InvoiceEntity, string> = { edge8: "TeddyBed OS", aio: "AIO" };
 
 // Same convention as portal-assume: the is_primary link wins, else the first.
 export function primaryContact(row: InvoiceListRow): { id: string; full_name: string | null } | null {

@@ -102,7 +102,7 @@ export default async function PortalTimeOffPage() {
                     <td>
                       <span className="admin-cell-strong">{r.fullName || "Team member"}</span>
                     </td>
-                    <td>{r.approverName || "Edge8"}</td>
+                    <td>{r.approverName || "TeddyBed OS"}</td>
                     <td>{r.team || muted}</td>
                     <td>{r.location || muted}</td>
                     <td>{r.leavePolicy || muted}</td>
