@@ -77,11 +77,11 @@ export default async function InquiriesPage() {
         sub={`${cards.length} open · contact-us intake, drag a card to change stage`}
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error.message}
         </div>
       )}
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="New" value={kpis.fresh} sub="unworked" />
         <MetricCard label="Contacted" value={kpis.contacted} />
         <MetricCard label="Promoted to lead" value={kpis.promoted} sub="in the SDR queue" />

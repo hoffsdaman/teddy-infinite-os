@@ -125,7 +125,7 @@ export function BrandProfileTabs({ profile }: { profile: BrandProfile }) {
       <div className="admin-tab-panel">
         <section className="admin-card admin-section-card">
           {note && (
-            <div className={`admin-alert admin-alert--${note.tone}`} style={{ marginBottom: 12 }}>
+            <div className={`admin-alert admin-alert--${note.tone} u-mb-3`}>
               {note.text}
             </div>
           )}
@@ -189,13 +189,13 @@ function StyleGroup({
   return (
     <div className="admin-field">
       <span className="admin-label">{title}</span>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 6 }}>
+      <div className="u-stack u-mt-2">
         {options.map((o) => (
-          <label key={o.value} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-            <input type="checkbox" checked={selected.includes(o.value)} onChange={() => onToggle(o.value)} style={{ marginTop: 3 }} />
+          <label key={o.value} className="u-row-top">
+            <input type="checkbox" checked={selected.includes(o.value)} onChange={() => onToggle(o.value)} className="u-mt-1" />
             <span>
-              <strong style={{ fontWeight: 600 }}>{o.label}</strong>
-              <span className="admin-hint" style={{ display: "inline", marginLeft: 6 }}>{o.desc}</span>
+              <strong className="u-strong">{o.label}</strong>
+              <span className="admin-hint u-inline u-ml-2">{o.desc}</span>
             </span>
           </label>
         ))}

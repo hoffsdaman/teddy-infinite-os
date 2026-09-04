@@ -63,12 +63,11 @@ export function NewEventButton() {
       {open && (
         <div className="admin-modal-backdrop" onClick={close}>
           <div
-            className="admin-modal"
+            className="admin-modal u-max-6"
             role="dialog"
             aria-modal="true"
             aria-label="New event"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: 480 }}
           >
             <div className="admin-modal-title">New event</div>
             <form
@@ -84,7 +83,7 @@ export function NewEventButton() {
                 <label className="admin-label">Title</label>
                 <input className="admin-input" value={title} onChange={(e) => setTitle(e.target.value)} required autoFocus />
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div className="u-grid-2 u-gap-3">
                 <div className="admin-field">
                   <label className="admin-label">Type</label>
                   <select className="admin-select" value={type} onChange={(e) => setType(e.target.value as EventType)}>
@@ -110,7 +109,7 @@ export function NewEventButton() {
                   </select>
                 </div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div className="u-grid-2 u-gap-3">
                 <div className="admin-field">
                   <label className="admin-label">Start date</label>
                   <input className="admin-input" type="date" value={startsAt} onChange={(e) => setStartsAt(e.target.value)} />
@@ -120,7 +119,7 @@ export function NewEventButton() {
                   <input className="admin-input" type="date" value={endsAt} onChange={(e) => setEndsAt(e.target.value)} />
                 </div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div className="u-grid-2 u-gap-3">
                 <div className="admin-field">
                   <label className="admin-label">Location</label>
                   <input className="admin-input" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, Country" />

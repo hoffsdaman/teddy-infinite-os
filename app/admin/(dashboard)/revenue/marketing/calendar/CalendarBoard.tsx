@@ -38,17 +38,17 @@ export function CalendarBoard({
           {c.parentId && titleById.has(c.parentId) && (
             <div className="admin-kanban-card-sub">↳ from {titleById.get(c.parentId)}</div>
           )}
-          <div className="admin-kanban-card-meta" style={{ marginTop: 6 }}>
+          <div className="admin-kanban-card-meta u-mt-2">
             <span
               className="admin-cal-chip"
-              style={{ background: CHANNEL_ACCENT[c.channel], color: "var(--color-bg-primary)" }}
+              style={{ background: CHANNEL_ACCENT[c.channel], color: "var(--color-bg-primary)" }} /* layout-ok: channel accent is a token var chosen at runtime */
             >
               {CHANNEL_LABEL[c.channel]}
             </span>
             {c.brandName && <Badge>{c.brandName}</Badge>}
             {c.pillarName && <Badge tone="info">{c.pillarName}</Badge>}
             {c.broadcastStatus && <Badge tone={statusTone(c.broadcastStatus)}>{c.broadcastStatus}</Badge>}
-            <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
+            <span className="admin-kanban-card-sub u-ml-auto">
               {c.publishDate ? formatDate(c.publishDate) : "no date"}
             </span>
           </div>

@@ -74,14 +74,14 @@ export default async function BroadcastDetailPage({ params }: { params: { id: st
       {hasSent && (
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Results</div>
-          <div className="admin-kpi-grid" style={{ marginTop: 12, marginBottom: 0 }}>
+          <div className="admin-kpi-grid u-mt-3 u-mb-0">
             <MetricCard label="Delivered" value={stats.delivered.toLocaleString()} />
             <MetricCard label="Bounced" value={stats.bounced.toLocaleString()} />
             <MetricCard label="Opened" value={stats.opened.toLocaleString()} />
             <MetricCard label="Clicked" value={stats.clicked.toLocaleString()} />
           </div>
           {stats.delivered === 0 && (
-            <div className="admin-hint" style={{ marginTop: 10 }}>
+            <div className="admin-hint u-mt-3">
               Delivery data arrives from the Resend webhook. If these stay at zero after a send,
               the webhook is not registered or RESEND_WEBHOOK_SECRET is missing.
             </div>
@@ -93,7 +93,7 @@ export default async function BroadcastDetailPage({ params }: { params: { id: st
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Recipients</div>
-        <div className="admin-table-wrap" style={{ marginTop: 12 }}>
+        <div className="admin-table-wrap u-mt-3">
           {recipients.length === 0 ? (
             <div className="admin-empty">
               No recipients yet. Pick an audience above and build the list.

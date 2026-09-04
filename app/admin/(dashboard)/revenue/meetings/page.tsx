@@ -85,7 +85,7 @@ export default async function MeetingsPage({ searchParams }: { searchParams: Sea
           </Link>
         }
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <DataTable
         columns={columns}
         rows={rows}

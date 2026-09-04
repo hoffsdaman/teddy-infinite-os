@@ -59,7 +59,7 @@ export function EventManage({ event }: { event: EventRow }) {
 
   return (
     <>
-      <dl className="admin-kv" style={{ marginBottom: 16 }}>
+      <dl className="admin-kv u-mb-4">
         <dt>Status</dt>
         <dd>{eventStatusBadge(event.status, event.archivedAt)}</dd>
         <dt>Type</dt>
@@ -92,7 +92,7 @@ export function EventManage({ event }: { event: EventRow }) {
             {qrs.feedback ? (
               <QrBlock title="Feedback survey" link={qrs.feedback} downloadName={`${event.slug}-feedback-qr.png`} />
             ) : (
-              <div style={{ marginTop: 14 }}>
+              <div className="u-mt-4">
                 <SectionLabel>Feedback survey</SectionLabel>
                 <div className="admin-empty">No survey linked yet — pick one in Settings on the event page.</div>
               </div>
@@ -106,7 +106,7 @@ export function EventManage({ event }: { event: EventRow }) {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="admin-cell-muted" style={{ marginBottom: 6, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+    <div className="admin-cell-muted u-mb-2 u-label">
       {children}
     </div>
   );
@@ -115,22 +115,22 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function QrBlock({ title, link, downloadName }: { title: string; link: QrLink; downloadName: string }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div style={{ marginTop: 14 }}>
+    <div className="u-mt-4">
       <SectionLabel>{title}</SectionLabel>
-      <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+      <div className="u-row-top u-gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={link.png}
           alt={`QR code for ${link.url}`}
           width={96}
           height={96}
-          style={{ borderRadius: 8, border: "1px solid var(--admin-line)" }}
+          className="admin-box"
         />
-        <div style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
-          <code className="admin-cell-mono" style={{ wordBreak: "break-all" }}>
+        <div className="u-stack u-min-0">
+          <code className="admin-cell-mono u-break-all">
             {link.url}
           </code>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="u-row">
             <button
               type="button"
               className="admin-btn"

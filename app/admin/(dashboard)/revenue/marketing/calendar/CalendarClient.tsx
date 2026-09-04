@@ -91,7 +91,7 @@ export function CalendarClient({
   return (
     <>
       {banner && (
-        <div className={`admin-alert ${banner.ok ? "admin-alert--ok" : "admin-alert--err"}`} style={{ marginBottom: 12 }}>
+        <div className={`admin-alert ${banner.ok ? "admin-alert--ok" : "admin-alert--err"} u-mb-3`}>
           {banner.text}
         </div>
       )}
@@ -107,7 +107,7 @@ export function CalendarClient({
       </section>
 
       {pillars.length > 0 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "0 0 14px" }}>
+        <div className="u-row u-wrap u-m-0 u-mb-4">
           <button
             type="button"
             className={`admin-btn admin-btn--sm${pillarFilter === null ? " admin-btn--primary" : ""}`}
@@ -129,7 +129,7 @@ export function CalendarClient({
       )}
 
       {campaigns.length > 0 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "0 0 14px" }}>
+        <div className="u-row u-wrap u-m-0 u-mb-4">
           <button
             type="button"
             className={`admin-btn admin-btn--sm${campaignFilter === "" ? " admin-btn--primary" : ""}`}

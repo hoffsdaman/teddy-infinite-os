@@ -32,14 +32,13 @@ export default async function BrandsPage() {
             <Link
               key={b.brandId}
               href={`/admin/revenue/marketing/brands/${b.brandSlug}`}
-              className="admin-card admin-section-card"
-              style={{ textDecoration: "none", color: "inherit", display: "block" }}
+              className="admin-card admin-section-card u-block u-link-plain"
             >
               <div className="admin-card-title">{b.brandName}</div>
-              <p className="admin-page-sub" style={{ marginTop: 6 }}>
+              <p className="admin-page-sub u-mt-2">
                 {b.positioning ?? "No profile yet."}
               </p>
-              <span className="admin-btn admin-btn--sm" style={{ marginTop: 12 }}>
+              <span className="admin-btn admin-btn--sm u-mt-3">
                 Edit profile
               </span>
             </Link>

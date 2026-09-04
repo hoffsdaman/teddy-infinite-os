@@ -102,8 +102,8 @@ export function ReferrerField({
   }
 
   return (
-    <div style={{ marginBottom: 16 }}>
-      <div className="admin-label" style={{ marginBottom: 6 }}>
+    <div className="u-mb-4">
+      <div className="admin-label u-mb-2">
         Referrer
       </div>
 
@@ -137,20 +137,14 @@ export function ReferrerField({
           />
           {term.trim().length >= 2 && (
             <div
-              style={{
-                border: "1px solid var(--admin-line)",
-                borderRadius: 8,
-                overflow: "hidden",
-                maxHeight: 220,
-                overflowY: "auto",
-              }}
+              className="admin-scroll-sm admin-box"
             >
               {searching ? (
-                <div className="admin-hint" style={{ padding: "8px 10px" }}>
+                <div className="admin-hint u-p-2">
                   Searching…
                 </div>
               ) : hits.length === 0 ? (
-                <div className="admin-hint" style={{ padding: "8px 10px" }}>
+                <div className="admin-hint u-p-2">
                   No matching contacts. Add them as a new contact below.
                 </div>
               ) : (
@@ -211,7 +205,7 @@ export function ReferrerField({
       )}
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {err}
         </div>
       )}
@@ -286,8 +280,8 @@ export function ReferrerCompanyField({
   }
 
   return (
-    <div style={{ marginBottom: 16 }}>
-      <div className="admin-label" style={{ marginBottom: 6 }}>
+    <div className="u-mb-4">
+      <div className="admin-label u-mb-2">
         Referring company
       </div>
 
@@ -321,20 +315,14 @@ export function ReferrerCompanyField({
           />
           {term.trim().length >= 2 && (
             <div
-              style={{
-                border: "1px solid var(--admin-line)",
-                borderRadius: 8,
-                overflow: "hidden",
-                maxHeight: 220,
-                overflowY: "auto",
-              }}
+              className="admin-scroll-sm admin-box"
             >
               {searching ? (
-                <div className="admin-hint" style={{ padding: "8px 10px" }}>
+                <div className="admin-hint u-p-2">
                   Searching…
                 </div>
               ) : hits.length === 0 ? (
-                <div className="admin-hint" style={{ padding: "8px 10px" }}>
+                <div className="admin-hint u-p-2">
                   No matching companies.
                 </div>
               ) : (
@@ -361,7 +349,7 @@ export function ReferrerCompanyField({
       )}
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {err}
         </div>
       )}
@@ -408,8 +396,8 @@ export function DealCommunications({ dealId }: { dealId: string }) {
   }
 
   return (
-    <div style={{ marginTop: 18 }}>
-      <div className="admin-label" style={{ marginBottom: 6 }}>
+    <div className="u-mt-4">
+      <div className="admin-label u-mb-2">
         Communications
       </div>
 
@@ -422,13 +410,13 @@ export function DealCommunications({ dealId }: { dealId: string }) {
           onChange={(e) => setBody(e.target.value)}
         />
       </div>
-      <div className="admin-form-actions" style={{ marginBottom: 12 }}>
+      <div className="admin-form-actions u-mb-3">
         <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={add} disabled={saving || !body.trim()}>
           {saving ? "Adding…" : "Add communication"}
         </button>
       </div>
       {saveErr && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {saveErr}
         </div>
       )}
@@ -444,15 +432,12 @@ export function DealCommunications({ dealId }: { dealId: string }) {
           {items.map((c) => (
             <li
               key={c.id}
-              style={{
-                borderLeft: "2px solid var(--admin-line-strong)",
-                paddingLeft: 10,
-              }}
+              className="admin-quote"
             >
-              <div className="admin-cell-muted" style={{ marginBottom: 2 }}>
+              <div className="admin-cell-muted u-mb-1">
                 {humanize(c.kind)} · {formatDate(c.occurredAt)}
               </div>
-              <div style={{ whiteSpace: "pre-wrap" }}>{c.body || c.subject || "—"}</div>
+              <div className="u-prewrap">{c.body || c.subject || "—"}</div>
             </li>
           ))}
         </ul>

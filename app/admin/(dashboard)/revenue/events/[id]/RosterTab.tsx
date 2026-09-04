@@ -86,8 +86,8 @@ export function RosterTab({
 
   return (
     <div>
-      <div className="admin-toolbar" style={{ justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="admin-toolbar u-gap-3 u-between u-wrap">
+        <div className="u-row">
           <button type="button" className="admin-btn admin-btn--primary" onClick={() => setShowAdd((v) => !v)}>
             {showAdd ? "Cancel" : "Add registration"}
           </button>
@@ -114,15 +114,14 @@ export function RosterTab({
 
       {showAdd && (
         <form
-          className="admin-form"
-          style={{ marginBottom: 16 }}
+          className="admin-form u-mb-4"
           onSubmit={(e) => {
             e.preventDefault();
             submitAdd();
           }}
         >
           {msg && <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`}>{msg.text}</div>}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">Email</label>
               <input className="admin-input" type="email" required value={addEmail} onChange={(e) => setAddEmail(e.target.value)} />
@@ -132,7 +131,7 @@ export function RosterTab({
               <input className="admin-input" value={addName} onChange={(e) => setAddName(e.target.value)} />
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+          <div className="u-grid-3 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">Phone</label>
               <input className="admin-input" value={addPhone} onChange={(e) => setAddPhone(e.target.value)} />
@@ -171,7 +170,7 @@ export function RosterTab({
                 <th>Tier</th>
                 <th>Status</th>
                 <th>Payment</th>
-                <th style={{ textAlign: "right" }}>Guests</th>
+                <th className="u-right">Guests</th>
                 <th>Registered</th>
                 <th>Checked in</th>
                 <th></th>
@@ -195,7 +194,7 @@ export function RosterTab({
                       ) : (
                         <span className="admin-cell-strong">{r.name || r.email || "Attendee"}</span>
                       )}
-                      <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                      <div className="admin-cell-muted u-sm">
                         {r.email}
                         {r.ticketCode ? ` · ${r.ticketCode}` : ""}
                       </div>
@@ -210,7 +209,7 @@ export function RosterTab({
                     <td>
                       <PaymentCell eventId={eventId} reg={r} onDone={() => router.refresh()} />
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.guestCount}
                     </td>
                     <td>{formatDate(r.createdAt)}</td>
@@ -301,11 +300,10 @@ function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterReg
   }
 
   return (
-    <span style={{ display: "inline-flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+    <span className="u-row u-wrap">
       <span>$</span>
       <input
-        className="admin-input"
-        style={{ width: 90 }}
+        className="admin-input u-w-90"
         type="number"
         min={0}
         step="0.01"
@@ -324,7 +322,7 @@ function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterReg
       <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => setEditing(false)}>
         ✕
       </button>
-      {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+      {err && <span className="u-sm u-err">{err}</span>}
     </span>
   );
 }

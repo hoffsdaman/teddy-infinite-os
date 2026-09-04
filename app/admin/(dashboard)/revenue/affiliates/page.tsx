@@ -36,7 +36,7 @@ export default async function AffiliatesPage() {
         sub={`${groups.length} ${groups.length === 1 ? "affiliate" : "affiliates"}`}
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Pipeline" value={formatCents(pipeline, "usd")} sub="open referred deals" />
         <MetricCard label="Converted" value={formatCents(converted, "usd")} sub="referred revenue that paid" />
         <MetricCard label="Commissions awarded" value={formatCents(commissionsAwarded, "usd")} sub="earned by affiliates" />
@@ -54,16 +54,16 @@ export default async function AffiliatesPage() {
               <tr>
                 <th>Affiliate</th>
                 <th>Codes</th>
-                <th style={{ textAlign: "right" }}>Referred deals</th>
-                <th style={{ textAlign: "right" }}>Referred pipeline</th>
-                <th style={{ textAlign: "right" }}>Unpaid</th>
+                <th className="u-right">Referred deals</th>
+                <th className="u-right">Referred pipeline</th>
+                <th className="u-right">Unpaid</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {groups.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="admin-cell-muted" style={{ textAlign: "center", padding: 24 }}>
+                  <td colSpan={6} className="admin-cell-muted u-p-5 u-center-text">
                     No affiliates yet.
                   </td>
                 </tr>
@@ -71,7 +71,7 @@ export default async function AffiliatesPage() {
                 groups.map((g) => (
                   <AffiliateShelfRow row={g} key={g.groupKey}>
                     <td>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                      <span className="u-row u-wrap">
                         <span className="admin-cell-strong">{g.fullName || g.email}</span>
                         {g.kind === "company" && <Badge tone="info">Company</Badge>}
                       </span>
@@ -80,15 +80,15 @@ export default async function AffiliatesPage() {
                     <td className="admin-cell-mono">
                       {g.codes.filter((c) => c.active).map((c) => c.code).join(", ") || <span className="admin-cell-muted">—</span>}
                     </td>
-                    <td style={{ textAlign: "right" }}>{g.referredDealCount || <span className="admin-cell-muted">0</span>}</td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="u-right">{g.referredDealCount || <span className="admin-cell-muted">0</span>}</td>
+                    <td className="admin-cell-mono u-right">
                       {g.referredOpenPipelineCents ? formatCents(g.referredOpenPipelineCents, "usd") : <span className="admin-cell-muted">—</span>}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {g.unpaidCents ? formatCents(g.unpaidCents, "usd") : <span className="admin-cell-muted">—</span>}
                     </td>
                     <td>
-                      <span style={{ display: "inline-flex", gap: 4, flexWrap: "wrap" }}>
+                      <span className="u-row u-wrap">
                         {g.active ? <Badge tone="ok">Active</Badge> : <Badge tone="neutral">Inactive</Badge>}
                         {g.pendingCount > 0 && <Badge tone="warn">{g.pendingCount} pending</Badge>}
                       </span>

@@ -242,7 +242,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
 
   const overview = (
     <>
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard
           label="Registered"
           value={event.capacity ? `${effectiveRegistered} / ${event.capacity}` : String(effectiveRegistered)}
@@ -254,22 +254,22 @@ export default async function EventDetailPage({ params }: { params: { id: string
       </div>
 
       {(accessCode || feedback.length > 0) && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 20 }}>
+        <div className="u-grid-auto-md u-mb-5">
           {accessCode && (
             <div className="admin-card admin-section-card">
               <div className="admin-card-title">My Retreat access</div>
-              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="u-stack u-mt-3">
                 <div>
-                  <div className="admin-cell-muted" style={{ fontSize: 12 }}>Access code</div>
-                  <code className="admin-cell-mono" style={{ fontSize: 20, fontWeight: 700 }}>{accessCode}</code>
+                  <div className="admin-cell-muted u-sm">Access code</div>
+                  <code className="admin-cell-mono admin-code-lg">{accessCode}</code>
                 </div>
                 <div>
-                  <div className="admin-cell-muted" style={{ fontSize: 12 }}>Guest link</div>
-                  <a className="admin-cell-mono" href={myRetreatUrl} target="_blank" rel="noopener noreferrer" style={{ wordBreak: "break-all" }}>
+                  <div className="admin-cell-muted u-sm">Guest link</div>
+                  <a className="admin-cell-mono u-break-all" href={myRetreatUrl} target="_blank" rel="noopener noreferrer">
                     {origin}/my-retreat
                   </a>
                 </div>
-                <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                <div className="admin-cell-muted u-sm">
                   Guests enter the code, then their email, to open their itinerary and surveys.
                 </div>
               </div>
@@ -278,15 +278,15 @@ export default async function EventDetailPage({ params }: { params: { id: string
           <div className="admin-card admin-section-card">
             <div className="admin-card-title">Feedback ({feedbackTotal})</div>
             {feedback.length === 0 ? (
-              <div className="admin-empty" style={{ marginTop: 10 }}>No survey responses yet for this event.</div>
+              <div className="admin-empty u-mt-3">No survey responses yet for this event.</div>
             ) : (
-              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="u-stack u-mt-3">
                 {feedback.map((f) => (
-                  <div key={f.id} style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "baseline" }}>
-                    <Link href={`/admin/operations/surveys/${f.id}`} style={{ fontWeight: 600 }}>
+                  <div key={f.id} className="u-row u-gap-3 u-between">
+                    <Link href={`/admin/operations/surveys/${f.id}`} className="u-strong">
                       {f.name}
                     </Link>
-                    <span className="admin-cell-muted" style={{ fontSize: 13, whiteSpace: "nowrap" }}>
+                    <span className="admin-cell-muted u-sm u-nowrap">
                       {f.count} {f.count === 1 ? "response" : "responses"}
                       {f.last ? ` · last ${formatDate(f.last)}` : ""}
                     </span>
@@ -298,7 +298,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: feedbackQr ? "1fr 1fr" : "1fr", gap: 20 }}>
+      <div className={feedbackQr ? "u-grid-2 u-gap-5" : "u-stack u-gap-5"}>
         <QrBlock title="Signup link" url={signupUrl} png={signupQr} downloadName={`${event.slug}-signup-qr.png`} />
         {feedbackQr && <QrBlock title="Feedback survey" url={feedbackQr.url} png={feedbackQr.png} downloadName={`${event.slug}-feedback-qr.png`} />}
       </div>
@@ -314,7 +314,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
               <th>Attendee</th>
               <th>Tier</th>
               <th>Order status</th>
-              <th style={{ textAlign: "right" }}>Amount</th>
+              <th className="u-right">Amount</th>
               <th>Placed</th>
             </tr>
           </thead>
@@ -335,7 +335,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
                     <td>
                       <Badge tone={statusTone(r.order!.status)}>{humanize(r.order!.status)}</Badge>
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {formatCents(r.order!.amountUsdCents, r.order!.currency ?? "usd")}
                     </td>
                     <td>{formatDate(r.order!.createdAt)}</td>
@@ -440,13 +440,13 @@ export default async function EventDetailPage({ params }: { params: { id: string
 function QrBlock({ title, url, png, downloadName }: { title: string; url: string; png: string; downloadName: string }) {
   return (
     <div>
-      <div className="admin-cell-muted" style={{ marginBottom: 6, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+      <div className="admin-cell-muted u-mb-2 u-label">
         {title}
       </div>
-      <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-        <img src={png} alt={`QR code for ${url}`} width={120} height={120} style={{ borderRadius: 8, border: "1px solid var(--admin-line)" }} />
-        <div style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
-          <code className="admin-cell-mono" style={{ wordBreak: "break-all" }}>
+      <div className="u-row-top u-gap-3">
+        <img src={png} alt={`QR code for ${url}`} width={120} height={120} className="admin-box" />
+        <div className="u-stack u-min-0">
+          <code className="admin-cell-mono u-break-all">
             {url}
           </code>
           <a className="admin-btn" href={png} download={downloadName}>

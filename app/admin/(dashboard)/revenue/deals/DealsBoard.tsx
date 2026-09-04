@@ -140,7 +140,7 @@ function NextStepLine({ card }: { card: DealCard }) {
   if (card.status !== "open") return null;
   if (!card.nextStepDate) {
     return (
-      <div className="admin-kanban-card-sub" style={{ color: "var(--admin-err-ink)", fontWeight: 600 }}>
+      <div className="admin-kanban-card-sub u-strong u-err">
         No next step
       </div>
     );
@@ -359,8 +359,8 @@ export function DealsBoard({
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flex: "1 1 auto", flexWrap: "wrap" }}>
+      <div className="u-row u-gap-3 u-between u-wrap u-mb-3">
+        <div className="u-row u-gap-3 u-wrap u-grow">
           <form className="admin-search" onSubmit={(e) => e.preventDefault()}>
             <svg className="admin-search-icon" viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="7" />
@@ -415,20 +415,20 @@ export function DealsBoard({
       </div>
 
       {banner && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {banner}
         </div>
       )}
       {notice && (
-        <div className="admin-alert admin-alert--ok" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--ok u-mb-3">
           {notice}
         </div>
       )}
 
       {pendingLost && (
-        <div className="admin-alert" style={{ marginBottom: 12, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <div className="admin-alert u-row u-wrap u-mb-3">
           <span>Why was this deal lost?</span>
-          <select className="admin-input" style={{ maxWidth: 200 }} value={reason} onChange={(e) => setReason(e.target.value)}>
+          <select className="admin-input admin-input--w-sm" value={reason} onChange={(e) => setReason(e.target.value)}>
             <option value="">Pick a reason…</option>
             {LOST_REASONS.map(([v, l]) => (
               <option key={v} value={v}>
@@ -454,11 +454,10 @@ export function DealsBoard({
       )}
 
       {pendingWon && (
-        <div className="admin-alert" style={{ marginBottom: 12, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <div className="admin-alert u-row u-wrap u-mb-3">
           <span>Final deal amount ({(cards.find((c) => c.id === pendingWon.cardId)?.currency ?? "usd").toUpperCase()})</span>
           <input
-            className="admin-input"
-            style={{ maxWidth: 140 }}
+            className="admin-input u-max-2"
             type="number"
             min="0"
             step="0.01"
@@ -507,10 +506,10 @@ export function DealsBoard({
                 })()}
               </div>
               {c.columnId === HANDOFF_COLUMN_ID && (
-                <div className="admin-kanban-card-handoff" style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }} onClick={(e) => e.stopPropagation()}>
+                <div className="admin-kanban-card-handoff u-row u-wrap u-mt-2" onClick={(e) => e.stopPropagation()}>
                   {rejecting === c.id ? (
                     <>
-                      <select className="admin-input" style={{ maxWidth: 150 }} value={reason} onChange={(e) => setReason(e.target.value)}>
+                      <select className="admin-input u-max-2" value={reason} onChange={(e) => setReason(e.target.value)}>
                         <option value="">Reason…</option>
                         {REJECT_REASONS.map(([v, l]) => (
                           <option key={v} value={v}>
@@ -796,12 +795,12 @@ export function DealDetail({
   return (
     <>
       {pendingHandoff && (
-        <div style={{ marginBottom: 16 }}>
-          <div className="admin-label" style={{ marginBottom: 6 }}>
+        <div className="u-mb-4">
+          <div className="admin-label u-mb-2">
             SDR handoff
           </div>
           {rejectingHandoff ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="u-stack">
               <select
                 className="admin-input"
                 aria-label="Reject reason"
@@ -815,7 +814,7 @@ export function DealDetail({
                   </option>
                 ))}
               </select>
-              <div style={{ display: "flex", gap: 8 }}>
+              <div className="u-row">
                 <button
                   type="button"
                   className="admin-btn admin-btn--danger"
@@ -830,7 +829,7 @@ export function DealDetail({
               </div>
             </div>
           ) : (
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="u-row u-wrap">
               <button
                 type="button"
                 className="admin-btn admin-btn--primary"
@@ -853,8 +852,8 @@ export function DealDetail({
         </div>
       )}
 
-      <div style={{ marginBottom: 16 }}>
-        <div className="admin-label" style={{ marginBottom: 6 }}>
+      <div className="u-mb-4">
+        <div className="admin-label u-mb-2">
           Stage
         </div>
         <select
@@ -887,12 +886,12 @@ export function DealDetail({
           ))}
         </select>
         {pendingHandoff && (
-          <div className="admin-hint" style={{ marginTop: 6 }}>
+          <div className="admin-hint u-mt-2">
             Choosing a stage accepts the SDR handoff.
           </div>
         )}
         {pendingLostStage && (
-          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="u-stack u-mt-2">
             <select
               className="admin-input"
               aria-label="Lost reason"
@@ -906,7 +905,7 @@ export function DealDetail({
                 </option>
               ))}
             </select>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="u-row">
               <button
                 type="button"
                 className="admin-btn admin-btn--danger"
@@ -925,7 +924,7 @@ export function DealDetail({
           </div>
         )}
         {pendingWonStage && (
-          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="u-stack u-mt-2">
             <div className="admin-field">
               <label className="admin-label">Final deal amount ({currency.toUpperCase()})</label>
               <input
@@ -939,7 +938,7 @@ export function DealDetail({
                 onChange={(e) => setWonAmount(e.target.value)}
               />
             </div>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="u-row">
               <button
                 type="button"
                 className="admin-btn admin-btn--primary"
@@ -960,14 +959,14 @@ export function DealDetail({
       </div>
 
       {!archived && !pendingHandoff && card.status === "open" && card.personId && (
-        <div style={{ marginBottom: 16 }}>
+        <div className="u-mb-4">
           <ConfirmButton
             className="admin-btn"
             label="Demote to lead"
             title="Send this deal back to the leads queue?"
             body={
               <>
-                <p style={{ marginBottom: 8 }}>
+                <p className="u-mb-2">
                   "{card.title || "This deal"}" moves back to the SDR queue as a lead. The deal is
                   archived, not deleted — restore it any time from the danger zone below.
                 </p>
@@ -990,7 +989,7 @@ export function DealDetail({
         </div>
       )}
 
-      <dl className="admin-kv" style={{ marginBottom: 16 }}>
+      <dl className="admin-kv u-mb-4">
         <dt>Status</dt>
         <dd>
           <Badge tone={statusTone(card.status ?? "")}>{humanize(card.status)}</Badge>
@@ -1042,7 +1041,7 @@ export function DealDetail({
       />
 
       <div className="admin-form">
-        <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+        <div className="u-row u-end u-sm">
           <AutosaveIndicator status={dealStatus} />
         </div>
         <div className="admin-field">
@@ -1054,7 +1053,7 @@ export function DealDetail({
             onBlur={(e) => dealCommit("title", e.target.value)}
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 10 }}>
+        <div className="u-grid-2-1">
           <div className="admin-field">
             <label className="admin-label">Amount</label>
             <input
@@ -1086,7 +1085,7 @@ export function DealDetail({
             </select>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="u-grid-2 u-gap-3">
           <div className="admin-field">
             <label className="admin-label">Probability %</label>
             <input
@@ -1170,13 +1169,13 @@ export function DealDetail({
 
       <DealCommunications dealId={card.id} />
 
-      <div className="admin-danger-zone" style={{ marginTop: 18 }}>
+      <div className="admin-danger-zone u-mt-4">
         <div className="admin-danger-zone-title">Danger zone</div>
         {archived ? (
           <div className="admin-danger-row">
             <span className="admin-danger-row-text">
               This deal is archived and hidden from the board.
-              {restoreErr && <div className="admin-alert admin-alert--err" style={{ marginTop: 6 }}>{restoreErr}</div>}
+              {restoreErr && <div className="admin-alert admin-alert--err u-mt-2">{restoreErr}</div>}
             </span>
             <button
               type="button"
@@ -1313,8 +1312,8 @@ function DealsList({
             stageLabel.get(c.columnId) ?? "—"
           )}
         </td>
-        <td style={{ textAlign: "right" }}>{formatCents(c.amountUsdCents, "usd")}</td>
-        <td style={{ textAlign: "right" }}>{c.probability != null ? `${c.probability}%` : "—"}</td>
+        <td className="u-right">{formatCents(c.amountUsdCents, "usd")}</td>
+        <td className="u-right">{c.probability != null ? `${c.probability}%` : "—"}</td>
         <td>
           {c.status !== "open" ? (
             <span className="admin-cell-muted">—</span>
@@ -1323,7 +1322,7 @@ function DealsList({
               {c.nextStep || "next step"} · {formatDate(c.nextStepDate)}
             </span>
           ) : (
-            <span style={{ color: "var(--admin-err-ink)", fontWeight: 600 }}>No next step</span>
+            <span className="u-strong u-err">No next step</span>
           )}
         </td>
         <td>
@@ -1468,7 +1467,7 @@ function BulkEditModal({
         <div className="admin-modal-title">Edit {count} deal{count === 1 ? "" : "s"}</div>
         <div className="admin-modal-body">Only the fields you fill are changed. Leave a field blank to keep it as-is.</div>
 
-        <div className="admin-form" style={{ marginTop: 14 }}>
+        <div className="admin-form u-mt-4">
           <div className="admin-field">
             <label className="admin-label">Move to stage</label>
             <select className="admin-select" value={stage} onChange={(e) => setStage(e.target.value)}>
@@ -1480,7 +1479,7 @@ function BulkEditModal({
               ))}
             </select>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">Probability %</label>
               <input className="admin-input" type="number" min="0" max="100" value={probability} onChange={(e) => setProbability(e.target.value)} />
@@ -1497,7 +1496,7 @@ function BulkEditModal({
         </div>
 
         {error && (
-          <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+          <div className="admin-alert admin-alert--err u-mt-3">
             {error}
           </div>
         )}

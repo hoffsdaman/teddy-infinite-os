@@ -109,9 +109,9 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
   return (
     <>
       <PageHead eyebrow="Revenue" title="Orders" sub={`${total.toLocaleString()} ${total === 1 ? "order" : "orders"}`} />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="USD · paid orders" />
         <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="USD · paid orders" />
         <MetricCard label="Paid" value={paidCount} sub={`of ${total.toLocaleString()} orders`} />
@@ -171,12 +171,12 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
                     </>
                   ) : null}
                   <dt>Stripe</dt>
-                  <dd className="admin-cell-mono" style={{ fontSize: 12, wordBreak: "break-all" }}>{r.stripe_session_id || "—"}</dd>
+                  <dd className="admin-cell-mono u-sm u-break-all">{r.stripe_session_id || "—"}</dd>
                   <dt>Created</dt>
                   <dd>{formatDate(r.created_at)}</dd>
                 </dl>
                 {r.person_id && (
-                  <div style={{ marginTop: 16 }}>
+                  <div className="u-mt-4">
                     <Link href={`/admin/contacts/${r.person_id}`} className="admin-btn admin-btn--primary">
                       Open contact
                     </Link>

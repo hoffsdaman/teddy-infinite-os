@@ -144,15 +144,14 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
         sub={`The funnel from site traffic to booked meetings, plus email activity, ${active.sub}.`}
       />
 
-      <div className="admin-tabs" role="tablist" style={{ marginBottom: 14 }}>
+      <div className="admin-tabs u-mb-4" role="tablist">
         {RANGES.map((r) => (
           <Link
             key={r.key}
             href={r.key === "30d" ? "/admin/revenue/marketing" : `/admin/revenue/marketing?range=${r.key}`}
             role="tab"
             aria-selected={r.key === range}
-            className={`admin-tab${r.key === range ? " is-active" : ""}`}
-            style={{ textDecoration: "none" }}
+            className={`admin-tab${r.key === range ? " is-active" : ""} u-link-plain`}
           >
             {r.label}
           </Link>
@@ -188,43 +187,37 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
       </div>
 
       {trafficError && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 16 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {trafficError}
         </div>
       )}
       {email.error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 16 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           Email activity: {email.error}
         </div>
       )}
       {audience.error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 16 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           Audience: {audience.error}
         </div>
       )}
 
       <section className="admin-card admin-section-card">
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 12,
-            flexWrap: "wrap",
-          }}
+          className="u-row u-gap-3 u-between u-wrap"
         >
           <div className="admin-card-title">Content engine</div>
           <Link className="admin-btn" href="/admin/revenue/marketing/campaigns">
             Open campaigns
           </Link>
         </div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           Every campaign asset by stage, the campaigns in flight, and the next email to go out.{" "}
           {engine.pipelineTotal.toLocaleString()} asset
           {engine.pipelineTotal === 1 ? "" : "s"} in the pipeline.
         </p>
 
-        <div className="admin-summary-pills" style={{ marginTop: 12, marginBottom: 4 }}>
+        <div className="admin-summary-pills u-mt-3 u-mb-1">
           {engine.stages.map((s) => (
             <Link key={s.id} className="admin-pill" href="/admin/revenue/marketing/campaigns">
               <span className="admin-pill-label">{s.label}</span>
@@ -234,17 +227,11 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
         </div>
 
         <div
-          className="admin-summary-grid"
-          style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))", marginTop: 12 }}
+          className="admin-summary-grid u-mt-3 u-grid-2"
         >
           <div className="admin-card admin-chart-card">
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 8,
-              }}
+              className="u-row u-between"
             >
               <div className="admin-kpi-label">Active campaigns</div>
               <Link href="/admin/revenue/marketing/campaigns" className="admin-cell-muted">
@@ -252,22 +239,17 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
               </Link>
             </div>
             {engine.activeCampaigns.length === 0 ? (
-              <div className="admin-empty" style={{ marginTop: 12 }}>
+              <div className="admin-empty u-mt-3">
                 No active campaigns. Start one on the campaigns page.
               </div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 12 }}>
+              <div className="u-stack u-gap-4 u-mt-3">
                 {engine.activeCampaigns.map((c) => {
                   const pct = c.assetCount === 0 ? 0 : Math.round((c.builtCount / c.assetCount) * 100);
                   return (
                     <div key={c.id}>
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "baseline",
-                          justifyContent: "space-between",
-                          gap: 8,
-                        }}
+                        className="u-row u-between"
                       >
                         <Link
                           href={`/admin/revenue/marketing/campaigns/${c.id}`}
@@ -275,30 +257,20 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
                         >
                           {c.name}
                         </Link>
-                        <span className="admin-cell-muted" style={{ whiteSpace: "nowrap" }}>
+                        <span className="admin-cell-muted u-nowrap">
                           {c.builtCount} / {c.assetCount} built
                         </span>
                       </div>
                       <div
-                        style={{
-                          height: 8,
-                          borderRadius: 20,
-                          background: "var(--admin-line-soft)",
-                          overflow: "hidden",
-                          marginTop: 6,
-                        }}
+                        className="admin-meter"
                       >
                         <div
-                          style={{
-                            width: `${pct}%`,
-                            height: "100%",
-                            borderRadius: 20,
-                            background: "var(--admin-accent)",
-                          }}
+                          className="admin-meter-fill"
+                          style={{ width: `${pct}%` }} /* layout-ok: data-driven width */
                         />
                       </div>
                       {c.channels.length > 0 && (
-                        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+                        <div className="u-row u-wrap u-mt-2">
                           {c.channels.map((ch) => (
                             <span key={ch} className="admin-chip">
                               {CHANNEL_LABEL[ch]}
@@ -315,12 +287,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
           <div className="admin-card admin-chart-card">
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 8,
-              }}
+              className="u-row u-between"
             >
               <div className="admin-kpi-label">Next broadcast</div>
               <Link href="/admin/revenue/marketing/broadcasts" className="admin-cell-muted">
@@ -328,18 +295,18 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
               </Link>
             </div>
             {engine.nextBroadcast === null ? (
-              <div className="admin-empty" style={{ marginTop: 12 }}>
+              <div className="admin-empty u-mt-3">
                 Nothing queued. Draft one on the broadcasts page.
               </div>
             ) : (
-              <div style={{ marginTop: 12 }}>
+              <div className="u-mt-3">
                 <Link
                   href={`/admin/revenue/marketing/broadcasts/${engine.nextBroadcast.id}`}
                   className="admin-cell-strong"
                 >
                   {engine.nextBroadcast.name}
                 </Link>
-                <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
+                <div className="u-row u-mt-2">
                   <Badge tone={BROADCAST_TONE[engine.nextBroadcast.status] ?? "neutral"}>
                     {engine.nextBroadcast.status}
                   </Badge>
@@ -357,27 +324,21 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Year goals</div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           The annual targets marketing drives, from the same source the Edges scoreboard reads.
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 14 }}>
+        <div className="u-stack u-gap-4 u-mt-4">
           {yearGoals.map((g) => {
             const pct =
               g.value === null ? 0 : Math.min(100, Math.round((g.value / g.target) * 100));
             return (
               <div key={g.label}>
                 <div
-                  style={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    justifyContent: "space-between",
-                    gap: 8,
-                  }}
+                  className="u-row u-between"
                 >
                   <span className="admin-cell-strong">{g.label}</span>
                   <span
-                    className="admin-cell-muted"
-                    style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}
+                    className="admin-cell-muted u-nowrap u-tabular"
                   >
                     {g.value === null
                       ? "—"
@@ -385,21 +346,11 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
                   </span>
                 </div>
                 <div
-                  style={{
-                    height: 10,
-                    borderRadius: 20,
-                    background: "var(--admin-line-soft)",
-                    overflow: "hidden",
-                    marginTop: 6,
-                  }}
+                  className="admin-meter admin-meter--thick"
                 >
                   <div
-                    style={{
-                      width: `${pct}%`,
-                      height: "100%",
-                      borderRadius: 20,
-                      background: "var(--admin-accent)",
-                    }}
+                    className="admin-meter-fill"
+                    style={{ width: `${pct}%` }} /* layout-ok: data-driven width */
                   />
                 </div>
               </div>
@@ -410,7 +361,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Public site traffic</div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           The marketing site only. Company OS (admin, team, and client portal) is excluded, since
           the team using the internal app is not audience reach.{" "}
           {!("error" in traffic) && traffic.coverage.totalPageviews > 0 && (
@@ -427,7 +378,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
         {!("error" in traffic) && traffic.byChannel.length > 0 && (
           <>
-            <div className="admin-summary-pills" style={{ marginTop: 12, marginBottom: 4 }}>
+            <div className="admin-summary-pills u-mt-3 u-mb-1">
               {traffic.byChannel.map((c) => (
                 <div key={c.label} className="admin-pill">
                   <span className="admin-pill-label">{c.label}</span>
@@ -444,8 +395,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
         )}
 
         <div
-          className="admin-summary-grid"
-          style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", marginTop: 12 }}
+          className="admin-summary-grid u-mt-3 u-grid-3"
         >
           <div className="admin-card admin-chart-card">
             <div className="admin-kpi-label">Top pages</div>
@@ -479,7 +429,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Email health</div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           {audience.eligible.toLocaleString()} of {audience.total.toLocaleString()} contacts can receive
           marketing email. {audience.neverAsked.toLocaleString()} have never been asked,{" "}
           {audience.unsubscribed.toLocaleString()} opted out, and{" "}
@@ -488,8 +438,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           seekers are excluded structurally.
         </p>
         <div
-          className="admin-summary-grid"
-          style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", marginTop: 12 }}
+          className="admin-summary-grid u-mt-3 u-grid-3"
         >
           <div className="admin-card admin-chart-card">
             <div className="admin-kpi-label">Contacts by persona</div>
@@ -510,7 +459,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
               stacked
             />
             {email.breakdownTruncated && (
-              <div className="admin-hint" style={{ marginTop: 8 }}>
+              <div className="admin-hint u-mt-2">
                 Based on the most recent sends in this window, not all
                 {" "}
                 {email.total.toLocaleString()}.
@@ -520,17 +469,17 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           <div className="admin-card admin-chart-card">
             <div className="admin-kpi-label">Deliverability</div>
             {delivery.error ? (
-              <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+              <div className="admin-alert admin-alert--err u-mt-3">
                 {delivery.error}
               </div>
             ) : !delivery.hasData ? (
-              <div className="admin-empty" style={{ marginTop: 12 }}>
+              <div className="admin-empty u-mt-3">
                 No delivery data yet. Register the Resend webhook at{" "}
                 <code>https://teddy-infinite-os.vercel.app/api/webhooks/resend/</code> (trailing slash required) and
                 set <code>RESEND_WEBHOOK_SECRET</code>. Events accrue from that point forward.
               </div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 12 }}>
+              <div className="u-stack u-gap-3 u-mt-3">
                 {[
                   { label: "Delivered", value: delivery.deliveryRate },
                   { label: "Bounced", value: delivery.bounceRate },
@@ -539,19 +488,18 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
                 ].map((r) => (
                   <div
                     key={r.label}
-                    style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}
+                    className="u-row u-between"
                   >
                     <span className="admin-cell-muted">{r.label}</span>
                     <span
-                      className="admin-cell-strong"
-                      style={{ fontVariantNumeric: "tabular-nums" }}
+                      className="admin-cell-strong u-tabular"
                     >
                       {formatRate(r.value)}
                     </span>
                   </div>
                 ))}
                 {delivery.bounceRate !== null && delivery.bounceRate > 5 && (
-                  <div className="admin-hint" style={{ color: "var(--admin-err-ink)" }}>
+                  <div className="admin-hint u-err">
                     Bounce rate over 5%, clean the list.
                   </div>
                 )}
@@ -560,7 +508,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           </div>
         </div>
         {delivery.hasData && delivery.problems.length > 0 && (
-          <div className="admin-table-wrap" style={{ marginTop: 16 }}>
+          <div className="admin-table-wrap u-mt-4">
             <div className="admin-table-scroll">
               <table className="admin-table">
                 <thead>
@@ -605,11 +553,11 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           </Link>
         </div>
         {recentContacts.error && (
-          <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+          <div className="admin-alert admin-alert--err u-mt-3">
             Contacts: {recentContacts.error}
           </div>
         )}
-        <div className="admin-table-wrap" style={{ marginTop: 12 }}>
+        <div className="admin-table-wrap u-mt-3">
           {recentContacts.rows.length === 0 ? (
             <div className="admin-empty">No contacts yet.</div>
           ) : (
@@ -649,13 +597,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
 
       <section className="admin-card admin-section-card">
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 12,
-            flexWrap: "wrap",
-          }}
+          className="u-row u-gap-3 u-between u-wrap"
         >
           <div className="admin-card-title">Recent email</div>
           <EmailAudienceToggle
@@ -665,7 +607,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
             searchParams={searchParams}
           />
         </div>
-        <div className="admin-table-wrap" style={{ marginTop: 12 }}>
+        <div className="admin-table-wrap u-mt-3">
           {email.recent.length === 0 ? (
             <div className="admin-empty">{AUDIENCE_EMPTY[emailAudience]}</div>
           ) : (

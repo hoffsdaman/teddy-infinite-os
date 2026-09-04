@@ -79,7 +79,7 @@ export function RegenerateModal({
             <div className="admin-alert admin-alert--err">{seedError}</div>
           ) : (
             <>
-              <label className="admin-label" style={{ display: "block", marginBottom: 8 }}>
+              <label className="admin-label u-block u-mb-2">
                 Prompt to be used — edit before running
               </label>
               <textarea
@@ -90,13 +90,13 @@ export function RegenerateModal({
                 disabled={busy}
               />
 
-              <details className="admin-card" style={{ padding: "10px 12px", marginTop: 12 }} open={showSources} onToggle={(e) => setShowSources((e.target as HTMLDetailsElement).open)}>
-                <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 13 }}>Built from</summary>
-                <div className="admin-hint" style={{ marginTop: 8 }}>{builtFrom}</div>
+              <details className="admin-card u-mt-3 u-p-3" open={showSources} onToggle={(e) => setShowSources((e.target as HTMLDetailsElement).open)}>
+                <summary className="u-strong u-pointer">Built from</summary>
+                <div className="admin-hint u-mt-2">{builtFrom}</div>
               </details>
 
               {error && (
-                <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+                <div className="admin-alert admin-alert--err u-mt-3">
                   {error}
                 </div>
               )}
@@ -106,7 +106,7 @@ export function RegenerateModal({
 
         <div className="admin-campaign-modal-foot">
           <span className="admin-hint">{footnote}</span>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="u-row">
             <button type="button" className="admin-btn" onClick={onClose} disabled={busy}>
               Cancel
             </button>

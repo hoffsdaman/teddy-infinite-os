@@ -25,7 +25,7 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
 
   return (
     <div className="admin-content">
-      <div style={{ marginBottom: 10 }}>
+      <div className="u-mb-3">
         <Link className="admin-cell-muted" href="/admin/revenue/meetings">
           ← All client meetings
         </Link>
@@ -39,7 +39,7 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
       />
 
       <div className="admin-card admin-section-card">
-        <div className="admin-cell-muted" style={{ fontSize: 13 }}>
+        <div className="admin-cell-muted u-sm">
           <div>
             <strong>Client:</strong>{" "}
             {meeting.companyName ? (
@@ -48,13 +48,13 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
               "—"
             )}
           </div>
-          <div style={{ marginTop: 4 }}>
+          <div className="u-mt-1">
             <strong>Attendees:</strong> {meeting.attendees.length > 0 ? meeting.attendees.join(", ") : "—"}
           </div>
         </div>
 
-        <div style={{ marginTop: 16 }}>
-          <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Summary</div>
+        <div className="u-mt-4">
+          <div className="admin-shelf-heading u-mb-2">Summary</div>
           {meeting.aiStatus === "pending" ? (
             <div className="admin-cell-muted">Generating the summary…</div>
           ) : meeting.aiStatus === "failed" ? (
@@ -68,20 +68,12 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
           )}
         </div>
 
-        <details style={{ marginTop: 16 }}>
-          <summary className="admin-cell-muted" style={{ cursor: "pointer" }}>
+        <details className="u-mt-4">
+          <summary className="admin-cell-muted u-pointer">
             Full transcript{meeting.sourceFileName ? ` · ${meeting.sourceFileName}` : ""}
           </summary>
           <pre
-            style={{
-              marginTop: 8,
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-              fontFamily: "inherit",
-              fontSize: 13,
-              maxHeight: 500,
-              overflow: "auto",
-            }}
+            className="u-mt-2 u-prewrap u-break-all admin-scroll-md"
           >
             {meeting.transcript}
           </pre>

@@ -65,18 +65,18 @@ export function PublishEditorPanel({ assetId, onDone }: { assetId: string; onDon
   }
 
   return (
-    <div className="admin-card" style={{ padding: "12px 14px" }}>
-      <div className="admin-label" style={{ marginBottom: 8 }}>Review &amp; publish (AI editor)</div>
+    <div className="admin-card u-p-3">
+      <div className="admin-label u-mb-2">Review &amp; publish (AI editor)</div>
       <button type="button" className="admin-btn admin-btn--primary" onClick={run} disabled={running}>
         {running ? "Reviewing…" : "Review & publish"}
       </button>
-      <div className="admin-hint" style={{ marginTop: 8 }}>
+      <div className="admin-hint u-mt-2">
         The editor checks the post against the publish checklist, fixes small issues, publishes it to
         the brand&apos;s site if it passes, and verifies the live URL.
       </div>
 
       {chips.length > 0 && (
-        <div className="admin-campaign-chip-row" style={{ marginTop: 10 }}>
+        <div className="admin-campaign-chip-row u-mt-3">
           {chips.map((c, i) => (
             <span key={i} className="admin-chip">{c.detail}</span>
           ))}
@@ -84,13 +84,12 @@ export function PublishEditorPanel({ assetId, onDone }: { assetId: string; onDon
       )}
 
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>
+        <div className="admin-alert admin-alert--err u-mt-3">{error}</div>
       )}
 
       {report && (
         <div
-          className="admin-card"
-          style={{ marginTop: 10, padding: "10px 12px", whiteSpace: "pre-wrap", fontSize: 13, lineHeight: 1.5 }}
+          className="admin-card u-mt-3 u-p-3 u-prewrap"
         >
           {report}
         </div>

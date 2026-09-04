@@ -78,8 +78,7 @@ export function InquiriesBoard({ initialCards }: { initialCards: InquiryCard[] }
     <>
       {banner && (
         <div
-          className={`admin-alert ${banner.ok ? "admin-alert--ok" : "admin-alert--err"}`}
-          style={{ marginBottom: 12 }}
+          className={`admin-alert ${banner.ok ? "admin-alert--ok" : "admin-alert--err"} u-mb-3`}
         >
           {banner.text}
         </div>
@@ -97,7 +96,7 @@ export function InquiriesBoard({ initialCards }: { initialCards: InquiryCard[] }
             <div className="admin-kanban-card-meta">
               {c.type && <Badge>{humanize(c.type)}</Badge>}
               {c.doNotContact && <Badge tone="err">DNC</Badge>}
-              <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
+              <span className="admin-kanban-card-sub u-ml-auto">
                 {timeAgo(c.created_at)}
               </span>
             </div>
@@ -156,7 +155,7 @@ function InquiryDetail({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+    <div className="u-stack ">
       <dl className="admin-kv">
         <dt>Status</dt>
         <dd>
@@ -172,10 +171,10 @@ function InquiryDetail({
 
       {card.message && (
         <div>
-          <div className="admin-label" style={{ marginBottom: 4 }}>
+          <div className="admin-label u-mb-1">
             Message
           </div>
-          <div className="admin-card" style={{ padding: "12px 14px", whiteSpace: "pre-wrap", fontSize: 13 }}>
+          <div className="admin-card u-p-3 u-prewrap">
             {card.message}
           </div>
         </div>

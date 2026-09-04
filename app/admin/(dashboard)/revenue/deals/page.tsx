@@ -160,11 +160,11 @@ export default async function DealsPage() {
         sub={`${openCards.length} open · ${pendingHandoffs} awaiting handoff decision · board or list view`}
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error.message}
         </div>
       )}
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="Open pipeline" value={formatCents(openPipeline)} />
         <MetricCard label="Weighted" value={formatCents(Math.round(weighted))} />
         <MetricCard label="Closing this month" value={formatCents(closingThisMonth)} />

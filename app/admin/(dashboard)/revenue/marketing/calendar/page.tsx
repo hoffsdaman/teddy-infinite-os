@@ -41,7 +41,7 @@ export default async function MarketingCalendarPage() {
       />
 
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}
@@ -49,7 +49,7 @@ export default async function MarketingCalendarPage() {
       {performance.length > 0 && (
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Performance by pillar</div>
-          <div className="admin-table-wrap" style={{ marginTop: 12 }}>
+          <div className="admin-table-wrap u-mt-3">
             <div className="admin-table-scroll">
               <table className="admin-table">
                 <thead>

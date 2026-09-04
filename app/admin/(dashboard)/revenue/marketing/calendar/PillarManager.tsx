@@ -47,9 +47,9 @@ export function PillarManager({
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 12 }}>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
-        <div className="admin-field" style={{ flex: "1 1 160px" }}>
+    <div className="admin-form u-mt-3">
+      <div className="u-row u-items-end u-gap-3 u-wrap">
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="pm-brand">Brand</label>
           <select id="pm-brand" className="admin-input" value={brandId} onChange={(e) => setBrandId(e.target.value)}>
             {brands.map((b) => (
@@ -57,7 +57,7 @@ export function PillarManager({
             ))}
           </select>
         </div>
-        <div className="admin-field" style={{ flex: "2 1 220px" }}>
+        <div className="admin-field u-flex-2">
           <label className="admin-label" htmlFor="pm-name">New pillar</label>
           <input id="pm-name" className="admin-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Proof-based certification" />
         </div>
@@ -66,14 +66,14 @@ export function PillarManager({
         </button>
       </div>
 
-      {note && <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>{note}</div>}
+      {note && <div className="admin-alert admin-alert--err u-mt-2">{note}</div>}
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
+      <div className="u-row u-wrap u-mt-3">
         {forBrand.length === 0 ? (
           <span className="admin-hint">No pillars yet for this brand.</span>
         ) : (
           forBrand.map((p) => (
-            <span key={p.id} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span key={p.id} className="u-row">
               <Badge>{p.name}</Badge>
               <button
                 type="button"

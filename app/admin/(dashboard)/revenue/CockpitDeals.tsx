@@ -104,7 +104,7 @@ export function CockpitDeals({
             <tr>
               <th>Deal</th>
               <th>Stage</th>
-              <th style={{ textAlign: "right" }}>Value</th>
+              <th className="u-right">Value</th>
               <th>Missing</th>
               <th>Current next step</th>
             </tr>
@@ -127,11 +127,11 @@ export function CockpitDeals({
               >
                 <td className="admin-cell-strong">{d.title}</td>
                 <td className="admin-cell-muted">{d.stage}</td>
-                <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                <td className="admin-cell-mono u-right">
                   {formatCents(d.usd)}
                 </td>
                 <td>
-                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+                  <div className="u-row u-wrap">
                     {d.gaps.map((g) => (
                       <Badge key={g} tone="warn">
                         {g}
@@ -139,8 +139,8 @@ export function CockpitDeals({
                     ))}
                   </div>
                 </td>
-                <td className="admin-cell-muted" style={{ maxWidth: 340 }}>
-                  {d.nextStep ? d.nextStep : <span style={{ color: "var(--admin-faint)" }}>none set</span>}
+                <td className="admin-cell-muted u-max-5">
+                  {d.nextStep ? d.nextStep : <span className="u-faint">none set</span>}
                 </td>
               </tr>
             ))}
@@ -158,13 +158,12 @@ export function CockpitDeals({
           <>
             <Link
               href={dealPath(selected.title || selected.personName || selected.companyName || "", selected.id)}
-              className="admin-btn admin-btn--sm admin-deal-open-link"
-              style={{ marginBottom: 12 }}
+              className="admin-btn admin-btn--sm admin-deal-open-link u-mb-3"
             >
               Open full deal ↗
             </Link>
             {banner && (
-              <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+              <div className="admin-alert admin-alert--err u-mb-3">
                 {banner}
               </div>
             )}

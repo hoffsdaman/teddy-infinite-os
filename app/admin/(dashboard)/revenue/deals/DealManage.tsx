@@ -232,18 +232,18 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
               {deal.source ? ` · ${humanize(deal.source)}` : ""}
             </div>
             {status === "lost" && deal.lostReason && (
-              <div className="admin-record-head-meta" style={{ marginTop: 2 }}>
+              <div className="admin-record-head-meta u-mt-1">
                 Lost: {humanize(deal.lostReason)}
               </div>
             )}
           </div>
 
           <div className="admin-record-head-actions admin-deal-head-actions">
-            <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums", lineHeight: 1.05 }}>
+            <div className="u-right">
+              <div className="admin-money-lg">
                 {formatCents(deal.amountCents, currency)}
               </div>
-              <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 3, fontVariantNumeric: "tabular-nums" }}>
+              <div className="admin-cell-muted u-sm u-mt-1 u-tabular">
                 {formatCents(deal.amountUsdCents, "usd")} forecast
                 {deal.probability != null && ` · ${formatCents(Math.round(weightedUsd), "usd")} weighted · ${deal.probability}%`}
               </div>
@@ -288,18 +288,17 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
           </div>
         </div>
         {err && (
-          <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>
+          <div className="admin-alert admin-alert--err u-mt-3">
             {err}
           </div>
         )}
       </div>
 
       {pendingWon && (
-        <div className="admin-alert admin-deal-inline-row" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-deal-inline-row u-mb-3">
           <span>Final deal amount ({currency.toUpperCase()})</span>
           <input
-            className="admin-input"
-            style={{ maxWidth: 140 }}
+            className="admin-input u-max-2"
             type="number"
             min="0"
             step="0.01"
@@ -326,9 +325,9 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
       )}
 
       {pendingLost && (
-        <div className="admin-alert admin-deal-inline-row" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-deal-inline-row u-mb-3">
           <span>Why was this deal lost?</span>
-          <select className="admin-input" style={{ maxWidth: 200 }} value={lostReason} onChange={(e) => setLostReason(e.target.value)}>
+          <select className="admin-input admin-input--w-sm" value={lostReason} onChange={(e) => setLostReason(e.target.value)}>
             <option value="">Pick a reason…</option>
             {LOST_REASONS.map(([v, l]) => (
               <option key={v} value={v}>
@@ -364,7 +363,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
       )}
 
       {archived && (
-        <div className="admin-alert" style={{ marginBottom: 14, border: "1px solid var(--admin-line-strong)" }}>
+        <div className="admin-alert admin-alert--outlined u-mb-4">
           This deal is archived and hidden from the board and forecast. Restore it from the danger zone to work it again.
         </div>
       )}
@@ -372,7 +371,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
       <div className="admin-record-cols">
         <div className="admin-record-main">
           <section className="admin-card admin-section-card">
-            <div className="admin-section-label" style={{ marginBottom: 12 }}>Deal terms</div>
+            <div className="admin-section-label u-mb-3">Deal terms</div>
             <dl className="admin-kv admin-kv--editable">
               <dt>Title</dt>
               <dd>
@@ -453,7 +452,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
           </section>
 
           <section className="admin-card admin-section-card">
-            <div className="admin-section-label" style={{ marginBottom: 12 }}>Documents</div>
+            <div className="admin-section-label u-mb-3">Documents</div>
             <dl className="admin-kv admin-kv--editable">
               <dt>Proposal</dt>
               <dd>
@@ -477,7 +476,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
           </section>
 
           <section className="admin-card admin-section-card">
-            <div className="admin-section-label" style={{ marginBottom: 12 }}>Attribution</div>
+            <div className="admin-section-label u-mb-3">Attribution</div>
             <ReferrerField
               dealId={deal.id}
               referrerId={deal.referrerId}
@@ -495,9 +494,9 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
 
         <aside className="admin-record-rail">
           {pendingHandoff && (
-            <section className="admin-card admin-section-card" style={{ borderColor: "var(--admin-warn-line, var(--admin-line-strong))" }}>
-              <div className="admin-section-label" style={{ marginBottom: 8 }}>SDR handoff</div>
-              <p className="admin-hint" style={{ marginTop: 0, marginBottom: 12 }}>
+            <section className="admin-card admin-section-card admin-card--warn">
+              <div className="admin-section-label u-mb-2">SDR handoff</div>
+              <p className="admin-hint u-mt-0 u-mb-3">
                 Waiting on your call. Accepting moves this into your owned pipeline.
               </p>
               {rejecting ? (
@@ -533,7 +532,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
           )}
 
           <section className="admin-card admin-section-card">
-            <div className="admin-section-label" style={{ marginBottom: 10 }}>Snapshot</div>
+            <div className="admin-section-label u-mb-3">Snapshot</div>
             <dl className="admin-kv">
               <dt>Status</dt>
               <dd>

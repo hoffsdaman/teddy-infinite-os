@@ -93,7 +93,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
       header: "Priority",
       sortable: true,
       cell: (r) => (
-        <span style={{ display: "inline-flex", gap: 4 }}>
+        <span className="admin-chiplist">
           {r.archived_at && <Badge tone="neutral">Archived</Badge>}
           {r.priority ? <Badge>{humanize(r.priority)}</Badge> : !r.archived_at ? <span className="admin-cell-muted">—</span> : null}
         </span>
@@ -160,7 +160,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
           </div>
         </div>
       )}
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <DataTable
         columns={columns}
         rows={rows}

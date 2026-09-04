@@ -14,7 +14,7 @@ export function ClientRowActions({ id, name }: { id: string; name: string | null
 
   return (
     <span
-      style={{ display: "inline-flex", gap: 6, justifyContent: "flex-end" }}
+      className="u-row u-end"
       onClick={(e) => e.stopPropagation()}
     >
       <Link
