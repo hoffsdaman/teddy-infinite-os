@@ -5082,3 +5082,15 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-board-col { flex: 0 0 320px; max-width: 320px; display: grid; gap: 10px; align-content: start; }
 .admin-input-wrap { position: relative; display: block; }
 .admin-input-eye { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; padding: 0; border: 0; background: transparent; color: var(--admin-ink-2); cursor: pointer; }
+/* ─── Team intranet / client portal (roadmap, requests, program plan chat) ── */
+.u-max-8 { max-width: 560px; }
+.u-max-wide { max-width: 1100px; }
+.u-flex-grow-md { flex: 1 1 220px; min-width: 0; }
+.u-cursor-default { cursor: default; }
+.u-grid-auto-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--admin-space-3); }
+.admin-text-md { font-size: var(--admin-text-md); line-height: 1.65; }
+.admin-list-md { margin: 0; padding-left: 18px; font-size: var(--admin-text-md); line-height: 1.7; }
+.admin-card--inset { background: var(--admin-bg); }
+.admin-assist-box { border: 1px solid var(--admin-line); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--admin-surface-2); }
+.admin-assist-msg { font-size: var(--admin-text-sm); line-height: 1.5; padding: 6px 9px; border-radius: var(--admin-radius-sm); background: var(--admin-surface); border: 1px solid var(--admin-line-soft); justify-self: start; max-width: 90%; }
+.admin-assist-msg--me { background: var(--admin-accent-soft); border: none; justify-self: end; }

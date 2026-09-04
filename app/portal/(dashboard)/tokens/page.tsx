@@ -51,12 +51,12 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
       />
 
       {justPaid && (
-        <div className="admin-alert admin-alert--ok" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--ok u-mb-4">
           Payment received, thank you! Your balance updates within a few seconds once Stripe confirms.
         </div>
       )}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Bought" value={fmtTokens(usage.boughtTokens)} sub={boughtSub} />
         <MetricCard
           label="Delivered"
@@ -87,8 +87,8 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
         )}
       </div>
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>By AI Program</h2>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">By AI Program</h2>
         {usage.programs.length === 0 ? (
           <div className="admin-empty">
             No tracked delivery yet. Once your AI Programs are underway, delivered hours and AI
@@ -101,29 +101,29 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
               <thead>
                 <tr>
                   <th>AI Program</th>
-                  <th style={{ textAlign: "right" }}>Delivered hours</th>
-                  <th style={{ textAlign: "right" }}>AI tokens</th>
-                  <th style={{ textAlign: "right" }}>AI leverage</th>
+                  <th className="u-right">Delivered hours</th>
+                  <th className="u-right">AI tokens</th>
+                  <th className="u-right">AI leverage</th>
                 </tr>
               </thead>
               <tbody>
                 {usage.programs.map((p) => (
                   <tr key={p.repoId ?? "unassigned"}>
                     <td>{p.name}</td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {fmtHours(p.deliveredHours)}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {fmtTokens(p.aiTokens)}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {formatLeverage(p.leverage)}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <p className="admin-cell-muted" style={{ marginTop: 8, marginBottom: 0 }}>
+            <p className="admin-cell-muted u-mt-2 u-mb-0">
               Tokens are a company-wide pool shared across programs; delivered hours and AI usage
               are tracked per program.
             </p>
@@ -131,10 +131,10 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
         )}
       </div>
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Buy token packs</h2>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">Buy token packs</h2>
         {actor.impersonation && (
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>
+          <p className="admin-page-sub u-mt-0">
             Viewing as client: checkout is disabled. This is what the client sees.
           </p>
         )}
@@ -142,7 +142,7 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
       </div>
 
       <div className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Purchases</h2>
+        <h2 className="admin-card-title u-mb-3">Purchases</h2>
         {usage.purchases.length === 0 ? (
           <div className="admin-empty">No token purchases yet.</div>
         ) : (

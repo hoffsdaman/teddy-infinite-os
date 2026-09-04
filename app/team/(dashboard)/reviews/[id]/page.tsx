@@ -32,9 +32,9 @@ function fmtDate(iso: string | null): string {
 function TextBlock({ label, value }: { label: string; value: string | null }) {
   if (!value) return null;
   return (
-    <div style={{ marginTop: 12 }}>
-      <div style={{ fontWeight: 700, fontSize: 13 }}>{label}</div>
-      <p style={{ margin: "4px 0 0", fontSize: 13, whiteSpace: "pre-wrap" }}>{value}</p>
+    <div className="u-mt-3">
+      <div className="u-strong">{label}</div>
+      <p className="u-m-0 u-mt-1 u-prewrap">{value}</p>
     </div>
   );
 }
@@ -52,30 +52,30 @@ function ReviewTranscriptCard({
   locked: boolean;
 }) {
   return (
-    <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+    <div className="admin-card u-mb-4 u-p-4">
       <div className="admin-card-title">Call transcript</div>
 
       {summary?.ai_status === "pending" && (
-        <p className="admin-hint" style={{ marginTop: 8 }}>
+        <p className="admin-hint u-mt-2">
           Summarizing the transcript. Refresh in a moment.
         </p>
       )}
       {summary?.ai_status === "error" && (
-        <p style={{ marginTop: 8, fontSize: 13 }}>
+        <p className="u-mt-2">
           <Badge tone="err">Summary failed</Badge>{" "}
           {summary.ai_error ? <span>{summary.ai_error}</span> : null} Re-add the transcript to retry.
         </p>
       )}
       {summary?.ai_status === "ready" && (
-        <div style={{ marginTop: 8 }}>
+        <div className="u-mt-2">
           <Badge tone="neutral">Draft from call</Badge>
           {summary.overview && (
-            <p style={{ margin: "8px 0 0", fontSize: 13, whiteSpace: "pre-wrap" }}>{summary.overview}</p>
+            <p className="u-m-0 u-mt-2 u-prewrap">{summary.overview}</p>
           )}
           {summary.strengths.length > 0 && (
             <>
-              <div style={{ fontWeight: 700, fontSize: 13, marginTop: 12 }}>Strengths</div>
-              <ul style={{ margin: "4px 0 0", paddingLeft: 18, fontSize: 13 }}>
+              <div className="u-mt-3 u-strong">Strengths</div>
+              <ul className="u-m-0 u-mt-1 u-pl-4">
                 {summary.strengths.map((s, i) => (
                   <li key={i}>{s}</li>
                 ))}
@@ -84,8 +84,8 @@ function ReviewTranscriptCard({
           )}
           {summary.growth_areas.length > 0 && (
             <>
-              <div style={{ fontWeight: 700, fontSize: 13, marginTop: 12 }}>Growth areas</div>
-              <ul style={{ margin: "4px 0 0", paddingLeft: 18, fontSize: 13 }}>
+              <div className="u-mt-3 u-strong">Growth areas</div>
+              <ul className="u-m-0 u-mt-1 u-pl-4">
                 {summary.growth_areas.map((s, i) => (
                   <li key={i}>{s}</li>
                 ))}
@@ -94,8 +94,8 @@ function ReviewTranscriptCard({
           )}
           {summary.dimensions.length > 0 && (
             <>
-              <div style={{ fontWeight: 700, fontSize: 13, marginTop: 12 }}>By dimension</div>
-              <ul style={{ margin: "4px 0 0", paddingLeft: 18, fontSize: 13 }}>
+              <div className="u-mt-3 u-strong">By dimension</div>
+              <ul className="u-m-0 u-mt-1 u-pl-4">
                 {summary.dimensions.map((d) => (
                   <li key={d.key}>
                     <strong>{d.label}:</strong> {d.signal}
@@ -104,8 +104,8 @@ function ReviewTranscriptCard({
               </ul>
             </>
           )}
-          <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--admin-line)" }}>
-            <div style={{ fontWeight: 700, fontSize: 13 }}>
+          <div className="admin-divider-top">
+            <div className="u-strong">
               From call section{" "}
               {summary.included ? (
                 <Badge tone="ok">Folded into review</Badge>
@@ -113,18 +113,17 @@ function ReviewTranscriptCard({
                 <Badge tone="neutral">Not in review yet</Badge>
               )}
             </div>
-            <p className="admin-hint" style={{ marginTop: 4 }}>
+            <p className="admin-hint u-mt-1">
               Edit the text below, then fold it into the overall review as a labeled section.
             </p>
             {!locked && (
-              <form action={setReviewSummaryIncludedAction} className="admin-field" style={{ marginTop: 8 }}>
+              <form action={setReviewSummaryIncludedAction} className="admin-field u-mt-2">
                 <input type="hidden" name="id" value={reviewId} />
                 <textarea
                   name="final_markdown"
                   rows={7}
                   defaultValue={summary.final_markdown ?? summary.section_markdown ?? ""}
-                  className="admin-input"
-                  style={{ fontSize: 13, fontFamily: "inherit", resize: "vertical" }}
+                  className="admin-input admin-textarea--grow"
                 />
                 <div className="admin-form-actions">
                   <button type="submit" name="include" value="1" className="admin-btn admin-btn--primary">
@@ -145,24 +144,22 @@ function ReviewTranscriptCard({
       {!locked && (
         <form
           action={addReviewTranscriptAction}
-          className="admin-field"
-          style={{ marginTop: summary ? 16 : 8 }}
+          className={`admin-field ${summary ? "u-mt-4" : "u-mt-2"}`}
         >
           <input type="hidden" name="id" value={reviewId} />
           <textarea
             name="transcript"
             rows={5}
             placeholder="Paste the call transcript, or upload a file below."
-            className="admin-input"
-            style={{ fontSize: 13, fontFamily: "inherit", resize: "vertical" }}
+            className="admin-input admin-textarea--grow"
           />
           <div className="admin-form-actions">
-            <input type="file" name="file" accept=".txt,.vtt,.srt,.md,.markdown,.docx" style={{ fontSize: 13 }} />
+            <input type="file" name="file" accept=".txt,.vtt,.srt,.md,.markdown,.docx" />
             <button type="submit" className="admin-btn admin-btn--primary">
               {summary ? "Replace transcript" : "Add transcript"}
             </button>
           </div>
-          <span className="admin-hint" style={{ margin: 0 }}>
+          <span className="admin-hint u-m-0">
             .txt, .vtt, .srt, .md, or .docx (max 10 MB). We summarize it against the review dimensions.
           </span>
         </form>
@@ -213,13 +210,13 @@ export default async function ReviewDetailPage({
       />
 
       {searchParams?.error && (
-        <div className="admin-card" style={{ padding: "12px 16px", marginBottom: 14 }}>
+        <div className="admin-card u-p-3 u-mb-4">
           <Badge tone="err">Not finalized</Badge>{" "}
-          <span style={{ fontSize: 13 }}>{searchParams.error}</span>
+          <span className="u-sm">{searchParams.error}</span>
         </div>
       )}
 
-      <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+      <div className="admin-card u-mb-4 u-p-4">
         <div className="admin-card-title">Ratings</div>
         <div className="admin-table-wrap">
           <table className="admin-table">
@@ -271,15 +268,15 @@ export default async function ReviewDetailPage({
           self ? { row: self, title: detail.isSubject ? "Your self-assessment" : "Self-assessment" } : null,
         ].filter(Boolean) as { row: ReviewRow; title: string }[]
       ).map(({ row, title }) => (
-        <div key={row.id} className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+        <div key={row.id} className="admin-card u-mb-4 u-p-4">
           <div className="admin-card-title">{title}</div>
           <TextBlock label="Achievements" value={row.achievements} />
           <TextBlock label="Areas for Improvement" value={row.improvements} />
           <TextBlock label="Additional comments" value={row.comments} />
           {row.rater_kind === "manager" && row.review_type === "midyear" && row.keeper !== null && (
-            <div style={{ marginTop: 12 }}>
-              <div style={{ fontWeight: 700, fontSize: 13 }}>Keeper question</div>
-              <p style={{ margin: "4px 0 0", fontSize: 13 }}>
+            <div className="u-mt-3">
+              <div className="u-strong">Keeper question</div>
+              <p className="u-m-0 u-mt-1">
                 {row.keeper ? "Yes, would fight to keep them" : "No"}
                 {row.keeper && (
                   <>
@@ -311,16 +308,16 @@ export default async function ReviewDetailPage({
       )}
 
       {!detail.isReviewer && foldedSection && (
-        <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+        <div className="admin-card u-mb-4 u-p-4">
           <div className="admin-card-title">From call</div>
-          <p style={{ margin: "4px 0 0", fontSize: 13, whiteSpace: "pre-wrap" }}>{foldedSection}</p>
+          <p className="u-m-0 u-mt-1 u-prewrap">{foldedSection}</p>
         </div>
       )}
 
       {decision && (
-        <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+        <div className="admin-card u-mb-4 u-p-4">
           <div className="admin-card-title">Decision</div>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 700 }}>
+          <p className="u-m-0 u-lg u-strong">
             {DECISION_LABEL[decision] ?? decision}
           </p>
           {typeof manager?.metadata.renewal_changes === "string" && manager.metadata.renewal_changes && (
@@ -330,11 +327,11 @@ export default async function ReviewDetailPage({
       )}
 
       {detail.isReviewer && manager && manager.status !== "finalized" && (
-        <div style={{ marginBottom: 16 }}>
+        <div className="u-mb-4">
           <Link className="admin-btn" href={`/surveys/perf-review-manager?review=${manager.id}`}>
             Edit review
           </Link>
-          <p className="admin-hint" style={{ marginTop: 6 }}>
+          <p className="admin-hint u-mt-2">
             Change any of your ratings or answers before finalizing. The self-assessment stays as
             {" "}
             {detail.subjectName} wrote it.
@@ -343,12 +340,12 @@ export default async function ReviewDetailPage({
       )}
 
       {detail.canFinalize && (
-        <form action={finalizeReviewAction} style={{ display: "flex", gap: 12, alignItems: "center" }}>
+        <form action={finalizeReviewAction} className="u-row u-gap-3">
           <input type="hidden" name="id" value={manager!.id} />
           <button type="submit" className="admin-btn admin-btn--primary">
             Finalize review
           </button>
-          <span className="admin-hint" style={{ margin: 0 }}>
+          <span className="admin-hint u-m-0">
             Finalizing makes this review visible to {detail.subjectName}.
           </span>
         </form>

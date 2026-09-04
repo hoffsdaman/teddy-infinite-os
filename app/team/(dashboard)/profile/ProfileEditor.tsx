@@ -52,9 +52,9 @@ export function ProfileEditor({
       <div className="admin-team-profile-stack">
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Personal</h2>
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>Yours to keep up to date.</p>
+          <p className="admin-page-sub u-mt-0">Yours to keep up to date.</p>
           <div className="admin-profile-fields">
-            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }} /* layout-ok: column count drives a CSS variable */>
               <Field label="Gender">
                 <select className="admin-input" value={v.gender} onChange={set("gender")}>
                   <option value="">—</option>
@@ -93,7 +93,7 @@ export function ProfileEditor({
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Contact</h2>
           <div className="admin-profile-fields">
-            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }} /* layout-ok: column count drives a CSS variable */>
               <Field label="Preferred name">
                 <input className="admin-input" value={v.preferredName} onChange={set("preferredName")} placeholder="What you like to be called" />
               </Field>
@@ -120,7 +120,7 @@ export function ProfileEditor({
             Private · payroll, ID and address
             <span className="admin-team-lock" aria-hidden>🔒</span>
           </h2>
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>
+          <p className="admin-page-sub u-mt-0">
             Only you and HR see this. We email you if bank details change.
           </p>
           <div className="admin-profile-fields">
@@ -132,7 +132,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.permanentAddress} onChange={set("permanentAddress")} />
               </Field>
             </div>
-            <div className="admin-profile-row" style={{ ["--n" as string]: 5 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 5 }} /* layout-ok: column count drives a CSS variable */>
               <Field label="Bank" span={2}>
                 <input className="admin-input" value={v.bankName} onChange={set("bankName")} />
               </Field>
@@ -140,7 +140,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.bankAccountNumber} onChange={set("bankAccountNumber")} />
               </Field>
             </div>
-            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }} /* layout-ok: column count drives a CSS variable */>
               <Field label="Branch">
                 <input className="admin-input" value={v.bankBranch} onChange={set("bankBranch")} />
               </Field>
@@ -151,7 +151,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.socialInsuranceNumber} onChange={set("socialInsuranceNumber")} />
               </Field>
             </div>
-            <div className="admin-profile-row" style={{ ["--n" as string]: 4 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 4 }} /* layout-ok: column count drives a CSS variable */>
               <Field label="National ID / passport no." span={2}>
                 <input className="admin-input" value={v.nationalIdNumber} onChange={set("nationalIdNumber")} />
               </Field>

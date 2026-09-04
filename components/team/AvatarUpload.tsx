@@ -59,7 +59,7 @@ export function AvatarUpload({
     <div className="admin-team-avatar-wrap">
       <div
         className={`admin-team-avatar${editable ? " is-editable" : ""}`}
-        style={{ width: size, height: size, fontSize: size / 2.6 }}
+        style={{ width: size, height: size, fontSize: size / 2.6 }} /* layout-ok: size from props */
         onClick={editable ? () => inputRef.current?.click() : undefined}
         role={editable ? "button" : undefined}
         tabIndex={editable ? 0 : undefined}

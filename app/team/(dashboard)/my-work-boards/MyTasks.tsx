@@ -35,14 +35,14 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
   return (
     <>
       {banner && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {banner}
         </div>
       )}
 
-      <section className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 10 }}>
-          <h2 className="admin-card-title" style={{ margin: 0 }}>
+      <section className="admin-card admin-section-card u-mb-4">
+        <div className="admin-card-head">
+          <h2 className="admin-card-title">
             My boards <span className="admin-cell-muted">({boards.length})</span>
           </h2>
           {boards.length > 0 && (
@@ -66,7 +66,7 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
         {boards.length === 0 ? (
           <span className="admin-cell-muted">You are not on any boards yet.</span>
         ) : boardsView === "card" ? (
-          <div className="admin-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+          <div className="admin-kpi-grid">
             {boards.map((b) => {
               const total = b.openCount + b.doneCount;
               const pct = total > 0 ? Math.round((b.doneCount / total) * 100) : 0;
@@ -74,20 +74,18 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                 <Link
                   key={b.id}
                   href={`/team/boards/${b.slug}`}
-                  className="admin-card admin-section-card is-clickable"
-                  style={{ display: "flex", flexDirection: "column", gap: 0, textDecoration: "none" }}
+                  className="admin-card admin-section-card is-clickable admin-hub-program-card"
                 >
-                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+                  <div className="u-row u-between">
                     <span className="admin-cell-strong">{b.name}</span>
                     {b.clientName && <Badge tone="info">Client</Badge>}
                   </div>
-                  <div className="admin-cell-muted" style={{ marginTop: 4, minHeight: 18 }}>
+                  <div className="admin-cell-muted u-mt-1">
                     {b.clientName ?? "Internal"}
                   </div>
-                  <div style={{ marginTop: 14 }}>
+                  <div className="u-mt-4">
                     <div
-                      className="admin-cell-muted"
-                      style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 5 }}
+                      className="admin-cell-muted admin-hub-program-progressrow"
                     >
                       <span>
                         {total === 0 ? "No cards yet" : b.openCount === 0 ? "All done" : `${b.openCount} open`}
@@ -95,10 +93,10 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                       {total > 0 && <span>{pct}% done</span>}
                     </div>
                     <div className="admin-progress">
-                      <div className="admin-progress-fill" style={{ width: `${pct}%` }} />
+                      <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                     </div>
                   </div>
-                  <div className="admin-cell-muted" style={{ marginTop: 12, fontSize: 12 }}>
+                  <div className="admin-cell-muted u-mt-3 u-sm">
                     {b.assignedToMe} assigned to you
                   </div>
                 </Link>
@@ -111,9 +109,9 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
               <thead>
                 <tr>
                   <th>Board</th>
-                  <th style={{ width: 200 }}>Client</th>
-                  <th style={{ width: 110, textAlign: "right" }}>Open tasks</th>
-                  <th style={{ width: 130, textAlign: "right" }}>Assigned to me</th>
+                  <th className="admin-th--lg">Client</th>
+                  <th className="admin-th--sm u-right">Open tasks</th>
+                  <th className="admin-th--sm u-right">Assigned to me</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,8 +119,8 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                   <tr key={b.id} className="is-clickable" onClick={() => router.push(`/team/boards/${b.slug}`)}>
                     <td className="admin-cell-strong">{b.name}</td>
                     <td className="admin-cell-muted">{b.clientName ?? "Internal"}</td>
-                    <td style={{ textAlign: "right" }}>{b.openCount}</td>
-                    <td style={{ textAlign: "right" }}>{b.assignedToMe}</td>
+                    <td className="u-right">{b.openCount}</td>
+                    <td className="u-right">{b.assignedToMe}</td>
                   </tr>
                 ))}
               </tbody>
@@ -131,8 +129,8 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
         )}
       </section>
 
-      <section className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+      <section className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">
           Assigned to me <span className="admin-cell-muted">({work.tasks.length})</span>
         </h2>
         {work.tasks.length === 0 ? (
@@ -143,11 +141,11 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
               <thead>
                 <tr>
                   <th>Task</th>
-                  <th style={{ width: 150 }}>Board</th>
-                  <th style={{ width: 90 }}>Column</th>
-                  <th style={{ width: 90 }}>Priority</th>
-                  <th style={{ width: 110 }}>Due</th>
-                  <th style={{ width: 90 }}></th>
+                  <th className="admin-th--md">Board</th>
+                  <th className="admin-th--sm">Column</th>
+                  <th className="admin-th--sm">Priority</th>
+                  <th className="admin-th--sm">Due</th>
+                  <th className="admin-th--sm"></th>
                 </tr>
               </thead>
               <tbody>
@@ -165,7 +163,7 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                       <td>
                         <Badge tone={PRIORITY_TONE[t.priority]}>{PRIORITY_LABEL[t.priority]}</Badge>
                       </td>
-                      <td className="admin-cell-muted" style={{ color: overdue ? "var(--admin-err-ink)" : undefined }}>
+                      <td className={`admin-cell-muted${overdue ? " u-err" : ""}`}>
                         {t.dueDate ? formatDate(t.dueDate) : "—"}
                       </td>
                       <td>
@@ -188,10 +186,10 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
 
       {work.commitments.length > 0 && (
         <section className="admin-card admin-section-card">
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+          <h2 className="admin-card-title u-mb-3">
             My open commitments <span className="admin-cell-muted">({work.commitments.length})</span>
           </h2>
-          <div className="admin-hint" style={{ marginBottom: 8 }}>
+          <div className="admin-hint u-mb-2">
             From your 1-1s. Update these in{" "}
             <Link href="/team/my-coaching" className="admin-cell-strong">
               My Coaching
@@ -201,9 +199,9 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
           {work.commitments.map((c) => (
             <div
               key={c.id}
-              style={{ display: "flex", gap: 10, alignItems: "center", padding: "8px 0", borderTop: "1px solid var(--admin-line)" }}
+              className="admin-row-divided"
             >
-              <span className="admin-cell-strong" style={{ flex: 1 }}>
+              <span className="admin-cell-strong u-grow">
                 {c.title}
               </span>
               <Badge tone="info">{humanize(c.status)}</Badge>

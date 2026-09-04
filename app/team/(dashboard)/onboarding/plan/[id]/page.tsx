@@ -54,7 +54,7 @@ export default async function TeamPlanViewPage({ params }: { params: { id: strin
   return (
     <>
       <PageHead eyebrow="Onboarding" title={`${name}'s onboarding plan`} sub="The plan their manager laid out for the first 180 days" />
-      <div className="admin-card admin-content" style={{ padding: "24px 28px" }}>
+      <div className="admin-card admin-content u-p-5">
         <div className="admin-plan-doc" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </>

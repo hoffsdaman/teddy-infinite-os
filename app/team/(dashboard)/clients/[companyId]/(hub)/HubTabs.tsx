@@ -35,7 +35,7 @@ export function HubTabs({
     { href: "/team", label: "Team" },
   ];
   return (
-    <nav className="admin-tabs" style={{ marginBottom: 18 }}>
+    <nav className="admin-tabs u-mb-4">
       {tabs.map((t) => {
         const href = `${base}${t.href}`;
         const active = t.href === "" ? pathname === base : pathname.startsWith(href);

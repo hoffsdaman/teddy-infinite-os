@@ -52,7 +52,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
         sub={`${fmtWhen(kit.scheduledAt)} · ${meta}`}
       />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div className="u-stack u-gap-4">
         <section className="admin-card admin-coach-section">
           <div className="admin-card-title">
             Resume screen{" "}
@@ -61,16 +61,16 @@ export default async function InterviewKitPage({ params }: { params: { interview
           {kit.aiSummary ? (
             <>
               {kit.aiSummary.overview && (
-                <p style={{ marginTop: 8, lineHeight: 1.6 }}>{kit.aiSummary.overview}</p>
+                <p className="u-mt-2">{kit.aiSummary.overview}</p>
               )}
               {kit.aiSummary.skills?.length > 0 && (
-                <ul style={{ margin: "10px 0 0", paddingLeft: 18, lineHeight: 1.6 }}>
+                <ul className="u-m-0 u-mt-3 u-pl-4">
                   {kit.aiSummary.skills.map((s, i) => (
                     <li key={i}>{s}</li>
                   ))}
                 </ul>
               )}
-              <div className="admin-hint" style={{ marginTop: 10 }}>
+              <div className="admin-hint u-mt-3">
                 {[
                   kit.aiSummary.english ? `English: ${kit.aiSummary.english}` : null,
                   kit.aiSummary.notice_period ? `Notice: ${kit.aiSummary.notice_period}` : null,
@@ -90,7 +90,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
           <section className="admin-card admin-coach-section">
             <div className="admin-card-title">From earlier rounds</div>
             <div className="admin-hint">What the AI panelist flagged to verify or ask about this round.</div>
-            <p style={{ marginTop: 8, lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{kit.carryForward}</p>
+            <p className="u-mt-2 u-prewrap">{kit.carryForward}</p>
           </section>
         )}
 
@@ -101,7 +101,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
               ? "Submitted. You can update it until the round is decided."
               : "Filled in during or right after the interview. The rest of the panel stays hidden until you submit."}
           </div>
-          <div style={{ marginTop: 12 }}>
+          <div className="u-mt-3">
             <ScorecardForm
               interviewId={kit.interviewId}
               criteria={kit.criteria}
@@ -120,7 +120,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
               <div className="admin-hint">
                 Blind until you submit. Then everyone&apos;s scorecard opens here, side by side.
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+              <div className="u-row u-wrap u-mt-3">
                 {kit.otherSeats.map((s, i) => (
                   <span key={i} className={`admin-badge ${s.submitted ? "admin-badge--ok" : ""}`}>
                     {s.name}
@@ -130,7 +130,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
               </div>
             </>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+            <div className="u-stack u-gap-3 u-mt-2">
               {kit.otherSeats.map((s, i) => (
                 <PanelSeatCard key={i} name={s.name} isAi={s.isAi} scorecard={s.scorecard} />
               ))}
@@ -167,14 +167,14 @@ function PanelSeatCard({
         </span>
       </div>
       {!scorecard || !scorecard.submittedAt ? (
-        <div className="admin-hint" style={{ marginTop: 6 }}>
+        <div className="admin-hint u-mt-2">
           No scorecard submitted.
         </div>
       ) : (
         <>
-          {scorecard.summary && <p style={{ marginTop: 6, lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{scorecard.summary}</p>}
+          {scorecard.summary && <p className="u-mt-2 u-prewrap">{scorecard.summary}</p>}
           {scorecard.scores.length > 0 && (
-            <ul style={{ margin: "8px 0 0", paddingLeft: 18, lineHeight: 1.6 }}>
+            <ul className="u-m-0 u-mt-2 u-pl-4">
               {scorecard.scores.map((sc, i) => (
                 <li key={i}>
                   <strong>{sc.criterion}</strong>

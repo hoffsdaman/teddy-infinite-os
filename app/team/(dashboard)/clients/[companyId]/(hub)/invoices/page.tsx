@@ -16,7 +16,7 @@ export default async function TeamClientInvoicesTab({ params }: { params: { comp
 
   return (
     <section className="admin-card admin-section-card">
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Invoices</h2>
+      <h2 className="admin-card-title u-mb-3">Invoices</h2>
       <InvoicesPanel invoices={invoices} />
     </section>
   );

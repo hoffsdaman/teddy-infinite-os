@@ -38,7 +38,7 @@ export function RequestEquipmentForm() {
       {msg && (
         <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`}>{msg.text}</div>
       )}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">What do you need</label>
           <select className="admin-select" value={type} onChange={(e) => setType(e.target.value)}>

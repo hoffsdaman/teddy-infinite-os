@@ -23,9 +23,9 @@ function dateRange(startsAt: string | null, endsAt: string | null): string {
 function EventCard({ reg }: { reg: PortalEventRegistration }) {
   return (
     <div className="admin-card admin-section-card" key={reg.id}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8 }}>
+      <div className="u-row-top u-between u-wrap">
         <div>
-          <h2 className="admin-card-title" style={{ marginBottom: 2 }}>{reg.eventTitle || "Event"}</h2>
+          <h2 className="admin-card-title u-mb-1">{reg.eventTitle || "Event"}</h2>
           <div className="admin-cell-muted">
             {dateRange(reg.startsAt, reg.endsAt)}
             {reg.location ? ` · ${reg.location}` : ""}
@@ -41,15 +41,15 @@ function EventCard({ reg }: { reg: PortalEventRegistration }) {
 function PublicEventCard({ event }: { event: EventRecord }) {
   return (
     <div className="admin-card admin-section-card">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8 }}>
+      <div className="u-row-top u-between u-wrap">
         <div>
-          <h2 className="admin-card-title" style={{ marginBottom: 2 }}>{event.title}</h2>
+          <h2 className="admin-card-title u-mb-1">{event.title}</h2>
           <div className="admin-cell-muted">
             {formatEventDates(event.starts_at, event.ends_at, event.timezone)}
             {event.location ? ` · ${event.location}` : ""}
           </div>
           {event.blurb && (
-            <p className="admin-page-sub" style={{ margin: "6px 0 0" }}>{event.blurb}</p>
+            <p className="admin-page-sub u-m-0 u-mt-2">{event.blurb}</p>
           )}
         </div>
         <a className="admin-btn admin-btn--sm" href={event.landing_path || eventPath(event.slug)}>

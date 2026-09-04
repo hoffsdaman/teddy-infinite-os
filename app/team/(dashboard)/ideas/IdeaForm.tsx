@@ -121,16 +121,16 @@ export function IdeaForm() {
   }
 
   return (
-    <div className="admin-card" style={{ padding: "22px 24px" }}>
+    <div className="admin-card u-p-5">
       {step === 0 ? (
         <>
           <h2 className="admin-card-title">Start with a name</h2>
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>
+          <p className="admin-page-sub u-mt-0">
             You&apos;ll walk through the first four Ds of the 5D framework — Define, Discover, Design,
             Determine. (Deploy comes later, once an idea is picked up.) Type your answers or tap the
             mic and talk. Two honest sentences per step beat a polished paragraph.
           </p>
-          <div className="admin-field" style={{ marginTop: 14 }}>
+          <div className="admin-field u-mt-4">
             <label className="admin-label" htmlFor="idea-title">Idea title</label>
             <input
               id="idea-title"
@@ -145,13 +145,13 @@ export function IdeaForm() {
         </>
       ) : current ? (
         <>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+          <div className="u-row u-gap-3 u-mb-1">
             <span className="admin-badge admin-badge--info">Step {step} of 4 · {current.d}</span>
           </div>
-          <h2 className="admin-card-title" style={{ marginBottom: 6 }}>{current.title}</h2>
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>{current.teach}</p>
+          <h2 className="admin-card-title u-mb-2">{current.title}</h2>
+          <p className="admin-page-sub u-mt-0">{current.teach}</p>
           <div className="admin-field">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="u-row u-wrap u-between">
               <label className="admin-label" htmlFor={`idea-${current.key}`}>Your answer</label>
               {canDictate && (
                 <button
@@ -178,9 +178,9 @@ export function IdeaForm() {
         </>
       ) : null}
 
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
 
-      <div className="admin-form-actions" style={{ marginTop: 14 }}>
+      <div className="admin-form-actions u-mt-4">
         {step > 0 && (
           <button type="button" className="admin-btn" onClick={back}>
             Back

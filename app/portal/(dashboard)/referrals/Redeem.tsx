@@ -38,8 +38,8 @@ export function Redeem({
 
   if (choice == null) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+      <div className="u-stack u-items-end">
+        <div className="u-row u-end u-wrap">
           <button type="button" className="admin-btn admin-btn--primary" disabled={pending} onClick={() => pick("work_credit")}>
             Take {formatCents(workCreditCents, "usd")} work credit
           </button>
@@ -47,7 +47,7 @@ export function Redeem({
             Take {formatCents(cashCents, "usd")} cash
           </button>
         </div>
-        {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+        {err && <span className="u-sm u-err">{err}</span>}
       </div>
     );
   }
@@ -55,11 +55,11 @@ export function Redeem({
   const other = choice === "work_credit" ? "cash" : "work_credit";
   const otherAmt = choice === "work_credit" ? cashCents : workCreditCents;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "flex-end" }}>
+    <div className="u-stack u-items-end u-gap-1">
       <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => pick(other)}>
         Switch to {other === "cash" ? `${formatCents(otherAmt, "usd")} cash` : `${formatCents(otherAmt, "usd")} work credit`}
       </button>
-      {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+      {err && <span className="u-sm u-err">{err}</span>}
     </div>
   );
 }

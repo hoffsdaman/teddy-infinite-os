@@ -296,9 +296,8 @@ export function TeamSidebar({
                 ) : (
                   <span
                     key={item.href}
-                    className="admin-nav-link"
+                    className="admin-nav-link u-disabled"
                     aria-disabled
-                    style={{ opacity: 0.4, cursor: "not-allowed" }}
                     title="Coming soon"
                   >
                     <span className="admin-nav-ico" aria-hidden>

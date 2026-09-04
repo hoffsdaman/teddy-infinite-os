@@ -109,13 +109,13 @@ export default async function TeamReviewsPage() {
         sub="Performance Pulse: the same scale every cycle, so the trend is real."
       />
 
-      <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+      <div className="admin-card u-mb-4 u-p-4">
         <div className="admin-card-title">To do</div>
         <ReviewTable rows={lists.todo} showSubject emptyText="Nothing to fill in right now." />
       </div>
 
       {isReviewer && (
-        <div className="admin-card" style={{ padding: "18px 20px", marginBottom: 16 }}>
+        <div className="admin-card u-mb-4 u-p-4">
           <div className="admin-card-title">My reports</div>
           <p className="admin-hint">
             Submitted reviews wait here for you to finalize. Your report sees a review only once it is
@@ -125,7 +125,7 @@ export default async function TeamReviewsPage() {
         </div>
       )}
 
-      <div className="admin-card" style={{ padding: "18px 20px" }}>
+      <div className="admin-card u-p-4">
         <div className="admin-card-title">My reviews</div>
         <ReviewTable
           rows={lists.mine}

@@ -144,10 +144,10 @@ export function DocumentsView({
   return (
     <div>
       {canUpload && (
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Upload documents</h2>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">Upload documents</h2>
         {companies.length > 1 && (
-          <div style={{ marginBottom: 12, maxWidth: 360 }}>
+          <div className="u-mb-3 u-max-5">
             <label className="admin-label" htmlFor="doc-company">Company</label>
             <select
               id="doc-company"
@@ -185,14 +185,14 @@ export function DocumentsView({
         </div>
 
         {queue.length > 0 && (
-          <div className="admin-list" style={{ marginTop: 12 }}>
+          <div className="admin-list u-mt-3">
             {queue.map((it) => (
               <div className="admin-list-row" key={it.id}>
                 <div className="admin-list-main">
                   <div className="admin-list-title">{it.file.name}</div>
                   <div className="admin-list-sub">
                     {it.status === "error" ? (
-                      <span style={{ color: "var(--admin-err-ink)" }}>{it.error}</span>
+                      <span className="u-err">{it.error}</span>
                     ) : it.status === "uploading" ? (
                       `Uploading… ${Math.round(it.progress * 100)}%`
                     ) : (
@@ -208,7 +208,7 @@ export function DocumentsView({
       )}
 
       <div className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>All documents</h2>
+        <h2 className="admin-card-title u-mb-3">All documents</h2>
         {documents.length === 0 ? (
           <div className="admin-empty">{canUpload ? "No documents yet. Upload the first one above." : "No documents yet."}</div>
         ) : (
@@ -253,7 +253,7 @@ export function DocumentsView({
             ))}
           </div>
         )}
-        {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+        {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
       </div>
     </div>
   );

@@ -25,14 +25,14 @@ export default async function PortalReferralsPage() {
       <>
         <PageHead eyebrow="Client Portal" title="Referrals" sub="Earn credit or cash for the people you send us." />
 
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>How it works</h2>
-          <p className="admin-page-sub" style={{ margin: 0 }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <h2 className="admin-card-title u-mb-3">How it works</h2>
+          <p className="admin-page-sub u-m-0">
             Know a company that could use Edge8? Refer them, and when their first engagement pays, you choose
             how to take your commission: <strong>20% as work credit</strong> toward your own Edge8 work, or{" "}
             <strong>10% as cash</strong>. You'll get a personal referral code and track everything right here.
           </p>
-          <div style={{ marginTop: 14 }}>
+          <div className="u-mt-4">
             <a
               className="admin-btn admin-btn--primary"
               href="mailto:hello@edge8.ai?subject=Referral%20program%20sign-up"
@@ -53,22 +53,22 @@ export default async function PortalReferralsPage() {
         sub={data.code ? `Your referral code: ${data.code}` : "Your referral activity"}
       />
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <p className="admin-page-sub" style={{ margin: 0 }}>
+      <div className="admin-card admin-section-card u-mb-4">
+        <p className="admin-page-sub u-m-0">
           Thanks for referring people to Edge8. For each referral that pays, you choose how to take your
           commission: <strong>20% as work credit</strong> toward your own Edge8 work, or <strong>10% as cash</strong>.
         </p>
       </div>
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Work credit" value={formatCents(data.workCreditTotalCents, "usd")} sub="chosen as credit" />
         <MetricCard label="Cash" value={formatCents(data.cashTotalCents, "usd")} sub="chosen as cash" />
         <MetricCard label="Awaiting payment" value={formatCents(data.unpaidCents, "usd")} sub="redeemed, not yet paid" />
         <MetricCard label="Awaiting your choice" value={data.pendingCount} sub="commissions to redeem" />
       </div>
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Commissions</h2>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">Commissions</h2>
         {data.commissions.length === 0 ? (
           <div className="admin-empty">No commissions yet. When a referral pays, it shows up here.</div>
         ) : (
@@ -92,7 +92,7 @@ export default async function PortalReferralsPage() {
                     )}
                   </div>
                 </div>
-                <div className="admin-list-aside" style={{ alignItems: "flex-end" }}>
+                <div className="admin-list-aside u-items-end">
                   {c.paidOut && <Badge tone="ok">Paid</Badge>}
                   {!c.paidOut && c.redemptionChoice && (
                     <Badge tone="neutral">{c.redemptionChoice === "work_credit" ? "Work credit 20%" : "Cash 10%"}</Badge>
@@ -113,7 +113,7 @@ export default async function PortalReferralsPage() {
       </div>
 
       <div className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>People you've referred</h2>
+        <h2 className="admin-card-title u-mb-3">People you've referred</h2>
         {data.referredDeals.length === 0 ? (
           <div className="admin-empty">No referrals tracked yet.</div>
         ) : (

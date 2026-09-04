@@ -139,7 +139,7 @@ export function LoginForm() {
   return (
     <form className="admin-form" onSubmit={handleSubmit}>
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
-      <p className="admin-auth-sub" style={{ marginTop: 0 }}>
+      <p className="admin-auth-sub u-mt-0">
         Enter your work email and we will send you a sign-in link. No password needed.
       </p>
       <div className="admin-field">

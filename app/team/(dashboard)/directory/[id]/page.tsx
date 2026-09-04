@@ -52,7 +52,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
   return (
     <div className="admin-team-profile">
       <div className="admin-team-profile-head">
-        <div className="admin-team-avatar" style={{ width: 88, height: 88, fontSize: 88 / 2.6 }}>
+        <div className="admin-team-avatar admin-avatar-lg">
           {profile.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={profile.avatarUrl} alt={profile.name} />
@@ -63,7 +63,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
         <div className="admin-team-profile-head-text">
           <h1 className="admin-page-title">{profile.name}</h1>
           {meta && (
-            <p className="admin-page-sub" style={{ marginTop: 2 }}>
+            <p className="admin-page-sub u-mt-1">
               {meta}
             </p>
           )}
@@ -98,7 +98,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
         {(goals.length > 0 || canManageGoals) && coachingProfileId && (
           <section className="admin-card admin-section-card">
             <h2 className="admin-card-title">FAST goals</h2>
-            <p className="admin-hint" style={{ marginTop: 0 }}>
+            <p className="admin-hint u-mt-0">
               Transparent by design: everyone&apos;s quarterly goals are visible to the whole team,
               and anyone can comment.
             </p>
@@ -132,7 +132,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
           </section>
         )}
 
-        <p className="admin-page-sub" style={{ marginBottom: 0 }}>
+        <p className="admin-page-sub u-mb-0">
           <Link href="/team/org">← Back to the org chart</Link>
         </p>
       </div>

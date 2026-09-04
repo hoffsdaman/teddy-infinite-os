@@ -56,7 +56,7 @@ const INTERVIEW_STATE_CHIP: Record<MyInterviewState, { className: string; label:
   done: { className: "admin-badge admin-badge--ok", label: "Scored" },
 };
 
-// Day-slot left-rail colour per state (see .hire-slot--* in admin.css).
+// Day-slot left-rail colour per state (see .admin-hire-slot--* in admin.css).
 const SLOT_MODIFIER: Record<MyInterviewState, string> = {
   up_next: "next",
   in_progress: "now",
@@ -112,7 +112,7 @@ function InterviewOutcomeChip({ iv }: { iv: CandidateInterview }) {
   }
 
   return (
-    <Link href={`/team/hiring/${iv.interviewId}`} style={{ textDecoration: "none" }}>
+    <Link href={`/team/hiring/${iv.interviewId}`} className="u-link-plain">
       <span className={className}>{text}</span>
     </Link>
   );
@@ -147,7 +147,7 @@ function GridCellNode({ cell }: { cell: GridCell }) {
   }
   if (cell.interviewId) {
     return (
-      <Link href={`/team/hiring/${cell.interviewId}`} style={{ textDecoration: "none" }}>
+      <Link href={`/team/hiring/${cell.interviewId}`} className="u-link-plain">
         {inner}
       </Link>
     );
@@ -183,7 +183,7 @@ export default async function TeamHiringPage() {
         }
       />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div className="u-stack u-gap-4">
         {myDay.length > 0 && (
           <section className="admin-card admin-coach-section">
             <div className="admin-card-title">
@@ -195,7 +195,7 @@ export default async function TeamHiringPage() {
               )}
             </div>
             <div className="admin-hint">Today, just completed, and anything still waiting on your scorecard.</div>
-            <div style={{ marginTop: 10 }}>
+            <div className="u-mt-3">
               {myDay.map((iv) => {
                 const chip = INTERVIEW_STATE_CHIP[iv.state];
                 return (
@@ -256,7 +256,7 @@ export default async function TeamHiringPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="admin-cell-muted" style={{ fontSize: 13 }}>
+                    <div className="admin-cell-muted u-sm">
                       {s.waiting === 0
                         ? "Nobody at the interview stage yet"
                         : `${s.waiting} candidate${s.waiting === 1 ? "" : "s"} at the interview stage, nothing booked`}
@@ -304,7 +304,7 @@ export default async function TeamHiringPage() {
 
             {req.loop.length > 0 && (
               <>
-                <div className="admin-label" style={{ marginTop: 14 }}>
+                <div className="admin-label u-mt-4">
                   Interview loop
                 </div>
                 {req.loop.map((step, i) => (
@@ -334,7 +334,7 @@ export default async function TeamHiringPage() {
               </>
             )}
 
-            <div className="admin-label-row" style={{ marginTop: 16 }}>
+            <div className="admin-label-row u-mt-4">
               <span className="admin-label">In flight</span>
               {req.loop.length > 0 && req.unassignedCount > 0 && (
                 <span className="admin-hint">
@@ -354,7 +354,7 @@ export default async function TeamHiringPage() {
                       <th>Candidate</th>
                       <th>Stage</th>
                       <th>Interviews</th>
-                      {canManage && <th style={{ textAlign: "right" }}>Actions</th>}
+                      {canManage && <th className="u-right">Actions</th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -363,7 +363,7 @@ export default async function TeamHiringPage() {
                         <td>
                           <div>{row.name}</div>
                           {row.rating != null && (
-                            <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                            <div className="admin-cell-muted u-sm">
                               AI screen {row.rating}
                             </div>
                           )}
@@ -373,7 +373,7 @@ export default async function TeamHiringPage() {
                           {row.interviews.length === 0 ? (
                             <span className="admin-cell-muted">No interviews yet</span>
                           ) : (
-                            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                            <div className="u-row u-wrap">
                               {row.interviews.map((iv) => (
                                 <InterviewOutcomeChip key={iv.interviewId} iv={iv} />
                               ))}
@@ -381,7 +381,7 @@ export default async function TeamHiringPage() {
                           )}
                         </td>
                         {canManage && (
-                          <td style={{ textAlign: "right" }}>
+                          <td className="u-right">
                             <CandidateActions
                               applicationId={row.applicationId}
                               canRequestBooking={row.atInterview && row.interviews.length === 0}
@@ -405,7 +405,7 @@ export default async function TeamHiringPage() {
                           {i + 1}. {step.name}
                         </th>
                       ))}
-                      {canManage && <th style={{ textAlign: "right" }}>Actions</th>}
+                      {canManage && <th className="u-right">Actions</th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -413,7 +413,7 @@ export default async function TeamHiringPage() {
                       <tr key={row.applicationId}>
                         <td>
                           <div>{row.name}</div>
-                          <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                          <div className="admin-cell-muted u-sm">
                             {row.rating != null ? `AI screen ${row.rating}` : row.stageName ?? "-"}
                           </div>
                         </td>
@@ -423,7 +423,7 @@ export default async function TeamHiringPage() {
                           </td>
                         ))}
                         {canManage && (
-                          <td style={{ textAlign: "right" }}>
+                          <td className="u-right">
                             <CandidateActions
                               applicationId={row.applicationId}
                               canRequestBooking={row.cells.some((c) => c.status === "action")}
@@ -443,32 +443,32 @@ export default async function TeamHiringPage() {
 
         {closedReqs.length > 0 && (
           <details className="admin-card admin-coach-section">
-            <summary style={{ cursor: "pointer", listStyle: "revert" }}>
-              <span className="admin-card-title" style={{ display: "inline" }}>
+            <summary className="admin-summary">
+              <span className="admin-card-title u-inline">
                 Closed roles
               </span>{" "}
               <span className="admin-cell-muted">({closedReqs.length})</span>
             </summary>
-            <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 14 }}>
+            <div className="u-stack u-gap-5 u-mt-4">
               {closedReqs.map((req) => {
                 const outcome = CLOSED_OUTCOME[req.status] ?? { className: "admin-badge", label: req.status };
                 return (
                   <div key={req.id}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                    <div className="u-row u-wrap">
                       <strong>{req.title}</strong>
                       <span className={outcome.className}>{outcome.label}</span>
                       {req.closedAt && (
-                        <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+                        <span className="admin-cell-muted u-sm">
                           closed {fmt(req.closedAt)}
                         </span>
                       )}
                     </div>
                     {req.grid.length === 0 ? (
-                      <div className="admin-hint" style={{ marginTop: 6 }}>
+                      <div className="admin-hint u-mt-2">
                         No candidates recorded.
                       </div>
                     ) : (
-                      <div className="admin-table-scroll" style={{ marginTop: 8 }}>
+                      <div className="admin-table-scroll u-mt-2">
                         <table className="admin-table">
                           <thead>
                             <tr>
@@ -483,7 +483,7 @@ export default async function TeamHiringPage() {
                                 <td>
                                   <div>{row.name}</div>
                                   {row.rating != null && (
-                                    <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                                    <div className="admin-cell-muted u-sm">
                                       AI screen {row.rating}
                                     </div>
                                   )}
@@ -493,7 +493,7 @@ export default async function TeamHiringPage() {
                                   {row.interviews.length === 0 ? (
                                     <span className="admin-cell-muted">No interviews</span>
                                   ) : (
-                                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                                    <div className="u-row u-wrap">
                                       {row.interviews.map((iv) => (
                                         <InterviewOutcomeChip key={iv.interviewId} iv={iv} />
                                       ))}

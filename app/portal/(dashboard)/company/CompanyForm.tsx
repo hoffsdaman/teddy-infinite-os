@@ -56,16 +56,16 @@ export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
 
   return (
     <form onSubmit={submit}>
-      <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+      <section className="admin-card admin-section-card u-mb-4">
         <h2 className="admin-card-title">{initial.name}</h2>
         {(since || initial.clientTypes.length > 0) && (
-          <p className="admin-page-sub" style={{ marginTop: 0 }}>
+          <p className="admin-page-sub u-mt-0">
             {since && `With Edge8 since ${since}.`}
             {initial.clientTypes.length > 0 && ` ${initial.clientTypes.join(" · ")}`}
           </p>
         )}
 
-        <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+        <div className="u-grid-auto-form">
           <Field label="Company name">
             <input className="admin-input" value={v.name} onChange={set("name")} disabled={pending} />
           </Field>
@@ -121,7 +121,7 @@ export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
           </Field>
         </div>
 
-        <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
+        <div className="u-grid-auto-form u-mt-3">
           <Field label="Head office address">
             <textarea
               className="admin-input"
@@ -143,7 +143,7 @@ export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
           </Field>
         </div>
 
-        <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <div className="u-row u-gap-3 u-wrap u-mt-4">
           <button type="submit" className="admin-btn admin-btn--primary" disabled={pending}>
             {pending ? "Saving…" : "Save changes"}
           </button>
@@ -160,7 +160,7 @@ export function CompanyForm({ initial }: { initial: CompanyProfileView }) {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="admin-field" style={{ display: "block" }}>
+    <label className="admin-field u-block">
       <span className="admin-label">{label}</span>
       {children}
     </label>

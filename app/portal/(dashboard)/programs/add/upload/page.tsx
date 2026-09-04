@@ -23,7 +23,7 @@ export default async function UploadProgramPage() {
         title="Upload documents"
         sub="Name your program and upload the documents you already have. Files stay private to your company."
       />
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+      <div className="admin-card admin-section-card u-mb-4">
         <UploadProgramForm companies={companies} />
       </div>
     </div>

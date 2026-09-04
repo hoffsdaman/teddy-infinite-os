@@ -74,8 +74,7 @@ export function RoadmapItemCard({ item, companyId }: { item: BacklogItem; compan
         {item.ref && <span className="tcr-ref">{item.ref}</span>}
         {editing ? (
           <input
-            className="admin-input"
-            style={{ flex: "1 1 220px", fontSize: 14 }}
+            className="admin-input u-flex-grow-md u-md"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             aria-label="Title"
@@ -85,8 +84,7 @@ export function RoadmapItemCard({ item, companyId }: { item: BacklogItem; compan
         )}
         <span className={`tcr-pri ${eff}`}>{PRIORITY_LABEL[eff]}</span>
         <select
-          className="admin-select"
-          style={{ width: "auto", fontSize: 12, flex: "none" }}
+          className="admin-select u-w-auto u-sm u-shrink-0"
           value={item.status}
           disabled={busy}
           onChange={(e) => setStatus(e.target.value as BacklogStatus)}
@@ -114,7 +112,7 @@ export function RoadmapItemCard({ item, companyId }: { item: BacklogItem; compan
         </button>
       </div>
       {editing ? (
-        <div className="tcr-body" style={{ display: "grid", gap: 8 }}>
+        <div className="tcr-body u-stack">
           <label className="admin-label">
             Who
             <input className="admin-input" value={who} onChange={(e) => setWho(e.target.value)} />
@@ -148,7 +146,7 @@ export function RoadmapItemCard({ item, companyId }: { item: BacklogItem; compan
           </div>
         </div>
       )}
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-2">{error}</div>}
     </div>
   );
 }

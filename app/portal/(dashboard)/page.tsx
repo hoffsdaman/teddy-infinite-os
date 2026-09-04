@@ -123,7 +123,7 @@ export default async function PortalHome() {
       />
 
       {hasGlance && (
-        <div className="admin-glance" style={{ marginBottom: 16 }}>
+        <div className="admin-glance u-mb-4">
           <div className="admin-glance-cell">
             <span className="admin-glance-label">Roadmap</span>
             <span className="admin-glance-value">
@@ -155,8 +155,8 @@ export default async function PortalHome() {
       )}
 
       {hasAttention && (
-        <div className="admin-card admin-section-card admin-card--attention" style={{ marginBottom: 16 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+        <div className="admin-card admin-section-card admin-card--attention u-mb-4">
+          <h2 className="admin-card-title u-mb-3">
             Needs your attention
           </h2>
           <div className="admin-list">
@@ -200,10 +200,9 @@ export default async function PortalHome() {
 
             {leaveDecisions.map((r) => (
               <Link
-                className="admin-list-row"
+                className="admin-list-row u-link-plain"
                 key={r.id}
                 href="/portal/time-off"
-                style={{ textDecoration: "none", color: "inherit" }}
               >
                 <div className="admin-list-main">
                   <div className="admin-list-title">{r.fullName || "Team member"} requested time off</div>
@@ -219,10 +218,9 @@ export default async function PortalHome() {
 
             {needsDecision.map((r) => (
               <Link
-                className="admin-list-row"
+                className="admin-list-row u-link-plain"
                 key={r.id}
                 href={`/portal/requests/${r.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
               >
                 <div className="admin-list-main">
                   <div className="admin-list-title">{r.title}</div>
@@ -246,7 +244,7 @@ export default async function PortalHome() {
           </div>
 
           {inProgress.length > 0 && (
-            <p className="admin-page-sub" style={{ marginTop: 12, marginBottom: 0 }}>
+            <p className="admin-page-sub u-mt-3 u-mb-0">
               {inProgress.length} more {inProgress.length === 1 ? "request is" : "requests are"} in
               progress with Edge8. <Link href="/portal/requests">View all</Link>
             </p>
@@ -254,7 +252,7 @@ export default async function PortalHome() {
         </div>
       )}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Token balance"
           value={tokens.balanceTokens}
@@ -300,23 +298,17 @@ export default async function PortalHome() {
       )}
 
       {roadmap.total > 0 && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+        <div className="admin-card admin-section-card u-mb-4">
           <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              gap: 8,
-              marginBottom: 10,
-            }}
+            className="u-row u-between u-mb-3"
           >
-            <h2 className="admin-card-title" style={{ margin: 0 }}>
+            <h2 className="admin-card-title">
               Roadmap
-              <span className="admin-cell-muted" style={{ fontWeight: 400, fontSize: 12, marginLeft: 8 }}>
+              <span className="admin-cell-muted u-ml-2 u-sm">
                 next up
               </span>
             </h2>
-            <Link href="/portal/hub" className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <Link href="/portal/hub" className="admin-cell-muted u-sm">
               View all {roadmap.total} →
             </Link>
           </div>
@@ -325,8 +317,7 @@ export default async function PortalHome() {
               <Link
                 key={it.id}
                 href="/portal/hub"
-                className="admin-list-row"
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="admin-list-row u-link-plain"
               >
                 <div className="admin-list-main">
                   <div className="admin-list-title">
@@ -344,15 +335,15 @@ export default async function PortalHome() {
       )}
 
       {board && openCards.length > 0 && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
-            <h2 className="admin-card-title" style={{ margin: 0 }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <div className="u-row u-between u-mb-3">
+            <h2 className="admin-card-title">
               Work Board
-              <span className="admin-cell-muted" style={{ fontWeight: 400, fontSize: 12, marginLeft: 8 }}>
+              <span className="admin-cell-muted u-ml-2 u-sm">
                 in motion
               </span>
             </h2>
-            <Link href="/portal/hub" className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <Link href="/portal/hub" className="admin-cell-muted u-sm">
               View board →
             </Link>
           </div>
@@ -361,8 +352,7 @@ export default async function PortalHome() {
               <Link
                 key={c.id}
                 href="/portal/hub"
-                className="admin-list-row"
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="admin-list-row u-link-plain"
               >
                 <div className="admin-list-main">
                   <div className="admin-list-title">{c.title}</div>
@@ -380,12 +370,12 @@ export default async function PortalHome() {
       )}
 
       {latestDocs.length > 0 && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
-            <h2 className="admin-card-title" style={{ margin: 0 }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <div className="u-row u-between u-mb-3">
+            <h2 className="admin-card-title">
               Latest documents
             </h2>
-            <Link href="/portal/hub" className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <Link href="/portal/hub" className="admin-cell-muted u-sm">
               All {documents.length} →
             </Link>
           </div>
@@ -414,25 +404,19 @@ export default async function PortalHome() {
       )}
 
       {hasStaff && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+        <div className="admin-card admin-section-card u-mb-4">
           <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              gap: 8,
-              marginBottom: outThisWeek.length > 0 ? 10 : 4,
-            }}
+            className={`u-row u-between ${outThisWeek.length > 0 ? "u-mb-3" : "u-mb-1"}`}
           >
-            <h2 className="admin-card-title" style={{ margin: 0 }}>
+            <h2 className="admin-card-title">
               This week
             </h2>
-            <Link href="/portal/time-off" className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <Link href="/portal/time-off" className="admin-cell-muted u-sm">
               Time off →
             </Link>
           </div>
           {outThisWeek.length === 0 ? (
-            <p className="admin-page-sub" style={{ margin: 0 }}>
+            <p className="admin-page-sub u-m-0">
               Your whole team is in this week.
             </p>
           ) : (
@@ -444,7 +428,7 @@ export default async function PortalHome() {
                     <div className="admin-list-sub">{humanize(e.leaveType)}</div>
                   </div>
                   <div className="admin-list-aside">
-                    <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+                    <span className="admin-cell-muted u-sm">
                       {timeOffRange(e.startDate, e.endDate, e.isHalfDay)}
                     </span>
                   </div>
@@ -456,21 +440,15 @@ export default async function PortalHome() {
       )}
 
       {nextEvent && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+        <div className="admin-card admin-section-card u-mb-4">
           <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              flexWrap: "wrap",
-              gap: 8,
-            }}
+            className="u-row-top u-between u-wrap"
           >
             <div>
-              <div className="admin-eyebrow" style={{ marginBottom: 4 }}>
+              <div className="admin-eyebrow u-mb-1">
                 Next event
               </div>
-              <h2 className="admin-card-title" style={{ marginBottom: 2 }}>
+              <h2 className="admin-card-title u-mb-1">
                 {nextEvent.eventTitle || "Event"}
               </h2>
               <div className="admin-cell-muted">
@@ -485,10 +463,10 @@ export default async function PortalHome() {
       )}
 
       <div className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 12 }}>
+        <h2 className="admin-card-title u-mb-3">
           Quick actions
         </h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+        <div className="u-row u-wrap">
           <Link href="/portal/requests/new" className="admin-btn admin-btn--primary">
             New project request
           </Link>

@@ -34,7 +34,7 @@ export function GeneralRequest() {
 
   if (sent && !open) {
     return (
-      <div style={{ display: "grid", gap: 8 }}>
+      <div className="u-stack">
         <div className="admin-alert admin-alert--ok">Sent — the Edge8 team will get back to you.</div>
         <button type="button" className="admin-btn" onClick={() => setSent(false)}>
           Send another
@@ -52,7 +52,7 @@ export function GeneralRequest() {
   }
 
   return (
-    <form onSubmit={submit} style={{ display: "grid", gap: 10 }}>
+    <form onSubmit={submit} className="u-stack u-gap-3">
       <label className="admin-field">
         <span>Subject</span>
         <input
@@ -68,7 +68,7 @@ export function GeneralRequest() {
         <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={4} required />
       </label>
       {err && <div className="admin-alert admin-alert--err">{err}</div>}
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button type="submit" className="admin-btn admin-btn--primary" disabled={pending}>
           {pending ? "Sending…" : "Send request"}
         </button>

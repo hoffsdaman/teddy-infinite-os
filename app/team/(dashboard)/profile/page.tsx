@@ -68,7 +68,7 @@ export default async function TeamProfilePage() {
         <AvatarUpload name={actor.displayName} avatarUrl={profile.avatarUrl} action={saveOwnAvatar} />
         <div className="admin-team-profile-head-text">
           <h1 className="admin-page-title">{actor.displayName}</h1>
-          <p className="admin-page-sub" style={{ marginTop: 2 }}>
+          <p className="admin-page-sub u-mt-1">
             {[p?.full_name, profile.positionTitle, p?.email].filter(Boolean).join(" · ")}
           </p>
         </div>
@@ -95,7 +95,7 @@ export default async function TeamProfilePage() {
             <dt>Start date</dt>
             <dd>{profile.start_date ? formatDate(profile.start_date) : "—"}</dd>
           </dl>
-          <p className="admin-page-sub" style={{ marginBottom: 0 }}>
+          <p className="admin-page-sub u-mb-0">
             Managed by the company. Ask your admin to change these.
           </p>
         </section>

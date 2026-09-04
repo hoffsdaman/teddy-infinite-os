@@ -22,7 +22,7 @@ export function BriefViewer({ html, title }: { html: string; title: string }) {
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button type="button" className="admin-btn admin-btn--sm" onClick={() => setOpen((v) => !v)}>
           {open ? "Hide brief" : "View brief"}
         </button>
@@ -35,7 +35,7 @@ export function BriefViewer({ html, title }: { html: string; title: string }) {
           title={title}
           sandbox=""
           srcDoc={html}
-          style={{ width: "100%", height: "70vh", marginTop: 12, border: "1px solid var(--admin-line)", borderRadius: 8, background: "var(--color-bg-primary)" }}
+          className="admin-frame u-mt-3"
         />
       )}
     </div>

@@ -37,12 +37,12 @@ export default async function CoachingSessionDetailPage({ params }: { params: { 
         }
       />
 
-      <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
+      <section className="admin-card admin-section-card u-mb-4">
         <div className="admin-cell-muted">
           <strong>Participants:</strong> {session.speakers.length > 0 ? session.speakers.join(", ") : "—"}
         </div>
         {session.recordingUrl && (
-          <div className="admin-cell-muted" style={{ marginTop: 6 }}>
+          <div className="admin-cell-muted u-mt-2">
             <a href={session.recordingUrl} target="_blank" rel="noreferrer">
               Zoom recording
             </a>
@@ -50,21 +50,21 @@ export default async function CoachingSessionDetailPage({ params }: { params: { 
         )}
       </section>
 
-      <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
+      <section className="admin-card admin-section-card u-mb-4">
         <h2 className="admin-card-title">Summary</h2>
         {summaryHtml ? (
-          <div className="admin-idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
+          <div className="admin-idea-plan u-mt-3" dangerouslySetInnerHTML={{ __html: summaryHtml }} />
         ) : (
           <div className="admin-empty">Summary pending. It generates from the transcript.</div>
         )}
       </section>
 
       {session.actionItems.length > 0 && (
-        <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
+        <section className="admin-card admin-section-card u-mb-4">
           <h2 className="admin-card-title">Action items</h2>
-          <ul style={{ marginTop: 10 }}>
+          <ul className="u-mt-3">
             {session.actionItems.map((a, i) => (
-              <li key={i} style={{ marginBottom: 6 }}>
+              <li key={i} className="u-mb-2">
                 <strong>{a.title}</strong>
                 {a.detail ? `: ${a.detail}` : ""}
                 {a.dueDate ? ` (due ${a.dueDate})` : ""}
@@ -77,10 +77,10 @@ export default async function CoachingSessionDetailPage({ params }: { params: { 
       {session.transcript && (
         <section className="admin-card admin-section-card">
           <details>
-            <summary className="admin-card-title" style={{ cursor: "pointer" }}>
+            <summary className="admin-card-title u-pointer">
               Full transcript
             </summary>
-            <pre style={{ whiteSpace: "pre-wrap", marginTop: 10, fontFamily: "inherit" }}>{session.transcript}</pre>
+            <pre className="u-mt-3 u-prewrap">{session.transcript}</pre>
           </details>
         </section>
       )}

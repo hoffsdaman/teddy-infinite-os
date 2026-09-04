@@ -31,7 +31,7 @@ export default async function TeamClientMeetingsTab({ params }: { params: { comp
 
   return (
     <section className="admin-card admin-section-card">
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Meetings</h2>
+      <h2 className="admin-card-title u-mb-3">Meetings</h2>
       <MeetingsPanel meetings={shown} publishAction={publishMeeting} programAction={setMeetingProgram} programOptions={programOptions} />
     </section>
   );

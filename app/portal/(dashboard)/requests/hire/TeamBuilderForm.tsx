@@ -107,7 +107,7 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
   if (sent) {
     return (
       <div className="admin-card admin-section-card">
-        <div className="admin-alert admin-alert--ok" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--ok u-mb-3">
           Request received. The Edge8 team will follow up with next steps.
         </div>
         <Link href="/portal/requests" className="admin-btn admin-btn--primary">
@@ -138,9 +138,9 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
         const position = HIRE_POSITIONS.find((p) => p.id === c.positionId)!;
         const found = findBracket(c.positionId, c.bracketId);
         return (
-          <div key={c.key} className="admin-card admin-section-card" style={{ display: "grid", gap: 14 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-              <h2 className="admin-card-title" style={{ margin: 0 }}>
+          <div key={c.key} className="admin-card admin-section-card u-stack u-gap-4">
+            <div className="u-row u-gap-3 u-between">
+              <h2 className="admin-card-title">
                 Team member {idx + 1}
               </h2>
               {candidates.length > 1 && (
@@ -187,29 +187,23 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
             </div>
 
             {found && (
-              <div className="admin-alert admin-alert--ok" style={{ margin: 0 }}>
+              <div className="admin-alert admin-alert--ok u-m-0">
                 {usd(found.bracket.minUsd)} to {usd(found.bracket.maxUsd)}/month
               </div>
             )}
 
             <div className="admin-field">
               <span>Tech stack</span>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 16 }}>
+              <div className="u-grid-auto-sm u-gap-4">
                 {HIRE_TECH_GROUPS.map((g) => (
-                  <div key={g.label} style={{ display: "grid", gap: 8, alignContent: "start" }}>
+                  <div key={g.label} className="u-stack">
                     <div
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        letterSpacing: 0.4,
-                        color: "var(--admin-muted)",
-                      }}
+                      className="u-muted u-label"
                     >
                       {g.label}
                     </div>
                     {g.options.map((t) => (
-                      <label key={t} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13 }}>
+                      <label key={t} className="u-row">
                         <input type="checkbox" checked={c.techStack.includes(t)} onChange={() => toggleTech(c.key, t)} />
                         {t}
                       </label>
@@ -229,29 +223,28 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
       </div>
 
       <div
-        className="admin-card admin-section-card"
-        style={{ background: "var(--admin-bg)", display: "grid", gap: 6 }}
+        className="admin-card admin-section-card admin-card--inset u-stack u-gap-2"
       >
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, fontSize: 14 }}>
+        <div className="u-row u-gap-3 u-between u-lg">
           <span>Team of {candidates.length} · estimated budget</span>
           <strong>{usd(totals.netAnnual)}/year</strong>
         </div>
         {totals.discounted ? (
-          <div style={{ fontSize: 13, color: "var(--admin-accent)" }}>
+          <div className="u-accent">
             10% team discount applied. You save {usd(totals.savings)}/year.
           </div>
         ) : (
-          <div style={{ fontSize: 13, color: "var(--admin-muted)" }}>
+          <div className="u-sm u-muted">
             Add {remainingForDiscount} more {remainingForDiscount === 1 ? "person" : "people"} to unlock 10% off the whole team.
           </div>
         )}
       </div>
 
-      <div className="admin-card admin-section-card" style={{ background: "var(--admin-bg)" }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Terms</h2>
-        <ul style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+      <div className="admin-card admin-section-card admin-card--inset">
+        <h2 className="admin-card-title u-mb-2">Terms</h2>
+        <ul className="u-stack u-gap-1 u-m-0 u-pl-4">
           {HIRE_TERMS.map((t) => (
-            <li key={t} style={{ fontSize: 13, color: "var(--admin-muted)" }}>
+            <li key={t} className="u-muted">
               {t}
             </li>
           ))}

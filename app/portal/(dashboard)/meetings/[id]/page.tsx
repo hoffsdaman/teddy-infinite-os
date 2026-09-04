@@ -19,7 +19,7 @@ export default async function PortalMeetingDetailPage({ params }: { params: { id
 
   return (
     <>
-      <div style={{ marginBottom: 10 }}>
+      <div className="u-mb-3">
         <Link className="admin-cell-muted" href="/portal/hub">
           ← Client Hub
         </Link>
@@ -32,13 +32,13 @@ export default async function PortalMeetingDetailPage({ params }: { params: { id
       />
 
       <div className="admin-card admin-section-card">
-        <div className="admin-cell-muted" style={{ fontSize: 13 }}>
+        <div className="admin-cell-muted u-sm">
           <strong>Attendees:</strong> {meeting.attendees.length > 0 ? meeting.attendees.join(", ") : "—"}
         </div>
         {summaryHtml ? (
-          <div className="admin-idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
+          <div className="admin-idea-plan u-mt-3" dangerouslySetInnerHTML={{ __html: summaryHtml }} />
         ) : (
-          <div className="admin-cell-muted" style={{ marginTop: 12 }}>No summary yet.</div>
+          <div className="admin-cell-muted u-mt-3">No summary yet.</div>
         )}
       </div>
     </>

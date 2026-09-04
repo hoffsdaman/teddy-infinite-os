@@ -28,7 +28,7 @@ export default async function TeamClientHubLayout({
   if (!company) notFound();
 
   return (
-    <div style={{ maxWidth: 1100 }}>
+    <div className="u-max-wide">
       <PageHead
         eyebrow={<Link href="/team/clients">← My Clients</Link>}
         title={company.name}

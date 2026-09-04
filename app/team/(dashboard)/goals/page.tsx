@@ -65,7 +65,7 @@ export default async function MyGoalsPage() {
       <MyGoalsPanel rows={rows} quarter={currentQuarter()} edges={edges} />
 
       {coached && (
-        <p className="admin-cell-muted" style={{ marginTop: 20 }}>
+        <p className="admin-cell-muted u-mt-5">
           Comments, priorities, and 1-1 recaps live on{" "}
           <Link href="/team/my-coaching">My coaching</Link>.
         </p>

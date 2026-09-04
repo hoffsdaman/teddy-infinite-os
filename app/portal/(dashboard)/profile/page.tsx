@@ -18,7 +18,7 @@ export default async function PortalProfilePage() {
   if (!profile) notFound();
 
   return (
-    <div style={{ maxWidth: 880 }}>
+    <div className="u-max-narrow">
       <PageHead
         eyebrow="Account"
         title="Personal Profile"

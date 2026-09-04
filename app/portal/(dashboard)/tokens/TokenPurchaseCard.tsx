@@ -28,8 +28,8 @@ export function TokenPurchaseCard() {
   }
 
   return (
-    <div style={{ display: "grid", gap: 12 }}>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+    <div className="u-stack u-gap-3">
+      <div className="u-row u-wrap">
         {Array.from({ length: MAX_PACKS }, (_, i) => i + 1).map((n) => (
           <button
             key={n}
@@ -42,7 +42,7 @@ export function TokenPurchaseCard() {
           </button>
         ))}
       </div>
-      <div style={{ fontSize: 13 }}>
+      <div className="u-sm">
         {packs * PACK_TOKENS} tokens · <strong>{formatCents(packs * PACK_PRICE_CENTS, "usd")}</strong>
       </div>
       {err && <div className="admin-alert admin-alert--err">{err}</div>}

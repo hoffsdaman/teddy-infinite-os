@@ -63,32 +63,32 @@ export function UsersView({
   const revoked = users.filter((u) => u.membershipStatus !== "active");
 
   return (
-    <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-        <h2 className="admin-card-title" style={{ margin: 0, flex: 1 }}>{companyName}</h2>
+    <div className="admin-card admin-section-card u-mb-4">
+      <div className="u-row u-gap-3 u-wrap u-mb-3">
+        <h2 className="admin-card-title u-m-0 u-grow">{companyName}</h2>
         <button type="button" className="admin-btn admin-btn--sm admin-btn--primary" onClick={() => setShowInvite((v) => !v)}>
           {showInvite ? "Cancel" : "Invite a user"}
         </button>
       </div>
 
       {showInvite && (
-        <div style={{ border: "1px dashed var(--admin-line)", borderRadius: 12, padding: 14, marginBottom: 14, maxWidth: 480 }}>
+        <div className="u-mb-4 u-p-4 u-max-6 admin-box">
           <label className="admin-label" htmlFor="inv-name">Name</label>
           <input id="inv-name" className="admin-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Alex Chen" disabled={pending} />
-          <div style={{ marginTop: 10 }}>
+          <div className="u-mt-3">
             <label className="admin-label" htmlFor="inv-email">Email</label>
             <input id="inv-email" className="admin-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@yourcompany.com" disabled={pending} />
           </div>
-          <div style={{ marginTop: 10 }}>
+          <div className="u-mt-3">
             <label className="admin-label" htmlFor="inv-role">Role</label>
             <select id="inv-role" className="admin-select" value={role} onChange={(e) => setRole(e.target.value)} disabled={pending}>
               <option value="admin">Admin</option>
               <option value="contributor">Contributor</option>
               <option value="viewer">Viewer</option>
             </select>
-            <div className="admin-cell-muted" style={{ fontSize: 12.5, marginTop: 6 }}>{ROLE_HELP[role]}</div>
+            <div className="admin-cell-muted u-mt-2 u-sm">{ROLE_HELP[role]}</div>
           </div>
-          <div style={{ marginTop: 12 }}>
+          <div className="u-mt-3">
             <button
               type="button"
               className="admin-btn admin-btn--primary"
@@ -125,14 +125,13 @@ export function UsersView({
                 {u.accessStatus === "none" && " · not invited yet"}
               </div>
             </div>
-            <div className="admin-list-aside" style={{ flexWrap: "wrap" }}>
+            <div className="admin-list-aside u-wrap">
               {u.isSelf ? (
                 <span className="admin-badge">{ROLE_LABEL[u.role] ?? u.role}</span>
               ) : (
                 <>
                   <select
-                    className="admin-select"
-                    style={{ padding: "4px 8px", fontSize: 12.5 }}
+                    className="admin-select u-p-1 u-sm"
                     value={u.role}
                     disabled={pending}
                     aria-label={`Role for ${u.name}`}
@@ -173,7 +172,7 @@ export function UsersView({
 
       {revoked.length > 0 && (
         <>
-          <h3 className="admin-section-label" style={{ marginTop: 16 }}>Removed</h3>
+          <h3 className="admin-section-label u-mt-4">Removed</h3>
           <div className="admin-list">
             {revoked.map((u) => (
               <div className="admin-list-row" key={u.personId}>
@@ -197,8 +196,8 @@ export function UsersView({
         </>
       )}
 
-      {msg && <div className="admin-alert" style={{ marginTop: 10 }}>{msg}</div>}
-      {err && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{err}</div>}
+      {msg && <div className="admin-alert u-mt-3">{msg}</div>}
+      {err && <div className="admin-alert admin-alert--err u-mt-3">{err}</div>}
     </div>
   );
 }

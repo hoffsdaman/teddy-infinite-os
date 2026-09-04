@@ -59,7 +59,7 @@ export default async function PortalDashboardLayout({
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div className="admin-fullheight">
       {actor.impersonation && (
         <AssumeBanner
           impersonation={actor.impersonation}
@@ -67,7 +67,7 @@ export default async function PortalDashboardLayout({
           companyName={companyName}
         />
       )}
-      <div className="admin-shell" style={{ flex: 1, minHeight: 0 }}>
+      <div className="admin-shell u-grow u-minh-0">
         <PortalSidebar
           name={actor.displayName}
           companyName={companyName}
