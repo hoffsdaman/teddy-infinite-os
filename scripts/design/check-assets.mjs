@@ -226,8 +226,11 @@ if (faces.length) {
    ───────────────────────────────────────────────────────────── */
 
 const ADMIN_CSS = join(ROOT, "app/admin/admin.css");
+// The .u-* padding utilities live in their own file now, and a card padded by
+// .u-p-4 is padded, so the companion search reads both stylesheets.
+const UTILITIES_CSS = join(ROOT, "app/styles/utilities.css");
 if (existsSync(ADMIN_CSS)) {
-  const css = stripCssComments(readFileSync(ADMIN_CSS, "utf8"));
+  const css = [ADMIN_CSS, UTILITIES_CSS].filter(existsSync).map((f) => stripCssComments(readFileSync(f, "utf8"))).join("\n");
 
   // A class "pads" if any rule whose SUBJECT is that class declares padding.
   // Checking the subject matters: `.x .admin-section-card + .admin-section-card`
@@ -287,8 +290,11 @@ if (existsSync(ADMIN_CSS)) {
    a broken build, and the remaining offenders are tracked in the inventory.
    ───────────────────────────────────────────────────────────── */
 
-const TYPE_SCALE = [11, 12, 13, 14, 15, 16, 18, 20, 24, 28, 32, 40, 48, 64, 80];
-const SPACE_SCALE = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 120];
+// 22 and 26 are the --admin-text-title / --admin-text-page ramp steps in tokens.css; 56 is the
+// display step between 48 and 64 the marketing headings use. `scale-ok` on a line exempts it.
+const TYPE_SCALE = [11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 40, 48, 56, 64, 80];
+// 1 is the hairline step (divider margins); 140 and 160 are the hero clamp() maxima on the public site.
+const SPACE_SCALE = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 120, 140, 160];
 
 const offScale = { type: new Map(), space: new Map() };
 const noteOff = (kind, value, file, line) => {
@@ -299,6 +305,7 @@ const noteOff = (kind, value, file, line) => {
 
 for (const file of cssFiles) {
   stripCssComments(readFileSync(file, "utf8")).split("\n").forEach((text, i) => {
+    if (/scale-ok/.test(readFileSync(file, "utf8").split("\n")[i] ?? "")) return;
     // px only. em/rem/% are relative and intentionally exempt.
     for (const m of text.matchAll(/font-size:\s*([0-9]+(?:\.[0-9]+)?)px/g)) {
       const v = Number(m[1]);

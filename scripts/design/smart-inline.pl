@@ -10,11 +10,14 @@
 use strict; use warnings;
 local $/; my $src = <STDIN>;
 
+# Public-site files use single quotes; normalise them inside style bodies only.
+$src =~ s{style=\{\{([^{}]*)\}\}}{ my $b = $1; $b =~ s/'/"/g unless $b =~ /"/; "style={{$b}}" }ge;
+
 # 1. Normalise multi-line style blocks (no nested braces / functions) onto one line.
 $src =~ s{style=\{\{\s*\n((?:\s*[^{}\n]*,?\n)+?)\s*\}\}}{"style={{ " . join(", ", map { my $x = $_; $x =~ s{^\s+}{}; $x =~ s{,\s*$}{}; $x } grep { m{\S} } split(m{\n}, $1)) . " }}"}ge;
 
-my %mt = (0=>"u-mt-0",2=>"u-mt-1",4=>"u-mt-1",5=>"u-mt-1",6=>"u-mt-2",8=>"u-mt-2",10=>"u-mt-3",12=>"u-mt-3",14=>"u-mt-4",16=>"u-mt-4",18=>"u-mt-4",20=>"u-mt-5",24=>"u-mt-5",28=>"u-mt-6",32=>"u-mt-6");
-my %mb = (0=>"u-mb-0",2=>"u-mb-1",4=>"u-mb-1",5=>"u-mb-1",6=>"u-mb-2",8=>"u-mb-2",10=>"u-mb-3",12=>"u-mb-3",14=>"u-mb-4",16=>"u-mb-4",18=>"u-mb-4",20=>"u-mb-5",24=>"u-mb-5",28=>"u-mb-6",32=>"u-mb-6");
+my %mt = (0=>"u-mt-0",2=>"u-mt-1",4=>"u-mt-1",5=>"u-mt-1",6=>"u-mt-2",8=>"u-mt-2",10=>"u-mt-3",12=>"u-mt-3",14=>"u-mt-4",16=>"u-mt-4",18=>"u-mt-4",20=>"u-mt-5",24=>"u-mt-5",28=>"u-mt-6",32=>"u-mt-6",40=>"u-mt-7",48=>"u-mt-8");
+my %mb = (0=>"u-mb-0",2=>"u-mb-1",4=>"u-mb-1",5=>"u-mb-1",6=>"u-mb-2",8=>"u-mb-2",10=>"u-mb-3",12=>"u-mb-3",14=>"u-mb-4",16=>"u-mb-4",18=>"u-mb-4",20=>"u-mb-5",24=>"u-mb-5",28=>"u-mb-6",32=>"u-mb-6",40=>"u-mb-7",48=>"u-mb-8");
 my %gap = (2=>"u-gap-1",3=>"u-gap-1",4=>"u-gap-1",5=>"u-gap-1",6=>"u-gap-2",8=>"u-gap-2",10=>"u-gap-3",12=>"u-gap-3",14=>"u-gap-4",16=>"u-gap-4",18=>"u-gap-4",20=>"u-gap-5",24=>"u-gap-5",32=>"u-gap-6");
 
 sub map_props {
@@ -71,9 +74,10 @@ sub map_props {
   if (defined(my $v = delete $p{marginTop})) { return undef unless $v =~ /^\d+$/ && $mt{$v}; push @cls, $mt{$v}; }
   if (defined(my $v = delete $p{marginBottom})) { return undef unless $v =~ /^\d+$/ && $mb{$v}; push @cls, $mb{$v}; }
   if (defined(my $v = delete $p{marginLeft})) { if ($v eq '"auto"') { push @cls, "u-ml-auto" } elsif ($v =~ /^(6|8)$/) { push @cls, "u-ml-2" } else { return undef } }
-  if (defined(my $v = delete $p{margin})) { if ($v eq '0') { push @cls, "u-m-0" } elsif ($v eq '16') { push @cls, "u-m-4" } elsif ($v =~ /^"0 0 (\d+)(?:px)?"$/ && $mb{$1}) { push @cls, "u-m-0", $mb{$1} } elsif ($v =~ /^"(\d+)px 0 0"$/ && $mt{$1}) { push @cls, "u-m-0", $mt{$1} } else { return undef } }
+  if (defined(my $v = delete $p{margin})) { if ($v eq '"0 auto"' || $v eq '"40px auto 0"') { push @cls, "u-mx-auto", ($v =~ /40px/ ? "u-mt-7" : ()) } elsif ($v eq '0') { push @cls, "u-m-0" } elsif ($v eq '16') { push @cls, "u-m-4" } elsif ($v =~ /^"0 0 (\d+)(?:px)?"$/ && $mb{$1}) { push @cls, "u-m-0", $mb{$1} } elsif ($v =~ /^"(\d+)px 0 0"$/ && $mt{$1}) { push @cls, "u-m-0", $mt{$1} } else { return undef } }
   if (defined(my $v = delete $p{padding})) { if ($v =~ /^(14|16|"14px 16px"|"16px 18px"|"16px 20px"|"18px 20px"|"12px 20px")$/) { push @cls, "u-p-4" } elsif ($v eq '"24px 28px"') { push @cls, "u-p-5" } elsif ($v =~ /^"(2|4)px 0"$/) { push @cls, "u-py-1" } elsif ($v =~ /^"4px 0 10px"$/) { push @cls, "u-pt-1", "u-pb-3" } elsif ($v =~ /^"(4px 8px|4px 10px|4px 10px 2px)"$/) { push @cls, "u-p-1" } elsif ($v =~ /^"(10|12)px 4px"$/) { push @cls, "u-py-3" } elsif ($v eq '"12px 14px"' || $v eq '12' || $v eq '"10px 12px"') { push @cls, "u-p-3" } elsif ($v eq '"8px 10px"' || $v eq '8') { push @cls, "u-p-2" } elsif ($v eq '24') { push @cls, "u-p-5" } elsif ($v eq '0') { push @cls, "u-p-0" } elsif ($v eq '"12px 0 0"') { push @cls, "u-pt-3" } elsif ($v eq '"0 16px 16px"') { push @cls, "u-p-4", "u-pt-0" } else { return undef } }
-  if (defined(my $v = delete $p{paddingTop})) { return undef unless $v =~ /^\d+$/ && $mt{$v}; (my $c = $mt{$v}) =~ s/u-mt/u-pt/; push @cls, $c; }
+  if (defined(my $v = delete $p{paddingTop})) { if ($v eq "0") { push @cls, "u-pt-0" } elsif ($v eq "64") { push @cls, "u-pt-9" } elsif ($v =~ /^\d+$/ && $mt{$v}) { (my $c = $mt{$v}) =~ s/u-mt/u-pt/; push @cls, $c } else { return undef } }
+  if (defined(my $v = delete $p{paddingBottom})) { if ($v eq "0") { push @cls, "u-pb-0" } elsif ($v eq "48") { push @cls, "u-pb-8" } elsif ($v eq "72") { push @cls, "u-pb-9" } elsif ($v =~ /^\d+$/ && $mb{$v}) { (my $c = $mb{$v}) =~ s/u-mb/u-pb/; push @cls, $c } else { return undef } }
   if (defined(my $v = delete $p{paddingLeft})) { if ($v =~ /^(16|18|20)$/) { push @cls, "u-pl-4" } elsif ($v eq '10') { push @cls, "u-pl-3" } else { return undef } }
   if (defined(my $v = delete $p{marginRight})) { if ($v =~ /^(6|7|8)$/) { push @cls, "u-mr-2" } elsif ($v eq '"auto"') { push @cls, "u-mr-auto" } else { return undef } }
   if (defined(my $v = delete $p{listStyle})) { return undef unless $v eq '"none"'; push @cls, "u-list-plain"; }
@@ -100,7 +104,7 @@ sub map_props {
   delete $p{fontFamily} if exists $p{fontFamily} && $p{fontFamily} eq '"inherit"';
   if (defined(my $v = delete $p{gridTemplateColumns})) { if ($v =~ /repeat\(2,/ || $v eq '"1fr 1fr"') { push @cls, "u-grid-2" } elsif ($v =~ /repeat\(3,/) { push @cls, "u-grid-3" } elsif ($v =~ /repeat\(4,/) { push @cls, "u-grid-4" } else { return undef } }
   if (defined(my $v = delete $p{width})) { if ($v eq '"100%"') { push @cls, "u-w-full" } elsif ($v eq '"auto"') { push @cls, "u-w-auto" } elsif ($v =~ /^(72|80|90|100)$/) { push @cls, "u-w-90" } elsif ($v =~ /^(110|120)$/) { push @cls, "u-w-120" } elsif ($v =~ /^(150|160)$/) { push @cls, "u-w-160" } elsif ($v =~ /^(200|220)$/) { push @cls, "u-w-200" } else { return undef } }
-  if (defined(my $v = delete $p{maxWidth})) { if ($v =~ /^(640|"640px")$/) { push @cls, "u-max-form" } elsif ($v =~ /^(880|"880px")$/) { push @cls, "u-max-narrow" } elsif ($v =~ /^(420|"420px")$/) { push @cls, "u-max-sm" } elsif ($v =~ /^(120|130)$/) { push @cls, "u-max-1" } elsif ($v =~ /^(140|150|160)$/) { push @cls, "u-max-2" } elsif ($v =~ /^(180|200|220|240)$/) { push @cls, "u-max-3" } elsif ($v =~ /^(260|280|300)$/) { push @cls, "u-max-4" } elsif ($v =~ /^(320|340|360)$/) { push @cls, "u-max-5" } elsif ($v =~ /^(480|500|520)$/) { push @cls, "u-max-6" } elsif ($v =~ /^(700|720|760)$/) { push @cls, "u-max-7" } elsif ($v =~ /^(84|90|100)$/) { push @cls, "u-max-0" } elsif ($v eq '"68ch"') { push @cls, "u-max-prose" } elsif ($v =~ /^(840|860)$/) { push @cls, "u-max-narrow" } elsif ($v eq '"100%"') { } else { return undef } }
+  if (defined(my $v = delete $p{maxWidth})) { if ($v =~ /^(640|"640px")$/) { push @cls, "u-max-form" } elsif ($v =~ /^(880|"880px")$/) { push @cls, "u-max-narrow" } elsif ($v =~ /^(420|"420px")$/) { push @cls, "u-max-sm" } elsif ($v =~ /^(120|130)$/) { push @cls, "u-max-1" } elsif ($v =~ /^(140|150|160)$/) { push @cls, "u-max-2" } elsif ($v =~ /^(180|200|220|240)$/) { push @cls, "u-max-3" } elsif ($v =~ /^(260|280|300)$/) { push @cls, "u-max-4" } elsif ($v =~ /^(320|340|360)$/) { push @cls, "u-max-5" } elsif ($v =~ /^(480|500|520)$/) { push @cls, "u-max-6" } elsif ($v =~ /^(700|720|760)$/) { push @cls, "u-max-7" } elsif ($v =~ /^(84|90|100)$/) { push @cls, "u-max-0" } elsif ($v eq '"68ch"') { push @cls, "u-max-prose" } elsif ($v =~ /^(840|860)$/) { push @cls, "u-max-narrow" } elsif ($v =~ /^(900|920)$/) { push @cls, "u-max-8" } elsif ($v eq '"100%"') { } else { return undef } }
   if (defined(my $v = delete $p{cursor})) { return undef unless $v eq '"pointer"'; push @cls, "u-pointer"; }
   if (defined(my $v = delete $p{wordBreak})) { return undef unless $v eq '"break-all"'; push @cls, "u-break-all"; }
   if (defined(my $v = delete $p{overflowWrap})) { return undef unless $v eq '"anywhere"'; push @cls, "u-break-all"; }

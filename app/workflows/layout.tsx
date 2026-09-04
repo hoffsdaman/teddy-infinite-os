@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './workflows.css'
+import '@/app/styles/utilities.css'
 
 const title = 'Workflows | TeddyBed'
 const description =

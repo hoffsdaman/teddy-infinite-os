@@ -6,6 +6,7 @@ import { isHiringManager } from "@/lib/team/hiring";
 import { TeamSidebar } from "@/components/team/TeamSidebar";
 import { TeamChatWidget } from "@/components/team/TeamChatWidget";
 import "../../admin/admin.css";
+import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
   title: { template: "%s · 8 Edges Team", default: "8 Edges Team" },

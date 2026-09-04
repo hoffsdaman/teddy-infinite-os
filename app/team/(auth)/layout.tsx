@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../../admin/admin.css";
+import "@/app/styles/utilities.css";
 
 // Bare, UN-gated auth shell so /team/login is reachable without a session. The
 // (dashboard) group carries the requireTeamMember() gate.
