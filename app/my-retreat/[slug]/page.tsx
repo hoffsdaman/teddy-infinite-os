@@ -62,13 +62,13 @@ export default async function MyRetreatHub({ params }: { params: { slug: string 
   const firstName = grant.name?.trim().split(/\s+/)[0] ?? null;
 
   return (
-    <main style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(104px, 14vh, 168px) 20px 96px" }}>
-      <header style={{ marginBottom: 36, paddingBottom: 24, borderBottom: "1px solid color-mix(in srgb, var(--dark) 8%, transparent)" }}>
-        <div style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.55 }}>
+    <main className="site-retreat-main">
+      <header className="site-retreat-head">
+        <div className="site-eyebrow">
           {firstName ? `Welcome, ${firstName}` : "My Retreat"}
         </div>
-        <h1 style={{ fontSize: 32, margin: "8px 0 10px", lineHeight: 1.1, letterSpacing: "-0.01em" }}>{event.title}</h1>
-        <div style={{ opacity: 0.75, fontSize: 16 }}>
+        <h1 className="site-retreat-title">{event.title}</h1>
+        <div className="site-retreat-meta">
           {formatEventDates(event.starts_at, event.ends_at, event.timezone)}
           {event.location ? ` · ${event.location}` : ""}
         </div>
@@ -77,19 +77,19 @@ export default async function MyRetreatHub({ params }: { params: { slug: string 
           <img
             src={event.cover_image_url}
             alt={event.title}
-            style={{ width: "100%", maxHeight: 320, objectFit: "cover", borderRadius: 14, marginTop: 18 }}
+            className="site-retreat-cover"
           />
         )}
       </header>
 
       {event.description && (
-        <section style={{ marginBottom: 32, lineHeight: 1.6, fontSize: 17 }}>
-          <p style={{ whiteSpace: "pre-line", margin: 0 }}>{event.description}</p>
+        <section className="site-retreat-body">
+          <p className="site-preline u-m-0">{event.description}</p>
         </section>
       )}
 
       <section>
-        <h2 style={{ fontSize: 20, margin: "0 0 14px" }}>Your itinerary</h2>
+        <h2 className="site-h2">Your itinerary</h2>
         <RetreatAgenda blocks={blocks} view="guest" />
       </section>
 

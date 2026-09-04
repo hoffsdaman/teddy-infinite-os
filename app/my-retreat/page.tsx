@@ -15,7 +15,7 @@ export default async function MyRetreatGatePage() {
   if (grant?.eventSlug) redirect(`/my-retreat/${grant.eventSlug}`);
 
   return (
-    <main style={{ minHeight: "70vh", padding: "clamp(48px, 10vh, 140px) 20px 80px" }}>
+    <main className="site-gate-main">
       <MyRetreatGate />
     </main>
   );

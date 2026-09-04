@@ -174,3 +174,5 @@
 .u-flex-grow-md { flex: 1 1 220px; min-width: 0; }
 .u-cursor-default { cursor: default; }
 .u-grid-auto-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--admin-space-3); }
+.u-object-cover { object-fit: cover; }
+.u-sentinel { height: 1px; }

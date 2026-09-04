@@ -8,13 +8,7 @@ export default function Footer() {
           <div>
             <div className="footer-logo">
               <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '26px',
-                  fontWeight: 400,
-                  color: 'var(--white)',
-                  letterSpacing: '-0.5px',
-                }}
+                className="site-wordmark site-wordmark--on-dark"
               >
                 TeddyBed
               </span>

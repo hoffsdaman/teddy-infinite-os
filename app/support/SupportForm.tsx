@@ -43,32 +43,15 @@ export function SupportForm() {
   }
 
   const sending = status.kind === "sending";
-  const labelStyle: React.CSSProperties = { display: "grid", gap: 6, fontSize: 14, fontWeight: 600, color: "var(--dark)" };
-  const inputStyle: React.CSSProperties = {
-    padding: "12px 14px",
-    borderRadius: 10,
-    border: "1px solid color-mix(in srgb, var(--dark) 15%, transparent)",
-    fontSize: 15,
-    fontFamily: "inherit",
-    width: "100%",
-    background: "var(--white)",
-    color: "var(--dark)",
-  };
 
   if (status.kind === "ok") {
     return (
       <div
-        style={{
-          background: "var(--white)",
-          borderRadius: 16,
-          padding: "32px 28px",
-          boxShadow: "0 10px 40px color-mix(in srgb, var(--dark) 8%, transparent)",
-          textAlign: "center",
-        }}
+        className="site-form-card u-center-text"
       >
-        <div style={{ fontSize: 40, marginBottom: 8 }}>✅</div>
-        <h3 style={{ margin: "0 0 8px", fontSize: 22 }}>Thanks — we&rsquo;ve got it.</h3>
-        <p style={{ margin: 0, color: "color-mix(in srgb, var(--dark) 60%, transparent)" }}>
+        <div className="site-form-icon u-mb-2">✅</div>
+        <h3 className="site-form-h3">Thanks — we&rsquo;ve got it.</h3>
+        <p className="site-muted u-m-0">
           {status.ticketNo ? (
             <>
               Your reference is <strong>{status.ticketNo}</strong>. We&rsquo;ll be in touch shortly.
@@ -80,8 +63,7 @@ export function SupportForm() {
         <button
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
-          className="btn"
-          style={{ marginTop: 20, background: "transparent", border: "1px solid color-mix(in srgb, var(--dark) 20%, transparent)", padding: "10px 20px", borderRadius: 40, cursor: "pointer" }}
+          className="btn site-btn-ghost u-mt-5"
         >
           Send another
         </button>
@@ -92,31 +74,31 @@ export function SupportForm() {
   return (
     <form
       onSubmit={submit}
-      style={{ background: "var(--white)", borderRadius: 16, padding: "28px", boxShadow: "0 10px 40px color-mix(in srgb, var(--dark) 8%, transparent)", display: "grid", gap: 16 }}
+      className="site-form-card u-stack u-gap-4"
     >
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
-        <label style={labelStyle}>
+      <div className="u-stack u-gap-4 u-grid-2">
+        <label className="site-label">
           Your name
-          <input style={inputStyle} type="text" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+          <input className="site-input" type="text" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
-        <label style={labelStyle}>
-          Email <span style={{ color: "var(--color-err-strong)" }}>*</span>
-          <input style={inputStyle} type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-      </div>
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
-        <label style={labelStyle}>
-          Subject <span style={{ color: "var(--color-err-strong)" }}>*</span>
-          <input style={inputStyle} type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g. Mattress warranty question" />
-        </label>
-        <label style={labelStyle}>
-          Order number <span style={{ fontWeight: 400, color: "color-mix(in srgb, var(--dark) 45%, transparent)" }}>(optional)</span>
-          <input style={inputStyle} type="text" value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="e.g. 1234" />
+        <label className="site-label">
+          Email <span className="site-req">*</span>
+          <input className="site-input" type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
       </div>
-      <label style={labelStyle}>
-        How can we help? <span style={{ color: "var(--color-err-strong)" }}>*</span>
-        <textarea style={{ ...inputStyle, resize: "vertical" }} rows={6} required value={message} onChange={(e) => setMessage(e.target.value)} />
+      <div className="u-stack u-gap-4 u-grid-2">
+        <label className="site-label">
+          Subject <span className="site-req">*</span>
+          <input className="site-input" type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g. Mattress warranty question" />
+        </label>
+        <label className="site-label">
+          Order number <span className="site-optional">(optional)</span>
+          <input className="site-input" type="text" value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="e.g. 1234" />
+        </label>
+      </div>
+      <label className="site-label">
+        How can we help? <span className="site-req">*</span>
+        <textarea className="site-input site-textarea" rows={6} required value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
       {/* Honeypot — hidden from humans, catches bots. */}
       <input
@@ -127,19 +109,18 @@ export function SupportForm() {
         value={website}
         onChange={(e) => setWebsite(e.target.value)}
         aria-hidden="true"
-        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+        className="site-honeypot"
       />
       {status.kind === "err" && (
-        <div style={{ background: "var(--color-err-bg)", color: "var(--color-err-deep)", padding: "10px 14px", borderRadius: 10, fontSize: 14 }}>
+        <div className="site-form-error">
           {status.message}
         </div>
       )}
       <div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary site-btn-submit"
           disabled={sending}
-          style={{ padding: "13px 32px", borderRadius: 40, fontWeight: 700, fontSize: 15, cursor: sending ? "default" : "pointer", opacity: sending ? 0.7 : 1 }}
         >
           {sending ? "Sending…" : "Send message"}
         </button>
