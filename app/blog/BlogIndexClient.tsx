@@ -121,7 +121,7 @@ export default function BlogIndexClient({ posts, tabs }: { posts: UnifiedPostMet
                         src={post.image}
                         alt={post.title}
                         fill
-                        style={{ objectFit: 'cover' }}
+                        className="u-object-cover"
                       />
                     </div>
                     <div className="blog-card-body">
@@ -137,7 +137,7 @@ export default function BlogIndexClient({ posts, tabs }: { posts: UnifiedPostMet
                 ))}
               </div>
               {/* Sentinel for infinite scroll */}
-              {hasMore && <div ref={sentinelRef} style={{ height: 1 }} aria-hidden="true" />}
+              {hasMore && <div ref={sentinelRef} className="u-sentinel" aria-hidden="true" />}
             </>
           ) : (
             <div className="blog-empty">

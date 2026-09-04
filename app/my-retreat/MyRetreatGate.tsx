@@ -74,8 +74,8 @@ export function MyRetreatGate({ initialCode = "" }: { initialCode?: string }) {
 
   return (
     <div style={card}>
-      <h1 style={{ fontSize: 24, margin: "0 0 6px" }}>Enter My Retreat</h1>
-      <p style={{ margin: "0 0 18px", opacity: 0.75, fontSize: 15 }}>
+      <h1 className="site-gate-title">Enter My Retreat</h1>
+      <p className="site-gate-sub">
         {stage === "code"
           ? "Enter the access code from your retreat invitation."
           : `${title}. Enter your email to continue.`}

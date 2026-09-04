@@ -475,3 +475,4 @@
     gap: 4px;
   }
 }
+.os-wordmark-text--on-dark { color: var(--white); font-size: 20px; }

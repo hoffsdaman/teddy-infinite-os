@@ -132,7 +132,7 @@ export function RegisterForm({ slug, tiers }: { slug: string; tiers: TierOption[
       </div>
       <div className={styles.fieldRow}>
         <label className={styles.fieldLabel} htmlFor="reg-phone">
-          Phone <span style={{ fontWeight: 400 }}>(optional)</span>
+          Phone <span>(optional)</span>
         </label>
         <input id="reg-phone" className={styles.input} value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />
       </div>

@@ -30,33 +30,18 @@ export default function Nav() {
     <>
       <nav
         id="navbar"
-        style={{ background: scrolled ? 'color-mix(in srgb, var(--white) 99%, transparent)' : 'color-mix(in srgb, var(--white) 97%, transparent)' }}
+        className={scrolled ? "is-scrolled" : undefined}
       >
         <div className="container">
           <div className="nav-inner">
-            <Link href="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Link href="/" className="nav-logo u-row">
               <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '24px',
-                  fontWeight: 400,
-                  color: 'var(--dark)',
-                  letterSpacing: '-0.5px',
-                }}
+                className="site-wordmark"
               >
                 TeddyBed
               </span>
               <span
-                style={{
-                  background: 'var(--mint)',
-                  color: 'var(--dark)',
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  padding: '3px 7px',
-                  borderRadius: '40px',
-                  letterSpacing: '0.5px',
-                  textTransform: 'uppercase',
-                }}
+                className="site-badge-mint site-badge-mint--xs"
               >
                 OS
               </span>

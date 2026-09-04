@@ -198,7 +198,7 @@ export default function ApplyForm({ jobId, jobTitle, jobSlug, questions }: Props
         onChange={handleChange}
         tabIndex={-1}
         aria-hidden
-        style={{ display: 'none' }}
+        className="u-hidden-input"
       />
 
       {error && <p className="apply-error">{error}</p>}

@@ -8,29 +8,18 @@ export const metadata: Metadata = {
 
 export default function SupportPage() {
   return (
-    <main style={{ minHeight: "70vh", padding: "72px 0 96px", background: "linear-gradient(180deg, var(--color-grey-50) 0%, var(--white) 100%)" }}>
-      <div className="container" style={{ maxWidth: 720, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
+    <main className="site-support-main">
+      <div className="container u-mx-auto u-max-7">
+        <div className="u-mb-6 u-center-text">
           <span
-            style={{
-              display: "inline-block",
-              background: "var(--mint)",
-              color: "var(--dark)",
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "5px 12px",
-              borderRadius: 40,
-              letterSpacing: "0.5px",
-              textTransform: "uppercase",
-              marginBottom: 16,
-            }}
+            className="site-badge-mint u-mb-4"
           >
             Support
           </span>
-          <h1 style={{ fontFamily: "var(--font-display, inherit)", fontSize: 40, margin: "0 0 10px", color: "var(--dark)" }}>
+          <h1 className="site-support-title">
             How can we help?
           </h1>
-          <p style={{ fontSize: 17, color: "color-mix(in srgb, var(--dark) 60%, transparent)", margin: 0 }}>
+          <p className="site-support-sub u-m-0">
             Tell us what&rsquo;s going on and we&rsquo;ll get back to you. You&rsquo;ll get a reference number right away.
           </p>
         </div>

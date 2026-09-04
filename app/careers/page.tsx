@@ -51,7 +51,7 @@ export default async function CareersPage() {
           <div className="reveal">
             <span className="section-label">Why Edge8</span>
             <h2 className="section-title">A Different Kind of AI Company</h2>
-            <p className="section-sub" style={{ marginTop: 16 }}>
+            <p className="section-sub u-mt-4">
               We practice what we sell. Every tool, workflow, and agent we recommend
               — we&rsquo;ve already built and run ourselves.
             </p>
@@ -127,7 +127,7 @@ export default async function CareersPage() {
           <div className="careers-mindset reveal">
             <span className="section-label">Who Thrives Here</span>
             <h2 className="section-title">We Hire for Mindset, Train for Skill</h2>
-            <p className="section-sub" style={{ marginTop: 16 }}>
+            <p className="section-sub u-mt-4">
               We&rsquo;re not looking for a specific résumé. We&rsquo;re looking for
               people who are genuinely curious about what AI can do next,
               uncomfortable with the way things were done before, and willing to
@@ -146,12 +146,12 @@ export default async function CareersPage() {
       </section>
 
       {/* ═══ OPEN ROLES ═════════════════════════════════════ */}
-      <section className="section" id="open-roles" style={{ background: 'var(--tint)' }}>
+      <section className="section section--tint-bg" id="open-roles">
         <div className="container">
           <div className="careers-roles-header reveal">
             <div>
               <span className="section-label">Open Roles</span>
-              <h2 className="section-title" style={{ marginTop: 12 }}>
+              <h2 className="section-title u-mt-3">
                 {jobs.length > 0 ? 'Where You Fit In' : 'No Openings Right Now'}
               </h2>
             </div>
@@ -205,10 +205,10 @@ export default async function CareersPage() {
       {/* ═══ HOW WE HIRE ════════════════════════════════════ */}
       <section className="section">
         <div className="container">
-          <div className="reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 56px' }}>
+          <div className="reveal u-center-text u-max-form u-mx-auto u-mb-8">
             <span className="section-label">The Process</span>
-            <h2 className="section-title" style={{ marginTop: 12 }}>How We Hire</h2>
-            <p className="section-sub" style={{ marginTop: 16 }}>
+            <h2 className="section-title u-mt-3">How We Hire</h2>
+            <p className="section-sub u-mt-4">
               No five-round interview loops. No take-home that eats your weekend.
               We move quickly, communicate directly, and respect your time.
             </p>

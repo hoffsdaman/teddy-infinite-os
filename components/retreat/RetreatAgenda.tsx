@@ -23,51 +23,39 @@ const timeStyle: React.CSSProperties = {
 export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "guest" | "ops" }) {
   const days = groupAgendaByDay(blocks, view);
   if (days.length === 0) {
-    return <p style={{ opacity: 0.7, margin: 0 }}>No agenda yet.</p>;
+    return <p className="u-m-0 u-dim-2">No agenda yet.</p>;
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+    <div className="u-stack ">
       {days.map((day) => (
         <section key={day.dayIndex}>
-          <header style={{ marginBottom: 8, display: "flex", alignItems: "baseline", gap: 10 }}>
+          <header className="u-row u-gap-3 u-mb-2">
             <span
               aria-hidden
-              style={{ width: 8, height: 8, borderRadius: 999, background: "var(--admin-ink)", flexShrink: 0 }}
+              className="site-agenda-dot"
             />
-            <div style={{ fontWeight: 700, fontSize: 17, letterSpacing: "-0.01em" }}>
+            <div className="site-agenda-day">
               {day.dayLabel || `Day ${day.dayIndex}`}
             </div>
             {!day.dayLabel && day.dayDate && <div style={timeStyle}>{formatDay(day.dayDate)}</div>}
           </header>
 
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="u-stack">
             {day.blocks.map((b) => (
               <div
                 key={b.id}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "180px 1fr",
-                  gap: 16,
-                  padding: "12px 0",
-                  borderTop: "1px solid var(--admin-line)",
-                }}
+                className="site-agenda-row"
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div className="u-stack">
                   <span style={timeStyle}>{timeText(b)}</span>
                   {view === "ops" && b.staff.length > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                    <div className="u-row u-wrap">
                       {b.staff.map((s) => (
                         <span
                           key={s.id}
                           title={STAFF_ROLE_LABELS[s.role]}
-                          style={{
-                            fontSize: 11,
-                            padding: "1px 6px",
-                            borderRadius: 999,
-                            background: "var(--admin-tint)",
-                            color: "var(--admin-ink)",
-                          }}
+                          className="site-agenda-tag"
                         >
                           {s.personName ?? "Unknown"} · {STAFF_ROLE_LABELS[s.role]}
                         </span>
@@ -75,15 +63,15 @@ export function RetreatAgenda({ blocks, view }: { blocks: AgendaBlock[]; view: "
                     </div>
                   )}
                   {view === "ops" && !b.guestVisible && (
-                    <span style={{ fontSize: 11, color: "var(--admin-muted)" }}>ops only</span>
+                    <span className="u-xs u-muted">ops only</span>
                   )}
                 </div>
 
                 <div>
-                  <div style={{ fontWeight: 600 }}>{b.title}</div>
-                  {b.body && <p style={{ margin: "4px 0 0", lineHeight: 1.5 }}>{b.body}</p>}
+                  <div className="u-strong">{b.title}</div>
+                  {b.body && <p className="u-m-0 u-mt-1">{b.body}</p>}
                   {b.room && (
-                    <div style={{ ...timeStyle, marginTop: 4 }}>Room: {b.room}</div>
+                    <div className="u-mt-1">Room: {b.room}</div>
                   )}
                 </div>
               </div>
