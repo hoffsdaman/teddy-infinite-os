@@ -569,12 +569,12 @@ function AssetsByChannel({
   // asset image, which is the fastest way to see a campaign's visual state.
   const [view, setView] = useState<"card" | "list">("card");
   useEffect(() => {
-    const saved = window.localStorage.getItem("admin-campaign-assets-view");
+    const saved = window.localStorage.getItem("mcr-assets-view");
     if (saved === "card" || saved === "list") setView(saved);
   }, []);
   function pickView(v: "card" | "list") {
     setView(v);
-    window.localStorage.setItem("admin-campaign-assets-view", v);
+    window.localStorage.setItem("mcr-assets-view", v);
   }
 
   return (
