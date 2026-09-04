@@ -146,23 +146,10 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
         <button
           type="button"
           onClick={() => toggleSort(k)}
-          style={{
-            background: "none",
-            border: 0,
-            padding: 0,
-            margin: 0,
-            font: "inherit",
-            color: "inherit",
-            letterSpacing: "inherit",
-            textTransform: "inherit",
-            cursor: "pointer",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 4,
-          }}
+          className="admin-btn-reset"
         >
           {label}
-          <span aria-hidden style={{ opacity: active ? 0.9 : 0.35, fontSize: "0.9em" }}>
+          <span aria-hidden className={`admin-sort-arrow${active ? " is-active" : ""}`}>
             {active ? (sortDir === "desc" ? "↓" : "↑") : "↕"}
           </span>
         </button>
@@ -176,10 +163,9 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
 
   return (
     <>
-      <div className="admin-toolbar" style={{ gap: 10, flexWrap: "wrap" }}>
+      <div className="admin-toolbar u-gap-3 u-wrap">
         <input
-          className="admin-input"
-          style={{ maxWidth: 280 }}
+          className="admin-input u-max-4"
           placeholder="Search event, location, or slug…"
           value={search}
           onChange={(e) => {
@@ -189,8 +175,7 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
           aria-label="Search events"
         />
         <select
-          className="admin-select"
-          style={{ maxWidth: 160 }}
+          className="admin-select u-max-2"
           value={typeFilter}
           onChange={(e) => {
             setTypeFilter(e.target.value);
@@ -206,8 +191,7 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
           ))}
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 160 }}
+          className="admin-select u-max-2"
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
@@ -224,8 +208,7 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
           <option value="archived">Archived</option>
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 130 }}
+          className="admin-select u-max-1"
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
@@ -286,18 +269,18 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
                     <td>{humanize(r.type)}</td>
                     <td>{r.location || <span className="admin-cell-muted">—</span>}</td>
                     <td>{dateRange(r.startsAt, r.endsAt)}</td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.totalCount > r.registeredCount
                         ? `${r.registeredCount} (${r.totalCount} incl. other)`
                         : String(r.registeredCount)}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.effectiveAttendees > 0 ? r.effectiveAttendees : <span className="admin-cell-muted">—</span>}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.tiers.length === 0 ? "Free" : formatCents(r.fromUsdCents, "usd")}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {formatCents(r.collectedUsdCents, "usd")}
                     </td>
                     <td>{eventStatusBadge(r.status, r.archivedAt)}</td>
@@ -322,7 +305,7 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
               >
                 Prev
               </button>
-              <span className="admin-pagebtn" aria-disabled style={{ pointerEvents: "none" }}>
+              <span className="admin-pagebtn u-no-events" aria-disabled>
                 {clampedPage} / {totalPages}
               </span>
               <button

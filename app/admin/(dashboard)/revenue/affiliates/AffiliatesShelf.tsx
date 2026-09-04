@@ -84,7 +84,7 @@ export function AffiliateShelfRow({ row, children }: { row: AffiliateGroup; chil
 function Notice({ msg }: { msg: { ok: boolean; text: string } | null }) {
   if (!msg) return null;
   return (
-    <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`} style={{ marginBottom: 10 }}>
+    <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"} u-mb-3`}>
       {msg.text}
     </div>
   );
@@ -113,7 +113,7 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
         </div>
         <div className="admin-list-sub">{source}</div>
       </div>
-      <div className="admin-list-aside" style={{ alignItems: "flex-end" }}>
+      <div className="admin-list-aside u-items-end">
         {c.redemptionChoice ? (
           <>
             <Badge tone={c.paidOut ? "ok" : "neutral"}>
@@ -121,9 +121,9 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
               {c.commissionCents != null ? ` · ${formatCents(c.commissionCents, "usd")}` : ""}
             </Badge>
             {c.paidOut ? (
-              <span className="admin-cell-muted" style={{ fontSize: 12 }}>Paid out</span>
+              <span className="admin-cell-muted u-sm">Paid out</span>
             ) : (
-              <div style={{ display: "flex", gap: 6 }}>
+              <div className="u-row">
                 <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => choose(c.redemptionChoice === "work_credit" ? "cash" : "work_credit")}>
                   Switch to {c.redemptionChoice === "work_credit" ? "10% cash" : "20% credit"}
                 </button>
@@ -133,7 +133,7 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
         ) : (
           <>
             <Badge tone="warn">Pending choice</Badge>
-            <div style={{ display: "flex", gap: 6 }}>
+            <div className="u-row">
               <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => choose("work_credit")}>
                 20% credit
               </button>
@@ -143,7 +143,7 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
             </div>
           </>
         )}
-        {err && <span className="admin-cell-muted" style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+        {err && <span className="admin-cell-muted u-sm u-err">{err}</span>}
       </div>
     </div>
   );
@@ -190,7 +190,7 @@ function AffiliateShelfBody({ row }: { row: AffiliateGroup }) {
 
       <section>
         <div className="admin-shelf-heading">Program</div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <div className="u-row u-wrap">
           {active ? <Badge tone="ok">Active affiliate</Badge> : <Badge tone="neutral">Not active</Badge>}
           {active ? (
             <ConfirmButton
@@ -254,7 +254,7 @@ function AffiliateShelfBody({ row }: { row: AffiliateGroup }) {
           )}
         </dl>
         {!loading && data && data.commissions.length > 0 && (
-          <div className="admin-list" style={{ marginTop: 8 }}>
+          <div className="admin-list u-mt-2">
             {data.commissions.map((c) => (
               <CommissionRow key={c.id} c={c} onChanged={() => run(async () => ({ ok: true, message: "Redemption updated." }))} />
             ))}

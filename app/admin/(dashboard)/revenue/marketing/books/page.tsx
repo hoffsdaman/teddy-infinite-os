@@ -43,9 +43,9 @@ export default async function BooksPage() {
             >
               <div className="admin-card-title">{b.title}</div>
               {b.subtitle ? (
-                <p className="admin-page-sub" style={{ marginTop: 4 }}>{b.subtitle}</p>
+                <p className="admin-page-sub u-mt-1">{b.subtitle}</p>
               ) : null}
-              <p className="admin-page-sub" style={{ marginTop: 6 }}>{b.description}</p>
+              <p className="admin-page-sub u-mt-2">{b.description}</p>
               <div className="admin-book-card-meta">
                 <Badge tone={b.status === "draft" ? "info" : "ok"}>
                   {STATUS_LABEL[b.status] ?? b.status}

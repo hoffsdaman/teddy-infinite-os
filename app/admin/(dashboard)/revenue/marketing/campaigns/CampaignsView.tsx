@@ -80,7 +80,7 @@ export function CampaignsView({
 
   return (
     <>
-      <div className="admin-campaign-toolbar" style={{ marginBottom: 14 }}>
+      <div className="admin-campaign-toolbar u-mb-4">
         {brands.length > 1 ? (
           <div className="admin-campaign-chip-row">
             <button
@@ -117,7 +117,7 @@ export function CampaignsView({
       {view === "calendar" ? (
         <div className="admin-card admin-section-card">
           <div className="admin-card-title">Publish calendar</div>
-          <p className="admin-page-sub" style={{ marginTop: 4, marginBottom: 12 }}>
+          <p className="admin-page-sub u-mt-1 u-mb-3">
             Every campaign asset by publish date. Click one to open it.
           </p>
           {brandEntries.length === 0 ? (
@@ -152,7 +152,7 @@ export function CampaignsView({
                     <tr key={c.id}>
                       <td className="admin-cell-strong">
                         <Link href={`/admin/revenue/marketing/campaigns/${c.id}`}>{c.name}</Link>
-                        <div className="admin-cell-muted" style={{ fontWeight: 400, marginTop: 2 }}>
+                        <div className="admin-cell-muted u-mt-1">
                           {[c.objective, c.pillarName ? `Pillar: ${c.pillarName}` : null, c.brandName]
                             .filter(Boolean)
                             .join(" · ") || "No goal set"}
@@ -175,15 +175,12 @@ export function CampaignsView({
                           )}
                         </div>
                       </td>
-                      <td style={{ minWidth: 160 }}>
+                      <td className="u-min-2">
                         <div className="admin-campaign-progress">
                           <div className="admin-campaign-progress-track">
                             <div
-                              className="admin-campaign-progress-fill"
-                              style={{
-                                width: `${pct}%`,
-                                background: pct === 100 ? "var(--admin-ok-ink)" : "var(--admin-accent)",
-                              }}
+                              className={`admin-campaign-progress-fill${pct === 100 ? " is-done" : ""}`}
+                              style={{ width: `${pct}%` }} /* layout-ok: data-driven width */
                             />
                           </div>
                           <span className="admin-cell-mono admin-campaign-progress-num">

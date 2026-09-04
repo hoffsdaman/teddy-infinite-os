@@ -126,11 +126,11 @@ export default async function LeadsPage() {
         sub={`${rows.length} in the queue · worked top to bottom, SLA first`}
       />
       {queueRes.error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {queueRes.error.message}
         </div>
       )}
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Meetings booked this week"
           value={`${meetingsBooked} / ${WEEKLY_MEETINGS_GOAL}`}

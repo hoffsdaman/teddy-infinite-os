@@ -44,7 +44,7 @@ export default async function BookPage({ params }: { params: { slug: string } })
         }
       />
 
-      <p className="admin-page-sub" style={{ marginBottom: 16 }}>
+      <p className="admin-page-sub u-mb-4">
         {book.audience ? <>For {book.audience.toLowerCase()}. </> : null}
         {chapters.length} chapters, about {Math.round(totalWords / 100) * 100} words.
         The chapters below are the markdown source the content pipeline reads; the
@@ -52,14 +52,14 @@ export default async function BookPage({ params }: { params: { slug: string } })
       </p>
 
       {book.readerPath ? (
-        <div className="admin-card admin-section-card" style={{ padding: 0, overflow: "hidden" }}>
+        <div className="admin-card admin-section-card u-p-0 u-clip">
           <iframe src={book.readerPath} title={book.title} className="admin-book-reader-frame" />
         </div>
       ) : null}
 
-      <div className="admin-card admin-section-card" style={{ marginTop: 16 }}>
+      <div className="admin-card admin-section-card u-mt-4">
         <div className="admin-card-title">Chapters</div>
-        <table className="admin-table" style={{ marginTop: 8 }}>
+        <table className="admin-table u-mt-2">
           <thead>
             <tr>
               <th>#</th>

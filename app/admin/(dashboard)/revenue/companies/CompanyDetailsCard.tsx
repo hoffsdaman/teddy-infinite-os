@@ -27,8 +27,8 @@ export function CompanyDetailsCard({
 
   return (
     <div className="admin-card admin-section-card">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Details</h2>
+      <div className="admin-card-head">
+        <h2 className="admin-card-title">Details</h2>
         {!editing && (
           <button type="button" className="admin-btn" onClick={() => setEditing(true)}>
             Edit
@@ -61,21 +61,12 @@ export function CompanyDetailsCard({
             )}
           </dl>
           {company.notes && (
-            <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid var(--admin-line-soft)" }}>
-              <div className="admin-cell-muted" style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600, marginBottom: 6 }}>
+            <div className="u-mt-4" style={{ paddingTop: 12, borderTop: "1px solid var(--admin-line-soft)" }} /* layout-ok: no block-level divider class (needs e.g. .admin-divider-top) */>
+              <div className="u-label u-strong u-mb-2">
                 Notes
               </div>
               <p
-                style={{
-                  margin: 0,
-                  fontSize: 12.5,
-                  lineHeight: 1.5,
-                  color: "var(--admin-ink-2)",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
+                className="u-m-0 u-sm u-ink-2 u-clamp-4"
               >
                 {company.notes}
               </p>

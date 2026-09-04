@@ -45,7 +45,7 @@ export function CompanyEditForm({
 
   return (
     <div className="admin-form">
-      <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+      <div className="u-row u-end u-sm">
         <AutosaveIndicator status={status} />
       </div>
       <div className="admin-field">
@@ -67,7 +67,7 @@ export function CompanyEditForm({
           placeholder="acme.com"
         />
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Industry</label>
           <select
@@ -105,7 +105,7 @@ export function CompanyEditForm({
           </select>
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Country</label>
           <select

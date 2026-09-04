@@ -266,13 +266,13 @@ export function EntryDrawer({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+    <div className="u-stack ">
       {note && <div className={`admin-alert admin-alert--${note.tone}`}>{note.text}</div>}
 
-      <div className="admin-card" style={{ padding: "12px 14px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 auto", minWidth: 0 }}>
+      <div className="admin-card u-row u-gap-3 u-wrap u-p-3">
+        <div className="u-grow u-min-0">
           <div className="admin-label">Repurposing waterfall</div>
-          <div className="admin-hint" style={{ marginTop: 2 }}>
+          <div className="admin-hint u-mt-1">
             {parentEntry
               ? `Derived from "${parentEntry.title}".`
               : childCount > 0
@@ -280,7 +280,7 @@ export function EntryDrawer({
                 : "Spin off dated LinkedIn, Facebook, and email versions of this asset."}
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="u-row">
           <button
             type="button"
             className="admin-btn admin-btn--primary"
@@ -371,14 +371,13 @@ export function EntryDrawer({
           <label className="admin-label" htmlFor="e-html">HTML</label>
           <textarea
             id="e-html"
-            className="admin-textarea"
+            className="admin-textarea admin-mono-sm"
             rows={8}
             value={bodyHtml}
             onChange={(e) => setBodyHtml(e.target.value)}
             placeholder="The rendered email or content HTML. Reference images by their library URL below."
-            style={{ fontFamily: "var(--admin-mono, ui-monospace, monospace)", fontSize: 12 }}
           />
-          <div className="admin-hint" style={{ marginTop: 2 }}>
+          <div className="admin-hint u-mt-1">
             The email or content body. Pull in images with their library URL (copy one from a version below).
           </div>
         </div>
@@ -412,8 +411,8 @@ export function EntryDrawer({
           </div>
         )}
 
-        <div className="admin-field" style={{ display: "flex", gap: 10 }}>
-          <div style={{ flex: 1 }}>
+        <div className="admin-field u-row u-gap-3">
+          <div className="u-grow">
             <label className="admin-label" htmlFor="e-imagestyle">Image style</label>
             <select id="e-imagestyle" className="admin-input" value={imageStyle} onChange={(e) => setImageStyle(e.target.value)}>
               <option value="">— None —</option>
@@ -422,7 +421,7 @@ export function EntryDrawer({
               ))}
             </select>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="u-grow">
             <label className="admin-label" htmlFor="e-imagetype">Image source</label>
             <select id="e-imagetype" className="admin-input" value={imageType} onChange={(e) => setImageType(e.target.value)}>
               <option value="">— None —</option>
@@ -444,21 +443,21 @@ export function EntryDrawer({
         <div className="admin-field">
           <label className="admin-label" htmlFor="e-imgbrief">Image brief</label>
           <textarea id="e-imgbrief" className="admin-textarea" rows={4} value={imageBriefMd} onChange={(e) => setImageBriefMd(e.target.value)} placeholder="Hero concept, palette, ratios…" />
-          <div className="admin-form-actions" style={{ marginTop: 8 }}>
+          <div className="admin-form-actions u-mt-2">
             <button type="button" className="admin-btn" disabled={pending} onClick={genImage}>
               {pending ? "Generating…" : images.length > 0 ? "Generate another" : "Generate image"}
             </button>
           </div>
 
           {selectedImage && (
-            <a href={selectedImage.url} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: 10 }}>
+            <a href={selectedImage.url} target="_blank" rel="noreferrer" className="u-block u-mt-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={selectedImage.url} alt="Selected" style={{ maxWidth: "100%", borderRadius: 10, border: "1px solid var(--admin-line)" }} />
+              <img src={selectedImage.url} alt="Selected" className="admin-box" />
             </a>
           )}
 
           {images.length > 1 && (
-            <div className="admin-campaign-thumbs" style={{ padding: "12px 0 0" }}>
+            <div className="admin-campaign-thumbs u-pt-3">
               {images.map((img, i) => (
                 <button
                   key={img.id}
@@ -476,11 +475,11 @@ export function EntryDrawer({
           )}
 
           {selectedImage && (
-            <div className="admin-hint" style={{ marginTop: 6, wordBreak: "break-all" }}>
+            <div className="admin-hint u-mt-2 u-break-all">
               Selected URL: {selectedImage.url}
             </div>
           )}
-          <div className="admin-hint" style={{ marginTop: 6 }}>
+          <div className="admin-hint u-mt-2">
             Every generation is kept as a version. Uses the image brief, the chosen image style, and the brand palette. Save the brief first if you just edited it.
           </div>
         </div>
@@ -511,8 +510,8 @@ export function EntryDrawer({
       )}
 
       {entry.channel === "blog" && (
-        <div className="admin-card" style={{ padding: "12px 14px" }}>
-          <div className="admin-label" style={{ marginBottom: 8 }}>Publish to site (manual)</div>
+        <div className="admin-card u-p-3">
+          <div className="admin-label u-mb-2">Publish to site (manual)</div>
           <div className="admin-form-actions">
             <button
               type="button"
@@ -528,7 +527,7 @@ export function EntryDrawer({
               </a>
             )}
           </div>
-          <div className="admin-hint" style={{ marginTop: 8 }}>
+          <div className="admin-hint u-mt-2">
             Publishes straight to edge8.ai from the database: validates the post, sets it live, and
             verifies the URL. No code deploy. Needs a body, an image, and an SEO plan with a slug.
           </div>
@@ -536,8 +535,8 @@ export function EntryDrawer({
       )}
 
       {entry.channel !== "email" && entry.channel !== "blog" && (
-        <div className="admin-card" style={{ padding: "12px 14px" }}>
-          <div className="admin-label" style={{ marginBottom: 8 }}>Publish</div>
+        <div className="admin-card u-p-3">
+          <div className="admin-label u-mb-2">Publish</div>
           <div className="admin-form">
             <input
               className="admin-input"
@@ -545,7 +544,7 @@ export function EntryDrawer({
               onChange={(e) => setPostedUrl(e.target.value)}
               placeholder="Live post URL (optional)"
             />
-            <div className="admin-form-actions" style={{ marginTop: 8 }}>
+            <div className="admin-form-actions u-mt-2">
               <button
                 type="button"
                 className="admin-btn admin-btn--primary"
@@ -561,7 +560,7 @@ export function EntryDrawer({
               )}
             </div>
           </div>
-          <div className="admin-hint" style={{ marginTop: 8 }}>
+          <div className="admin-hint u-mt-2">
             You post {CHANNELS.find((c) => c.id === entry.channel)?.label ?? "this"} by hand; recording it
             here moves the entry to Published and clears it from the daily reminder.
           </div>
@@ -569,10 +568,10 @@ export function EntryDrawer({
       )}
 
       {entry.channel === "email" && (
-        <div className="admin-card" style={{ padding: "12px 14px" }}>
-          <div className="admin-label" style={{ marginBottom: 8 }}>Broadcast</div>
+        <div className="admin-card u-p-3">
+          <div className="admin-label u-mb-2">Broadcast</div>
           {entry.broadcastId ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div className="u-row u-wrap">
               {entry.broadcastStatus && (
                 <Badge tone={statusTone(entry.broadcastStatus)}>{entry.broadcastStatus}</Badge>
               )}
@@ -586,14 +585,14 @@ export function EntryDrawer({
             </button>
           )}
           {perf && perf.sent > 0 && (
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 12 }}>
+            <div className="u-row u-gap-4 u-wrap u-mt-3">
               <PerfStat label="Sent" value={perf.sent} />
               <PerfStat label="Delivered" value={perf.delivered} />
               <PerfStat label="Opened" value={perf.opened} />
               <PerfStat label="Clicked" value={perf.clicked} />
             </div>
           )}
-          <div className="admin-hint" style={{ marginTop: 8 }}>
+          <div className="admin-hint u-mt-2">
             Spawns a draft broadcast in the send engine, prefilled with this entry&apos;s title, brand, and date.
           </div>
         </div>
@@ -605,7 +604,7 @@ export function EntryDrawer({
 function PerfStat({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <div style={{ fontSize: 18, fontWeight: 600 }}>{value.toLocaleString()}</div>
+      <div className="admin-num-lg">{value.toLocaleString()}</div>
       <div className="admin-hint">{label}</div>
     </div>
   );

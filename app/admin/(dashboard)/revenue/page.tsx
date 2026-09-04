@@ -49,7 +49,7 @@ async function MarketingSection({
 
   return (
     <>
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Visitors · 30d"
           value={visitors != null ? visitors.toLocaleString("en-US") : "—"}
@@ -75,7 +75,7 @@ async function MarketingSection({
           href="/admin/revenue/marketing/campaigns"
         />
       </div>
-      <div className="admin-summary-grid" style={{ marginBottom: 4 }}>
+      <div className="admin-summary-grid u-mb-1">
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Traffic by channel · 30d</div>
           <DonutChart data={byChannel} centerLabel="visits" ariaLabel="Public site traffic by channel" emptyText="No traffic data." />
@@ -96,7 +96,7 @@ async function MarketingSection({
                   </div>
                 </div>
               ))}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/revenue/marketing/campaigns" className="admin-auth-link">Open campaigns →</Link>
               </div>
             </div>
@@ -108,7 +108,7 @@ async function MarketingSection({
 }
 function MarketingSectionFallback() {
   return (
-    <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+    <div className="admin-kpi-grid u-mb-4">
       <MetricCard label="Visitors · 30d" value="…" sub="unique, public site" />
       <MetricCard label="Newsletter audience" value="…" sub="loading" />
       <MetricCard label="Emails opened · 30d" value="…" sub="loading" />
@@ -433,13 +433,13 @@ export default async function SalesCockpitPage() {
         sub="Revenue, marketing signals, and the sales command center."
       />
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err.message}
         </div>
       )}
 
       {/* ── Shared money strip: the numbers every revenue function cares about ── */}
-      <div className="admin-kpi-grid" style={{ marginBottom: 4 }}>
+      <div className="admin-kpi-grid u-mb-1">
         <MetricCard
           label="Revenue · 1yr"
           value={formatCents(revenue1yr)}
@@ -458,13 +458,13 @@ export default async function SalesCockpitPage() {
           slaOverdue > 0 ? `${slaOverdue} SLA overdue` : null,
         ].filter(Boolean).join(" · ")}
       />
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="Open pipeline" value={formatCents(openPipeline)} sub={`${deals.length} open deals`} href="/admin/revenue/deals" />
         <MetricCard label="New leads · 30d" value={newLeads30} sub={vsPrior(newLeads30, newLeadsPrev30)} href="/admin/revenue/leads" />
         <MetricCard label="Meetings booked" value={`${meetingsBooked} / ${WEEKLY_MEETINGS_GOAL}`} sub="this week vs goal" href="/admin/revenue/leads" />
         <MetricCard label="Conversion · 90d" value={`${conversion90}%`} sub="lead → won" />
       </div>
-      <div className="admin-summary-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-summary-grid u-mb-4">
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Revenue by month · {year}</div>
           <BarChart data={revenueByMonth} ariaLabel="Revenue by month" formatValue={compactUsd} />
@@ -476,7 +476,7 @@ export default async function SalesCockpitPage() {
       </div>
 
       {/* ── Deals needing attention: the priority action list ── */}
-      <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+      <div className="admin-card admin-section-card u-mb-5">
         <h2 className="admin-card-title">Deals needing attention</h2>
         <CockpitDeals
           deals={cockpitDeals}
@@ -487,9 +487,9 @@ export default async function SalesCockpitPage() {
         />
       </div>
 
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", alignItems: "start" }}>
+      <div className="u-grid-auto-lg">
         {/* ── Leads to work ── */}
-        <div className="admin-card admin-section-card" style={{ alignSelf: "start" }}>
+        <div className="admin-card admin-section-card u-self-start u-mt-0">
           <h2 className="admin-card-title">Leads to work</h2>
           {leads.length === 0 ? (
             <div className="admin-empty">No current leads in the queue.</div>
@@ -517,7 +517,7 @@ export default async function SalesCockpitPage() {
                 );
               })}
               {leads.length > 8 && (
-                <div style={{ paddingTop: 10 }}>
+                <div className="u-pt-3">
                   <Link href="/admin/revenue/leads" className="admin-auth-link">View all {leads.length} in the queue →</Link>
                 </div>
               )}
@@ -529,7 +529,7 @@ export default async function SalesCockpitPage() {
         {/* marginTop:0 cancels the `.admin-section-card + .admin-section-card` stacking
             margin, which the grid's adjacent siblings otherwise inherit and which would
             push this card 16px below the Leads card. */}
-        <div className="admin-card admin-section-card" style={{ alignSelf: "start", marginTop: 0 }}>
+        <div className="admin-card admin-section-card u-self-start u-mt-0">
           <h2 className="admin-card-title">Inquiries to triage</h2>
           {inquiries.length === 0 ? (
             <div className="admin-empty">No new contact-us inquiries. Inbox zero.</div>
@@ -549,7 +549,7 @@ export default async function SalesCockpitPage() {
                   </div>
                 );
               })}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/revenue/inquiries" className="admin-auth-link">Open the inquiries board →</Link>
               </div>
             </div>
@@ -570,7 +570,7 @@ export default async function SalesCockpitPage() {
 
       {/* ── CUSTOMER SUCCESS (placeholder; retention + support tickets land here later) ── */}
       <Band label="Customer Success" note="coming later" muted />
-      <div className="admin-kpi-grid" style={{ opacity: 0.6 }}>
+      <div className="admin-kpi-grid u-dim">
         <MetricCard label="Active clients" value="—" sub="coming later" />
         <MetricCard label="Renewals due" value="—" sub="coming later" />
         <MetricCard

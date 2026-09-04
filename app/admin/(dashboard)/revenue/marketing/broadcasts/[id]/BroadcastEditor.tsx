@@ -79,7 +79,7 @@ export function BroadcastEditor({
   return (
     <>
       {note && (
-        <div className={`admin-alert admin-alert--${note.tone}`} style={{ marginBottom: 14 }}>
+        <div className={`admin-alert admin-alert--${note.tone} u-mb-4`}>
           {note.text}
         </div>
       )}
@@ -87,12 +87,12 @@ export function BroadcastEditor({
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Content</div>
         {!isDraft && (
-          <div className="admin-hint" style={{ marginTop: 6 }}>
+          <div className="admin-hint u-mt-2">
             The content is frozen because this broadcast is {campaign.status}. Editing it mid-send
             would change what later recipients receive. Cancel the broadcast to edit it.
           </div>
         )}
-        <div className="admin-form" style={{ marginTop: 12 }}>
+        <div className="admin-form u-mt-3">
           <div className="admin-field">
             <label className="admin-label" htmlFor="brand">
               Brand
@@ -111,16 +111,16 @@ export function BroadcastEditor({
             </select>
             <div className="admin-hint">Which identity this send goes out as (Edge8, AI Officer Institute).</div>
             {activeProfile && (activeProfile.voiceMd || activeProfile.primaryCta || activeProfile.positioning) && (
-              <details className="admin-card" style={{ padding: "10px 12px", marginTop: 8 }}>
-                <summary style={{ cursor: "pointer", fontWeight: 600 }}>
+              <details className="admin-card u-mt-2 u-p-3">
+                <summary className="u-strong u-pointer">
                   {activeProfile.brandName} voice reference
                 </summary>
-                <div style={{ marginTop: 8, fontSize: 13, display: "flex", flexDirection: "column", gap: 8 }}>
+                <div className="u-stack u-mt-2">
                   {activeProfile.positioning && (
                     <div><span className="admin-label">Positioning</span><div>{activeProfile.positioning}</div></div>
                   )}
                   {activeProfile.voiceMd && (
-                    <div><span className="admin-label">Voice</span><div style={{ whiteSpace: "pre-wrap" }}>{activeProfile.voiceMd}</div></div>
+                    <div><span className="admin-label">Voice</span><div className="u-prewrap">{activeProfile.voiceMd}</div></div>
                   )}
                   {activeProfile.primaryCta && (
                     <div><span className="admin-label">Primary CTA</span><div>{activeProfile.primaryCta}</div></div>
@@ -235,21 +235,21 @@ export function BroadcastEditor({
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Audience</div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           Only contacts who are marked subscribed can be reached. Job seekers, team members, and
           anyone flagged do-not-contact are excluded no matter what you pick here.
         </p>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           {campaign.brandName && campaign.brandName !== "Edge8"
             ? `This is a ${campaign.brandName} broadcast, so it reaches only ${campaign.brandName}'s brand audience.`
             : "With no brand (or the Edge8 brand) set, this reaches the full house list. Pick a guest brand to scope the send to that brand's audience only."}
         </p>
-        <div className="admin-form" style={{ marginTop: 12 }}>
+        <div className="admin-form u-mt-3">
           <div className="admin-field">
             <span className="admin-label">Personas</span>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 6 }}>
+            <div className="u-row u-gap-4 u-wrap u-mt-2">
               {PERSONA_CHOICES.map((choice) => (
-                <label key={choice.value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <label key={choice.value} className="u-row">
                   <input
                     type="checkbox"
                     checked={personas.includes(choice.value)}
@@ -330,7 +330,7 @@ export function BroadcastEditor({
 
       <section className="admin-card admin-section-card">
         <div className="admin-card-title">Send</div>
-        <p className="admin-page-sub" style={{ marginTop: 4 }}>
+        <p className="admin-page-sub u-mt-1">
           {campaign.status === "draft" &&
             `${pendingCount} recipient(s) queued. Approving does not send: you start the send separately.`}
           {campaign.status === "approved" &&
@@ -341,7 +341,7 @@ export function BroadcastEditor({
           {campaign.status === "cancelled" && "This broadcast was cancelled."}
         </p>
 
-        <div className="admin-form" style={{ marginTop: 12 }}>
+        <div className="admin-form u-mt-3">
           <div className="admin-field">
             <label className="admin-label" htmlFor="schedule">
               Schedule
@@ -360,7 +360,7 @@ export function BroadcastEditor({
                 : "No schedule: sending starts immediately when you press Start sending."}
             </div>
             {isDraft && (
-              <div className="admin-form-actions" style={{ marginTop: 8 }}>
+              <div className="admin-form-actions u-mt-2">
                 <button
                   type="button"
                   className="admin-btn"
@@ -379,7 +379,7 @@ export function BroadcastEditor({
           </div>
         </div>
 
-        <div className="admin-form-actions" style={{ marginTop: 12 }}>
+        <div className="admin-form-actions u-mt-3">
           {campaign.status === "draft" && (
             <button
               type="button"

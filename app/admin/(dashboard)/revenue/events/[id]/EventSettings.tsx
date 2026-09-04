@@ -221,9 +221,9 @@ export function EventSettings({
   }
 
   return (
-    <div style={{ maxWidth: 640 }}>
+    <div className="u-max-form">
       <div className="admin-form">
-        <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+        <div className="u-row u-end u-sm">
           <AutosaveIndicator status={saveStatus} />
         </div>
 
@@ -258,7 +258,7 @@ export function EventSettings({
             placeholder="The long-form pitch shown on the signup page. Blank lines start a new paragraph."
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="u-grid-2 u-gap-3">
           <div className="admin-field">
             <label className="admin-label">Type</label>
             <select
@@ -322,7 +322,7 @@ export function EventSettings({
             placeholder="City, Country"
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="u-grid-2 u-gap-3">
           <div className="admin-field">
             <label className="admin-label">Start date</label>
             <input
@@ -360,7 +360,7 @@ export function EventSettings({
             placeholder="Uncapped"
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="u-grid-2 u-gap-3">
           <div className="admin-field">
             <label className="admin-label">Registered (override)</label>
             <input
@@ -397,9 +397,9 @@ export function EventSettings({
         {talks.length > 0 && (
           <div className="admin-field">
             <label className="admin-label">Talks covered</label>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <div className="u-stack">
               {talks.map((t) => (
-                <label key={t.id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, cursor: "pointer" }}>
+                <label key={t.id} className="u-row u-pointer">
                   <input
                     type="checkbox"
                     checked={talkIds.includes(t.id)}
@@ -409,7 +409,7 @@ export function EventSettings({
                 </label>
               ))}
             </div>
-            {talksErr && <div className="admin-alert admin-alert--err" style={{ marginTop: 6 }}>{talksErr}</div>}
+            {talksErr && <div className="admin-alert admin-alert--err u-mt-2">{talksErr}</div>}
             <div className="admin-hint">Which keynote/workshop products this event covered. Pick all that apply.</div>
           </div>
         )}
@@ -459,7 +459,7 @@ export function EventSettings({
       </div>
 
       {msg && (
-        <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`} style={{ marginTop: 16 }}>
+        <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"} u-mt-4`}>
           {msg.text}
         </div>
       )}
@@ -467,7 +467,7 @@ export function EventSettings({
       <TiersSection eventId={event.id} tiers={tiers} onChanged={() => router.refresh()} setMsg={setMsg} />
       <MediaSection eventId={event.id} coverImageUrl={event.coverImageUrl} media={event.media} onChanged={() => router.refresh()} />
 
-      <div className="admin-danger-zone" style={{ marginTop: 18 }}>
+      <div className="admin-danger-zone u-mt-4">
         <div className="admin-danger-zone-title">Danger zone</div>
         {isArchived ? (
           <div className="admin-danger-row">
@@ -562,9 +562,9 @@ function TiersSection({
   }
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-        <div className="admin-cell-muted" style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+    <div className="u-mt-4">
+      <div className="admin-card-head">
+        <div className="admin-cell-muted u-label">
           Tickets
         </div>
         <button type="button" className="admin-btn" onClick={() => setShowAdd((v) => !v)}>
@@ -574,8 +574,7 @@ function TiersSection({
 
       {showAdd && (
         <form
-          className="admin-form"
-          style={{ marginBottom: 12 }}
+          className="admin-form u-mb-3"
           onSubmit={(e) => {
             e.preventDefault();
             submit();
@@ -586,7 +585,7 @@ function TiersSection({
             <label className="admin-label">Ticket name</label>
             <input className="admin-input" value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="General admission" />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">Price (USD)</label>
               <input className="admin-input" type="number" min={0} step="1" value={price} onChange={(e) => setPrice(e.target.value)} />
@@ -621,7 +620,7 @@ function TiersSection({
                   {[t.description, t.capacity ? `${t.capacity} seats` : null].filter(Boolean).join(" · ") || "—"}
                 </div>
               </div>
-              <div className="admin-list-aside" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="admin-list-aside u-row">
                 <span className="admin-cell-mono">{tierPriceLabel({ amount_cents: t.amountCents, currency: t.currency })}</span>
                 {!t.active && <Badge tone="neutral">Inactive</Badge>}
                 <button type="button" className="admin-btn" disabled={togglingId === t.id} onClick={() => toggle(t.id, !t.active)}>
@@ -632,7 +631,7 @@ function TiersSection({
           ))}
         </div>
       )}
-      <div className="admin-hint" style={{ marginTop: 6 }}>
+      <div className="admin-hint u-mt-2">
         Prices are fixed once a ticket is on sale. Deactivate it and add a new one to reprice.
       </div>
     </div>
@@ -693,11 +692,11 @@ function MediaSection({
   }
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <div className="admin-cell-muted" style={{ marginBottom: 6, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+    <div className="u-mt-4">
+      <div className="admin-cell-muted u-mb-2 u-label">
         Cover image
       </div>
-      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 14 }}>
+      <div className="u-row u-gap-3 u-mb-4">
         {coverImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -705,17 +704,17 @@ function MediaSection({
             alt="Cover"
             width={96}
             height={64}
-            style={{ borderRadius: 8, objectFit: "cover", border: "1px solid var(--admin-line)" }}
+            className="admin-img-thumb"
           />
         ) : (
           <span className="admin-cell-muted">None. The signup page renders without a hero.</span>
         )}
-        <label className="admin-btn" style={{ cursor: "pointer" }}>
+        <label className="admin-btn u-pointer">
           {busy === "cover" ? "Uploading…" : coverImageUrl ? "Replace" : "Upload"}
           <input
             type="file"
             accept="image/*"
-            style={{ display: "none" }}
+            className="u-hidden-input"
             disabled={busy !== null}
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -736,10 +735,10 @@ function MediaSection({
         )}
       </div>
 
-      <div className="admin-cell-muted" style={{ marginBottom: 6, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+      <div className="admin-cell-muted u-mb-2 u-label">
         Gallery & video
       </div>
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 8 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-2">{error}</div>}
 
       {media.length === 0 ? (
         <div className="admin-empty">No media yet.</div>
@@ -747,21 +746,21 @@ function MediaSection({
         <div className="admin-list">
           {media.map((m, i) => (
             <div className="admin-list-row" key={`${m.url}-${i}`}>
-              <div className="admin-list-main" style={{ display: "flex", gap: 10, alignItems: "center", minWidth: 0 }}>
+              <div className="admin-list-main u-row u-gap-3 u-min-0">
                 {m.kind === "image" ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={m.url} alt={m.caption ?? ""} width={56} height={40} style={{ borderRadius: 6, objectFit: "cover", flexShrink: 0 }} />
+                  <img src={m.url} alt={m.caption ?? ""} width={56} height={40} className="admin-img-thumb admin-img-thumb--sm" />
                 ) : (
-                  <span style={{ flexShrink: 0 }}>🎬</span>
+                  <span className="u-shrink-0">🎬</span>
                 )}
-                <div style={{ minWidth: 0 }}>
-                  <div className="admin-list-title" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <div className="u-min-0">
+                  <div className="admin-list-title u-truncate">
                     {m.caption || m.url}
                   </div>
                   <div className="admin-list-sub">{m.kind}</div>
                 </div>
               </div>
-              <div className="admin-list-aside" style={{ display: "flex", gap: 4 }}>
+              <div className="admin-list-aside u-row u-gap-1">
                 <button type="button" className="admin-btn" disabled={busy !== null || i === 0} onClick={() => run("move", () => moveEventMedia(eventId, i, "up"))} aria-label="Move up">
                   ↑
                 </button>
@@ -783,20 +782,19 @@ function MediaSection({
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10, flexWrap: "wrap" }}>
+      <div className="u-row u-wrap u-mt-3">
         <input
-          className="admin-input"
-          style={{ maxWidth: 220 }}
+          className="admin-input u-max-3"
           placeholder="Caption (optional)"
           value={imageCaption}
           onChange={(e) => setImageCaption(e.target.value)}
         />
-        <label className="admin-btn" style={{ cursor: "pointer" }}>
+        <label className="admin-btn u-pointer">
           {busy === "gallery" ? "Uploading…" : "Upload image"}
           <input
             type="file"
             accept="image/*"
-            style={{ display: "none" }}
+            className="u-hidden-input"
             disabled={busy !== null}
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -808,15 +806,14 @@ function MediaSection({
       </div>
 
       <form
-        style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10, flexWrap: "wrap" }}
+        className="u-row u-wrap u-mt-3"
         onSubmit={(e) => {
           e.preventDefault();
           submitVideo();
         }}
       >
         <input
-          className="admin-input"
-          style={{ maxWidth: 260 }}
+          className="admin-input u-max-4"
           type="url"
           placeholder="YouTube / Vimeo / .mp4 URL"
           value={videoUrl}
@@ -824,8 +821,7 @@ function MediaSection({
           required
         />
         <input
-          className="admin-input"
-          style={{ maxWidth: 180 }}
+          className="admin-input u-max-3"
           placeholder="Caption (optional)"
           value={videoCaption}
           onChange={(e) => setVideoCaption(e.target.value)}

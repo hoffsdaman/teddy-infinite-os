@@ -80,13 +80,13 @@ export function NewEntryForm({
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 12 }}>
-      <div className="admin-form-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
-        <div className="admin-field" style={{ flex: "2 1 220px" }}>
+    <div className="admin-form u-mt-3">
+      <div className="admin-form-row u-row u-items-end u-gap-3 u-wrap">
+        <div className="admin-field u-flex-2">
           <label className="admin-label" htmlFor="ne-title">Title</label>
           <input id="ne-title" className="admin-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="What we learned running 40 AI workshops" />
         </div>
-        <div className="admin-field" style={{ flex: "1 1 130px" }}>
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="ne-channel">Channel</label>
           <select id="ne-channel" className="admin-input" value={channel} onChange={(e) => setChannel(e.target.value as CalendarChannel)}>
             {CHANNELS.map((c) => (
@@ -94,7 +94,7 @@ export function NewEntryForm({
             ))}
           </select>
         </div>
-        <div className="admin-field" style={{ flex: "1 1 130px" }}>
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="ne-brand">Brand</label>
           <select
             id="ne-brand"
@@ -111,7 +111,7 @@ export function NewEntryForm({
             ))}
           </select>
         </div>
-        <div className="admin-field" style={{ flex: "1 1 150px" }}>
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="ne-pillar">Pillar</label>
           <select
             id="ne-pillar"
@@ -126,7 +126,7 @@ export function NewEntryForm({
             ))}
           </select>
         </div>
-        <div className="admin-field" style={{ flex: "1 1 150px" }}>
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="ne-date">Date</label>
           <input id="ne-date" className="admin-input" type="date" value={publishDate} onChange={(e) => setPublishDate(e.target.value)} />
         </div>
@@ -134,7 +134,7 @@ export function NewEntryForm({
           {pending ? "Adding…" : "Add entry"}
         </button>
       </div>
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-2">{error}</div>}
     </div>
   );
 }

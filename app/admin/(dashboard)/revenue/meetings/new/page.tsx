@@ -22,7 +22,7 @@ export default async function NewMeetingPage({ searchParams }: { searchParams: S
 
   return (
     <div className="admin-content--form">
-      <div style={{ marginBottom: 10 }}>
+      <div className="u-mb-3">
         <Link className="admin-cell-muted" href="/admin/revenue/meetings">
           ← All meeting notes
         </Link>

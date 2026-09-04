@@ -85,9 +85,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
   return (
     <>
       <PageHead eyebrow="Revenue" title="Products" sub={`${total.toLocaleString()} ${total === 1 ? "product" : "products"}`} />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Active products" value={activeCount} sub={`of ${total.toLocaleString()} in catalog`} />
         <MetricCard label="Upcoming" value={upcomingCount} sub="active, future start date" />
       </div>

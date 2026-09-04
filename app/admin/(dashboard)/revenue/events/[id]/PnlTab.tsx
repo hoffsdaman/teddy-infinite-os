@@ -190,26 +190,26 @@ export function PnlTab({
           <td>
             <div>{CLASSIFICATION_LABELS[l.classification] ?? l.classification}</div>
             {(l.description || l.personId) && (
-              <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+              <div className="admin-cell-muted u-sm">
                 {[l.personId ? peopleById.get(l.personId) : null, l.description].filter(Boolean).join(" · ")}
                 {l.staffDays ? ` · ${l.staffDays}d × $150` : ""}
               </div>
             )}
           </td>
-          <td style={{ textAlign: "right" }} className="admin-cell-mono">
+          <td className="admin-cell-mono u-right">
             {nativeCell(l.estimatedCents, l.estimatedCurrency)}
           </td>
-          <td style={{ textAlign: "right" }} className="admin-cell-mono">
+          <td className="admin-cell-mono u-right">
             {nativeCell(l.actualCents, l.actualCurrency)}
           </td>
-          <td style={{ textAlign: "right" }} className="admin-cell-mono">
+          <td className="admin-cell-mono u-right">
             {formatCents(l.actualUsdCents, "usd")}
           </td>
-          <td style={{ textAlign: "right" }} className="admin-cell-mono">
+          <td className="admin-cell-mono u-right">
             {d == null ? "—" : formatCents(d, "usd")}
           </td>
           <td>{PAYMENT_STATUS_LABELS[l.paymentStatus]}</td>
-          <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+          <td className="u-right u-nowrap">
             <button className="admin-btn admin-btn--sm" onClick={() => openEdit(l)} disabled={pending}>
               Edit
             </button>{" "}
@@ -225,31 +225,31 @@ export function PnlTab({
   return (
     <div>
       {/* Summary */}
-      <div className="admin-table-wrap" style={{ marginBottom: 20 }}>
+      <div className="admin-table-wrap u-mb-5">
         <table className="admin-table">
           <thead>
             <tr>
               <th></th>
-              <th style={{ textAlign: "right" }}>Estimated (USD)</th>
-              <th style={{ textAlign: "right" }}>Actual (USD)</th>
+              <th className="u-right">Estimated (USD)</th>
+              <th className="u-right">Actual (USD)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Total revenue</td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(summary.revenueEstimatedUsd, "usd")}
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(summary.revenueActualUsd, "usd")}
               </td>
             </tr>
             <tr>
               <td>Total expenses</td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(summary.expenseEstimatedUsd, "usd")}
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(summary.expenseActualUsd, "usd")}
               </td>
             </tr>
@@ -257,10 +257,10 @@ export function PnlTab({
               <td>
                 <strong>Profit / (Loss)</strong>
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 <strong>{formatCents(summary.profitEstimatedUsd, "usd")}</strong>
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 <strong>{formatCents(summary.profitActualUsd, "usd")}</strong>
               </td>
             </tr>
@@ -269,7 +269,7 @@ export function PnlTab({
       </div>
 
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 16 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}
@@ -281,15 +281,15 @@ export function PnlTab({
           Add revenue line
         </button>
       </div>
-      <div className="admin-table-wrap" style={{ marginBottom: 24 }}>
+      <div className="admin-table-wrap u-mb-5">
         <table className="admin-table">
           <thead>
             <tr>
               <th>Line</th>
-              <th style={{ textAlign: "right" }}>Estimated</th>
-              <th style={{ textAlign: "right" }}>Actual</th>
-              <th style={{ textAlign: "right" }}>Actual (USD)</th>
-              <th style={{ textAlign: "right" }}>Diff (USD)</th>
+              <th className="u-right">Estimated</th>
+              <th className="u-right">Actual</th>
+              <th className="u-right">Actual (USD)</th>
+              <th className="u-right">Diff (USD)</th>
               <th>Payment</th>
               <th></th>
             </tr>
@@ -299,16 +299,16 @@ export function PnlTab({
               <td>
                 Stripe registrations <span className="admin-cell-muted">(auto)</span>
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(autoRevenueUsdCents, "usd")}
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(autoRevenueUsdCents, "usd")}
               </td>
-              <td style={{ textAlign: "right" }} className="admin-cell-mono">
+              <td className="admin-cell-mono u-right">
                 {formatCents(autoRevenueUsdCents, "usd")}
               </td>
-              <td style={{ textAlign: "right" }}>—</td>
+              <td className="u-right">—</td>
               <td>Paid</td>
               <td></td>
             </tr>
@@ -329,10 +329,10 @@ export function PnlTab({
           <thead>
             <tr>
               <th>Line</th>
-              <th style={{ textAlign: "right" }}>Estimated</th>
-              <th style={{ textAlign: "right" }}>Actual</th>
-              <th style={{ textAlign: "right" }}>Actual (USD)</th>
-              <th style={{ textAlign: "right" }}>Diff (USD)</th>
+              <th className="u-right">Estimated</th>
+              <th className="u-right">Actual</th>
+              <th className="u-right">Actual (USD)</th>
+              <th className="u-right">Diff (USD)</th>
               <th>Payment</th>
               <th></th>
             </tr>
@@ -343,7 +343,7 @@ export function PnlTab({
 
       {/* Add / edit form */}
       {form && (
-        <div className="admin-card admin-section-card" style={{ marginTop: 24 }}>
+        <div className="admin-card admin-section-card u-mt-5">
           <h3 className="admin-card-title">
             {editingId ? "Edit" : "Add"} {form.side} line
           </h3>
@@ -400,21 +400,19 @@ export function PnlTab({
 
             <div className="admin-field">
               <label className="admin-label">Estimated</label>
-              <div style={{ display: "flex", gap: 8 }}>
+              <div className="u-row">
                 <input
-                  className="admin-input"
+                  className="admin-input u-grow"
                   type="number"
                   step="any"
                   value={form.estimatedAmount}
                   onChange={(e) => setForm({ ...form, estimatedAmount: e.target.value })}
                   placeholder="amount"
-                  style={{ flex: 1 }}
                 />
                 <select
-                  className="admin-select"
+                  className="admin-select u-w-90"
                   value={form.estimatedCurrency}
                   onChange={(e) => setForm({ ...form, estimatedCurrency: e.target.value })}
-                  style={{ width: 90 }}
                 >
                   {CURRENCIES.map((c) => (
                     <option key={c} value={c}>
@@ -427,21 +425,19 @@ export function PnlTab({
 
             <div className="admin-field">
               <label className="admin-label">Actual</label>
-              <div style={{ display: "flex", gap: 8 }}>
+              <div className="u-row">
                 <input
-                  className="admin-input"
+                  className="admin-input u-grow"
                   type="number"
                   step="any"
                   value={form.actualAmount}
                   onChange={(e) => setForm({ ...form, actualAmount: e.target.value })}
                   placeholder="amount"
-                  style={{ flex: 1 }}
                 />
                 <select
-                  className="admin-select"
+                  className="admin-select u-w-90"
                   value={form.actualCurrency}
                   onChange={(e) => setForm({ ...form, actualCurrency: e.target.value })}
-                  style={{ width: 90 }}
                 >
                   {CURRENCIES.map((c) => (
                     <option key={c} value={c}>

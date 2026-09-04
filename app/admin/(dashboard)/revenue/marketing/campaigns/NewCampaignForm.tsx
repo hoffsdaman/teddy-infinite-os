@@ -43,7 +43,7 @@ export function NewCampaignForm({ brands, pillars }: { brands: BrandOption[]; pi
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 12 }}>
+    <div className="admin-form u-mt-3">
       <div className="admin-field">
         <label className="admin-label" htmlFor="c-idea">
           The idea
@@ -128,14 +128,14 @@ export function NewCampaignForm({ brands, pillars }: { brands: BrandOption[]; pi
         </select>
       </div>
 
-      <div className="admin-field" style={{ display: "flex", gap: 10 }}>
-        <div style={{ flex: 1 }}>
+      <div className="admin-field u-row u-gap-3">
+        <div className="u-grow">
           <label className="admin-label" htmlFor="c-start">
             Starts
           </label>
           <input id="c-start" className="admin-input" type="date" value={startsOn} onChange={(e) => setStartsOn(e.target.value)} />
         </div>
-        <div style={{ flex: 1 }}>
+        <div className="u-grow">
           <label className="admin-label" htmlFor="c-end">
             Ends
           </label>
@@ -144,7 +144,7 @@ export function NewCampaignForm({ brands, pillars }: { brands: BrandOption[]; pi
       </div>
 
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {error}
         </div>
       )}

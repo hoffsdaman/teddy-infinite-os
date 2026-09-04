@@ -264,13 +264,13 @@ export function CampaignHub({
     startsOn || endsOn ? `${fmtDate(startsOn || null)} – ${fmtDate(endsOn || null)}` : "—";
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+    <div className="u-stack ">
       {note && <div className={`admin-alert admin-alert--${note.tone}`}>{note.text}</div>}
 
       {/* Header: goal/dates/pillar/brand. The idea has its own tab. */}
       <section className="admin-card admin-section-card">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        <div className="u-row-top u-wrap u-between">
+          <div className="u-row u-wrap">
             <span className="admin-chip admin-chip--accent">Campaign</span>
             <Badge tone={status === "done" ? "ok" : status === "active" ? "warn" : "info"}>
               {CAMPAIGN_STATUSES.find((s) => s.id === status)?.label ?? status}
@@ -282,8 +282,8 @@ export function CampaignHub({
         </div>
 
         {!editing ? (
-          <div className="admin-summary-pills" style={{ marginTop: 14 }}>
-            <span className="admin-pill admin-pill--text" style={{ flex: "1 1 320px" }}>
+          <div className="admin-summary-pills u-mt-4">
+            <span className="admin-pill admin-pill--text u-flex-2">
               <span className="admin-pill-label">Goal</span>
               <span className="admin-pill-val">{objective || "—"}</span>
             </span>
@@ -301,7 +301,7 @@ export function CampaignHub({
             </span>
           </div>
         ) : (
-          <div className="admin-form" style={{ marginTop: 14 }}>
+          <div className="admin-form u-mt-4">
             <div className="admin-field">
               <label className="admin-label" htmlFor="h-name">Name</label>
               <input id="h-name" className="admin-input" value={name} onChange={(e) => setName(e.target.value)} />
@@ -311,8 +311,8 @@ export function CampaignHub({
               <label className="admin-label" htmlFor="h-goal">Goal</label>
               <input id="h-goal" className="admin-input" value={objective} onChange={(e) => setObjective(e.target.value)} placeholder="Lead-gen: 25 demos booked" />
             </div>
-            <div className="admin-field" style={{ display: "flex", gap: 10 }}>
-              <div style={{ flex: 1 }}>
+            <div className="admin-field u-row u-gap-3">
+              <div className="u-grow">
                 <label className="admin-label" htmlFor="h-brand">Brand</label>
                 <select
                   id="h-brand"
@@ -329,7 +329,7 @@ export function CampaignHub({
                   ))}
                 </select>
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="u-grow">
                 <label className="admin-label" htmlFor="h-pillar">Pillar</label>
                 <select
                   id="h-pillar"
@@ -345,16 +345,16 @@ export function CampaignHub({
                 </select>
               </div>
             </div>
-            <div className="admin-field" style={{ display: "flex", gap: 10 }}>
-              <div style={{ flex: 1 }}>
+            <div className="admin-field u-row u-gap-3">
+              <div className="u-grow">
                 <label className="admin-label" htmlFor="h-start">Starts</label>
                 <input id="h-start" className="admin-input" type="date" value={startsOn} onChange={(e) => setStartsOn(e.target.value)} />
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="u-grow">
                 <label className="admin-label" htmlFor="h-end">Ends</label>
                 <input id="h-end" className="admin-input" type="date" value={endsOn} onChange={(e) => setEndsOn(e.target.value)} />
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="u-grow">
                 <label className="admin-label" htmlFor="h-status">Status</label>
                 <select id="h-status" className="admin-input" value={status} onChange={(e) => setStatus(e.target.value as typeof status)}>
                   {CAMPAIGN_STATUSES.map((s) => (
@@ -377,7 +377,7 @@ export function CampaignHub({
         <div className="admin-campaign-section-head">
           <div>
             <div className="admin-card-title">Draft the assets</div>
-            <p className="admin-page-sub" style={{ marginTop: 4, maxWidth: 640 }}>
+            <p className="admin-page-sub u-mt-1 u-max-form">
               {brand ? (
                 <>
                   Reads the idea and{" "}
@@ -423,7 +423,7 @@ export function CampaignHub({
 
         {tab === "idea" && (
           <section className="admin-card admin-section-card">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div className="u-row u-wrap u-between">
               <div className="admin-card-title">The idea</div>
               <button
                 type="button"
@@ -434,12 +434,12 @@ export function CampaignHub({
                 {ideaEditing ? "Cancel" : "Edit"}
               </button>
             </div>
-            <p className="admin-page-sub" style={{ marginTop: 4 }}>
+            <p className="admin-page-sub u-mt-1">
               The founder's pitch, in full. This is the heart of the campaign; the writer and every
               asset take their cue from it.
             </p>
             {ideaEditing ? (
-              <div className="admin-form" style={{ marginTop: 12 }}>
+              <div className="admin-form u-mt-3">
                 <textarea
                   className="admin-textarea"
                   rows={12}
@@ -454,9 +454,9 @@ export function CampaignHub({
                 </div>
               </div>
             ) : idea.trim() ? (
-              <p className="admin-campaign-campaign-idea" style={{ marginTop: 12 }}>{idea}</p>
+              <p className="admin-campaign-campaign-idea u-mt-3">{idea}</p>
             ) : (
-              <div className="admin-empty" style={{ marginTop: 12 }}>
+              <div className="admin-empty u-mt-3">
                 No idea written yet. Click Edit to pitch it.
               </div>
             )}
@@ -483,7 +483,7 @@ export function CampaignHub({
         {tab === "workboard" && (
           <div className="admin-card admin-section-card">
             <div className="admin-card-title">Workboard</div>
-            <p className="admin-page-sub" style={{ marginTop: 4, marginBottom: 12 }}>
+            <p className="admin-page-sub u-mt-1 u-mb-3">
               Where each asset sits in production. Drag a card to move its stage, or open one to edit
               its copy and images.
             </p>
@@ -502,7 +502,7 @@ export function CampaignHub({
             <div className="admin-campaign-section-head">
               <div>
                 <div className="admin-card-title">SEO / GEO plan</div>
-                <p className="admin-page-sub" style={{ marginTop: 4, maxWidth: 640 }}>
+                <p className="admin-page-sub u-mt-1 u-max-form">
                   Three parts, one plan the writer reads when drafting. <strong>Search</strong> is the
                   classic package (keywords, title tag, meta, slug, internal links). <strong>FAQ</strong> is
                   the real questions people type: these win featured snippets and People Also Ask, and
@@ -515,7 +515,7 @@ export function CampaignHub({
                 {pending ? "Generating…" : seoGeoMd.trim() ? "Regenerate with AI" : "Generate with AI"}
               </button>
             </div>
-            <div className="admin-form" style={{ marginTop: 14 }}>
+            <div className="admin-form u-mt-4">
               <textarea
                 className="admin-textarea"
                 rows={20}
@@ -569,17 +569,17 @@ function AssetsByChannel({
   // asset image, which is the fastest way to see a campaign's visual state.
   const [view, setView] = useState<"card" | "list">("card");
   useEffect(() => {
-    const saved = window.localStorage.getItem("mcr-assets-view");
+    const saved = window.localStorage.getItem("admin-campaign-assets-view");
     if (saved === "card" || saved === "list") setView(saved);
   }, []);
   function pickView(v: "card" | "list") {
     setView(v);
-    window.localStorage.setItem("mcr-assets-view", v);
+    window.localStorage.setItem("admin-campaign-assets-view", v);
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+    <div className="u-stack u-gap-4">
+      <div className="u-row u-wrap u-between">
         <div className="admin-page-sub">
           {entries.length} asset{entries.length === 1 ? "" : "s"} across {channelCount} channel
           {channelCount === 1 ? "" : "s"}.
@@ -600,14 +600,14 @@ function AssetsByChannel({
       </div>
 
       {addOpen && (
-        <section className="admin-card" style={{ padding: "14px 16px" }}>
+        <section className="admin-card u-p-4">
           <div className="admin-form">
-            <div className="admin-field" style={{ display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }}>
-              <div style={{ flex: "2 1 220px" }}>
+            <div className="admin-field u-row u-items-end u-gap-3 u-wrap">
+              <div className="u-flex-2">
                 <label className="admin-label" htmlFor="a-title">Title</label>
                 <input id="a-title" className="admin-input" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="What is a centaur team?" />
               </div>
-              <div style={{ flex: "1 1 130px" }}>
+              <div className="u-flex-1">
                 <label className="admin-label" htmlFor="a-channel">Channel</label>
                 <select id="a-channel" className="admin-input" value={newChannel} onChange={(e) => setNewChannel(e.target.value as CalendarChannel)}>
                   {CHANNELS.map((c) => (
@@ -615,7 +615,7 @@ function AssetsByChannel({
                   ))}
                 </select>
               </div>
-              <div style={{ flex: "1 1 150px" }}>
+              <div className="u-flex-1">
                 <label className="admin-label" htmlFor="a-date">Publish date</label>
                 <input id="a-date" className="admin-input" type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} />
               </div>
@@ -642,7 +642,7 @@ function AssetsByChannel({
                   <span className="admin-cell-muted">{lane.length}</span>
                 </div>
                 {lane.length === 0 ? (
-                  <div className="admin-cell-muted" style={{ fontSize: 12, padding: "6px 2px" }}>—</div>
+                  <div className="admin-cell-muted u-sm u-pt-2">—</div>
                 ) : (
                   lane.map((a) => (
                     <Link
@@ -721,7 +721,7 @@ function AssetsList({ campaignId, entries }: { campaignId: string; entries: Cale
         <table className="admin-table">
           <thead>
             <tr>
-              <th style={{ width: 56 }}>Image</th>
+              <th className="admin-th--xs">Image</th>
               <th><button type="button" className="admin-th-sort" onClick={() => onSort("title")}>Title{arrow("title")}</button></th>
               <th><button type="button" className="admin-th-sort" onClick={() => onSort("channel")}>Channel{arrow("channel")}</button></th>
               <th><button type="button" className="admin-th-sort" onClick={() => onSort("status")}>Status{arrow("status")}</button></th>
@@ -732,7 +732,7 @@ function AssetsList({ campaignId, entries }: { campaignId: string; entries: Cale
             {rows.map((a) => (
               <tr
                 key={a.id}
-                style={{ cursor: "pointer" }}
+                className="u-pointer"
                 onClick={() => router.push(`/admin/revenue/marketing/campaigns/${campaignId}/assets/${a.id}`)}
               >
                 <td>
@@ -765,7 +765,7 @@ function AssetsList({ campaignId, entries }: { campaignId: string; entries: Cale
 function ReportPanel({ report }: { report: CampaignReport }) {
   const openRate = report.delivered > 0 ? `${Math.round((report.opened / report.delivered) * 100)}%` : "—";
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div className="u-stack u-gap-4">
       <div className="admin-kpi-grid">
         <MetricCard label="Assets live" value={String(report.assetsLive)} sub={`of ${report.assetsTotal} planned`} />
         <MetricCard label="Emails delivered" value={report.delivered.toLocaleString()} sub={`${report.broadcasts.length} broadcast${report.broadcasts.length === 1 ? "" : "s"}`} />
@@ -777,13 +777,13 @@ function ReportPanel({ report }: { report: CampaignReport }) {
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Email (Broadcasts)</div>
           {report.broadcasts.length === 0 ? (
-            <div className="admin-cell-muted" style={{ marginTop: 8, fontSize: 13 }}>No broadcasts in this campaign yet.</div>
+            <div className="admin-cell-muted u-mt-2">No broadcasts in this campaign yet.</div>
           ) : (
-            <div style={{ marginTop: 10 }}>
+            <div className="u-mt-3">
               {report.broadcasts.map((b) => (
                 <div key={b.id} className="admin-campaign-report-row">
-                  <span style={{ flex: 1, fontSize: 13 }}>{b.title}</span>
-                  <span className="admin-cell-mono" style={{ fontSize: 12 }}>
+                  <span className="u-grow">{b.title}</span>
+                  <span className="admin-cell-mono u-sm">
                     {b.sent > 0 ? `${b.sent.toLocaleString()} sent · ${b.openRate ?? "—"}% open` : b.status ?? "draft"}
                   </span>
                 </div>
@@ -795,15 +795,15 @@ function ReportPanel({ report }: { report: CampaignReport }) {
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Content (Blog · Social)</div>
           {report.content.filter((c) => c.channel !== "email").length === 0 ? (
-            <div className="admin-cell-muted" style={{ marginTop: 8, fontSize: 13 }}>No content assets yet.</div>
+            <div className="admin-cell-muted u-mt-2">No content assets yet.</div>
           ) : (
-            <div style={{ marginTop: 10 }}>
+            <div className="u-mt-3">
               {report.content
                 .filter((c) => c.channel !== "email")
                 .map((c) => (
                   <div key={c.channel} className="admin-campaign-report-row">
-                    <span style={{ flex: 1, fontSize: 13, textTransform: "capitalize" }}>{c.channel}</span>
-                    <span className="admin-cell-mono" style={{ fontSize: 12 }}>
+                    <span className="u-grow u-caps">{c.channel}</span>
+                    <span className="admin-cell-mono u-sm">
                       {c.published} / {c.total} published
                     </span>
                   </div>

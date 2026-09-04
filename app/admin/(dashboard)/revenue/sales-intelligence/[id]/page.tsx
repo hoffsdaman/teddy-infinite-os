@@ -41,7 +41,7 @@ export default async function CallDetailPage({ params }: { params: { id: string 
 
   return (
     <div className="admin-content">
-      <div style={{ marginBottom: 10 }}>
+      <div className="u-mb-3">
         <Link className="admin-cell-muted" href="/admin/revenue/sales-intelligence">
           ← All calls
         </Link>
@@ -65,7 +65,7 @@ export default async function CallDetailPage({ params }: { params: { id: string 
         }
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 14 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <div className="admin-kpi">
           <div className="admin-kpi-label">Your talk ratio</div>
           <div className="admin-kpi-val">{stats.talkRatio == null ? "—" : `${Math.round(stats.talkRatio * 100)}%`}</div>
@@ -84,16 +84,16 @@ export default async function CallDetailPage({ params }: { params: { id: string 
       </div>
 
       {call.scorecard && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
-          <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Scorecard</div>
-          <table className="admin-table" style={{ width: "100%" }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <div className="admin-shelf-heading u-mb-2">Scorecard</div>
+          <table className="admin-table u-w-full">
             <tbody>
               {DIMENSIONS.map((d) => {
                 const v = call.scorecard![d.key];
                 return (
                   <tr key={d.key}>
                     <td>{d.label}</td>
-                    <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+                    <td className="u-right u-nowrap">
                       {v == null ? (
                         <span className="admin-cell-muted">—</span>
                       ) : (
@@ -108,31 +108,28 @@ export default async function CallDetailPage({ params }: { params: { id: string 
             </tbody>
           </table>
           {coachingHtml && (
-            <div style={{ marginTop: 12 }}>
-              <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Coaching notes</div>
+            <div className="u-mt-3">
+              <div className="admin-shelf-heading u-mb-2">Coaching notes</div>
               <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: coachingHtml }} />
             </div>
           )}
         </div>
       )}
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
-        <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Who talked</div>
+      <div className="admin-card admin-section-card u-mb-4">
+        <div className="admin-shelf-heading u-mb-2">Who talked</div>
         {stats.speakers.map((s) => (
-          <div key={s.name} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-            <div style={{ width: 160, fontSize: 13 }} className={isHostSpeaker(s.name) ? "admin-cell-strong" : undefined}>
+          <div key={s.name} className="u-row u-gap-3 u-mb-2">
+            <div className={`${isHostSpeaker(s.name) ? "admin-cell-strong" : undefined} u-w-160`}>
               {s.name}
             </div>
-            <div style={{ flex: 1, height: 8, background: "var(--admin-border)", borderRadius: 4, overflow: "hidden" }}>
+            <div className="admin-meter admin-meter--flat">
               <div
-                style={{
-                  width: `${Math.round(s.share * 100)}%`,
-                  height: "100%",
-                  background: isHostSpeaker(s.name) ? "var(--admin-accent)" : "var(--admin-muted)",
-                }}
+                className={`admin-meter-fill${isHostSpeaker(s.name) ? "" : " is-muted"}`}
+                style={{ width: `${Math.round(s.share * 100)}%` }} /* layout-ok: data-driven width */
               />
             </div>
-            <div className="admin-cell-muted" style={{ width: 90, textAlign: "right", fontSize: 13 }}>
+            <div className="admin-cell-muted u-right u-w-90">
               {Math.round(s.share * 100)}% · {s.words.toLocaleString()}w
             </div>
           </div>
@@ -140,15 +137,15 @@ export default async function CallDetailPage({ params }: { params: { id: string 
       </div>
 
       <div className="admin-card admin-section-card">
-        <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Transcript</div>
-        <div style={{ maxHeight: 600, overflow: "auto" }}>
+        <div className="admin-shelf-heading u-mb-2">Transcript</div>
+        <div className="admin-scroll-lg">
           {stats.segments.map((seg, i) => (
-            <div key={i} style={{ marginBottom: 12 }}>
-              <div style={{ fontSize: 12 }}>
+            <div key={i} className="u-mb-3">
+              <div className="u-sm">
                 <span className={isHostSpeaker(seg.speaker) ? "admin-cell-strong" : undefined}>{seg.speaker}</span>{" "}
                 <span className="admin-cell-muted">{seg.time}</span>
               </div>
-              <div style={{ fontSize: 13, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{seg.text}</div>
+              <div className="u-prewrap u-break-all">{seg.text}</div>
             </div>
           ))}
         </div>

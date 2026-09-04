@@ -17,27 +17,20 @@ export function TeamMembersTab({ blocks }: { blocks: AgendaBlock[] }) {
   const people = Array.from(byPerson.values()).sort((a, b) => b.blocks - a.blocks);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className="u-stack u-gap-5">
       <div className="admin-hint">
         Who is working this event and their schedule. Assign team members to agenda blocks on the Agenda tab.
       </div>
 
       {people.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div className="u-row u-wrap">
           {people.map((p) => (
             <span
               key={p.name}
-              style={{
-                display: "inline-flex",
-                gap: 6,
-                alignItems: "baseline",
-                padding: "6px 12px",
-                borderRadius: 999,
-                border: "1px solid var(--admin-line)",
-              }}
+              className="admin-chip-outline"
             >
               <strong>{p.name}</strong>
-              <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+              <span className="admin-cell-muted u-sm">
                 {Array.from(p.roles).join(", ")} · {p.blocks} block{p.blocks === 1 ? "" : "s"}
               </span>
             </span>

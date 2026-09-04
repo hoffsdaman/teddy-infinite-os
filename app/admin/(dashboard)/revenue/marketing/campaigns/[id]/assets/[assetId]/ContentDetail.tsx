@@ -85,10 +85,10 @@ export function ContentDetail({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className="u-stack u-gap-4">
       {note && <div className={`admin-alert admin-alert--${note.tone}`}>{note.text}</div>}
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <div className="u-row u-wrap">
         <span className="admin-chip">{entry.channel}</span>
         <Badge tone={statusTone(entry.status)}>{STATUS_LABEL[entry.status]}</Badge>
         {entry.pillarName && <span className="admin-chip">Pillar: {entry.pillarName}</span>}
@@ -102,7 +102,7 @@ export function ContentDetail({
         <section className="admin-card admin-campaign-panel">
           <div className="admin-campaign-panel-head">
             <span className="admin-campaign-panel-title">{isBlog ? "Blog preview" : "Formatted text"}</span>
-            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+            <div className="u-row u-wrap">
               {isBlog && (
                 <select
                   className="admin-select admin-campaign-style-select"
@@ -138,7 +138,7 @@ export function ContentDetail({
             </div>
           </div>
           {editing ? (
-            <div className="admin-form" style={{ padding: 16 }}>
+            <div className="admin-form u-p-4">
               <textarea
                 className="admin-textarea"
                 rows={20}
@@ -164,10 +164,10 @@ export function ContentDetail({
                 coverUrl={selected?.url ?? null}
               />
             ) : (
-              <div className="admin-idea-plan" style={{ padding: 16 }} dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="admin-idea-plan u-p-4" dangerouslySetInnerHTML={{ __html: html }} />
             )
           ) : (
-            <div className="admin-empty" style={{ margin: 16 }}>
+            <div className="admin-empty u-m-4">
               No copy yet. Edit markdown to write it, or draft it from the calendar.
             </div>
           )}
@@ -212,14 +212,14 @@ export function ContentDetail({
                   ))}
                 </div>
               )}
-              <div className="admin-hint" style={{ padding: "0 16px 16px" }}>
+              <div className="admin-hint u-p-4 u-pt-0">
                 {isBlog
                   ? "The cover in the preview shows the selected image. Every generation is kept; click a version to switch, or regenerate to add one."
                   : "Every generation is kept. The highlighted version is the one that publishes; click an older one to switch back."}
               </div>
             </>
           ) : (
-            <div className="admin-empty" style={{ margin: 16 }}>
+            <div className="admin-empty u-m-4">
               No image yet. Generate one from the entry&apos;s image brief and the brand palette.
             </div>
           )}

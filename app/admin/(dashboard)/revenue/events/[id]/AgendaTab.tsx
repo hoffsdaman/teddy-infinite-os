@@ -126,8 +126,8 @@ export function AgendaTab({
   const nextDayIndex = days.length ? Math.max(...days.map((d) => d.dayIndex)) : 1;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+    <div className="u-stack u-gap-4">
+      <div className="u-row u-wrap">
         <button className="admin-btn admin-btn--primary" onClick={() => setForm(emptyForm(nextDayIndex))} disabled={pending}>
           + Add block
         </button>
@@ -154,12 +154,12 @@ export function AgendaTab({
         <div className="admin-empty">No agenda blocks yet. Add the first block, or clone from another retreat.</div>
       ) : (
         days.map((day) => (
-          <section key={day.dayIndex} style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: 14 }}>
-            <div style={{ fontWeight: 600, marginBottom: 8 }}>
+          <section key={day.dayIndex} className="admin-box-pad">
+            <div className="u-mb-2 u-strong">
               {day.dayLabel || `Day ${day.dayIndex}`}
-              {day.dayDate ? <span style={{ opacity: 0.6, fontWeight: 400 }}> · {day.dayDate}</span> : null}
+              {day.dayDate ? <span className="u-dim"> · {day.dayDate}</span> : null}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div className="u-stack u-gap-3">
               {day.blocks.map((b, i) => (
                 <BlockCard
                   key={b.id}
@@ -197,7 +197,7 @@ function CloneBar({
   const [sourceId, setSourceId] = useState("");
   const [includeStaff, setIncludeStaff] = useState(true);
   return (
-    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+    <div className="u-row u-wrap">
       <select className="admin-select" value={sourceId} onChange={(e) => setSourceId(e.target.value)} disabled={disabled}>
         <option value="">Clone agenda from…</option>
         {sources.map((s) => (
@@ -206,7 +206,7 @@ function CloneBar({
           </option>
         ))}
       </select>
-      <label style={{ fontSize: 13, display: "flex", gap: 4, alignItems: "center" }}>
+      <label className="u-row u-gap-1">
         <input type="checkbox" checked={includeStaff} onChange={(e) => setIncludeStaff(e.target.checked)} disabled={disabled} />
         with staff
       </label>
@@ -236,9 +236,9 @@ function BlockFormCard({
 }) {
   const set = (patch: Partial<BlockForm>) => setForm({ ...form, ...patch });
   return (
-    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: 14, display: "grid", gap: 10 }}>
-      <div style={{ fontWeight: 600 }}>{form.id ? "Edit block" : "New block"}</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 }}>
+    <div className="admin-box-pad u-stack u-gap-3">
+      <div className="u-strong">{form.id ? "Edit block" : "New block"}</div>
+      <div className="u-grid-auto-sm">
         <Field label="Day #">
           <input className="admin-input" type="number" min={1} value={form.dayIndex} onChange={(e) => set({ dayIndex: e.target.value })} />
         </Field>
@@ -271,11 +271,11 @@ function BlockFormCard({
       <Field label="Body">
         <textarea className="admin-input" rows={3} value={form.body} onChange={(e) => set({ body: e.target.value })} />
       </Field>
-      <label style={{ fontSize: 13, display: "flex", gap: 6, alignItems: "center" }}>
+      <label className="u-row">
         <input type="checkbox" checked={form.guestVisible} onChange={(e) => set({ guestVisible: e.target.checked })} />
         Show to guest (uncheck for ops-only / work-schedule blocks)
       </label>
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button className="admin-btn admin-btn-primary" onClick={onSubmit} disabled={disabled}>
           {form.id ? "Save" : "Add block"}
         </button>
@@ -312,18 +312,18 @@ function BlockCard({
 }) {
   const time = block.timeLabel || (block.period ? PERIOD_LABELS[block.period] : "");
   return (
-    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 8, padding: "10px 12px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: 12, opacity: 0.65 }}>
+    <div className="u-p-3 admin-box">
+      <div className="u-row-top u-gap-3 u-between">
+        <div className="u-min-0">
+          <div className="u-sm u-dim-2">
             {time}
             {block.room ? ` · ${block.room}` : ""}
             {!block.guestVisible ? " · ops only" : ""}
           </div>
-          <div style={{ fontWeight: 600 }}>{block.title}</div>
-          {block.body && <div style={{ fontSize: 13, opacity: 0.85, marginTop: 2 }}>{block.body}</div>}
+          <div className="u-strong">{block.title}</div>
+          {block.body && <div className="u-mt-1">{block.body}</div>}
         </div>
-        <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+        <div className="u-row u-gap-1 u-shrink-0">
           <button className="admin-btn" onClick={() => onMove("up")} disabled={disabled || isFirst} title="Move up">
             ↑
           </button>
@@ -339,25 +339,17 @@ function BlockCard({
         </div>
       </div>
 
-      <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+      <div className="u-row u-wrap u-mt-2">
         {block.staff.map((s) => (
           <span
             key={s.id}
-            style={{
-              fontSize: 11,
-              padding: "2px 8px",
-              borderRadius: 999,
-              background: "var(--admin-tint)",
-              display: "inline-flex",
-              gap: 6,
-              alignItems: "center",
-            }}
+            className="admin-tag-pill"
           >
             {s.personName ?? "Unknown"} · {STAFF_ROLE_LABELS[s.role]}
             <button
               onClick={() => onRemoveStaff(s.id)}
               disabled={disabled}
-              style={{ border: "none", background: "none", cursor: "pointer", padding: 0, lineHeight: 1 }}
+              className="admin-btn-reset"
               title="Remove"
             >
               ✕
@@ -382,7 +374,7 @@ function StaffAdder({
   const [personId, setPersonId] = useState("");
   const [role, setRole] = useState<AgendaStaffRole>("engineer");
   return (
-    <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}>
+    <span className="u-row">
       <PersonSelect
         compact
         value={personId}
@@ -390,9 +382,9 @@ function StaffAdder({
         disabled={disabled}
         emptyLabel="+ staff…"
         options={people.map((p) => ({ value: p.id, label: p.name }))}
-        style={{ minWidth: 120 }}
+        style={{ minWidth: 120 }} /* layout-ok: PersonSelect takes style, not className */
       />
-      <select className="admin-select" value={role} onChange={(e) => setRole(e.target.value as AgendaStaffRole)} disabled={disabled} style={{ fontSize: 12 }}>
+      <select className="admin-select u-sm" value={role} onChange={(e) => setRole(e.target.value as AgendaStaffRole)} disabled={disabled}>
         {AGENDA_STAFF_ROLES.map((r) => (
           <option key={r} value={r}>
             {STAFF_ROLE_LABELS[r]}
@@ -416,8 +408,8 @@ function StaffAdder({
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12 }}>
-      <span style={{ opacity: 0.7 }}>{label}</span>
+    <label className="u-stack u-gap-1 u-sm">
+      <span className="u-dim-2">{label}</span>
       {children}
     </label>
   );

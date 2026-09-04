@@ -5,7 +5,7 @@ import { blogPreviewFamily, blogTypeLabel } from "@/lib/marketing/style-catalogu
 // Full-page render of a blog asset, matching the live /post/[slug] layout:
 // cover image, meta row, title, article typography. The presentation family
 // (statement / structured / analytical / narrative) follows the chosen blog
-// style via the .mcr-blogprev--{family} variants in admin.css.
+// style via the .admin-campaign-blogprev--{family} variants in admin.css.
 export function BlogPreview({
   title,
   html,

@@ -200,7 +200,7 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
   return (
     <>
       {banner && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {banner}
         </div>
       )}
@@ -289,7 +289,7 @@ function LeadDetail({
           </label>
         ))}
       </div>
-      <div className="admin-lead-actions" style={{ marginBottom: 20 }}>
+      <div className="admin-lead-actions u-mb-5">
         <button
           type="button"
           className="admin-btn"
@@ -305,7 +305,7 @@ function LeadDetail({
       </div>
 
       <div className="admin-lead-section-label">Work it</div>
-      <div className="admin-lead-actions" style={{ marginBottom: 10 }}>
+      <div className="admin-lead-actions u-mb-3">
         <input
           className="admin-input admin-lead-note"
           placeholder="Call note (optional)"
@@ -378,14 +378,14 @@ function LeadDetail({
         </button>
       </div>
 
-      <div className="admin-danger-zone" style={{ marginTop: 16 }}>
+      <div className="admin-danger-zone u-mt-4">
         <div className="admin-danger-row">
           <span className="admin-danger-row-text">
             <strong>Remove from queue</strong> keeps the contact and their history — it just takes them
             off the SDR queue. <strong>Delete person</strong> erases the record entirely (GDPR) and is
             blocked if they have orders, bookings or deals.
           </span>
-          <span style={{ display: "inline-flex", gap: 8, flexShrink: 0 }}>
+          <span className="u-row u-shrink-0">
             <button
               type="button"
               className="admin-btn"

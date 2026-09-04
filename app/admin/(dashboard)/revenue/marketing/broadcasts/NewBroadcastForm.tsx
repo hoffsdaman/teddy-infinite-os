@@ -24,7 +24,7 @@ export function NewBroadcastForm() {
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 12 }}>
+    <div className="admin-form u-mt-3">
       <div className="admin-field">
         <label className="admin-label" htmlFor="campaign-name">
           Internal name
@@ -51,7 +51,7 @@ export function NewBroadcastForm() {
         />
       </div>
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {error}
         </div>
       )}

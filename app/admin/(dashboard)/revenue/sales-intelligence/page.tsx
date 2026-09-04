@@ -83,7 +83,7 @@ export default async function SalesIntelligencePage({ searchParams }: { searchPa
         title="Sales Intelligence"
         sub={`${total.toLocaleString()} sales call${total === 1 ? "" : "s"} on record, searchable by what was said`}
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <DataTable
         columns={columns}
         rows={rows}
