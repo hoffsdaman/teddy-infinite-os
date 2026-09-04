@@ -326,7 +326,7 @@ export default async function SalesCockpitPage() {
   const revenueYtd = cashBetween(yearStart, tomorrow);
   const entitySplit = (from: string, to: string) => (
     <>
-      <div>Edge8 {compactUsd(invoiceCash(from, to, "edge8") + stripeCash(from, to))}</div>
+      <div>TeddyBed OS {compactUsd(invoiceCash(from, to, "edge8") + stripeCash(from, to))}</div>
       <div>AIO {compactUsd(invoiceCash(from, to, "aio"))}</div>
     </>
   );

@@ -3242,7 +3242,7 @@ footer {
 }
 
 /* ─── BRAND NAME ──────────────────────────────────── */
-/* "Edge8" is never written in all caps (see CLAUDE.md). Many label styles on
+/* "TeddyBed OS" is never written in all caps (see CLAUDE.md). Many label styles on
    both the site and the OS apply text-transform: uppercase, which silently
    renders the brand as "EDGE8". Those label classes are shared with non-brand
    labels, so they cannot simply drop the transform.

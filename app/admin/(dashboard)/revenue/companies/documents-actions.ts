@@ -15,7 +15,7 @@ import {
 // Admin-side client documents: upload for any company (optionally tagged to one
 // of its AI Programs), download, and delete ANY document. Gated by
 // requireAdmin() throughout; the client portal's uploader-only delete rule does
-// not apply here — Edge8 operates the whole surface.
+// not apply here — TeddyBed OS operates the whole surface.
 
 function refresh(companyId: string) {
   revalidatePath(`/admin/revenue/companies/${companyId}`);

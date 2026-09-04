@@ -1,14 +1,14 @@
 import { Badge } from "@/components/admin/Badge";
 import type { HubTeam } from "@/lib/team/clients";
 
-// Client Hub team tab: both sides of the account, the Edge8 staff assigned to
+// Client Hub team tab: both sides of the account, the TeddyBed OS staff assigned to
 // the client (client-visible assignments only) and the client's own people.
 // Shared across the team hub, the admin 360 hub, and the portal.
 export function HubTeamPanel({ team }: { team: HubTeam }) {
   return (
     <div className="u-stack u-gap-4">
       <section className="admin-card admin-section-card">
-        <h2 className="admin-card-title u-mb-3">Edge8 team</h2>
+        <h2 className="admin-card-title u-mb-3">TeddyBed OS team</h2>
         {team.edge8.length === 0 ? (
           <div className="admin-empty">No staff assigned yet.</div>
         ) : (

@@ -19,7 +19,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Team",
-  description: "Edge8 team members and departments.",
+  description: "TeddyBed OS team members and departments.",
 };
 
 // Talent office: internal team (persona=employee). Rows open an inline-editable

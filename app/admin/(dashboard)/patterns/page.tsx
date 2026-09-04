@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Pattern library",
 };
 
-// Living style guide for the 8 Edges admin design system. Renders every token
+// Living style guide for the TeddyBed OS admin design system. Renders every token
 // and component using the real .admin-* classes, so it tracks admin.css exactly
 // and serves as the QA reference for the redesign. Not linked in the sidebar nav
 // by design; reach it directly at /admin/patterns.
@@ -53,7 +53,7 @@ export default function PatternsPage() {
       <PageHead
         eyebrow="Design system"
         title="Pattern library"
-        sub="The living reference for the 8 Edges admin. Every token and component below renders the real admin.css classes, so this page tracks the system exactly."
+        sub="The living reference for the TeddyBed OS admin. Every token and component below renders the real admin.css classes, so this page tracks the system exactly."
         action={<button className="admin-btn admin-btn--primary" type="button">Primary action</button>}
       />
 
@@ -375,7 +375,7 @@ export default function PatternsPage() {
             <dt>Phone</dt>
             <dd>+84 90 123 4567</dd>
             <dt>Source</dt>
-            <dd>Edge8</dd>
+            <dd>TeddyBed OS</dd>
             <dt>Created</dt>
             <dd className="admin-cell-mono">2026-07-06</dd>
           </dl>

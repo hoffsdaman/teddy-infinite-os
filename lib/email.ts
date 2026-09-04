@@ -6,7 +6,7 @@ import { PALETTE as P } from "@/lib/design/palette";
 // environments and local dev should never hard-fail on email send.
 
 const resendApiKey = process.env.RESEND_API_KEY;
-const emailFrom = process.env.EMAIL_FROM || "Edge8 <notifications@edge8.ai>";
+const emailFrom = process.env.EMAIL_FROM || "TeddyBed OS <notifications@edge8.ai>";
 
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
@@ -109,7 +109,7 @@ export async function sendEventTicketEmail(opts: {
     <p style="margin:20px 0;"><a href="${opts.ticketUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">View my ticket</a></p>
     <p style="font-size:13px;color:${P.inkBody};">Or copy this link: ${opts.ticketUrl}</p>
     <p style="margin-top:24px;">Reply to this email any time if plans change.</p>
-    <p>Dave and the Edge8 team</p>
+    <p>Dave and the TeddyBed OS team</p>
   `.trim();
 
   return sendTransactionalEmail({
@@ -122,7 +122,7 @@ export async function sendEventTicketEmail(opts: {
 
 // Customer-facing email when they reserve a Saigon seat with the
 // offline_vn (bank transfer) flow. Mirrors aio-website's
-// sendRetreatReservedEmail copy and includes the Edge8 AI bank details.
+// sendRetreatReservedEmail copy and includes the TeddyBed OS AI bank details.
 export async function sendOfflineReservedEmail(opts: {
   to: string;
   name: string | null;
@@ -184,10 +184,10 @@ export async function sendBankChangeAlert(opts: {
     timeStyle: "short",
   }).format(new Date());
   const html = `
-    <p>Heads up — the bank details on ${opts.employeeName}'s Edge8 profile were just changed.</p>
+    <p>Heads up — the bank details on ${opts.employeeName}'s TeddyBed OS profile were just changed.</p>
     <p style="color:${P.inkBody};font-size:13px;">${when} (Saigon time)</p>
     <p>If this wasn't expected, review it in the admin People area and confirm with ${opts.employeeName} directly before the next payroll run.</p>
-    <p>8 Edges</p>
+    <p>TeddyBed OS</p>
   `.trim();
 
   // De-duped recipient list: employee always, plus HR (unless they're the same).

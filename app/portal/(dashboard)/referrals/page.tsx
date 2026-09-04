@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 // who they've referred, and each commission — with the choice to take it as
 // 20% work credit or 10% cash. Every figure is scoped to their own person id in
 // lib/portal/referrals.ts. Non-affiliates (no code, no history) get a pitch +
-// contact CTA instead of an empty ledger; codes are issued by Edge8 on request.
+// contact CTA instead of an empty ledger; codes are issued by TeddyBed OS on request.
 export default async function PortalReferralsPage() {
   const actor = await requirePortalMember();
   const data = await getReferralsForActor(actor);
@@ -28,8 +28,8 @@ export default async function PortalReferralsPage() {
         <div className="admin-card admin-section-card u-mb-4">
           <h2 className="admin-card-title u-mb-3">How it works</h2>
           <p className="admin-page-sub u-m-0">
-            Know a company that could use Edge8? Refer them, and when their first engagement pays, you choose
-            how to take your commission: <strong>20% as work credit</strong> toward your own Edge8 work, or{" "}
+            Know a company that could use TeddyBed OS? Refer them, and when their first engagement pays, you choose
+            how to take your commission: <strong>20% as work credit</strong> toward your own TeddyBed OS work, or{" "}
             <strong>10% as cash</strong>. You'll get a personal referral code and track everything right here.
           </p>
           <div className="u-mt-4">
@@ -55,8 +55,8 @@ export default async function PortalReferralsPage() {
 
       <div className="admin-card admin-section-card u-mb-4">
         <p className="admin-page-sub u-m-0">
-          Thanks for referring people to Edge8. For each referral that pays, you choose how to take your
-          commission: <strong>20% as work credit</strong> toward your own Edge8 work, or <strong>10% as cash</strong>.
+          Thanks for referring people to TeddyBed OS. For each referral that pays, you choose how to take your
+          commission: <strong>20% as work credit</strong> toward your own TeddyBed OS work, or <strong>10% as cash</strong>.
         </p>
       </div>
 

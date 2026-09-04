@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Sync",
-  description: "8 Edges: the weekly heartbeat. The Monday packet, prepared Sunday 18:00 by the product manager agent.",
+  description: "TeddyBed OS: the weekly heartbeat. The Monday packet, prepared Sunday 18:00 by the product manager agent.",
 };
 
 type Packet = { id: string; week_start: string; body_md: string; created_by: string; created_at: string };
@@ -63,7 +63,7 @@ export default async function SyncPage() {
   return (
     <>
       <PageHead
-        eyebrow="8 Edges"
+        eyebrow="TeddyBed OS"
         title="Sync"
         sub="The weekly heartbeat. The packet is prepared every Sunday 18:00 from the live numbers, goals, and issues; the meeting starts at the decision."
       />

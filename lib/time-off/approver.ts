@@ -1,9 +1,9 @@
 // "Who approves this person's leave?" — one answer, used by every surface that
 // routes or gates a leave decision (docs/plans/2026-08-12-client-manager-time-off-approval.md).
 //
-// Edge8 staff placed at a client are managed day to day by someone at the
+// TeddyBed OS staff placed at a client are managed day to day by someone at the
 // client. The order is: the client manager named on their active placement,
-// else their Edge8 manager, else nobody. Approval power comes from being that
+// else their TeddyBed OS manager, else nobody. Approval power comes from being that
 // named client manager, never from a portal role — a client admin with no
 // placements naming them decides nothing.
 
@@ -94,7 +94,7 @@ export async function resolveLeaveApprover(teamMemberId: string): Promise<LeaveA
 
 // Other people to keep in the loop on a client-approved request: the client's
 // active portal admins (visibility only, they cannot decide). Excludes the
-// approver themselves. Empty for Edge8-approved leave.
+// approver themselves. Empty for TeddyBed OS-approved leave.
 export async function clientWatcherEmails(approver: LeaveApprover): Promise<string[]> {
   if (approver.kind !== "client" || !approver.companyId) return [];
 

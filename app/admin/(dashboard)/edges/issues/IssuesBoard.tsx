@@ -183,7 +183,7 @@ export function IssuesBoard({
       {table(open, "Open issues")}
       {closed.length > 0 && table(closed, "Solved and dropped")}
 
-      <DetailDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} eyebrow="8 Edges" title="File an issue">
+      <DetailDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} eyebrow="TeddyBed OS" title="File an issue">
         <IssueForm
           krs={krs}
           teamOptions={teamOptions}

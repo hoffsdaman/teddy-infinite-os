@@ -18,7 +18,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Trigger', assignment: 'human', desc: 'Month end, when the bank transactions are available. The close runs on a rhythm, not a mood.' },
   { name: 'Inputs', assignment: 'human', desc: 'Vietnam bank transactions, the US expense sheet, and the finance tracking sheet that structures both.' },
   { name: 'Decision', assignment: 'human', desc: 'AIO allocation and pass-through vs direct categorization. The judgment calls are named and scheduled, not improvised.' },
-  { name: 'Routing', assignment: 'both', desc: 'The tracking sheet routes every line into its category: payroll, social insurance, PIT, and the Edge8 breakdowns.' },
+  { name: 'Routing', assignment: 'both', desc: 'The tracking sheet routes every line into its category: payroll, social insurance, PIT, and the TeddyBed OS breakdowns.' },
   { name: 'Output', assignment: 'human', desc: 'QuickBooks expense entries: one per category on the Vietnam side, one per vendor on the US side.' },
   { name: 'Delivery', assignment: 'human', desc: 'Entered directly into QuickBooks as direct payments. No accounts payable, nothing accrued.' },
   { name: 'Measurement', assignment: 'both', desc: 'The P&L, run before and after. Month-over-month consistency is the error detector; anything that moved gets explained.' },
@@ -147,13 +147,13 @@ export default function MonthlyExpensesWorkflowPage() {
                       <a href="https://edge8company.sg.larksuite.com/wiki/D7KuwVxFEiXHxfkIhj8ldAeegcb?sheet=QAXynP">
                         finance tracking sheet
                       </a>{' '}
-                      and fill the columns: payroll, social insurance, PIT, other expenses. Then break up the Edge8
+                      and fill the columns: payroll, social insurance, PIT, other expenses. Then break up the TeddyBed OS
                       expenses:
                     </p>
                     <ul>
                       <li>Staffing</li>
                       <li>Operations</li>
-                      <li>Edge8 expenses</li>
+                      <li>TeddyBed OS expenses</li>
                       <li>Whatever is left over = AI program contractors</li>
                     </ul>
                   </>
@@ -178,7 +178,7 @@ export default function MonthlyExpensesWorkflowPage() {
                 body: (
                   <ul>
                     <li>One expense entry for the Vietnam total from the finance tracking sheet</li>
-                    <li>One entry per Edge8 category: staffing, operations, Edge8 expenses, AI program contractors</li>
+                    <li>One entry per TeddyBed OS category: staffing, operations, TeddyBed OS expenses, AI program contractors</li>
                     <li>All entries are direct payments from the checking account</li>
                   </ul>
                 ),

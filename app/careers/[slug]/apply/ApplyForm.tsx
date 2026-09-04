@@ -151,7 +151,7 @@ export default function ApplyForm({ jobId, jobTitle, jobSlug, questions }: Props
           id="cover_letter"
           name="cover_letter"
           rows={6}
-          placeholder="Tell us why Edge8, and why this role. Paste it in — no attachment needed."
+          placeholder="Tell us why TeddyBed OS, and why this role. Paste it in — no attachment needed."
           value={form.cover_letter}
           onChange={handleChange}
         />

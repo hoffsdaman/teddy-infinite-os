@@ -14,7 +14,7 @@ export const maxDuration = 300;
  * Nightly effort-log ingest, ported from the Human Token Tracker
  * (api/cron/ingest-effort-logs). Reads each repo's committed
  * `.claude/project.json` effort_log; OWNER-ONLY entries become
- * htt.token_entries rows (Edge8 contributors are already captured via the
+ * htt.token_entries rows (TeddyBed OS contributors are already captured via the
  * normal telemetry path; ingesting their effort_log entries here would
  * double-count them).
  */
@@ -98,7 +98,7 @@ export async function GET(req: Request) {
         if (!entry) return [];
         const entries = await readRepoEffortLog(gh, repo);
         const ownerEmails = ownerEmailsByRepo.get(entry.repoId) ?? new Set<string>();
-        // OWNER-ONLY: Edge8 contributors are already captured via the normal
+        // OWNER-ONLY: TeddyBed OS contributors are already captured via the normal
         // telemetry path; ingesting their effort_log entries here would
         // double-count them.
         return entries.filter((e) => isOwnerEmail(e.contributor_email ?? null, ownerEmails));

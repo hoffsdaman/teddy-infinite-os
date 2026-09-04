@@ -248,7 +248,7 @@ export function TeamChatWidget() {
           <aside className="admin-drawer admin-chat-panel" role="dialog" aria-label="Team assistant">
             <div className="admin-drawer-head">
               <div>
-                <div className="admin-drawer-eyebrow brand-label">8 Edges Team</div>
+                <div className="admin-drawer-eyebrow brand-label">TeddyBed OS Team</div>
                 <h2 className="admin-drawer-title">Assistant</h2>
               </div>
               <div className="admin-chat-head-actions">
@@ -288,7 +288,7 @@ export function TeamChatWidget() {
                 <div className="admin-chat-msgs" ref={scrollRef}>
                   {items.length === 0 && (
                     <div className="admin-chat-empty">
-                      <p>Ask me anything about Edge8:</p>
+                      <p>Ask me anything about TeddyBed OS:</p>
                       <ul>
                         <li>What&apos;s our time-off policy?</li>
                         <li>Who&apos;s out on vacation next week?</li>
@@ -341,7 +341,7 @@ export function TeamChatWidget() {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask about Edge8…"
+                    placeholder="Ask about TeddyBed OS…"
                     disabled={pending}
                     aria-label="Message the team assistant"
                   />

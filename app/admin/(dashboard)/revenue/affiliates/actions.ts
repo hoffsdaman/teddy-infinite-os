@@ -239,8 +239,8 @@ export async function sendAffiliateInvite(personId: string): Promise<Result> {
     const { sendTransactionalEmail } = await import("@/lib/email");
     await sendTransactionalEmail({
       to: email,
-      subject: "Your 8 Edges Client Portal sign-in link",
-      html: `<p>Here is your sign-in link for the 8 Edges Client Portal:</p><p><a href="${data.properties.action_link}">Sign in</a></p>`,
+      subject: "Your TeddyBed OS Client Portal sign-in link",
+      html: `<p>Here is your sign-in link for the TeddyBed OS Client Portal:</p><p><a href="${data.properties.action_link}">Sign in</a></p>`,
     });
     message = "Sign-in link sent (account already existed).";
   } else {

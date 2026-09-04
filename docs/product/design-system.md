@@ -23,7 +23,7 @@ live*, this page wins.
    ramp and the status hues. Raw values. Never used directly by a component;
    only by the layers below. There is no blue in-brand: Yogi teal carries the
    `--color-primary-blue` role and Winnie gold carries the `--color-accent-mint`
-   role, so the role names stay stable across the 8 Edges family of repos.
+   role, so the role names stay stable across the TeddyBed OS family of repos.
 2. `--blue`, `--mint`, `--dark`, `--tint` … — short aliases the public
    marketing pages use. `--font-display` is Roca Two, `--font-body` Manrope,
    `--font-brand-body` Outfit.

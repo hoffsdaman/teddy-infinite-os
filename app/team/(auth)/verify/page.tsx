@@ -59,7 +59,7 @@ export default function TeamVerify() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges Team
+          TeddyBed OS Team
         </div>
         {state === "failed" ? (
           <>

@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 // Operations → Time Off. Employees self-serve in /team/time-off; their leave
-// policy decides the path (Edge8 Core Team auto-approves, On Target is manual).
+// policy decides the path (TeddyBed OS Core Team auto-approves, On Target is manual).
 // This board is awareness-first: upcoming and pending leave up top with the
 // decision controls (approve/reject pending, deny an auto-approval), 2026
 // usage cards, then the full log. The admin "log time off for someone" form is
@@ -151,7 +151,7 @@ export default async function TimeOffPage() {
       <PageHead
         eyebrow="Operations"
         title="Time Off"
-        sub="Edge8 policy auto-approves; On Target waits for a decision. Deny anything that doesn't work."
+        sub="TeddyBed OS policy auto-approves; On Target waits for a decision. Deny anything that doesn't work."
         action={
           <div className="u-row">
             <Link href="/admin/operations/time-off/policies" className="admin-btn">

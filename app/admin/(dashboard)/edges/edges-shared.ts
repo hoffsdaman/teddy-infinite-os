@@ -1,5 +1,5 @@
-// Shared types + constants for the 8 Edges pages (/admin/edges/*).
-// See docs/product/eight-edges/eight-edges-engineering-plan.md.
+// Shared types + constants for the TeddyBed OS pages (/admin/edges/*).
+// See docs/product/design-system.md.
 
 export const DAVE_PERSON_ID = "a8bf026f-8c20-49c5-8a55-6fc5c580af64";
 
@@ -28,7 +28,7 @@ export const AGENTS = [
 ] as const;
 
 export const BRAND_LABELS: Record<string, string> = {
-  edge8: "Edge8",
+  edge8: "TeddyBed OS",
   aio: "AI Officer Institute",
   company: "Company",
 };

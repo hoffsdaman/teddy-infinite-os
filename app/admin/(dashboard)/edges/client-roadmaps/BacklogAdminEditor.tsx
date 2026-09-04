@@ -142,7 +142,7 @@ export function BacklogAdminEditor({
                 className={`admin-backlog-pill${it.edge8_priority === p ? ` on-${p}` : ""}`}
                 disabled={pending}
                 onClick={() => run(() => setEdge8Priority(it.id, p))}
-                title="Edge8 proposed priority"
+                title="TeddyBed OS proposed priority"
               >
                 {PRIORITY_LABEL[p]}
               </button>
@@ -402,7 +402,7 @@ export function BacklogAdminEditor({
         <div className="admin-backlog-empty">
           <p>
             No roadmap yet. A roadmap is a set of milestones you define for this client:
-            start from a blank one, or seed the standard Edge8 5-milestone layout and
+            start from a blank one, or seed the standard TeddyBed OS 5-milestone layout and
             shape it from there.
           </p>
           {newGroupOpen ? (
@@ -411,7 +411,7 @@ export function BacklogAdminEditor({
             <div className="row">
               <button type="button" className="admin-backlog-btn" onClick={() => setNewGroupOpen(true)}>Create a group</button>
               <button type="button" className="admin-backlog-btn ghost" disabled={pending} onClick={() => run(() => seedTemplateGroups(companyId))}>
-                Start from the Edge8 template
+                Start from the TeddyBed OS template
               </button>
             </div>
           )}

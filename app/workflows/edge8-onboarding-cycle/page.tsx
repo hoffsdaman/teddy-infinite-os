@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WorkflowHero, ActorChip, StepCards, SevenElements, DetailFooter, type Actor, type WorkflowElement } from '../ui'
 
-const title = 'Edge8 Onboarding Cycle | TeddyBed Workflows'
+const title = 'TeddyBed OS Onboarding Cycle | TeddyBed Workflows'
 const description =
   'Every new hire moves through six onboarding stages on a kanban board that runs itself: the system chases the plan, sends the surveys, triggers the reviews, and flips the status. Humans hold the sessions and make the one call that matters.'
 
@@ -38,7 +38,7 @@ const NODES: LaneNode[] = [
     actor: 'system',
     actorLabel: 'System',
     title: 'Day 1: orientation is pre-loaded',
-    desc: 'Three one-hour sessions are already on the card as a checklist: HR handbook, Intro to Edge8, and a team overview with the manager.',
+    desc: 'Three one-hour sessions are already on the card as a checklist: HR handbook, Intro to TeddyBed OS, and a team overview with the manager.',
   },
   {
     num: '3',
@@ -94,7 +94,7 @@ export default function Edge8OnboardingCycleWorkflowPage() {
     <main>
       <WorkflowHero
         category="Talent"
-        title="Edge8 Onboarding Cycle"
+        title="TeddyBed OS Onboarding Cycle"
         tldr="Every new hire gets a kanban card that moves through six stages, from pre-boarding to a 180-day stay interview. The system chases the plan, sends the surveys, triggers the reviews, and flips the status. Humans hold the sessions and make one decision."
         meta={[
           { label: 'Stages', value: '6' },
@@ -178,7 +178,7 @@ export default function Edge8OnboardingCycleWorkflowPage() {
                 body: (
                   <p>
                     Three orientation sessions are seeded onto the card before the hire walks in: an hour on the HR
-                    handbook, an hour of Intro to Edge8, and an hour with their manager on how the team works. The
+                    handbook, an hour of Intro to TeddyBed OS, and an hour with their manager on how the team works. The
                     manager ticks them off; the card shows what actually happened.
                   </p>
                 ),

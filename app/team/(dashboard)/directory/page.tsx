@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Directory",
-  description: "Who's who at Edge8: roles, departments, and reporting lines.",
+  description: "Who's who at TeddyBed OS: roles, departments, and reporting lines.",
 };
 
 // /team/directory — read-only, company-visible roster. getDirectory() returns a
@@ -20,7 +20,7 @@ export default async function TeamDirectoryPage() {
 
   return (
     <>
-      <PageHead eyebrow="Me" title="Directory" sub="Who's who at Edge8" />
+      <PageHead eyebrow="Me" title="Directory" sub="Who's who at TeddyBed OS" />
       {entries.length === 0 ? (
         <div className="admin-empty">No team members found.</div>
       ) : (

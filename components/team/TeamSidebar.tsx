@@ -157,7 +157,7 @@ export function TeamSidebar({
         >
           ☰
         </button>
-        <strong>8 Edges Team</strong>
+        <strong>TeddyBed OS Team</strong>
       </div>
 
       {navOpen && <div className="admin-scrim" onClick={() => setNavOpen(false)} />}
@@ -165,7 +165,7 @@ export function TeamSidebar({
       <nav className={`admin-sidebar${navOpen ? " is-open" : ""}`} aria-label="Team">
         <div className="admin-brand">
           <span className="admin-brand-lead">
-            8 Edges Team
+            TeddyBed OS Team
           </span>
           <span className="admin-brand-actions">
             <button

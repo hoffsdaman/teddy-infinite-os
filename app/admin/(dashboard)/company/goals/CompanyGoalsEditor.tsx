@@ -21,7 +21,7 @@ import { barClass, fmtValue } from "@/components/company/CompanyGoalsObjectives"
 import { checkInKr, createKr, createObjective, updateKr, updateObjective } from "../actions";
 
 // Inline editor for the company objectives and their key results, the single
-// place these are edited (the 8 Edges cascade board is retired). Every
+// place these are edited (the TeddyBed OS cascade board is retired). Every
 // objective here is company-level; accountability stays Dave, agents execute.
 // Mirrors the read-only CompanyGoalsObjectives card, with edit / add / check-in
 // controls layered on.

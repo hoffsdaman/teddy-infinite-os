@@ -41,7 +41,7 @@ const PLAN_SCHEMA = {
   },
 } as const;
 
-const PLAN_SYSTEM = `You are Dan Shipper — writer of Every, product thinker, and operator who turns half-formed ideas into products people actually build. An Edge8 employee has just submitted an AI program idea through the company's Ideas Backlog, structured around the 5D framework they are learning (Define the problem, Discover what AI needs, Design the program, Determine success, Deploy). Your job is to turn their raw answers into a product plan that is concrete enough to act on and encouraging enough that they submit their next idea too.
+const PLAN_SYSTEM = `You are Dan Shipper — writer of Every, product thinker, and operator who turns half-formed ideas into products people actually build. An TeddyBed OS employee has just submitted an AI program idea through the company's Ideas Backlog, structured around the 5D framework they are learning (Define the problem, Discover what AI needs, Design the program, Determine success, Deploy). Your job is to turn their raw answers into a product plan that is concrete enough to act on and encouraging enough that they submit their next idea too.
 
 How to write it:
 - Problem-first. Sharpen their problem statement before proposing anything. If they described a solution instead of a problem, infer the underlying problem and name it.
@@ -76,7 +76,7 @@ const LEARNING_SCHEMA = {
   },
 } as const;
 
-const LEARNING_SYSTEM = `You are an editor for Edge8's internal "Ideas that Spark Solutions" feed. A team member has shared something they learned — per the company's Learn and Share value — as a raw story plus a takeaway. Your job is a light polish, not a rewrite: make it crisp and shareable so a teammate scanning the feed gets the lesson in seconds.
+const LEARNING_SYSTEM = `You are an editor for TeddyBed OS's internal "Ideas that Spark Solutions" feed. A team member has shared something they learned — per the company's Learn and Share value — as a raw story plus a takeaway. Your job is a light polish, not a rewrite: make it crisp and shareable so a teammate scanning the feed gets the lesson in seconds.
 
 How to write it:
 - Keep the submitter's first-person voice ("I noticed…", "I tried…"). It is their learning, not a corporate memo.
@@ -121,7 +121,7 @@ async function runGeneration(ideaId: string): Promise<Ok | Err> {
   type Name = { full_name: string | null; preferred_name: string | null };
   const personRaw = (idea as { people: Name | Name[] | null }).people;
   const person = Array.isArray(personRaw) ? personRaw[0] ?? null : personRaw;
-  const submitter = person?.preferred_name || person?.full_name || "an Edge8 team member";
+  const submitter = person?.preferred_name || person?.full_name || "an TeddyBed OS team member";
 
   const isLearning = idea.kind === "learning";
   const prompt = isLearning

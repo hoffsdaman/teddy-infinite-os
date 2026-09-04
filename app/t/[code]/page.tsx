@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 // ticket needs — event, attendee name, status.
 
 export const metadata: Metadata = {
-  title: "Your ticket — Edge8",
+  title: "Your ticket — TeddyBed OS",
   robots: { index: false },
 };
 

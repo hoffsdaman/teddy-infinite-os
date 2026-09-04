@@ -58,7 +58,7 @@ function Avatar({ name, avatarUrl }: { name: string; avatarUrl: string | null })
   );
 }
 
-// Client-facing team roster: the Edge8 staff dedicated to this client, scoped
+// Client-facing team roster: the TeddyBed OS staff dedicated to this client, scoped
 // through company_os.staff_assignments. Directory-safe fields only — see
 // lib/portal/team.ts for the column contract (no balances, no employee_number,
 // no manager chain).
@@ -68,7 +68,7 @@ export default async function PortalTeamPage() {
 
   return (
     <>
-      <PageHead eyebrow="Client Portal" title="Team" sub="Your dedicated Edge8 team." />
+      <PageHead eyebrow="Client Portal" title="Team" sub="Your dedicated TeddyBed OS team." />
 
       {team.length === 0 ? (
         <div className="admin-card admin-section-card">

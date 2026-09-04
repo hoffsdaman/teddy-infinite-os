@@ -230,7 +230,7 @@ export const LOCAL_ROUTINES: Routine[] = [
   {
     id: "fast-goal-dm-blast",
     name: "FAST goal DM blast",
-    description: "One-time: DM the approved FAST-goal message to 20 Edge8 team members via Lark.",
+    description: "One-time: DM the approved FAST-goal message to 20 TeddyBed OS team members via Lark.",
     host: "laptop",
     hostLabel: LAPTOP,
     schedule: "One-time, 2026-08-27 09:00 +07",

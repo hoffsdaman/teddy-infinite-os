@@ -1,6 +1,6 @@
-# Edge8 — Documentation Index
+# TeddyBed OS — Documentation Index
 
-**Project:** Edge8 (edge8.co)
+**Project:** TeddyBed OS (edge8.co)
 **Stack:** Next.js · React · Vercel
 **Owner:** Dave Hajdu
 **Last updated:** 2026-05-18
@@ -17,7 +17,6 @@ High-level product vision, thematic epics, status dashboard, and the phased road
 |---|---|
 | ⭐ [Four Offices of the Future](./product/four-offices-of-the-future.md) | **North‑star.** The org operating model (Revenue · Talent · Operations · Innovation) and how the Company OS / `/admin` CRM embodies it — shared people spine, per‑office role lenses, persona mapping, nested‑by‑office IA, agentic substrate. Read before building any admin screen. |
 | [Human Tokens & Infinite Leverage](./product/human-tokens-infinite-leverage.md) | The *why* and unit of measure behind the offices — human tokens (1 hr human work) vs AI tokens, the AI Token Ratio (leverage). Companion to the north‑star. |
-| [Product](./product/product.md) | What Edge8 is, audiences (ranked), values, business model, moat, the next 90 days. |
 | [Epics](./product/epics.md) | Six thematic epics — Services, Case Studies, Culture/About, **Careers and Talent Network (new)**, Content, Lead Conversion. |
 | [Epic Status](./product/epic-status.md) | At-a-glance dashboard — pipeline glyphs and % estimate per epic. |
 
@@ -94,7 +93,7 @@ Historical and superseded material. Kept for reference; do not rely on without r
 
 ## How to use this index
 
-- New to the project? Read [`product/product.md`](./product/product.md), then [`product/01-product-timeline.md`](./product/01-product-timeline.md), then come back here.
+- New to the project? Start with [`product/design-system.md`](./product/design-system.md) and this index.
 - Looking for current status? Open [`project-status.html`](./project-status.html) in a browser, or read [`product/epic-status.md`](./product/epic-status.md).
 - Starting work on a feature? Read [`features/README.md`](./features/README.md) for the convention before creating files.
 - Adding architecture material? Read [`architecture/README.md`](./architecture/README.md) — and ask whether it's really architecture vs. a feature design.

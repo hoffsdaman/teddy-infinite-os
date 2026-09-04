@@ -44,7 +44,7 @@ export function ClientBoardView({
             <div className="admin-kanban-col-body">
               {colCards.map((c) => {
                 const isNew = !c.done && Date.now() - new Date(c.createdAt).getTime() < NEW_ASSIGNMENT_DAYS * 86400000;
-                const who = c.assigneeName ?? "Edge8";
+                const who = c.assigneeName ?? "TeddyBed OS";
                 const mine = !!viewerPersonId && c.assigneeId === viewerPersonId;
                 return (
                   <div className="admin-kanban-card admin-kanban-card--static" key={c.id}>

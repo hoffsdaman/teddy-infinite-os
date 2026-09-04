@@ -368,7 +368,7 @@ async function handleTokenPackPaid(session: Stripe.Checkout.Session) {
     const name = person?.full_name?.split(" ")[0] || "there";
     await sendTransactionalEmail({
       to: toEmail,
-      subject: `Your Edge8 human tokens: ${purchase.tokens} hours`,
+      subject: `Your TeddyBed OS human tokens: ${purchase.tokens} hours`,
       html: `
         <p>Hi ${name},</p>
         <p>Thanks — your payment of <strong>${amountLabel}</strong> for ${purchase.packs} ${
@@ -376,7 +376,7 @@ async function handleTokenPackPaid(session: Stripe.Checkout.Session) {
         } (<strong>${purchase.tokens} human tokens</strong>, 1 token = 1 hour of skilled work) is confirmed.</p>
         <p>Your balance is live in your portal: ${getSiteOrigin()}/portal/tokens</p>
         <p style="margin-top:24px;">Reply to this email any time to put them to work.</p>
-        <p>Dave and the Edge8 team</p>
+        <p>Dave and the TeddyBed OS team</p>
       `.trim(),
       replyTo: "dave@edge8.co",
     });

@@ -153,7 +153,7 @@ function passesSuppression(row: CandidateRow): boolean {
 // grown. Paging until a short page arrives is the only way to know it is whole.
 const AUDIENCE_PAGE = 500;
 
-// Edge8 owns this CRM, so an Edge8-branded (or brand-less) broadcast draws from
+// TeddyBed OS owns this CRM, so an TeddyBed OS-branded (or brand-less) broadcast draws from
 // the whole house list. Any other brand is a guest and is scoped strictly to
 // its brand_contacts membership, so a guest send can never reach the house list.
 const HOME_BRAND_SLUG = "edge8";

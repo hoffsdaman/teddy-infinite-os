@@ -130,7 +130,7 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
               <input
                 key={i}
                 className="admin-input u-mb-2"
-                placeholder={`Question ${i + 1}${i === 0 ? " — e.g. Why Edge8?" : " (optional)"}`}
+                placeholder={`Question ${i + 1}${i === 0 ? " — e.g. Why TeddyBed OS?" : " (optional)"}`}
                 value={q}
                 onChange={(e) => setQuestions((cur) => cur.map((x, j) => (j === i ? e.target.value : x)))}
               />

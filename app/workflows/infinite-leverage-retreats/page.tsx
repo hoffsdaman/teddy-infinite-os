@@ -41,7 +41,7 @@ const ELEMENTS: WorkflowElement[] = [
 
 const title = 'Infinite Leverage Retreats | TeddyBed Workflows'
 const description =
-  'How Edge8 runs an Infinite Leverage retreat: a founder ships real AI programs alongside the team in a few days, while the admin carries the money and the memory so profit is known the day it ends.'
+  'How TeddyBed OS runs an Infinite Leverage retreat: a founder ships real AI programs alongside the team in a few days, while the admin carries the money and the memory so profit is known the day it ends.'
 
 export const metadata: Metadata = {
   title,

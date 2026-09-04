@@ -1,4 +1,4 @@
-// Edge8 Onboarding Cycle domain logic (docs/plans/2026-07-22-onboarding-plans-kanban.md).
+// TeddyBed OS Onboarding Cycle domain logic (docs/plans/2026-07-22-onboarding-plans-kanban.md).
 // One `onboarding_plans` journey per new hire drives the manager kanban at
 // /team/onboarding and the daily cron: plan-upload nag (T-7..Day 1) -> Day 8
 // feedback survey -> 45-day review -> Day 60 promotion -> Day 180 stay
@@ -52,7 +52,7 @@ export const DECISION_BY_CHOICE: Record<string, CycleDecision> = {
 // The three Day 1 orientation activities, seeded as onboarding_tasks.
 const DAY1_TASKS = [
   "HR Handbook with Mai",
-  "Intro to Edge8 with Dave",
+  "Intro to TeddyBed OS with Dave",
   "Team Overview with team manager",
 ] as const;
 const DAY1_CATEGORY = "day_1";
@@ -421,7 +421,7 @@ export async function runOnboardingCycle(todayISO: string): Promise<CycleRunSumm
         subject: "One week in — 3 quick questions",
         html:
           `<p>Hi ${name},</p>` +
-          `<p>You are one week into Edge8. Three quick questions (about a minute) so we can fix anything that is not working:</p>` +
+          `<p>You are one week into TeddyBed OS. Three quick questions (about a minute) so we can fix anything that is not working:</p>` +
           `<p><a href="${origin}/surveys/${DAY8_SURVEY_SLUG}">Answer the Day 8 survey</a></p>` +
           `<p>Your manager and the talent team read every response.</p>`,
         logMeta: { source: "onboarding-cycle", kind: "day8_survey" },
@@ -507,12 +507,12 @@ export async function runOnboardingCycle(todayISO: string): Promise<CycleRunSumm
           ))];
           await sendTransactionalEmail({
             to: [row.member.email, ...cc],
-            subject: `Congratulations ${name} — you're a full-time Edge8 team member!`,
+            subject: `Congratulations ${name} — you're a full-time TeddyBed OS team member!`,
             html:
               `<p>Hi ${name},</p>` +
-              `<p><strong>Congratulations!</strong> You passed probation and as of today you are a full-time member of the Edge8 team.</p>` +
+              `<p><strong>Congratulations!</strong> You passed probation and as of today you are a full-time member of the TeddyBed OS team.</p>` +
               `<p>Thank you for everything you have put in over your first 60 days — we are glad you are here.</p>` +
-              `<p>— The Edge8 team</p>`,
+              `<p>— The TeddyBed OS team</p>`,
             logMeta: { source: "onboarding-cycle", kind: "day60_congrats" },
           });
         }

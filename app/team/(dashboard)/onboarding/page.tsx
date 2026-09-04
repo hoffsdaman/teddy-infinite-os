@@ -25,7 +25,7 @@ export const metadata = {
   description: "Your reports' onboarding journeys, from pre-boarding to the 180-day stay interview.",
 };
 
-// /team/onboarding — the Edge8 Onboarding Cycle board, manager-only (the
+// /team/onboarding — the TeddyBed OS Onboarding Cycle board, manager-only (the
 // sidebar shows My Team only to managers; this guard covers direct URLs).
 // Every read is scoped to actor.teamMemberScope: a manager sees exactly their
 // own reports' journeys, nothing else.

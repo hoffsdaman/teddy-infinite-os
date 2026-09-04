@@ -6,7 +6,7 @@ import { notifyOps } from '@/lib/lark'
 import { NextRequest, NextResponse } from 'next/server'
 import { PALETTE as P } from "@/lib/design/palette";
 
-const FROM = 'Edge8 <contact@edge8.ai>'
+const FROM = 'TeddyBed OS <contact@edge8.ai>'
 
 // ── Spam gate ──────────────────────────────────────────────────────────────
 // The honeypot below catches naive bots. This catches the form-spam wave that
@@ -72,15 +72,15 @@ export async function POST(req: NextRequest) {
 
     // 1️⃣ Save to company_os (people + inquiries). `company` has no column on
     //    people (relational model) so it rides in inquiries.metadata.
-    const person = await getOrCreatePerson({ email, name, source: 'edge8.ai' })
+    const person = await getOrCreatePerson({ email, name, source: 'teddybed.com.au' })
     if (person.ok) {
       const { error: inquiryError } = await companyOs.from('inquiries').insert({
         person_id:   person.id,
         type:        'consultation',
         subject:     'AI Audit Request',
         message:     message || null,
-        source:      'edge8.ai',
-        source_site: 'edge8.ai',
+        source:      'teddybed.com.au',
+        source_site: 'teddybed.com.au',
         status:      'new_lead',
         metadata:    { company, team_size: teamSize || null, name, email },
       })

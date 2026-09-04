@@ -9,8 +9,8 @@ import "../../admin/admin.css";
 import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
-  title: { template: "%s · 8 Edges Team", default: "8 Edges Team" },
-  description: "Your Edge8 team workspace.",
+  title: { template: "%s · TeddyBed OS Team", default: "TeddyBed OS Team" },
+  description: "Your TeddyBed OS team workspace.",
   robots: { index: false, follow: false },
 };
 

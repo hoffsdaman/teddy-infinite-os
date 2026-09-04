@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Core Values",
-  description: "The six values Edge8 works by.",
+  description: "The six values TeddyBed OS works by.",
 };
 
 // /team/values — the six core values, company-visible and read-only. Rows live

@@ -1,4 +1,4 @@
-# Edge8 Data Dictionary
+# TeddyBed OS Data Dictionary
 
 Purpose: context for AI agents and engineers so that any new application can decide whether an existing table serves it or a new table is needed. Meaning (grain, origin, usage, reuse rules) is written by humans and reviewed like code. Facts (rows, reads, writes) are stamped from the live database and never hand-edited.
 
@@ -65,7 +65,7 @@ Columns:
 - avatar_url: URL of the person's profile photo served from the public avatars storage bucket (see `lib/avatars.ts`).
 - country: Country of residence, free text; backfilled by CRM heuristics scripts.
 - timezone: The person's timezone, captured on profile edits and Stripe checkout.
-- is_team_member: Flag marking the person as Edge8 staff, used to scope team lookups and exclude staff from marketing sends.
+- is_team_member: Flag marking the person as TeddyBed OS staff, used to scope team lookups and exclude staff from marketing sends.
 - do_not_contact: Blunt CRM-wide "never contact this person at all" flag; both this and `marketing_consent` must pass before a marketing email sends.
 - owner_id: FK to people; the team member who owns this contact relationship in the CRM.
 - source: Free-text provenance label for how the row was created (e.g. `edge8.ai/careers`, `intake`, `dayoff`, import script names).
@@ -74,7 +74,7 @@ Columns:
 - created_at: Row creation time.
 - updated_at: Last modification time.
 - gender: Self-reported gender, shown on the team profile.
-- persona: Which kind of relationship this person is to Edge8. Valid values: [vendor, prospect, client, job_seeker, employee, student].
+- persona: Which kind of relationship this person is to TeddyBed OS. Valid values: [vendor, prospect, client, job_seeker, employee, student].
 - linkedin_url: Link to the person's LinkedIn profile.
 - city: City of residence, free text.
 - state_province: State or province of residence, free text.
@@ -116,10 +116,10 @@ Columns:
 - metadata: Free-form JSON side-car; known keys include `qbo_customer_ids` and `qbo_customer_ids_aio` (realm-aware QuickBooks customer mapping per legal entity) plus payment details merged by the Stripe webhook.
 - archived_at: Soft-archive timestamp; null means the row is active and every query filters on it.
 - archived_by: Email of the admin who archived the row; cleared on unarchive.
-- lifecycle_stage: The org's account-level relationship stage with Edge8, raise-only via code (never auto-demoted); extend values rather than adding boolean flags. Valid values: [none, subscriber, lead, mql, sql, opportunity, customer, evangelist].
+- lifecycle_stage: The org's account-level relationship stage with TeddyBed OS, raise-only via code (never auto-demoted); extend values rather than adding boolean flags. Valid values: [none, subscriber, lead, mql, sql, opportunity, customer, evangelist].
 - industry_normalized: Fixed-taxonomy industry used by charts and filters, check-constrained. Valid values: [Technology & Software, Food & Beverage, Hospitality & Travel, Financial Services, Professional Services, Real Estate & Construction, Retail & Consumer Goods, Manufacturing, Healthcare & Wellness, Legal, Marketing & Media, Education, Logistics & Supply Chain, Energy, Other].
 - website_url: Canonical bare host (citext) consolidated from the old domain+website pair; the CRM match/search key for companies.
-- client_types: Text array of relationship kinds an org can hold simultaneously; Edge8-internal, never exposed to the portal.
+- client_types: Text array of relationship kinds an org can hold simultaneously; TeddyBed OS-internal, never exposed to the portal.
 - is_ai_program: Whether this org is in an AI program engagement (true means tracker on, at least one repo); set by the HTT registration pipeline.
 Evidence: rows 256 · reads 60,101 · inserts 256 (stamped 28 Aug 2026)
 
@@ -424,7 +424,7 @@ Do not: recreate a separate calendar or content system; the 27 Aug cleanup remov
 Columns:
 - id: Primary key.
 - title: Title of the content piece.
-- brand_id: FK to brands; which identity (Edge8, AI Officer) the content publishes as.
+- brand_id: FK to brands; which identity (TeddyBed OS, AI Officer) the content publishes as.
 - pillar: Legacy free-text pillar label, superseded by `pillar_id` and left in place unwritten.
 - channel: Publishing channel for the piece. Valid values: [blog, email, linkedin, facebook].
 - status: Workflow state on the content kanban. Valid values: [idea, drafted, approved, scheduled, published, skipped].
@@ -638,25 +638,25 @@ Columns:
 - id: Primary key.
 - company_id: FK to companies; the client whose AI Program roadmap this item is on.
 - group_key: Roadmap section the item sits in, matching a `client_roadmap_groups.key` for the company; code validates the key against the company's own groups (the original hardcoded five-section check survives only as a seed template).
-- ref: Stable seed reference like `F1`/`R1` for Edge8-authored items, unique per company; null for client-proposed items.
+- ref: Stable seed reference like `F1`/`R1` for TeddyBed OS-authored items, unique per company; null for client-proposed items.
 - title: The backlog item's name.
 - who: Which client people the item affects (free text, e.g. names or "Everyone").
 - today_state: How the work is done today — the manual process the item replaces.
-- build_desc: What Edge8 would build.
+- build_desc: What TeddyBed OS would build.
 - needs: Array of prerequisites (dependency refs like `F1`, API access, client inputs).
 - token_low: Low end of the human-token estimate for the build.
 - token_high: High end of the human-token estimate.
-- edge8_priority: Edge8's proposed priority; the client's `client_priority` wins when set. Valid values: [now, next, later, park].
+- edge8_priority: TeddyBed OS's proposed priority; the client's `client_priority` wins when set. Valid values: [now, next, later, park].
 - client_priority: The client's own priority choice from the portal, overriding `edge8_priority` when set. Valid values: [now, next, later, park].
 - client_note: The client's comment on the item, written from the portal.
-- source: Who authored the item — Edge8 seeds or a client proposal awaiting acceptance. Valid values: [edge8, client].
+- source: Who authored the item — TeddyBed OS seeds or a client proposal awaiting acceptance. Valid values: [edge8, client].
 - status: Item lifecycle on the roadmap. Valid values: [proposed, accepted, active, shipped, parked].
-- sort_order: Edge8's ordering within a group; the admin views sort by it.
+- sort_order: TeddyBed OS's ordering within a group; the admin views sort by it.
 - archived_at: When the item was archived (soft delete); null means live.
 - archived_by: Who archived the item.
 - created_at: Row creation time.
 - updated_at: Last modification time.
-- client_sort_order: The client's dragged ordering within a group; the portal orders by `coalesce(client_sort_order, sort_order)` so un-reordered groups fall back to Edge8's order.
+- client_sort_order: The client's dragged ordering within a group; the portal orders by `coalesce(client_sort_order, sort_order)` so un-reordered groups fall back to TeddyBed OS's order.
 - ai_program_id: FK to ai_programs; null means company-wide, set means the item belongs to one AI Program (HTT Phase 1, backfilled only for single-program companies).
 Evidence: rows 43 · reads 1,617 · inserts 43 (stamped 28 Aug 2026)
 
@@ -798,7 +798,7 @@ Columns:
 - seq: Monotonic identity sequence; the table is append-only and the current allocation is the highest-seq row per company, unambiguous even when `set_at` ties.
 - company_id: FK to companies; the client company whose allotted token pack this row sets.
 - tokens: Allotted pack size in tokens (numeric so tenths are possible; UI shows whole); null on the latest row means the pack was removed.
-- set_by_email: Email of the Edge8-internal user who set the value, taken from the verified session, never typed input.
+- set_by_email: Email of the TeddyBed OS-internal user who set the value, taken from the verified session, never typed input.
 - set_at: When this allocation row was recorded.
 Evidence: rows 8 · reads 73 · inserts 8 (stamped 28 Aug 2026)
 
@@ -813,7 +813,7 @@ Columns:
 - id: Primary key.
 - repo_id: FK to htt.repos; scope of the identity row; null applies the identity to every repo (global).
 - git_email: Client/owner git commit email; matched case-insensitively to exclude owner commits from attribution and to classify self-reported effort as owner work.
-- github_login: Client/owner GitHub login; matched case-insensitively against `pull_requests.author_login` to classify a PR as owner (client) rather than Edge8 work.
+- github_login: Client/owner GitHub login; matched case-insensitively against `pull_requests.author_login` to classify a PR as owner (client) rather than TeddyBed OS work.
 - label: Human-readable label for the identity (who this email/login is).
 - created_at: Row creation time.
 Evidence: rows 20 · reads 52 · inserts 40 (stamped 28 Aug 2026)

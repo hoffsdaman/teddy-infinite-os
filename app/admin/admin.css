@@ -1,9 +1,9 @@
-/* 8 Edges admin styles. Scoped under .admin-shell / .admin-auth / .admin-* / .u-*
+/* TeddyBed OS admin styles. Scoped under .admin-shell / .admin-auth / .admin-* / .u-*
    so nothing collides with the marketing site (globals.css). Loaded after
    globals.css by both admin route-group layouts.
 
-   Design system: the Edge8 Data Layer, which extends the brand system for dense
-   surfaces (see docs/product/edge8-design-system-data.md). Manrope brand-wide,
+   Design system: the TeddyBed OS Data Layer, which extends the brand system for dense
+   surfaces (see docs/product/design-system.md). Manrope brand-wide,
    a dense 13px scale, cool navy neutrals and overlay-only shadows, plus per-section
    accent theming. The tokens below re-root onto the canonical brand tokens in
    globals.css; the living reference renders at /admin/patterns. */
@@ -3960,7 +3960,7 @@ a.admin-ideas-share-card:hover {
 .admin-team-eq-req-date { font-size: 12px; color: var(--admin-muted); margin: 4px 0 0; }
 .admin-team-eq-req-note { font-size: 12px; color: var(--admin-muted); margin: 4px 0 0; font-style: italic; }
 
-/* ── 8 Edges ─────────────────────────────────────────────────────────
+/* ── TeddyBed OS ─────────────────────────────────────────────────────────
    Sidebar section labels + the Edges pages (Goals cascade, casting chips,
    progress bars). Tokens only; hovers stay subtle per the house rule. */
 

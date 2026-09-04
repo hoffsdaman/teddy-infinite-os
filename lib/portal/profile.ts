@@ -7,7 +7,7 @@
 //             their own company_os.people row. Every role may do this.
 //   company   admin-only, per company (lib/portal/roles.ts). Non-admins never
 //             see the nav item and a direct visit 404s. Only the client-owned
-//             fields are writable here: Edge8-internal CRM columns (priority,
+//             fields are writable here: TeddyBed OS-internal CRM columns (priority,
 //             lifecycle_stage, notes, owner, client_types) are never exposed.
 //
 // Company writes are audit-logged like the admin surface, so a client-side edit
@@ -48,7 +48,7 @@ export type PersonalProfileView = PersonalProfile & {
 
 // Job title lives on the CRM link (person_companies), not on the person, so it
 // is only editable when the actor has exactly one company. With more than one,
-// the title is ambiguous and Edge8 maintains it.
+// the title is ambiguous and TeddyBed OS maintains it.
 async function titleLink(actor: PortalActor): Promise<{ id: string; title: string | null } | null> {
   if (actor.companyScope.length !== 1) return null;
   const { data } = await companyOs
@@ -207,7 +207,7 @@ export async function updateCompanyProfile(
     return { ok: false, error: "The general email doesn't look like an email address." };
   }
 
-  // metadata is shared with Edge8 (qbo ids, research links): merge our three
+  // metadata is shared with TeddyBed OS (qbo ids, research links): merge our three
   // keys into the stored object rather than replacing it.
   const { data: current } = await companyOs
     .from("companies")

@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
           .split(',').map((e: string) => e.trim()).filter(Boolean)
 
         await resend.emails.send({
-          from: 'Edge8 Adventures <contact@edge8.ai>',
+          from: 'TeddyBed OS Adventures <contact@edge8.ai>',
           to,
           replyTo: contact_email,
           subject: `Vietnam Adventure flight info — ${family_name}`,

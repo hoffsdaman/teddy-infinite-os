@@ -109,7 +109,7 @@ export function BroadcastEditor({
                 <option key={b.id} value={b.id}>{b.name}</option>
               ))}
             </select>
-            <div className="admin-hint">Which identity this send goes out as (Edge8, AI Officer Institute).</div>
+            <div className="admin-hint">Which identity this send goes out as (TeddyBed OS, AI Officer Institute).</div>
             {activeProfile && (activeProfile.voiceMd || activeProfile.primaryCta || activeProfile.positioning) && (
               <details className="admin-card u-mt-2 u-p-3">
                 <summary className="u-strong u-pointer">
@@ -182,7 +182,7 @@ export function BroadcastEditor({
               onChange={(e) => setBodyMd(e.target.value)}
             />
             <div className="admin-hint">
-              Markdown: # headings, **bold**, *italic*, [links](https://…), and - lists. The Edge8
+              Markdown: # headings, **bold**, *italic*, [links](https://…), and - lists. The TeddyBed OS
               wrapper, footer, and unsubscribe link are added automatically.
             </div>
           </div>
@@ -240,9 +240,9 @@ export function BroadcastEditor({
           anyone flagged do-not-contact are excluded no matter what you pick here.
         </p>
         <p className="admin-page-sub u-mt-1">
-          {campaign.brandName && campaign.brandName !== "Edge8"
+          {campaign.brandName && campaign.brandName !== "TeddyBed OS"
             ? `This is a ${campaign.brandName} broadcast, so it reaches only ${campaign.brandName}'s brand audience.`
-            : "With no brand (or the Edge8 brand) set, this reaches the full house list. Pick a guest brand to scope the send to that brand's audience only."}
+            : "With no brand (or the TeddyBed OS brand) set, this reaches the full house list. Pick a guest brand to scope the send to that brand's audience only."}
         </p>
         <div className="admin-form u-mt-3">
           <div className="admin-field">

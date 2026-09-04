@@ -37,7 +37,7 @@ export function UnsubscribeForm({ token }: { token: string }) {
     return (
       <p>
         <strong>You&rsquo;re unsubscribed.</strong> You will not receive any more marketing email
-        from Edge8. You may still get essential messages about services you use, such as event
+        from TeddyBed OS. You may still get essential messages about services you use, such as event
         tickets or account notices.
       </p>
     )
@@ -46,7 +46,7 @@ export function UnsubscribeForm({ token }: { token: string }) {
   return (
     <>
       <p>
-        Click below to stop receiving marketing email from Edge8. This does not affect essential
+        Click below to stop receiving marketing email from TeddyBed OS. This does not affect essential
         messages about services you already use.
       </p>
       <p>

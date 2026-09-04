@@ -1,6 +1,6 @@
 // Client-facing backlog / AI Program view. Company-scoped: a portal member sees
 // their own company's backlog and can (a) set the client priority on any item and
-// (b) propose new items for Edge8 to accept. Every read goes through portalRead,
+// (b) propose new items for TeddyBed OS to accept. Every read goes through portalRead,
 // every write re-checks the item belongs to the actor's company scope before
 // touching it (IDOR guard) — see lib/portal/data.ts.
 
@@ -48,7 +48,7 @@ export async function getGroupsForActor(actor: PortalActor): Promise<RoadmapGrou
 }
 
 // The next few items on the roadmap for the home page: highest effective
-// priority first (client choice wins over Edge8's), parked items excluded.
+// priority first (client choice wins over TeddyBed OS's), parked items excluded.
 // Returns the top `limit` plus the total active count for "view all".
 export async function getRoadmapPreviewForActor(
   actor: PortalActor,
@@ -97,7 +97,7 @@ export async function getRoadmapPreviewForActor(
 }
 
 // The client-facing overview shown at the top of the roadmap. Company-scoped;
-// returns null when Edge8 has not written one yet.
+// returns null when TeddyBed OS has not written one yet.
 export async function getOverviewForActor(actor: PortalActor): Promise<string | null> {
   if (actor.companyScope.length === 0) return null;
   const { data } = await portalRead(actor, "client_roadmap_overview", "company_id, body").limit(1);
@@ -112,7 +112,7 @@ export async function getBacklogForActor(actor: PortalActor): Promise<BacklogIte
     .is("archived_at", null);
   const items = (data ?? []) as unknown as BacklogItem[];
   // Effective order within a group is the client's dragged order when set,
-  // else Edge8's sort_order. Sort here since PostgREST can't coalesce in order.
+  // else TeddyBed OS's sort_order. Sort here since PostgREST can't coalesce in order.
   return items.sort(
     (a, b) => (a.client_sort_order ?? a.sort_order) - (b.client_sort_order ?? b.sort_order),
   );

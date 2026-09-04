@@ -27,7 +27,7 @@ export const allCaseStudies: CaseStudyMeta[] = [
     image: '/case studies/images/case studies-ai programs-Kyungbang.jpeg',
     highlights: ['AI Program', 'Manufacturing', 'Data Systems'],
     description: 'Enterprise AI program for global manufacturing.',
-    summary: "Kyungbang, a global textile manufacturer, manages one of the most complex challenges in its industry: high-volume fiber testing across suppliers and factories worldwide. Data arrived in scattered formats—PDFs, Excel sheets, raw text—forcing engineers to spend hours reconciling numbers before making decisions. Edge8 partnered with Kyungbang to build an AI-powered quality platform designed to unify that data, flag anomalies in real time, and allow engineers to query results in natural language.",
+    summary: "Kyungbang, a global textile manufacturer, manages one of the most complex challenges in its industry: high-volume fiber testing across suppliers and factories worldwide. Data arrived in scattered formats—PDFs, Excel sheets, raw text—forcing engineers to spend hours reconciling numbers before making decisions. TeddyBed OS partnered with Kyungbang to build an AI-powered quality platform designed to unify that data, flag anomalies in real time, and allow engineers to query results in natural language.",
     challenge: [
       'Supplier and factory data scattered across inconsistent formats (PDF, Excel, text)',
       'Manual entry of results into spreadsheets, then printed for review',
@@ -124,7 +124,7 @@ export const allCaseStudies: CaseStudyMeta[] = [
     image: '/case studies/images/case studies-ai programs-OnTarget (Abound Health).jpeg',
     highlights: ['Healthcare AI', 'Patient Engagement', 'Data'],
     description: 'AI program for health-focused enterprise.',
-    summary: "OnTarget is Edge8's Vietnam-based engineering team supporting high-velocity tech companies. In this engagement, the team partnered with Abound Health to re-architect mobile pipelines, modernize infrastructure, and implement AI-assisted development practices.",
+    summary: "OnTarget is TeddyBed OS's Vietnam-based engineering team supporting high-velocity tech companies. In this engagement, the team partnered with Abound Health to re-architect mobile pipelines, modernize infrastructure, and implement AI-assisted development practices.",
     challenge: [
       'Unstructured CI/CD pipeline for mobile releases',
       'Outdated Java infrastructure and desktop frontend',
@@ -164,7 +164,7 @@ export const allCaseStudies: CaseStudyMeta[] = [
     image: '/case studies/images/case studies-ai programs-EO APAC Region (HubSpot).jpeg',
     highlights: ['CRM AI', 'APAC Growth', 'HubSpot Integration'],
     description: 'AI-enhanced CRM program for EO APAC region.',
-    summary: "Entrepreneurs' Organization (EO) is a global peer-to-peer network for founders and leaders. In the APAC region, membership operations were fragmented—with each chapter using its own set of disconnected tools. Edge8 partnered with EO APAC to centralize operations, streamline onboarding, and bring AI-powered visibility through HubSpot CRM and n8n automations. Starting with a pilot in EO Vietnam, this initiative laid the groundwork for scalable, data-informed growth across the region.",
+    summary: "Entrepreneurs' Organization (EO) is a global peer-to-peer network for founders and leaders. In the APAC region, membership operations were fragmented—with each chapter using its own set of disconnected tools. TeddyBed OS partnered with EO APAC to centralize operations, streamline onboarding, and bring AI-powered visibility through HubSpot CRM and n8n automations. Starting with a pilot in EO Vietnam, this initiative laid the groundwork for scalable, data-informed growth across the region.",
     challenge: [
       'No unified CRM across EO APAC chapters',
       'Manual processes relied on Excel, Notion, and Google Sheets',

@@ -5,7 +5,7 @@
  * Kept in TS (not CSS custom properties) because these accents are consumed as
  * inline-style color strings by the kanban/board components. Values mirror the
  * data-layer palette in app/globals.css — see
- * docs/product/edge8-design-system-data.md.
+ * docs/product/design-system.md.
  *
  * Previously these arrays were copy-pasted across four files with drifting values
  * (e.g. `var(--admin-accent)` vs the accent token, `var(--admin-chart-4)` vs a raw hex). This module

@@ -1,7 +1,7 @@
 // Roadmap writes from the team client hub. Same scope rule as every read in
 // lib/team/clients.ts: the item's company must be in the actor's active staff
 // assignments, resolved server-side. Deliberately narrower than the admin
-// editor: team members create items and edit content/status. Edge8 priority,
+// editor: team members create items and edit content/status. TeddyBed OS priority,
 // client priority, ordering, groups, and archive stay admin/client-only so the
 // commercial levers keep one owner.
 

@@ -246,7 +246,7 @@ export function AdminSidebar({
         >
           ☰
         </button>
-        <strong>8 Edges</strong>
+        <strong>TeddyBed OS</strong>
       </div>
 
       {navOpen && <div className="admin-scrim" onClick={() => setNavOpen(false)} />}
@@ -254,7 +254,7 @@ export function AdminSidebar({
       <nav className={`admin-sidebar${navOpen ? " is-open" : ""}`} aria-label="Admin">
         <div className="admin-brand">
           <span className="admin-brand-lead">
-            8 Edges
+            TeddyBed OS
           </span>
           <span className="admin-brand-actions">
             <button

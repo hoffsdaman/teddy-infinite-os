@@ -84,7 +84,7 @@ export default async function PortalHome() {
   const needsDecision = requests.filter(
     (r) => r.status === "estimate_submitted" || r.status === "work_submitted",
   );
-  // Moving, but on Edge8's side — surfaced as a count, not a card. Draft is the
+  // Moving, but on TeddyBed OS's side — surfaced as a count, not a card. Draft is the
   // client's own unsent request, so it is neither "yours to action" nor "ours".
   const inProgress = requests.filter((r) =>
     ["awaiting_estimate", "changes_requested", "approved"].includes(r.status),
@@ -130,7 +130,7 @@ export default async function PortalHome() {
               {roadmap.total > 0 ? `${roadmap.total} item${roadmap.total === 1 ? "" : "s"}` : "None yet"}
             </span>
             <span className="admin-glance-note">
-              {roadmap.total > 0 ? <Link href="/portal/hub">Open →</Link> : "Built with Edge8"}
+              {roadmap.total > 0 ? <Link href="/portal/hub">Open →</Link> : "Built with TeddyBed OS"}
             </span>
           </div>
           <div className="admin-glance-cell">
@@ -139,7 +139,7 @@ export default async function PortalHome() {
               {board ? `${openCards.length} open card${openCards.length === 1 ? "" : "s"}` : "No board yet"}
             </span>
             <span className="admin-glance-note">
-              {board ? <Link href="/portal/hub">Open →</Link> : "Set up by Edge8"}
+              {board ? <Link href="/portal/hub">Open →</Link> : "Set up by TeddyBed OS"}
             </span>
           </div>
           <div className="admin-glance-cell">
@@ -246,7 +246,7 @@ export default async function PortalHome() {
           {inProgress.length > 0 && (
             <p className="admin-page-sub u-mt-3 u-mb-0">
               {inProgress.length} more {inProgress.length === 1 ? "request is" : "requests are"} in
-              progress with Edge8. <Link href="/portal/requests">View all</Link>
+              progress with TeddyBed OS. <Link href="/portal/requests">View all</Link>
             </p>
           )}
         </div>

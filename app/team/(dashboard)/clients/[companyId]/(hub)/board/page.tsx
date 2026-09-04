@@ -92,7 +92,7 @@ export default async function TeamClientBoardTab({ params }: { params: { company
                   const isNew =
                     !c.done &&
                     Date.now() - new Date(c.createdAt).getTime() < NEW_ASSIGNMENT_DAYS * 86400000;
-                  const who = c.assigneeName ?? "Edge8";
+                  const who = c.assigneeName ?? "TeddyBed OS";
                   const mine = c.assigneeId === actor.personId;
                   return (
                     <div className="admin-kanban-card admin-kanban-card--static" key={c.id}>

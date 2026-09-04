@@ -140,7 +140,7 @@ export async function updateBacklogItem(id: string, patch: Partial<BacklogItemIn
   return { ok: true };
 }
 
-// Set the Edge8-proposed priority, the most common single edit, kept separate
+// Set the TeddyBed OS-proposed priority, the most common single edit, kept separate
 // so the board pills can call it directly.
 export async function setEdge8Priority(id: string, priority: BacklogPriority): Promise<Result> {
   if (!BACKLOG_PRIORITIES.includes(priority)) return { ok: false, error: "Invalid priority." };
@@ -361,7 +361,7 @@ export async function restoreRoadmapGroup(id: string): Promise<Result> {
   return { ok: true };
 }
 
-// Seed the classic Edge8 5-milestone layout for a client. Skips any key the company
+// Seed the classic TeddyBed OS 5-milestone layout for a client. Skips any key the company
 // already has (including archived ones), so it is safe to run on a partly
 // built roadmap.
 export async function seedTemplateGroups(companyId: string): Promise<Result> {

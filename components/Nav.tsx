@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 // Slim nav for the surviving public pages (blog, workflows, careers, events).
-// The Edge8 marketing dropdowns and retreat-funnel CTA logic went with the
+// The TeddyBed OS marketing dropdowns and retreat-funnel CTA logic went with the
 // marketing pages; the CTA now feeds the OS sign-in. The wordmark is set in
 // Roca Two (--font-display) rather than a logo image, matching the homepage.
 export default function Nav() {

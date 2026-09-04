@@ -5,7 +5,7 @@ import "@/app/styles/utilities.css";
 // Bare, UN-gated auth shell so /team/login is reachable without a session. The
 // (dashboard) group carries the requireTeamMember() gate.
 export const metadata: Metadata = {
-  title: "Sign in · 8 Edges Team",
+  title: "Sign in · TeddyBed OS Team",
   robots: { index: false, follow: false },
 };
 

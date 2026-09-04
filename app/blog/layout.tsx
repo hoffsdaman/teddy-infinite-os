@@ -1,7 +1,7 @@
 import './blog.css'
 import type { Metadata } from 'next'
 
-const title = 'Blog | AI Strategy, Agents & Leadership Insights | Edge8'
+const title = 'Blog | AI Strategy, Agents & Leadership Insights | TeddyBed OS'
 const description = 'Practical writing on AI Programs, fractional CAIO work, agent design, and how founders use AI to be Tech-Forward.'
 
 export const metadata: Metadata = {

@@ -4,7 +4,7 @@ import { promotePersonToLead } from "./lifecycle";
 import { SOURCE_SITE } from "./utils";
 
 // Records a retreat lead into the company_os schema: get-or-create the person by
-// email, then insert an inquiry tagged to the Edge8 brand. Structured answers go
+// email, then insert an inquiry tagged to the TeddyBed OS brand. Structured answers go
 // into inquiries.metadata so the dashboard can filter/chart on them.
 
 export type RetreatSignupInput = {

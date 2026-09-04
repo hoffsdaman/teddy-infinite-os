@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Build Your Team",
-  description: "Build a full-time team of Edge8 members based in Vietnam and estimate the budget.",
+  description: "Build a full-time team of TeddyBed OS members based in Vietnam and estimate the budget.",
 };
 
 export default async function HireRequestPage() {
@@ -24,7 +24,7 @@ export default async function HireRequestPage() {
       />
       {companies.length === 0 ? (
         <div className="admin-empty">
-          Your portal access isn&apos;t linked to a company yet. Reply to your Edge8 contact to fix this.
+          Your portal access isn&apos;t linked to a company yet. Reply to your TeddyBed OS contact to fix this.
         </div>
       ) : (
         <TeamBuilderForm companies={companies} />

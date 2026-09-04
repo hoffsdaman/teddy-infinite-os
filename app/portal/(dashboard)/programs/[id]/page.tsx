@@ -201,7 +201,7 @@ export default async function AiProgramDetailPage({
       content:
         roadmapItems.length === 0 && roadmapGroups.length === 0 ? (
           <section className="admin-card admin-section-card">
-            <Empty text="No roadmap items in this program yet. Edge8 adds them as the program is scoped." />
+            <Empty text="No roadmap items in this program yet. TeddyBed OS adds them as the program is scoped." />
           </section>
         ) : (
           <BacklogPortalView

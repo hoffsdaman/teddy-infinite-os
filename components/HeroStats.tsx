@@ -83,7 +83,7 @@ export default function HeroStats() {
   }, [visible, attendees, workflows])
 
   return (
-    <section className="hero-stats" aria-label="Edge8 program results to date" ref={ref}>
+    <section className="hero-stats" aria-label="TeddyBed OS program results to date" ref={ref}>
       <div className="container">
         <div className="hero-stats-grid">
           {STATS.map((stat, i) => {

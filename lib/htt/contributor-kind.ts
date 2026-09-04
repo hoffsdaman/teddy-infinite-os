@@ -1,5 +1,5 @@
 /**
- * Owner-vs-Edge8 contribution classification (read-time). Ported from the
+ * Owner-vs-TeddyBed OS contribution classification (read-time). Ported from the
  * Human Token Tracker (lib/data/contributor-kind.ts): project_id -> repo_id.
  *
  * The owner/client is identified by `htt.client_identities` (github_login,

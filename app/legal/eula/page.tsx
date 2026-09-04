@@ -3,8 +3,8 @@ import { PageHeader, Block } from '@/components/experience/Subpage'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Edge8 AI · Terms of Service',
-  description: 'Terms of service and end-user license agreement for Talent Edge LLC (d/b/a Edge8).',
+  title: 'TeddyBed OS · Terms of Service',
+  description: 'Terms of service and end-user license agreement for Talent Edge LLC (d/b/a TeddyBed OS).',
 }
 
 const EFFECTIVE_DATE = 'July 18, 2026'
@@ -14,19 +14,19 @@ export default function TermsOfServicePage() {
     <div className="xp-page">
       <article className="xp-article">
         <Link href="/" className="xp-backlink">
-          ← Edge8
+          ← TeddyBed OS
         </Link>
 
         <PageHeader
           eyebrow={`Effective ${EFFECTIVE_DATE}`}
           title="Terms of Service"
-          lead="These terms (“Agreement”) govern your access to and use of the Edge8 website, client portal, and related services, operated by Talent Edge LLC, doing business as Edge8 (“Edge8,” “we,” “us”). By using our services, you agree to this Agreement."
+          lead="These terms (“Agreement”) govern your access to and use of the TeddyBed OS website, client portal, and related services, operated by Talent Edge LLC, doing business as TeddyBed OS (“TeddyBed OS,” “we,” “us”). By using our services, you agree to this Agreement."
         />
 
         <div className="xp-blocks">
           <Block heading="Acceptance of terms">
             <p>
-              By accessing or using the Edge8 website, client portal, or any related service, you
+              By accessing or using the TeddyBed OS website, client portal, or any related service, you
               agree to be bound by this Agreement. If you don't agree, please don't use our
               services.
             </p>
@@ -34,7 +34,7 @@ export default function TermsOfServicePage() {
 
           <Block heading="Description of services">
             <p>
-              Edge8 provides AI leadership training, automation consulting, global staffing, and
+              TeddyBed OS provides AI leadership training, automation consulting, global staffing, and
               related programs, along with a client and team portal for managing engagements,
               invoicing, and communication.
             </p>
@@ -45,13 +45,13 @@ export default function TermsOfServicePage() {
               Some parts of our services, such as the client and team portal, require an account.
               You're responsible for maintaining the confidentiality of your login credentials and
               for all activity under your account. Notify us promptly at{' '}
-              <a href="mailto:hello@edge8.ai">hello@edge8.ai</a> if you suspect unauthorized use.
+              <a href="mailto:hello@teddybed.com.au">hello@teddybed.com.au</a> if you suspect unauthorized use.
             </p>
           </Block>
 
           <Block heading="License to use our services">
             <p>
-              Subject to your compliance with this Agreement, Edge8 grants you a limited,
+              Subject to your compliance with this Agreement, TeddyBed OS grants you a limited,
               non-exclusive, non-transferable, revocable license to access and use our website and
               portal for their intended purposes. This license doesn't include any right to resell,
               copy, or create derivative works from our content or platform without our written
@@ -71,7 +71,7 @@ export default function TermsOfServicePage() {
           <Block heading="Intellectual property">
             <p>
               All content on our website and platform — including text, graphics, logos, curricula,
-              and software — is owned by Edge8 or our licensors and is protected by intellectual
+              and software — is owned by TeddyBed OS or our licensors and is protected by intellectual
               property laws. You may not copy, modify, distribute, or create derivative works from
               our content without prior written consent.
             </p>
@@ -105,7 +105,7 @@ export default function TermsOfServicePage() {
 
           <Block heading="Limitation of liability">
             <p>
-              To the fullest extent permitted by law, Edge8 will not be liable for any indirect,
+              To the fullest extent permitted by law, TeddyBed OS will not be liable for any indirect,
               incidental, special, consequential, or punitive damages arising from your use of our
               services, even if we've been advised of the possibility of such damages.
             </p>
@@ -113,7 +113,7 @@ export default function TermsOfServicePage() {
 
           <Block heading="Indemnification">
             <p>
-              You agree to indemnify and hold Edge8 harmless from any claims, damages, or expenses
+              You agree to indemnify and hold TeddyBed OS harmless from any claims, damages, or expenses
               arising from your violation of this Agreement or misuse of our services.
             </p>
           </Block>
@@ -121,7 +121,7 @@ export default function TermsOfServicePage() {
           <Block heading="Termination">
             <p>
               We may suspend or terminate your access to our services at any time for conduct that
-              violates this Agreement or is otherwise harmful to Edge8 or other users.
+              violates this Agreement or is otherwise harmful to TeddyBed OS or other users.
             </p>
           </Block>
 
@@ -143,7 +143,7 @@ export default function TermsOfServicePage() {
           <Block heading="Contact us">
             <p>
               Questions about these terms? Email us at{' '}
-              <a href="mailto:hello@edge8.ai">hello@edge8.ai</a>.
+              <a href="mailto:hello@teddybed.com.au">hello@teddybed.com.au</a>.
             </p>
           </Block>
         </div>

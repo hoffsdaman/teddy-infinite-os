@@ -23,13 +23,13 @@ export default async function CareersPage() {
             <span
               className="section-label section-label--glow"
             >
-              Join Edge8
+              Join TeddyBed OS
             </span>
             <h1>
               Help Founders<br />Lead AI.
             </h1>
             <p className="careers-hero-sub">
-              Edge8 is at the frontier of AI adoption in business. We don&rsquo;t
+              TeddyBed OS is at the frontier of AI adoption in business. We don&rsquo;t
               talk about AI — we build agents, deploy automation, and run it live
               inside companies. If that&rsquo;s where you want to work, keep reading.
             </p>
@@ -49,7 +49,7 @@ export default async function CareersPage() {
       <section className="section section--tint-bg">
         <div className="container">
           <div className="reveal">
-            <span className="section-label">Why Edge8</span>
+            <span className="section-label">Why TeddyBed OS</span>
             <h2 className="section-title">A Different Kind of AI Company</h2>
             <p className="section-sub u-mt-4">
               We practice what we sell. Every tool, workflow, and agent we recommend
@@ -113,7 +113,7 @@ export default async function CareersPage() {
               <h3>Grow with AI</h3>
               <p>
                 AI isn&rsquo;t a feature here — it&rsquo;s the whole business.
-                Working at Edge8 means learning faster, iterating more, and
+                Working at TeddyBed OS means learning faster, iterating more, and
                 understanding AI-in-practice better than almost anyone.
               </p>
             </div>
@@ -192,7 +192,7 @@ export default async function CareersPage() {
                 and we&rsquo;ll reach out when something fits.
               </p>
               <a
-                href="mailto:hello@edge8.ai?subject=Expression of Interest — Edge8"
+                href="mailto:hello@teddybed.com.au?subject=Expression of Interest — TeddyBed OS"
                 className="btn btn-primary"
               >
                 Express Interest →
@@ -219,7 +219,7 @@ export default async function CareersPage() {
               <div className="careers-step-num">1</div>
               <h3 className="careers-step-title">Drop Us a Note</h3>
               <p className="careers-step-desc">
-                A short email with your background and why Edge8. No template, no
+                A short email with your background and why TeddyBed OS. No template, no
                 cover-letter format. Just be direct about what you&rsquo;ve done and
                 what you want to do next.
               </p>
@@ -259,16 +259,16 @@ export default async function CareersPage() {
               Don&rsquo;t see a role?<br />We want to hear from you.
             </h2>
             <p>
-              Good people don&rsquo;t always line up with open positions. If Edge8
+              Good people don&rsquo;t always line up with open positions. If TeddyBed OS
               sounds like the right place to do your best work, send us your
               background. When a role opens that fits, you&rsquo;ll be the first
               to know.
             </p>
             <a
-              href="mailto:hello@edge8.ai?subject=Expression of Interest — Edge8"
+              href="mailto:hello@teddybed.com.au?subject=Expression of Interest — TeddyBed OS"
               className="btn btn-secondary careers-cta-btn"
             >
-              hello@edge8.ai →
+              hello@teddybed.com.au →
             </a>
           </div>
         </div>

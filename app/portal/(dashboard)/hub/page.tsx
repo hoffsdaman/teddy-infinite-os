@@ -49,7 +49,7 @@ export default async function PortalHubPage() {
       <PageHead
         eyebrow="Client Portal"
         title="AI Programs"
-        sub="Your AI Programs with Edge8, and the company-wide delivery they add up to."
+        sub="Your AI Programs with TeddyBed OS, and the company-wide delivery they add up to."
         action={
           canCreate ? (
             <Link href="/portal/programs/add" className="admin-btn admin-btn--primary">
@@ -78,7 +78,7 @@ export default async function PortalHubPage() {
         <div className="admin-card admin-section-card">
           <h2 className="admin-card-title u-mb-2">No AI Programs yet</h2>
           <p className="admin-page-sub u-m-0">
-            This is where you plan and track AI programs with Edge8. Start one from a guided plan or by
+            This is where you plan and track AI programs with TeddyBed OS. Start one from a guided plan or by
             uploading your own documents.
           </p>
           {canCreate && (

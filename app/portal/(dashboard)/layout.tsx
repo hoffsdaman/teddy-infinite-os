@@ -13,8 +13,8 @@ import "../../admin/admin.css";
 import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
-  title: { template: "%s · 8 Edges Client Portal", default: "8 Edges Client Portal" },
-  description: "Your Edge8 client portal.",
+  title: { template: "%s · TeddyBed OS Client Portal", default: "TeddyBed OS Client Portal" },
+  description: "Your TeddyBed OS client portal.",
   robots: { index: false, follow: false },
 };
 

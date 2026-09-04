@@ -2,7 +2,7 @@
 // page and server action must go through here rather than importing the
 // service-role `companyOs` client directly — the same ban that lib/team/data.ts
 // enforces for /team. Portal users are external client contacts, so an unscoped
-// query would leak other clients' data (or Edge8-internal data); funnelling
+// query would leak other clients' data (or TeddyBed OS-internal data); funnelling
 // reads through one helper that injects the actor's scope filter makes that
 // structurally impossible. Unlike /team, there is NO "company-visible" tier
 // here: every read is company-scoped or self-scoped, no exceptions.

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ElementsGrid } from '../ui'
 
-const title = 'How We Design Workflows | Edge8'
+const title = 'How We Design Workflows | TeddyBed OS'
 const description =
   'The method behind every workflow we run: the 5D program brief, the seven elements of a workflow, the Centaur Map, the New Hire Test, and three stage gates.'
 

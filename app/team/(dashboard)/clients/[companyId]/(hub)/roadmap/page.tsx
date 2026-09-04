@@ -13,7 +13,7 @@ export const metadata = {
 
 // The Roadmap tab: the same groups, ordering, and client-set priorities the
 // client sees on /portal/roadmap, so the team view and the client view always
-// agree. Assigned team members can add items and edit content/status; Edge8
+// agree. Assigned team members can add items and edit content/status; TeddyBed OS
 // priority and client priority stay admin/client-only.
 
 export default async function TeamClientRoadmapTab({ params }: { params: { companyId: string } }) {

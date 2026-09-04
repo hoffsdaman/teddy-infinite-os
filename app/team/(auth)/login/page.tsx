@@ -6,7 +6,7 @@ export default function TeamLoginPage() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges Team
+          TeddyBed OS Team
         </div>
         <p className="admin-auth-sub">Sign in to your team workspace.</p>
         <Suspense>
