@@ -109,7 +109,7 @@ export function ReferrerField({
 
       {mode === "idle" &&
         (referrerId ? (
-          <div className="deal-inline-row">
+          <div className="admin-deal-inline-row">
             <Link href={`/admin/contacts/${referrerId}`} className="admin-cell-strong">
               {referrerName || "View contact"}
             </Link>
@@ -127,7 +127,7 @@ export function ReferrerField({
         ))}
 
       {mode === "search" && (
-        <div className="deal-field-stack">
+        <div className="admin-deal-field-stack">
           <input
             className="admin-input"
             autoFocus
@@ -160,7 +160,7 @@ export function ReferrerField({
                     type="button"
                     onClick={() => link(h)}
                     disabled={busy}
-                    className="deal-option"
+                    className="admin-deal-option"
                   >
                     <span className="admin-cell-strong">{h.name}</span>
                     <span className="admin-cell-muted">{h.email}</span>
@@ -169,7 +169,7 @@ export function ReferrerField({
               )}
             </div>
           )}
-          <div className="deal-btn-row">
+          <div className="admin-deal-btn-row">
             <button
               type="button"
               className="admin-btn admin-btn--sm"
@@ -190,7 +190,7 @@ export function ReferrerField({
       )}
 
       {mode === "new" && (
-        <div className="deal-field-stack">
+        <div className="admin-deal-field-stack">
           <div className="admin-field">
             <label className="admin-label">Name</label>
             <input className="admin-input" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Full name" />
@@ -199,7 +199,7 @@ export function ReferrerField({
             <label className="admin-label">Email</label>
             <input className="admin-input" type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} placeholder="name@example.com" />
           </div>
-          <div className="deal-btn-row">
+          <div className="admin-deal-btn-row">
             <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={createNew} disabled={busy}>
               {busy ? "Saving…" : "Create & link"}
             </button>
@@ -293,7 +293,7 @@ export function ReferrerCompanyField({
 
       {mode === "idle" &&
         (referrerCompanyId ? (
-          <div className="deal-inline-row">
+          <div className="admin-deal-inline-row">
             <Link href={`/admin/revenue/companies/${referrerCompanyId}`} className="admin-cell-strong">
               {referrerCompanyName || "View company"}
             </Link>
@@ -311,7 +311,7 @@ export function ReferrerCompanyField({
         ))}
 
       {mode === "search" && (
-        <div className="deal-field-stack">
+        <div className="admin-deal-field-stack">
           <input
             className="admin-input"
             autoFocus
@@ -344,7 +344,7 @@ export function ReferrerCompanyField({
                     type="button"
                     onClick={() => link(h)}
                     disabled={busy}
-                    className="deal-option"
+                    className="admin-deal-option"
                   >
                     <span className="admin-cell-strong">{h.name || "Unnamed company"}</span>
                   </button>
@@ -352,7 +352,7 @@ export function ReferrerCompanyField({
               )}
             </div>
           )}
-          <div className="deal-btn-row">
+          <div className="admin-deal-btn-row">
             <button type="button" className="admin-btn admin-btn--sm" onClick={reset}>
               Cancel
             </button>
@@ -440,7 +440,7 @@ export function DealCommunications({ dealId }: { dealId: string }) {
       ) : items.length === 0 ? (
         <div className="admin-empty">No communications yet.</div>
       ) : (
-        <ul className="deal-comm-list">
+        <ul className="admin-deal-comm-list">
           {items.map((c) => (
             <li
               key={c.id}

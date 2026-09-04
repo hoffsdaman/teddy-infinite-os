@@ -92,18 +92,18 @@ export function MyCoachingView({
               onClick={() => selectTab(t.id)}
             >
               {t.label}
-              {typeof count === "number" && count > 0 && <span className="coach-tab-count">{count}</span>}
+              {typeof count === "number" && count > 0 && <span className="admin-coach-tab-count">{count}</span>}
             </button>
           );
         })}
       </nav>
 
-      <div className="coach-profile">
+      <div className="admin-coach-profile">
         {tab === "my" && (
           <>
             <MyTalkingPoints talkingPoints={talkingPoints} teamMemberId={teamMemberId} />
 
-            <section className="admin-card coach-section">
+            <section className="admin-card admin-coach-section">
               <div className="admin-card-title">Your commitments</div>
               <div className="admin-hint">
                 What you said you&apos;d get done before your next 1-1. Add your own, and drag the stack so the most
@@ -112,7 +112,7 @@ export function MyCoachingView({
               <MyCommitments commitments={commitments} teamMemberId={teamMemberId} />
             </section>
 
-            <section className="admin-card coach-section">
+            <section className="admin-card admin-coach-section">
               <div className="admin-card-title">Your growth priorities</div>
               <div className="admin-hint">
                 What {coachName ?? "your coach"} wants you to focus on for your growth. Reviewed every 1-1, not a
@@ -121,7 +121,7 @@ export function MyCoachingView({
               {priorities.length === 0 ? (
                 <div className="admin-empty">No growth priorities set yet. Shape them together in your next 1-1.</div>
               ) : (
-                <ul className="mycoach-priorities">
+                <ul className="admin-mycoach-priorities">
                   {priorities.map((p) => (
                     <li key={p.id}>
                       <strong>{p.title}</strong>
@@ -135,7 +135,7 @@ export function MyCoachingView({
         )}
 
         {tab === "goals" && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-card-title">Your FAST goals</div>
             <div className="admin-hint">
               How you&apos;re measured, and your path to promotion. Add, edit, or retire a goal on{" "}
@@ -150,8 +150,8 @@ export function MyCoachingView({
               </div>
             )}
             {goals.map((g) => (
-              <div key={g.id} className="mycoach-goal-row">
-                <div className="mycoach-goal">
+              <div key={g.id} className="admin-mycoach-goal-row">
+                <div className="admin-mycoach-goal">
                   {g.title}
                   {g.status !== "active" && (
                     <span
@@ -173,7 +173,7 @@ export function MyCoachingView({
         )}
 
         {tab === "profile" && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-card-title">Your OCEAN profile</div>
             {ocean ? (
               <>
@@ -181,7 +181,7 @@ export function MyCoachingView({
                   How {coachName ?? "your coach"} reads your working style, with the behavior behind each read. It&apos;s
                   a conversation starter for your 1-1s, not a verdict, so bring anything you see differently.
                 </div>
-                <div className="coach-ocean-list">
+                <div className="admin-coach-ocean-list">
                   {(
                     [
                       ["Openness", ocean.openness],
@@ -191,12 +191,12 @@ export function MyCoachingView({
                       ["Neuroticism", ocean.neuroticism],
                     ] as const
                   ).map(([label, dim]) => (
-                    <div key={label} className="coach-ocean-line">
-                      <div className="coach-ocean-line-head">
+                    <div key={label} className="admin-coach-ocean-line">
+                      <div className="admin-coach-ocean-line-head">
                         <strong>{label}</strong>
                         <span className="admin-badge admin-badge--info">{dim.rating ?? "TBD"}</span>
                       </div>
-                      {dim.evidence && <div className="admin-cell-muted coach-ocean-line-evidence">{dim.evidence}</div>}
+                      {dim.evidence && <div className="admin-cell-muted admin-coach-ocean-line-evidence">{dim.evidence}</div>}
                     </div>
                   ))}
                 </div>
@@ -209,7 +209,7 @@ export function MyCoachingView({
                 {ocean.guidanceMarkdown && (
                   <div className="coach-block">
                     <span className="admin-eyebrow">Growth guidance</span>
-                    <p className="coach-ocean-guidance">{ocean.guidanceMarkdown}</p>
+                    <p className="admin-coach-ocean-guidance">{ocean.guidanceMarkdown}</p>
                   </div>
                 )}
               </>
@@ -223,43 +223,43 @@ export function MyCoachingView({
 
         {tab === "history" && (
           <>
-            <section className="admin-card coach-section">
+            <section className="admin-card admin-coach-section">
               <div className="admin-card-title">1-1 recaps</div>
               {recaps.length === 0 && (
                 <div className="admin-empty">Recaps from your 1-1s will appear here after each meeting.</div>
               )}
               {recaps.map((r, i) => (
-                <details key={r.id} className="mycoach-recap" open={i === 0}>
+                <details key={r.id} className="admin-mycoach-recap" open={i === 0}>
                   <summary>
                     <strong>{fmt(r.heldOn)}</strong>
                   </summary>
                   {r.agenda.length > 0 && (
                     <div className="coach-block">
                       <span className="admin-eyebrow">Your agenda for this 1-1</span>
-                      <ul className="mycoach-priorities">
+                      <ul className="admin-mycoach-priorities">
                         {r.agenda.map((body, j) => (
                           <li key={j}>{body}</li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  <div className="idea-plan" dangerouslySetInnerHTML={{ __html: r.html }} />
+                  <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: r.html }} />
                 </details>
               ))}
             </section>
 
-            <section className="admin-card coach-section">
+            <section className="admin-card admin-coach-section">
               <div className="admin-card-title">Check-ins</div>
               {checkins.length === 0 && (
                 <div className="admin-empty">Mid-cycle check-ins between your 1-1s appear here.</div>
               )}
               {checkins.map((c) => (
-                <details key={c.id} className="mycoach-recap">
+                <details key={c.id} className="admin-mycoach-recap">
                   <summary>
                     <strong>{fmt(c.sentAt)}</strong>{" "}
                     {!c.respondedAt && <span className="admin-badge admin-badge--warn">awaiting your update</span>}
                   </summary>
-                  <div className="idea-plan" dangerouslySetInnerHTML={{ __html: c.html }} />
+                  <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: c.html }} />
                 </details>
               ))}
             </section>

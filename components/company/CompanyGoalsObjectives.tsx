@@ -43,14 +43,14 @@ export function CompanyGoalsObjectives({
 
       {tree.map((o, oi) => (
         <div key={o.id} className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
-          <div className="edges-ohead">
-            <span className={`edges-ltag edges-ltag--${o.brand ?? "company"}`}>
+          <div className="admin-edges-ohead">
+            <span className={`admin-edges-ltag admin-edges-ltag--${o.brand ?? "company"}`}>
               {BRAND_LABELS[o.brand ?? "company"]}
             </span>
             <h3>
               O{oi + 1} · {o.title}
             </h3>
-            <span className="edges-ohead-note">
+            <span className="admin-edges-ohead-note">
               {Math.round(o.krs.reduce((s, kr) => s + progressPct(kr), 0) / Math.max(1, o.krs.length))}% ·{" "}
               {o.krs.some((kr) => kr.status === "off_track")
                 ? "off track"
@@ -60,29 +60,29 @@ export function CompanyGoalsObjectives({
             </span>
           </div>
           {o.krs.map((kr, ki) => (
-            <div key={kr.id} className="edges-kr">
-              <div className="edges-kr-row">
-                <div className="edges-kr-title">
+            <div key={kr.id} className="admin-edges-kr">
+              <div className="admin-edges-kr-row">
+                <div className="admin-edges-kr-title">
                   <span style={{ color: "var(--admin-faint)", fontWeight: 750, fontSize: 10, marginRight: 7 }}>
                     KR{oi + 1}.{ki + 1}
                   </span>
                   {kr.title}
                 </div>
-                <span className="edges-owner">
-                  <span className="edges-av" title="Accountable human">
+                <span className="admin-edges-owner">
+                  <span className="admin-edges-av" title="Accountable human">
                     {initialsById[kr.accountable_person_id] ?? "?"}
                   </span>
                   {kr.executing_agent && (
-                    <span className="edges-av edges-av--bot" title={`${kr.executing_agent} agent`}>
+                    <span className="admin-edges-av admin-edges-av--bot" title={`${kr.executing_agent} agent`}>
                       {agentInitials(kr.executing_agent)}
                     </span>
                   )}
                 </span>
-                <span className="edges-prog">
-                  <span className="edges-prog-bar">
+                <span className="admin-edges-prog">
+                  <span className="admin-edges-prog-bar">
                     <i className={barClass(kr)} style={{ width: `${Math.min(100, progressPct(kr))}%` }} />
                   </span>
-                  <span className="edges-prog-val">{fmtValue(kr)}</span>
+                  <span className="admin-edges-prog-val">{fmtValue(kr)}</span>
                 </span>
               </div>
             </div>

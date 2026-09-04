@@ -18,7 +18,7 @@ export default async function AddAiProgramPage() {
         title="Add AI Program Plan"
         sub="Two ways to start a program. Build a plan from scratch with our guided assistant, or upload documents you already have."
       />
-      <div className="mp-kpi-grid mp-kpi-grid--2up" style={{ gridAutoRows: "1fr" }}>
+      <div className="admin-kpi-grid admin-kpi-grid--2up" style={{ gridAutoRows: "1fr" }}>
         <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
           <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Create a plan</h2>
           <p className="admin-page-sub" style={{ margin: 0, minHeight: 56 }}>

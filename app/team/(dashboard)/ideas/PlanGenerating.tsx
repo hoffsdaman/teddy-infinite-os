@@ -31,37 +31,37 @@ export function PlanGenerating() {
   const visibleLines = (stage + 1) * 2;
 
   return (
-    <div className="admin-card idea-gen" role="status">
+    <div className="admin-card admin-idea-gen" role="status">
       <h2 className="admin-card-title">Building your product plan</h2>
       <p className="admin-page-sub" style={{ marginTop: 6 }}>
         Your idea is safely saved. Claude is turning it into a product plan, which takes about 20
         seconds.
       </p>
 
-      <ol className="idea-gen-steps" aria-hidden="true">
+      <ol className="admin-idea-gen-steps" aria-hidden="true">
         {STAGES.map((s, i) => (
           <li
             key={s.d}
-            className={`idea-gen-step${i < stage ? " is-done" : ""}${i === stage ? " is-active" : ""}`}
+            className={`admin-idea-gen-step${i < stage ? " is-done" : ""}${i === stage ? " is-active" : ""}`}
           >
-            <span className="idea-gen-dot" />
+            <span className="admin-idea-gen-dot" />
             {s.d}
           </li>
         ))}
       </ol>
 
-      <div className="idea-gen-doc" aria-hidden="true">
+      <div className="admin-idea-gen-doc" aria-hidden="true">
         {LINE_WIDTHS.slice(0, visibleLines).map((w, i) => (
           <span
             key={i}
-            className={`idea-gen-line${i === visibleLines - 1 ? " is-fresh" : ""}`}
+            className={`admin-idea-gen-line${i === visibleLines - 1 ? " is-fresh" : ""}`}
             style={{ width: `${w}%` }}
           />
         ))}
-        <span className="idea-gen-caret" />
+        <span className="admin-idea-gen-caret" />
       </div>
 
-      <p className="idea-gen-status" aria-live="polite">{STAGES[stage].label}</p>
+      <p className="admin-idea-gen-status" aria-live="polite">{STAGES[stage].label}</p>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default async function BrandsPage() {
       {brands.length === 0 ? (
         <div className="admin-empty">No active brands.</div>
       ) : (
-        <div className="mp-kpi-grid">
+        <div className="admin-kpi-grid">
           {brands.map((b) => (
             <Link
               key={b.brandId}

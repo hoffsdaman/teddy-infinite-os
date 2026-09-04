@@ -80,9 +80,9 @@ export function CampaignsView({
 
   return (
     <>
-      <div className="mcr-toolbar" style={{ marginBottom: 14 }}>
+      <div className="admin-campaign-toolbar" style={{ marginBottom: 14 }}>
         {brands.length > 1 ? (
-          <div className="mcr-chip-row">
+          <div className="admin-campaign-chip-row">
             <button
               type="button"
               className={`admin-btn admin-btn--sm${brandFilter === null ? " admin-btn--primary" : ""}`}
@@ -163,7 +163,7 @@ export function CampaignsView({
                       </td>
                       <td className="admin-cell-mono">{fmt(c.startsOn)}</td>
                       <td>
-                        <div className="mcr-chip-row">
+                        <div className="admin-campaign-chip-row">
                           {c.channels.length === 0 ? (
                             <span className="admin-cell-muted">—</span>
                           ) : (
@@ -176,17 +176,17 @@ export function CampaignsView({
                         </div>
                       </td>
                       <td style={{ minWidth: 160 }}>
-                        <div className="mcr-progress">
-                          <div className="mcr-progress-track">
+                        <div className="admin-campaign-progress">
+                          <div className="admin-campaign-progress-track">
                             <div
-                              className="mcr-progress-fill"
+                              className="admin-campaign-progress-fill"
                               style={{
                                 width: `${pct}%`,
                                 background: pct === 100 ? "var(--admin-ok-ink)" : "var(--admin-accent)",
                               }}
                             />
                           </div>
-                          <span className="admin-cell-mono mcr-progress-num">
+                          <span className="admin-cell-mono admin-campaign-progress-num">
                             {c.builtCount}/{c.assetCount} built
                           </span>
                         </div>

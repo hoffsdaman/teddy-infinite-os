@@ -14,16 +14,16 @@ export function MetricCard({
 }) {
   const inner = (
     <>
-      <div className="mp-kpi-label">{label}</div>
-      <div className="mp-kpi-val">{value}</div>
-      {sub && <div className="mp-kpi-note">{sub}</div>}
+      <div className="admin-kpi-label">{label}</div>
+      <div className="admin-kpi-val">{value}</div>
+      {sub && <div className="admin-kpi-note">{sub}</div>}
     </>
   );
   return href ? (
-    <Link href={href} className="mp-kpi">
+    <Link href={href} className="admin-kpi">
       {inner}
     </Link>
   ) : (
-    <div className="mp-kpi">{inner}</div>
+    <div className="admin-kpi">{inner}</div>
   );
 }

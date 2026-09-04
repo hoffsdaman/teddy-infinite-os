@@ -142,11 +142,11 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
 
           <div className="admin-summary-grid" style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">Daily page views</div>
+              <div className="admin-kpi-label">Daily page views</div>
               <BarChart data={overview.daily} ariaLabel="Daily page views" />
             </div>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">Top referrers</div>
+              <div className="admin-kpi-label">Top referrers</div>
               <BarChart
                 data={toBars(overview.topReferrers)}
                 ariaLabel="Top referrers by page views"
@@ -215,7 +215,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
           </div>
 
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">
+            <div className="admin-kpi-label">
               {isInternal ? "Screens by unique users" : "Pages by page views"}
             </div>
             <BarChart

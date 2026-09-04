@@ -59,7 +59,7 @@ export default async function PortalHubPage() {
         }
       />
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Human Tokens" value={fmtTokens(overview.balanceTokens)} sub={boughtSub} />
         <MetricCard label="AI Tokens" value={fmtCompact(overview.aiTokens)} sub="Claude + app tokens used" />
         <MetricCard

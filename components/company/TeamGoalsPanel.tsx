@@ -46,7 +46,7 @@ export function TeamGoalsPanel({
 
   return (
     <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
-      <div className="cg-panel-head">
+      <div className="admin-cg-panel-head">
         <div className="admin-card-title" style={{ margin: 0 }}>
           Team member FAST goals{" "}
           <span className="admin-cell-muted">
@@ -74,15 +74,15 @@ export function TeamGoalsPanel({
       </div>
 
       {view === "person" ? (
-        <div className="edges-fast-grid">
+        <div className="admin-edges-fast-grid">
           {byPerson.map((p) => (
-            <div key={p.teamMemberId} className="edges-fast-person">
-              <div className="edges-fast-name">
+            <div key={p.teamMemberId} className="admin-edges-fast-person">
+              <div className="admin-edges-fast-name">
                 <Link href={personHref(p.teamMemberId)}>{p.name}</Link>
               </div>
               {p.goals.length === 0 && <div className="admin-cell-muted">No active goal</div>}
               {p.goals.map((g, i) => (
-                <div key={i} className="edges-fast-goal">
+                <div key={i} className="admin-edges-fast-goal">
                   <div>{g.title}</div>
                   <div className="admin-cell-muted">{g.ladder ? `⇗ ${g.ladder}` : "No ladder yet"}</div>
                 </div>
@@ -91,12 +91,12 @@ export function TeamGoalsPanel({
           ))}
         </div>
       ) : (
-        <div className="cg-obj-list">
+        <div className="admin-cg-obj-list">
           {byObjective.map((o) => (
-            <div key={o.objectiveId ?? "unaligned"} className="cg-obj-group">
-              <div className="cg-obj-head">
+            <div key={o.objectiveId ?? "unaligned"} className="admin-cg-obj-group">
+              <div className="admin-cg-obj-head">
                 {o.objectiveId !== null && (
-                  <span className={`edges-ltag edges-ltag--${o.lineTag}`}>{o.lineLabel}</span>
+                  <span className={`admin-edges-ltag admin-edges-ltag--${o.lineTag}`}>{o.lineLabel}</span>
                 )}
                 <h4>{o.label}</h4>
                 <span className="admin-cell-muted">
@@ -104,15 +104,15 @@ export function TeamGoalsPanel({
                 </span>
               </div>
               {o.items.length === 0 ? (
-                <div className="admin-cell-muted cg-obj-empty">No FAST goals aligned here yet.</div>
+                <div className="admin-cell-muted admin-cg-obj-empty">No FAST goals aligned here yet.</div>
               ) : (
                 o.items.map((it, i) => (
-                  <div key={i} className="cg-obj-row">
-                    <Link href={personHref(it.teamMemberId)} className="cg-obj-person">
+                  <div key={i} className="admin-cg-obj-row">
+                    <Link href={personHref(it.teamMemberId)} className="admin-cg-obj-person">
                       {it.name}
                     </Link>
-                    <span className="cg-obj-goal">{it.goalTitle}</span>
-                    {it.ladder && <span className="admin-cell-muted cg-obj-ladder">⇗ {it.ladder}</span>}
+                    <span className="admin-cg-obj-goal">{it.goalTitle}</span>
+                    {it.ladder && <span className="admin-cell-muted admin-cg-obj-ladder">⇗ {it.ladder}</span>}
                   </div>
                 ))
               )}

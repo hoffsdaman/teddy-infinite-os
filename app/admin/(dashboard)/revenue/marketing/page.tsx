@@ -162,7 +162,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
       {/* The funnel, left to right: attention in, meetings out. Page views now
           live in the traffic section's coverage line, and total emails sent in
           the Recent email toggle, so nothing here is lost. */}
-      <div className="mp-kpi-grid">
+      <div className="admin-kpi-grid">
         <MetricCard
           label="Visitors"
           value={totals ? totals.visitors.toLocaleString() : "—"}
@@ -246,7 +246,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
                 gap: 8,
               }}
             >
-              <div className="mp-kpi-label">Active campaigns</div>
+              <div className="admin-kpi-label">Active campaigns</div>
               <Link href="/admin/revenue/marketing/campaigns" className="admin-cell-muted">
                 See all
               </Link>
@@ -322,7 +322,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
                 gap: 8,
               }}
             >
-              <div className="mp-kpi-label">Next broadcast</div>
+              <div className="admin-kpi-label">Next broadcast</div>
               <Link href="/admin/revenue/marketing/broadcasts" className="admin-cell-muted">
                 See all
               </Link>
@@ -448,7 +448,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", marginTop: 12 }}
         >
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">Top pages</div>
+            <div className="admin-kpi-label">Top pages</div>
             <BarChart
               data={"error" in traffic ? [] : toBars(traffic.topPages)}
               ariaLabel="Top pages by page views"
@@ -457,7 +457,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
             />
           </div>
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">Top referrers</div>
+            <div className="admin-kpi-label">Top referrers</div>
             <BarChart
               data={"error" in traffic ? [] : toBars(traffic.topReferrers)}
               ariaLabel="Top referrers by page views"
@@ -466,7 +466,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
             />
           </div>
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">Content by pillar</div>
+            <div className="admin-kpi-label">Content by pillar</div>
             <BarChart
               data={engine.contentByPillar}
               ariaLabel="Calendar content by pillar"
@@ -492,7 +492,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
           style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", marginTop: 12 }}
         >
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">Contacts by persona</div>
+            <div className="admin-kpi-label">Contacts by persona</div>
             <DonutChart
               data={audience.byPersona}
               centerLabel={`${audience.total.toLocaleString()} contacts`}
@@ -502,7 +502,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
             />
           </div>
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">{BY_SOURCE_LABEL[emailAudience]}</div>
+            <div className="admin-kpi-label">{BY_SOURCE_LABEL[emailAudience]}</div>
             <BarChart
               data={email.bySource}
               ariaLabel={BY_SOURCE_LABEL[emailAudience]}
@@ -518,7 +518,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Se
             )}
           </div>
           <div className="admin-card admin-chart-card">
-            <div className="mp-kpi-label">Deliverability</div>
+            <div className="admin-kpi-label">Deliverability</div>
             {delivery.error ? (
               <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
                 {delivery.error}

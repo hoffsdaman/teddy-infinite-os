@@ -164,7 +164,7 @@ export default async function DealsPage() {
           {error.message}
         </div>
       )}
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="Open pipeline" value={formatCents(openPipeline)} />
         <MetricCard label="Weighted" value={formatCents(Math.round(weighted))} />
         <MetricCard label="Closing this month" value={formatCents(closingThisMonth)} />

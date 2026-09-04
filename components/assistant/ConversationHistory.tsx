@@ -167,27 +167,27 @@ export function ConversationHistory({
   };
 
   return (
-    <div className="chatw-history">
+    <div className="admin-chat-history">
       {loading && conversations.length === 0 ? (
-        <div className="chatw-history-note">Loading…</div>
+        <div className="admin-chat-history-note">Loading…</div>
       ) : error ? (
-        <div className="chatw-history-note chatw-history-note--error">{error}</div>
+        <div className="admin-chat-history-note admin-chat-history-note--error">{error}</div>
       ) : conversations.length === 0 ? (
-        <div className="chatw-history-note">
+        <div className="admin-chat-history-note">
           {emptyHint ?? "No saved conversations yet."}
         </div>
       ) : (
-        <ul className="chatw-history-list">
+        <ul className="admin-chat-history-list">
           {conversations.map((c) => {
             const isEditing = editingId === c.id;
             const isConfirming = confirmingId === c.id;
             return (
               <li
                 key={c.id}
-                className={`chatw-history-row${c.id === activeId ? " chatw-history-row--active" : ""}`}
+                className={`admin-chat-history-row${c.id === activeId ? " admin-chat-history-row--active" : ""}`}
               >
                 {isEditing ? (
-                  <div className="chatw-history-edit">
+                  <div className="admin-chat-history-edit">
                     <input
                       ref={editRef}
                       type="text"
@@ -203,12 +203,12 @@ export function ConversationHistory({
                       aria-label="Rename conversation"
                       maxLength={200}
                     />
-                    <button type="button" className="chatw-history-icon" onClick={() => commitRename(c.id)}>
+                    <button type="button" className="admin-chat-history-icon" onClick={() => commitRename(c.id)}>
                       Save
                     </button>
                     <button
                       type="button"
-                      className="chatw-history-icon"
+                      className="admin-chat-history-icon"
                       onClick={() => {
                         setEditingId(null);
                         setDraftTitle("");
@@ -218,11 +218,11 @@ export function ConversationHistory({
                     </button>
                   </div>
                 ) : isConfirming ? (
-                  <div className="chatw-history-confirm">
+                  <div className="admin-chat-history-confirm">
                     <span>Delete this chat?</span>
                     <button
                       type="button"
-                      className="chatw-history-icon chatw-history-icon--danger"
+                      className="admin-chat-history-icon admin-chat-history-icon--danger"
                       onClick={() => {
                         void remove(c.id);
                         setConfirmingId(null);
@@ -232,7 +232,7 @@ export function ConversationHistory({
                     </button>
                     <button
                       type="button"
-                      className="chatw-history-icon"
+                      className="admin-chat-history-icon"
                       onClick={() => setConfirmingId(null)}
                     >
                       Cancel
@@ -242,19 +242,19 @@ export function ConversationHistory({
                   <>
                     <button
                       type="button"
-                      className="chatw-history-open"
+                      className="admin-chat-history-open"
                       onClick={() => openConversation(c.id)}
                       disabled={openingId === c.id}
                     >
-                      <span className="chatw-history-title">{c.title || "Untitled chat"}</span>
-                      <span className="chatw-history-time">
+                      <span className="admin-chat-history-title">{c.title || "Untitled chat"}</span>
+                      <span className="admin-chat-history-time">
                         {openingId === c.id ? "Opening…" : relativeTime(c.last_message_at)}
                       </span>
                     </button>
-                    <div className="chatw-history-actions">
+                    <div className="admin-chat-history-actions">
                       <button
                         type="button"
-                        className="chatw-history-icon"
+                        className="admin-chat-history-icon"
                         aria-label="Rename conversation"
                         onClick={() => startRename(c)}
                       >
@@ -262,7 +262,7 @@ export function ConversationHistory({
                       </button>
                       <button
                         type="button"
-                        className="chatw-history-icon chatw-history-icon--danger"
+                        className="admin-chat-history-icon admin-chat-history-icon--danger"
                         aria-label="Delete conversation"
                         onClick={() => {
                           setEditingId(null);

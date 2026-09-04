@@ -42,27 +42,27 @@ export function KanbanBoard<T extends KanbanCardBase>({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="sap-kanban">
+      <div className="admin-kanban">
         {columns.map((col) => {
           const colCards = cards.filter((c) => c.columnId === col.id);
           return (
             <Droppable droppableId={col.id} key={col.id}>
               {(provided, snapshot) => (
-                <div className={`sap-col${snapshot.isDraggingOver ? " is-over" : ""}`}>
-                  <div className="sap-col-head">
+                <div className={`admin-kanban-col${snapshot.isDraggingOver ? " is-over" : ""}`}>
+                  <div className="admin-kanban-col-head">
                     <span
-                      className="sap-col-dot"
+                      className="admin-kanban-col-dot"
                       style={col.accent ? { background: col.accent } : undefined}
                     />
-                    <span className="sap-col-label">{col.label}</span>
-                    <span className="sap-col-count">{colCards.length}</span>
+                    <span className="admin-kanban-col-label">{col.label}</span>
+                    <span className="admin-kanban-col-count">{colCards.length}</span>
                   </div>
                   {/* Droppable ref lives on the card list (not the whole column)
                       so the placeholder sizes it — this keeps an empty column a
                       full-height drop target instead of collapsing to nothing. */}
-                  <div className="sap-col-body" ref={provided.innerRef} {...provided.droppableProps}>
+                  <div className="admin-kanban-col-body" ref={provided.innerRef} {...provided.droppableProps}>
                     {colCards.length === 0 && !snapshot.isDraggingOver && (
-                      <div className="sap-col-empty">No cards</div>
+                      <div className="admin-kanban-col-empty">No cards</div>
                     )}
                     {colCards.map((card, i) => (
                       <Draggable draggableId={card.id} index={i} key={card.id}>
@@ -71,7 +71,7 @@ export function KanbanBoard<T extends KanbanCardBase>({
                             ref={dp.innerRef}
                             {...dp.draggableProps}
                             {...dp.dragHandleProps}
-                            className={`sap-card${ds.isDragging ? " is-dragging" : ""}${cardClassName?.(card) ? ` ${cardClassName(card)}` : ""}`}
+                            className={`admin-kanban-card${ds.isDragging ? " is-dragging" : ""}${cardClassName?.(card) ? ` ${cardClassName(card)}` : ""}`}
                             onClick={() => onCardClick?.(card)}
                           >
                             {renderCard(card)}

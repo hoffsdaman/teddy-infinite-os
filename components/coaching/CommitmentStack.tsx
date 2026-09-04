@@ -95,7 +95,7 @@ export function CommitmentStack({
           <Droppable droppableId="commitments">
             {(dropProvided) => (
               <div
-                className="coach-commit-stack"
+                className="admin-coach-commit-stack"
                 ref={dropProvided.innerRef}
                 {...dropProvided.droppableProps}
               >
@@ -103,12 +103,12 @@ export function CommitmentStack({
                   <Draggable draggableId={c.id} index={i} key={c.id} isDragDisabled={busy}>
                     {(provided, snapshot) => (
                       <div
-                        className={`coach-commit-card${snapshot.isDragging ? " is-dragging" : ""}`}
+                        className={`admin-coach-commit-card${snapshot.isDragging ? " is-dragging" : ""}`}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                       >
                         <span
-                          className="coach-commit-handle"
+                          className="admin-coach-commit-handle"
                           {...provided.dragHandleProps}
                           title="Drag to reorder"
                           aria-label="Drag to reorder"
@@ -135,10 +135,10 @@ export function CommitmentStack({
       )}
 
       {closed.length > 0 && (
-        <details className="coach-closed">
+        <details className="admin-coach-closed">
           <summary>{closed.length} closed</summary>
           {closed.map((c) => (
-            <div key={c.id} className="coach-commitment is-closed">
+            <div key={c.id} className="admin-coach-commitment is-closed">
               <span className={`admin-badge ${STATUS_BADGE[c.status]}`}>
                 {COMMITMENT_STATUS_LABELS[c.status]}
               </span>
@@ -178,8 +178,8 @@ function CommitmentCard({
 
   if (editing && authoring) {
     return (
-      <div className="coach-commit-body">
-        <div className="coach-commit-edit">
+      <div className="admin-coach-commit-body">
+        <div className="admin-coach-commit-edit">
           <input
             className="admin-input"
             value={title}
@@ -221,18 +221,18 @@ function CommitmentCard({
   }
 
   return (
-    <div className="coach-commit-body">
-      <div className="coach-commit-top">
+    <div className="admin-coach-commit-body">
+      <div className="admin-coach-commit-top">
         <span className={`admin-badge ${STATUS_BADGE[c.status]}`}>
           {COMMITMENT_STATUS_LABELS[c.status]}
         </span>
-        <span className="coach-commitment-title">{c.title}</span>
+        <span className="admin-coach-commitment-title">{c.title}</span>
         <span className="admin-cell-muted">
           {ownerLabel(c)}
           {c.dueOn ? ` · due ${fmt(c.dueOn)}` : ""}
         </span>
       </div>
-      <div className="coach-commitment-controls">
+      <div className="admin-coach-commitment-controls">
         <select
           className="admin-input"
           value={c.status}

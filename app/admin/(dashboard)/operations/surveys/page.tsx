@@ -143,7 +143,7 @@ export default async function SurveysPage({
 
       {list.error && <div className="admin-alert admin-alert--err">{list.error}</div>}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Surveys" value={total} />
         <MetricCard label="Published" value={published} />
         <MetricCard label="Responses" value={responses} />

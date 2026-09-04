@@ -68,9 +68,9 @@ function IdeaColumn({
 
   return (
     <section className="ideas-col">
-      <div className="ideas-col-head">
+      <div className="admin-ideas-col-head">
         <h2>{heading}</h2>
-        <span className="ideas-col-count">{total.toLocaleString()}</span>
+        <span className="admin-ideas-col-count">{total.toLocaleString()}</span>
       </div>
       <div className="admin-table-wrap">
         <div className="admin-table-scroll">
@@ -225,7 +225,7 @@ export default async function IdeasBacklogPage({ searchParams }: { searchParams:
             ]}
           />
         </div>
-        <div className="ideas-columns">
+        <div className="admin-ideas-columns">
           <IdeaColumn
             heading="Build ideas"
             variant="build"

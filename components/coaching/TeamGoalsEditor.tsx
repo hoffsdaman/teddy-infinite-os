@@ -35,11 +35,11 @@ export function TeamGoalsEditor({
     <div>
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
       {goals.length === 0 && <div className="admin-cell-muted">No active FAST goal yet.</div>}
-      <ul className="mycoach-priorities">
+      <ul className="admin-mycoach-priorities">
         {goals.map((g) => (
           <li key={g.goalId}>
             {editingId === g.goalId ? (
-              <span className="coach-add-row">
+              <span className="admin-coach-add-row">
                 <input
                   className="admin-input"
                   value={editTitle}
@@ -64,7 +64,7 @@ export function TeamGoalsEditor({
                 <strong>{g.title}</strong>
                 {g.ladderLabel && <span className="admin-cell-muted"> · ladders to {g.ladderLabel}</span>}
                 {canManage && (
-                  <span className="goal-manage-btns">
+                  <span className="admin-goal-manage-btns">
                     <button
                       className="admin-btn admin-btn--sm"
                       onClick={() => {
@@ -94,7 +94,7 @@ export function TeamGoalsEditor({
         ))}
       </ul>
       {canManage && (
-        <div className="coach-add-row">
+        <div className="admin-coach-add-row">
           <input
             className="admin-input"
             placeholder="New FAST goal…"

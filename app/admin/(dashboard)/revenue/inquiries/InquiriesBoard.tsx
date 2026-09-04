@@ -92,12 +92,12 @@ export function InquiriesBoard({ initialCards }: { initialCards: InquiryCard[] }
         onCardClick={(c) => setSelectedId(c.id)}
         renderCard={(c) => (
           <>
-            <div className="sap-card-title">{c.personName || c.personEmail || "(unknown)"}</div>
-            <div className="sap-card-sub">{c.subject || humanize(c.type)}</div>
-            <div className="sap-card-meta">
+            <div className="admin-kanban-card-title">{c.personName || c.personEmail || "(unknown)"}</div>
+            <div className="admin-kanban-card-sub">{c.subject || humanize(c.type)}</div>
+            <div className="admin-kanban-card-meta">
               {c.type && <Badge>{humanize(c.type)}</Badge>}
               {c.doNotContact && <Badge tone="err">DNC</Badge>}
-              <span className="sap-card-sub" style={{ marginLeft: "auto" }}>
+              <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
                 {timeAgo(c.created_at)}
               </span>
             </div>

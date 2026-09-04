@@ -20,12 +20,12 @@ export function ClientCards<T extends ClientCardRow>({
   hrefQuery?: string;
 }) {
   return (
-    <div className="team-hub-grid">
+    <div className="admin-hub-grid">
       {rows.map((c) => (
-        <Link key={c.id} href={`${detailBasePath}/${c.id}${hrefQuery ?? ""}`} className="team-hub-card">
-          <span className="team-hub-ico" aria-hidden>◔</span>
-          <span className="team-hub-title">{c.name || "(no name)"}</span>
-          <span className="team-hub-sub">{subText?.(c) || "View details"}</span>
+        <Link key={c.id} href={`${detailBasePath}/${c.id}${hrefQuery ?? ""}`} className="admin-hub-card">
+          <span className="admin-hub-ico" aria-hidden>◔</span>
+          <span className="admin-hub-title">{c.name || "(no name)"}</span>
+          <span className="admin-hub-sub">{subText?.(c) || "View details"}</span>
         </Link>
       ))}
     </div>

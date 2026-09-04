@@ -50,12 +50,12 @@ export function AssumeManager({ clients }: { clients: AssumableClient[] }) {
             const canAssume = hasMembers || Boolean(c.contactEmail);
             const selectedPersonId = selected[c.companyId] ?? c.members[0]?.personId;
             return (
-              <div className="admin-list-row assume-row" key={c.companyId}>
-                <div className="admin-list-main assume-main">
-                  <span className="assume-logo" aria-hidden>
+              <div className="admin-list-row admin-assume-row" key={c.companyId}>
+                <div className="admin-list-main admin-assume-main">
+                  <span className="admin-assume-logo" aria-hidden>
                     {companyInitials(c.companyName)}
                   </span>
-                  <div className="assume-main-text">
+                  <div className="admin-assume-main-text">
                     <div className="admin-list-title">{c.companyName}</div>
                     <div className="admin-list-sub">
                       {hasMembers
@@ -66,10 +66,10 @@ export function AssumeManager({ clients }: { clients: AssumableClient[] }) {
                     </div>
                   </div>
                 </div>
-                <div className="assume-controls">
+                <div className="admin-assume-controls">
                   {hasMembers && (
                     <select
-                      className="admin-select assume-select"
+                      className="admin-select admin-assume-select"
                       aria-label={`View ${c.companyName} as`}
                       value={selectedPersonId}
                       onChange={(e) =>

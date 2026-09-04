@@ -140,13 +140,13 @@ function NextStepLine({ card }: { card: DealCard }) {
   if (card.status !== "open") return null;
   if (!card.nextStepDate) {
     return (
-      <div className="sap-card-sub" style={{ color: "var(--admin-err-ink)", fontWeight: 600 }}>
+      <div className="admin-kanban-card-sub" style={{ color: "var(--admin-err-ink)", fontWeight: 600 }}>
         No next step
       </div>
     );
   }
   return (
-    <div className="sap-card-sub">
+    <div className="admin-kanban-card-sub">
       → {card.nextStep || "next step"} · {formatDate(card.nextStepDate)}
     </div>
   );
@@ -493,12 +493,12 @@ export function DealsBoard({
           onCardClick={openDeal}
           renderCard={(c) => (
             <>
-              <div className="sap-card-title">{c.title || c.personName || c.companyName || "(untitled deal)"}</div>
-              <div className="sap-card-sub">{c.companyName || c.personName || "—"}</div>
+              <div className="admin-kanban-card-title">{c.title || c.personName || c.companyName || "(untitled deal)"}</div>
+              <div className="admin-kanban-card-sub">{c.companyName || c.personName || "—"}</div>
               <NextStepLine card={c} />
-              <div className="sap-card-meta">
+              <div className="admin-kanban-card-meta">
                 <Badge tone="info">{formatCents(c.amountUsdCents, "usd")}</Badge>
-                {c.probability != null && <span className="sap-card-sub">{c.probability}%</span>}
+                {c.probability != null && <span className="admin-kanban-card-sub">{c.probability}%</span>}
                 {(() => {
                   const d = idleDays(c.updatedAt);
                   return c.status === "open" && d != null && d > 14 ? (
@@ -507,7 +507,7 @@ export function DealsBoard({
                 })()}
               </div>
               {c.columnId === HANDOFF_COLUMN_ID && (
-                <div className="sap-card-handoff" style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }} onClick={(e) => e.stopPropagation()}>
+                <div className="admin-kanban-card-handoff" style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }} onClick={(e) => e.stopPropagation()}>
                   {rejecting === c.id ? (
                     <>
                       <select className="admin-input" style={{ maxWidth: 150 }} value={reason} onChange={(e) => setReason(e.target.value)}>
@@ -553,9 +553,9 @@ export function DealsBoard({
               0,
             );
             return (
-              <div className="sap-col-foot">
+              <div className="admin-kanban-col-foot">
                 <span>{formatCents(total)}</span>
-                <span className="sap-card-sub">{formatCents(weighted)} weighted</span>
+                <span className="admin-kanban-card-sub">{formatCents(weighted)} weighted</span>
               </div>
             );
           }}

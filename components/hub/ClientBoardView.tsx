@@ -31,37 +31,37 @@ export function ClientBoardView({
   const accents = board.columns.map((c) => (c.isDone ? STAGE_WON : NONDONE_ACCENTS[nd++ % NONDONE_ACCENTS.length]));
 
   return (
-    <div className="sap-kanban">
+    <div className="admin-kanban">
       {board.columns.map((col, i) => {
         const colCards = board.cards.filter((c) => c.columnId === col.id);
         return (
-          <div className="sap-col" key={col.id}>
-            <div className="sap-col-head">
-              <span className="sap-col-dot" style={{ background: accents[i] }} />
-              <span className="sap-col-label">{col.name}</span>
-              <span className="sap-col-count">{colCards.length}</span>
+          <div className="admin-kanban-col" key={col.id}>
+            <div className="admin-kanban-col-head">
+              <span className="admin-kanban-col-dot" style={{ background: accents[i] }} />
+              <span className="admin-kanban-col-label">{col.name}</span>
+              <span className="admin-kanban-col-count">{colCards.length}</span>
             </div>
-            <div className="sap-col-body">
+            <div className="admin-kanban-col-body">
               {colCards.map((c) => {
                 const isNew = !c.done && Date.now() - new Date(c.createdAt).getTime() < NEW_ASSIGNMENT_DAYS * 86400000;
                 const who = c.assigneeName ?? "Edge8";
                 const mine = !!viewerPersonId && c.assigneeId === viewerPersonId;
                 return (
-                  <div className="sap-card sap-card--static" key={c.id}>
-                    <div className="sap-card-title">{c.title}</div>
-                    <div className="sap-card-meta">
+                  <div className="admin-kanban-card admin-kanban-card--static" key={c.id}>
+                    <div className="admin-kanban-card-title">{c.title}</div>
+                    <div className="admin-kanban-card-meta">
                       {isNew && <Badge tone="info">New</Badge>}
                       {mine && <Badge tone="ok">Mine</Badge>}
                       <Badge tone={PRIORITY_TONE[c.priority]}>{PRIORITY_LABEL[c.priority]}</Badge>
                       {c.sprintName && <Badge tone="info">{c.sprintName}</Badge>}
                     </div>
-                    <div className="sap-card-meta">
-                      <span className="sap-card-assignee">
-                        <span className="sap-avatar">{initials(who)}</span>
+                    <div className="admin-kanban-card-meta">
+                      <span className="admin-kanban-card-assignee">
+                        <span className="admin-kanban-avatar">{initials(who)}</span>
                         {who}
                       </span>
                       {c.dueDate && (
-                        <span className="sap-card-sub" style={{ marginLeft: "auto" }}>
+                        <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
                           {formatDate(c.dueDate)}
                         </span>
                       )}
@@ -69,7 +69,7 @@ export function ClientBoardView({
                   </div>
                 );
               })}
-              {colCards.length === 0 && <div className="sap-col-empty">No cards</div>}
+              {colCards.length === 0 && <div className="admin-kanban-col-empty">No cards</div>}
             </div>
           </div>
         );

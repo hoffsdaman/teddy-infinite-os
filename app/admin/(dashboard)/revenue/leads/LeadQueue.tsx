@@ -135,10 +135,10 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
           <div
             ref={dp.innerRef}
             {...dp.draggableProps}
-            className={`lead-card${open ? " is-open" : ""}${r.pinnedAt ? " is-pinned" : ""}${ds.isDragging ? " is-dragging" : ""}`}
+            className={`admin-lead-card${open ? " is-open" : ""}${r.pinnedAt ? " is-pinned" : ""}${ds.isDragging ? " is-dragging" : ""}`}
           >
             <div
-              className="lead-head"
+              className="admin-lead-head"
               role="button"
               tabIndex={0}
               aria-expanded={open}
@@ -150,7 +150,7 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
               }}
             >
               <span
-                className="lead-drag-handle"
+                className="admin-lead-drag-handle"
                 {...dp.dragHandleProps}
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`Drag ${r.name} to pin or unpin`}
@@ -158,25 +158,25 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
               >
                 ⠿
               </span>
-              <div className="lead-head-main">
-                <div className="lead-name">
+              <div className="admin-lead-head-main">
+                <div className="admin-lead-name">
                   {r.name}
                   {r.company ? <span className="admin-cell-muted"> · {r.company}</span> : null}
                 </div>
-                <div className="lead-sub">
+                <div className="admin-lead-sub">
                   {r.inquiry?.subject || r.inquiry?.message || r.email}
                 </div>
               </div>
-              <div className="lead-head-meta">
+              <div className="admin-lead-head-meta">
                 {r.pinnedAt && <Badge tone="info">Pinned</Badge>}
                 {slaBadge(r.slaDueAt)}
                 {statusBadge(r.status)}
-                <span className="lead-attempt">
+                <span className="admin-lead-attempt">
                   {r.attemptCount > 0 ? `attempt ${r.attemptCount}` : "no attempts"}
                 </span>
                 <button
                   type="button"
-                  className={`lead-pin-btn${r.pinnedAt ? " is-active" : ""}`}
+                  className={`admin-lead-pin-btn${r.pinnedAt ? " is-active" : ""}`}
                   aria-pressed={!!r.pinnedAt}
                   title={r.pinnedAt ? "Unpin from top of queue" : "Pin to top of queue"}
                   disabled={pending}
@@ -205,16 +205,16 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
         </div>
       )}
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="lead-zone-label">Pinned</div>
+        <div className="admin-lead-zone-label">Pinned</div>
         <Droppable droppableId="pinned-zone">
           {(provided, snapshot) => (
             <div
-              className={`lead-queue lead-zone${snapshot.isDraggingOver ? " is-drop-target" : ""}`}
+              className={`admin-lead-queue admin-lead-zone${snapshot.isDraggingOver ? " is-drop-target" : ""}`}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
               {pinnedRows.length === 0 && !snapshot.isDraggingOver && (
-                <div className="lead-zone-empty">Drag a lead here to pin it above the queue</div>
+                <div className="admin-lead-zone-empty">Drag a lead here to pin it above the queue</div>
               )}
               {pinnedRows.map((r, i) => renderCard(r, i))}
               {provided.placeholder}
@@ -222,11 +222,11 @@ export function LeadQueue({ rows }: { rows: QueueRow[] }) {
           )}
         </Droppable>
 
-        {pinnedRows.length > 0 && <div className="lead-zone-label">Queue</div>}
+        {pinnedRows.length > 0 && <div className="admin-lead-zone-label">Queue</div>}
         <Droppable droppableId="queue-zone">
           {(provided, snapshot) => (
             <div
-              className={`lead-queue${snapshot.isDraggingOver ? " is-drop-target" : ""}`}
+              className={`admin-lead-queue${snapshot.isDraggingOver ? " is-drop-target" : ""}`}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -259,8 +259,8 @@ function LeadDetail({
   const capturedCount = GPCT_FIELDS.filter(([k]) => qual[k].trim()).length;
 
   return (
-    <div className="lead-detail">
-      <div className="lead-meta-row">
+    <div className="admin-lead-detail">
+      <div className="admin-lead-meta-row">
         <Link href={`/admin/contacts/${row.id}`} className="admin-cell-strong">
           Open contact
         </Link>
@@ -273,12 +273,12 @@ function LeadDetail({
         )}
       </div>
 
-      {row.inquiry?.message && <p className="lead-inquiry">{row.inquiry.message}</p>}
+      {row.inquiry?.message && <p className="admin-lead-inquiry">{row.inquiry.message}</p>}
 
-      <div className="lead-section-label">Qualification (GPCT) · {capturedCount}/6 captured</div>
-      <div className="lead-gpct">
+      <div className="admin-lead-section-label">Qualification (GPCT) · {capturedCount}/6 captured</div>
+      <div className="admin-lead-gpct">
         {GPCT_FIELDS.map(([key, label]) => (
-          <label key={key} className="lead-field">
+          <label key={key} className="admin-lead-field">
             <span className="admin-label">{label}</span>
             <input
               className="admin-input"
@@ -289,7 +289,7 @@ function LeadDetail({
           </label>
         ))}
       </div>
-      <div className="lead-actions" style={{ marginBottom: 20 }}>
+      <div className="admin-lead-actions" style={{ marginBottom: 20 }}>
         <button
           type="button"
           className="admin-btn"
@@ -304,10 +304,10 @@ function LeadDetail({
         </button>
       </div>
 
-      <div className="lead-section-label">Work it</div>
-      <div className="lead-actions" style={{ marginBottom: 10 }}>
+      <div className="admin-lead-section-label">Work it</div>
+      <div className="admin-lead-actions" style={{ marginBottom: 10 }}>
         <input
-          className="admin-input lead-note"
+          className="admin-input admin-lead-note"
           placeholder="Call note (optional)"
           value={callNote}
           onChange={(e) => setCallNote(e.target.value)}
@@ -341,9 +341,9 @@ function LeadDetail({
         </button>
       </div>
 
-      <div className="lead-actions">
+      <div className="admin-lead-actions">
         <select
-          className="admin-input lead-select"
+          className="admin-input admin-lead-select"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
         >
@@ -355,7 +355,7 @@ function LeadDetail({
           ))}
         </select>
         <input
-          className="admin-input lead-note"
+          className="admin-input admin-lead-note"
           placeholder="Note (optional)"
           value={dqNote}
           onChange={(e) => setDqNote(e.target.value)}

@@ -6,16 +6,16 @@ export const VALUE_ICONS = ["✦", "▲", "◎", "✓", "✎", "☼"];
 // Company section. Glyphs are presentation-only, keyed by position.
 export function CoreValuesGrid({ values }: { values: ValueRow[] }) {
   return (
-    <div className="team-values-grid">
+    <div className="admin-team-values-grid">
       {values.map((v, i) => (
-        <div key={v.id} className="team-value-card">
-          <span className="team-value-head">
-            <span className="team-value-num" aria-hidden>
+        <div key={v.id} className="admin-team-value-card">
+          <span className="admin-team-value-head">
+            <span className="admin-team-value-num" aria-hidden>
               {VALUE_ICONS[i % VALUE_ICONS.length]}
             </span>
-            <span className="team-value-title">{v.title}</span>
+            <span className="admin-team-value-title">{v.title}</span>
           </span>
-          <span className="team-value-body">{v.description}</span>
+          <span className="admin-team-value-body">{v.description}</span>
         </div>
       ))}
     </div>

@@ -109,30 +109,30 @@ export default async function AgentsPage() {
         </div>
       )}
 
-      <div className="mp-kpi-grid mp-kpi-grid--2up" style={{ marginBottom: 24 }}>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">Total routines</div>
-          <div className="mp-kpi-val">{counts.total}</div>
+      <div className="admin-kpi-grid admin-kpi-grid--2up" style={{ marginBottom: 24 }}>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">Total routines</div>
+          <div className="admin-kpi-val">{counts.total}</div>
         </div>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">On Vercel</div>
-          <div className="mp-kpi-val">{counts.vercel}</div>
-          <div className="mp-kpi-note">Cloud crons</div>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">On Vercel</div>
+          <div className="admin-kpi-val">{counts.vercel}</div>
+          <div className="admin-kpi-note">Cloud crons</div>
         </div>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">On Mac mini</div>
-          <div className="mp-kpi-val">{counts.macMini}</div>
-          <div className="mp-kpi-note">The one machine routines belong on</div>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">On Mac mini</div>
+          <div className="admin-kpi-val">{counts.macMini}</div>
+          <div className="admin-kpi-note">The one machine routines belong on</div>
         </div>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">On laptops</div>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">On laptops</div>
           <div
-            className="mp-kpi-val"
+            className="admin-kpi-val"
             style={{ color: counts.laptop > 0 ? "var(--admin-err-ink)" : "var(--admin-ok-ink)" }}
           >
             {counts.laptop}
           </div>
-          <div className="mp-kpi-note">{counts.laptop > 0 ? "Policy violation" : "Policy holding"}</div>
+          <div className="admin-kpi-note">{counts.laptop > 0 ? "Policy violation" : "Policy holding"}</div>
         </div>
       </div>
 

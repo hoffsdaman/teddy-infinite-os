@@ -150,7 +150,7 @@ export function PortalSidebar({
 
       {navOpen && <div className="admin-scrim" onClick={() => setNavOpen(false)} />}
 
-      <nav className={`admin-sidebar portal-sidebar${navOpen ? " is-open" : ""}`} aria-label="Portal">
+      <nav className={`admin-sidebar admin-portal-sidebar${navOpen ? " is-open" : ""}`} aria-label="Portal">
         <div className="admin-brand">
           <span className="admin-brand-lead">8 Edges Client Portal</span>
           <span className="admin-brand-actions">

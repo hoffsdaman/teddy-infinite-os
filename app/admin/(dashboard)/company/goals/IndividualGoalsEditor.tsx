@@ -184,7 +184,7 @@ export function IndividualGoalsEditor({
           required
         />
       </div>
-      <div className="goals-grid">
+      <div className="admin-goals-grid">
         <div className="admin-field">
           <label className="admin-label">Measure (optional)</label>
           <input className="admin-input" value={form.metricUnit} onChange={(e) => set("metricUnit", e.target.value)} placeholder="days, clients, %" />
@@ -252,7 +252,7 @@ export function IndividualGoalsEditor({
 
   const goalRow = (g: CoachingGoal, gi: number) =>
     editingId === g.id ? (
-      <div key={g.id} className="edges-kr">
+      <div key={g.id} className="admin-edges-kr">
         <div style={{ padding: "4px 0 10px" }}>
           {goalForm(
             (e) => {
@@ -269,7 +269,7 @@ export function IndividualGoalsEditor({
     ) : (
       <div
         key={g.id}
-        className="edges-kr edges-kr--click"
+        className="admin-edges-kr admin-edges-kr--click"
         role="button"
         tabIndex={0}
         title="Click to edit"
@@ -282,8 +282,8 @@ export function IndividualGoalsEditor({
         }}
       >
         <>
-          <div className="edges-kr-row">
-            <div className="edges-kr-title">
+          <div className="admin-edges-kr-row">
+            <div className="admin-edges-kr-title">
               <span style={{ color: "var(--admin-faint)", fontWeight: 750, fontSize: 10, marginRight: 7 }}>
                 G{gi + 1}
               </span>
@@ -298,14 +298,14 @@ export function IndividualGoalsEditor({
               const pct = progressPct(g);
               const val = fmtGoal(g);
               return pct !== null || val ? (
-                <span className="edges-prog">
-                  <span className="edges-prog-bar">
+                <span className="admin-edges-prog">
+                  <span className="admin-edges-prog-bar">
                     <i
                       className={g.status === "achieved" ? "is-done" : ""}
                       style={{ width: `${pct ?? 0}%` }}
                     />
                   </span>
-                  <span className="edges-prog-val">{val}</span>
+                  <span className="admin-edges-prog-val">{val}</span>
                 </span>
               ) : null;
             })()}
@@ -319,9 +319,9 @@ export function IndividualGoalsEditor({
 
   const memberCard = (m: AdminMemberGoals) => (
     <div key={m.teamMemberId} className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
-      <div className="edges-ohead">
+      <div className="admin-edges-ohead">
         <h3>{m.name}</h3>
-        <span className="edges-ohead-note">
+        <span className="admin-edges-ohead-note">
           {m.goals.length} {m.goals.length === 1 ? "goal" : "goals"} ·{" "}
           {m.goals.filter((g) => g.ladder).length} aligned
         </span>
@@ -354,14 +354,14 @@ export function IndividualGoalsEditor({
 
       {withoutGoals.length > 0 && (
         <div className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
-          <div className="edges-ohead">
+          <div className="admin-edges-ohead">
             <h3>No active goal yet</h3>
-            <span className="edges-ohead-note">
+            <span className="admin-edges-ohead-note">
               {withoutGoals.length} {withoutGoals.length === 1 ? "member" : "members"}
             </span>
           </div>
           {withoutGoals.map((m) => (
-            <div key={m.teamMemberId} className="edges-kr">
+            <div key={m.teamMemberId} className="admin-edges-kr">
               {addingFor === m.teamMemberId ? (
                 <div style={{ padding: "4px 0 10px" }}>
                   {goalForm((e) => {
@@ -370,8 +370,8 @@ export function IndividualGoalsEditor({
                   }, "Add goal")}
                 </div>
               ) : (
-                <div className="edges-kr-row">
-                  <div className="edges-kr-title">{m.name}</div>
+                <div className="admin-edges-kr-row">
+                  <div className="admin-edges-kr-title">{m.name}</div>
                   <button className="admin-btn admin-btn--sm" onClick={() => openAdd(m.teamMemberId)} disabled={pending}>
                     + Goal
                   </button>

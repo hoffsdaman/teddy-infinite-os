@@ -117,7 +117,7 @@ export default async function AioPadPage({ searchParams }: { searchParams: Searc
       <PageHead eyebrow="Revenue" title="AIO Pad" sub={`${total.toLocaleString()} ${total === 1 ? "booking" : "bookings"}`} />
       {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="USD · confirmed bookings" />
         <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="USD · confirmed bookings" />
         <MetricCard label="Upcoming" value={upcomingCount} sub="start date today or later" />

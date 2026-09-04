@@ -7,7 +7,7 @@ export default function Loading() {
     <div aria-busy="true" aria-label="Loading">
       <div className="admin-skeleton-bar" style={{ width: 90 }} />
       <div className="admin-skeleton-bar" style={{ width: 280, height: 26, margin: "12px 0 28px" }} />
-      <div className="mp-kpi-grid" style={{ marginBottom: 0 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 0 }}>
         {[0, 1, 2].map((i) => (
           <div className="admin-card" key={i} style={{ padding: "16px 18px" }}>
             <div className="admin-skeleton-bar" style={{ width: 100 }} />

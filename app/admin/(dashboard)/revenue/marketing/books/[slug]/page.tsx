@@ -53,7 +53,7 @@ export default async function BookPage({ params }: { params: { slug: string } })
 
       {book.readerPath ? (
         <div className="admin-card admin-section-card" style={{ padding: 0, overflow: "hidden" }}>
-          <iframe src={book.readerPath} title={book.title} className="book-reader-frame" />
+          <iframe src={book.readerPath} title={book.title} className="admin-book-reader-frame" />
         </div>
       ) : null}
 

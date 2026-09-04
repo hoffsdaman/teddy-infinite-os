@@ -46,9 +46,9 @@ export function bucketForRole(position: string | null, department: string | null
 
 function Chips({ tools }: { tools: string[] }) {
   return (
-    <div className="ts-chips">
+    <div className="admin-start-chips">
       {tools.map((t) => (
-        <span key={t} className="ts-chip">
+        <span key={t} className="admin-start-chip">
           {t}
         </span>
       ))}
@@ -64,14 +64,14 @@ type Props = {
 
 export function StartHerePanel({ coreTeaching, recentPosts, roleBucket }: Props) {
   return (
-    <section className="team-start" aria-label="Start here">
-      <div className="team-start-head">
-        <span className="team-start-badge" aria-hidden>
+    <section className="admin-team-start" aria-label="Start here">
+      <div className="admin-team-start-head">
+        <span className="admin-team-start-badge" aria-hidden>
           ✦
         </span>
         <div>
-          <h2 className="team-start-title">Start here</h2>
-          <p className="team-start-sub">A few things to get into while you settle in.</p>
+          <h2 className="admin-team-start-title">Start here</h2>
+          <p className="admin-team-start-sub">A few things to get into while you settle in.</p>
         </div>
       </div>
 
@@ -80,40 +80,40 @@ export function StartHerePanel({ coreTeaching, recentPosts, roleBucket }: Props)
         href={`/post/${coreTeaching.slug}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="ts-featured"
+        className="admin-start-featured"
       >
-        <span className="ts-featured-media">
+        <span className="admin-start-featured-media">
           <Image
             src={coreTeaching.image}
             alt={coreTeaching.title}
             width={224}
             height={126}
-            className="ts-featured-img"
+            className="admin-start-featured-img"
           />
         </span>
-        <span className="ts-featured-body">
-          <span className="ts-kicker">Required reading</span>
-          <span className="ts-featured-heading">{coreTeaching.title}</span>
-          <span className="ts-featured-excerpt">{coreTeaching.excerpt}</span>
-          <span className="ts-more">Read the core teaching · {coreTeaching.readTime} →</span>
+        <span className="admin-start-featured-body">
+          <span className="admin-start-kicker">Required reading</span>
+          <span className="admin-start-featured-heading">{coreTeaching.title}</span>
+          <span className="admin-start-featured-excerpt">{coreTeaching.excerpt}</span>
+          <span className="admin-start-more">Read the core teaching · {coreTeaching.readTime} →</span>
         </span>
       </Link>
 
       {/* Recent posts */}
       <div className="admin-section-label">Fresh from the blog</div>
-      <div className="ts-posts">
+      <div className="admin-start-posts">
         {recentPosts.map((p) => (
           <Link
             key={p.slug}
             href={`/post/${p.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="ts-post"
+            className="admin-start-post"
           >
-            <Image src={p.image} alt={p.title} width={72} height={72} className="ts-post-thumb" />
-            <span className="ts-post-body">
-              <span className="ts-post-heading">{p.title}</span>
-              <span className="ts-post-meta">
+            <Image src={p.image} alt={p.title} width={72} height={72} className="admin-start-post-thumb" />
+            <span className="admin-start-post-body">
+              <span className="admin-start-post-heading">{p.title}</span>
+              <span className="admin-start-post-meta">
                 {p.category} · {p.readTime}
               </span>
             </span>
@@ -124,35 +124,35 @@ export function StartHerePanel({ coreTeaching, recentPosts, roleBucket }: Props)
       {/* Role-based tool kit */}
       <div className="admin-section-label">Your tool kit</div>
       <div className="ts-tools">
-        <div className="ts-tools-baseline">
-          <span className="ts-cap">Everyone, from day one</span>
+        <div className="admin-start-tools-baseline">
+          <span className="admin-start-cap">Everyone, from day one</span>
           <Chips tools={BASELINE} />
         </div>
-        <div className="ts-tools-roles">
+        <div className="admin-start-tools-roles">
           {BUCKETS.map((b) => (
-            <div key={b.key} className={"ts-role" + (roleBucket === b.key ? " mine" : "")}>
-              <div className="ts-role-head">
+            <div key={b.key} className={"admin-start-role" + (roleBucket === b.key ? " mine" : "")}>
+              <div className="admin-start-role-head">
                 {b.label}
-                {roleBucket === b.key && <span className="ts-yours">Your role</span>}
+                {roleBucket === b.key && <span className="admin-start-yours">Your role</span>}
               </div>
               <Chips tools={b.tools} />
             </div>
           ))}
         </div>
-        <p className="ts-note">
+        <p className="admin-start-note">
           Everyone learns GitHub, Vercel, and Supabase, not just engineers. Claude Code is for every
           role.
         </p>
       </div>
 
       {/* Certification */}
-      <div className="ts-cta">
-        <div className="ts-cta-body">
-          <span className="ts-kicker light">Get certified</span>
-          <span className="ts-cta-heading">
+      <div className="admin-start-cta">
+        <div className="admin-start-cta-body">
+          <span className="admin-start-kicker light">Get certified</span>
+          <span className="admin-start-cta-heading">
             Join AIOlabz and start your AI Officer certification
           </span>
-          <ol className="ts-cta-steps">
+          <ol className="admin-start-cta-steps">
             <li>
               Sign up at <b>aiolabz.com</b> using your <b>@edge8.ai</b> company email.
             </li>
@@ -164,12 +164,12 @@ export function StartHerePanel({ coreTeaching, recentPosts, roleBucket }: Props)
             </li>
           </ol>
         </div>
-        <div className="ts-cta-actions">
-          <a className="ts-btn" href={CERT_URL} target="_blank" rel="noopener noreferrer">
+        <div className="admin-start-cta-actions">
+          <a className="admin-start-btn" href={CERT_URL} target="_blank" rel="noopener noreferrer">
             Start the certification →
           </a>
           <a
-            className="ts-btn ghost"
+            className="admin-start-btn ghost"
             href={AIOLABZ_URL}
             target="_blank"
             rel="noopener noreferrer"

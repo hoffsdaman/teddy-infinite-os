@@ -89,10 +89,10 @@ export function AssignedStaffCard({
       ) : (
         <div className="admin-list" style={{ marginBottom: 12 }}>
           {assignments.map((a) => (
-            <div className="admin-list-row staff-assign-row" key={a.id}>
+            <div className="admin-list-row admin-staff-assign-row" key={a.id}>
               <div className="admin-list-main">
                 <div className="admin-list-title">{a.full_name || a.email || "Unknown"}</div>
-                <div className="admin-list-sub staff-assign-sub">
+                <div className="admin-list-sub admin-staff-assign-sub">
                   {a.role_title || a.position_title || "No role set"}
                   {a.client_visible ? (
                     <Badge tone="ok">On client team</Badge>
@@ -101,7 +101,7 @@ export function AssignedStaffCard({
                   )}
                 </div>
               </div>
-              <div className="admin-list-aside staff-assign-actions">
+              <div className="admin-list-aside admin-staff-assign-actions">
                 <label className="admin-cell-muted" style={{ fontSize: 12 }}>
                   Approves leave
                   <select

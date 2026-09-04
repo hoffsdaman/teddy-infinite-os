@@ -97,15 +97,15 @@ export function ContentDetail({
         )}
       </div>
 
-      <div className="mcr-detail-grid">
+      <div className="admin-campaign-detail-grid">
         {/* Formatted text */}
-        <section className="admin-card mcr-panel">
-          <div className="mcr-panel-head">
-            <span className="mcr-panel-title">{isBlog ? "Blog preview" : "Formatted text"}</span>
+        <section className="admin-card admin-campaign-panel">
+          <div className="admin-campaign-panel-head">
+            <span className="admin-campaign-panel-title">{isBlog ? "Blog preview" : "Formatted text"}</span>
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
               {isBlog && (
                 <select
-                  className="admin-select mcr-style-select"
+                  className="admin-select admin-campaign-style-select"
                   value={blogStyle}
                   onChange={(e) => pickBlogStyle(e.target.value)}
                   disabled={pending}
@@ -164,7 +164,7 @@ export function ContentDetail({
                 coverUrl={selected?.url ?? null}
               />
             ) : (
-              <div className="idea-plan" style={{ padding: 16 }} dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="admin-idea-plan" style={{ padding: 16 }} dangerouslySetInnerHTML={{ __html: html }} />
             )
           ) : (
             <div className="admin-empty" style={{ margin: 16 }}>
@@ -174,9 +174,9 @@ export function ContentDetail({
         </section>
 
         {/* Images */}
-        <section className="admin-card mcr-panel">
-          <div className="mcr-panel-head">
-            <span className="mcr-panel-title">
+        <section className="admin-card admin-campaign-panel">
+          <div className="admin-campaign-panel-head">
+            <span className="admin-campaign-panel-title">
               Images{images.length > 0 ? ` · ${images.length}` : ""}
             </span>
             <button type="button" className="admin-btn admin-btn--sm admin-btn--primary" onClick={() => setModal("image")} disabled={pending}>
@@ -190,18 +190,18 @@ export function ContentDetail({
                   image full size, so don't duplicate it here; just show the
                   version tray. Other channels have no preview cover, so show it. */}
               {!isBlog && (
-                <a href={selected.url} target="_blank" rel="noreferrer" className="mcr-imgbox">
+                <a href={selected.url} target="_blank" rel="noreferrer" className="admin-campaign-imgbox">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={selected.url} alt={entry.title} />
                 </a>
               )}
               {(isBlog ? images.length >= 1 : images.length > 1) && (
-                <div className="mcr-thumbs" style={isBlog ? { paddingTop: 14 } : undefined}>
+                <div className="admin-campaign-thumbs" style={isBlog ? { paddingTop: 14 } : undefined}>
                   {images.map((img, i) => (
                     <button
                       key={img.id}
                       type="button"
-                      className={`mcr-thumb${img.isSelected ? " is-selected" : ""}`}
+                      className={`admin-campaign-thumb${img.isSelected ? " is-selected" : ""}`}
                       onClick={() => pickImage(img.id)}
                       disabled={pending || img.isSelected}
                       title={img.isSelected ? "Selected" : "Use this version"}

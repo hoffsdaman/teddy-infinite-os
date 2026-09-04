@@ -57,15 +57,15 @@ function OrgCard({
   // Blue badge / orange badge, the Microsoft way: FTE blue, contractor orange.
   const isContractor = entry.employmentType === "contract";
   return (
-    <Link href={personHref(entry.id)} className={`team-org-card${isRoot ? " is-root" : ""}`}>
-      <span className="team-org-name">{entry.name}</span>
+    <Link href={personHref(entry.id)} className={`admin-team-org-card${isRoot ? " is-root" : ""}`}>
+      <span className="admin-team-org-name">{entry.name}</span>
       {(meta || reports) && (
-        <span className="team-org-meta">
+        <span className="admin-team-org-meta">
           {meta || "—"}
           {reports ? ` · ${reports} ${reports === 1 ? "report" : "reports"}` : ""}
         </span>
       )}
-      <span className={`team-org-badge ${isContractor ? "is-contract" : "is-fte"}`}>
+      <span className={`admin-team-org-badge ${isContractor ? "is-contract" : "is-fte"}`}>
         {isContractor ? "Contractor" : "FTE"}
       </span>
     </Link>
@@ -81,17 +81,17 @@ function OpenRoleCard({ role }: { role: OpenRole }) {
     .join(" · ");
   const inner = (
     <>
-      <span className="team-org-name">{role.title}</span>
-      <span className="team-org-meta">{meta || "Hiring"}</span>
-      <span className="team-org-badge is-open">Open role</span>
+      <span className="admin-team-org-name">{role.title}</span>
+      <span className="admin-team-org-meta">{meta || "Hiring"}</span>
+      <span className="admin-team-org-badge is-open">Open role</span>
     </>
   );
   return role.isPublic && role.slug ? (
-    <a href={`/careers/${role.slug}/`} className="team-org-card is-open-role" target="_blank" rel="noreferrer">
+    <a href={`/careers/${role.slug}/`} className="admin-team-org-card is-open-role" target="_blank" rel="noreferrer">
       {inner}
     </a>
   ) : (
-    <span className="team-org-card is-open-role">{inner}</span>
+    <span className="admin-team-org-card is-open-role">{inner}</span>
   );
 }
 
@@ -164,8 +164,8 @@ export function OrgChart({
 
   return (
     <>
-      <div className="team-org-wrap">
-        <ul className="team-org">
+      <div className="admin-team-org-wrap">
+        <ul className="admin-team-org">
           {roots.map((r) => (
             <OrgNode key={r.id} entry={r} map={map} roles={roles} depth={0} personHref={personHref} />
           ))}
@@ -175,7 +175,7 @@ export function OrgChart({
       {unassigned.length > 0 && (
         <>
           <h2 className="admin-section-label">Open roles without a hiring manager</h2>
-          <div className="team-org-unassigned">
+          <div className="admin-team-org-unassigned">
             {unassigned.map((r) => (
               <OpenRoleCard key={r.id} role={r} />
             ))}

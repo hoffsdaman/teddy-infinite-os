@@ -217,7 +217,7 @@ export function TeamChatWidget() {
     <>
       <button
         type="button"
-        className="chatw-fab"
+        className="admin-chat-fab"
         aria-label="Open team assistant"
         onClick={() => setOpen(true)}
       >
@@ -245,23 +245,23 @@ export function TeamChatWidget() {
             className="admin-drawer-backdrop"
             onClick={() => setOpen(false)}
           />
-          <aside className="admin-drawer chatw-panel" role="dialog" aria-label="Team assistant">
+          <aside className="admin-drawer admin-chat-panel" role="dialog" aria-label="Team assistant">
             <div className="admin-drawer-head">
               <div>
                 <div className="admin-drawer-eyebrow brand-label">8 Edges Team</div>
                 <h2 className="admin-drawer-title">Assistant</h2>
               </div>
-              <div className="chatw-head-actions">
+              <div className="admin-chat-head-actions">
                 <button
                   type="button"
-                  className={`chatw-history-btn${showHistory ? " chatw-history-btn--active" : ""}`}
+                  className={`admin-chat-history-btn${showHistory ? " admin-chat-history-btn--active" : ""}`}
                   aria-pressed={showHistory}
                   onClick={() => setShowHistory((v) => !v)}
                 >
                   {showHistory ? "Back" : "History"}
                 </button>
                 {(items.length > 0 || conversationId) && (
-                  <button type="button" className="chatw-newchat" onClick={newChat}>
+                  <button type="button" className="admin-chat-newchat" onClick={newChat}>
                     New chat
                   </button>
                 )}
@@ -285,9 +285,9 @@ export function TeamChatWidget() {
               />
             ) : (
               <>
-                <div className="chatw-msgs" ref={scrollRef}>
+                <div className="admin-chat-msgs" ref={scrollRef}>
                   {items.length === 0 && (
-                    <div className="chatw-empty">
+                    <div className="admin-chat-empty">
                       <p>Ask me anything about Edge8:</p>
                       <ul>
                         <li>What&apos;s our time-off policy?</li>
@@ -296,7 +296,7 @@ export function TeamChatWidget() {
                         <li>How much revenue have we invoiced this quarter?</li>
                         <li>Which clients do we work with?</li>
                       </ul>
-                      <p className="chatw-empty-note">
+                      <p className="admin-chat-empty-note">
                         Read-only. I look things up but never change anything, and I can&apos;t see
                         payroll or private personal data.
                       </p>
@@ -306,36 +306,36 @@ export function TeamChatWidget() {
                   {items.map((item, i) => {
                     if (item.kind === "user") {
                       return (
-                        <div key={i} className="chatw-msg chatw-msg--user">
+                        <div key={i} className="admin-chat-msg admin-chat-msg--user">
                           {item.text}
                         </div>
                       );
                     }
                     if (item.kind === "bot") {
                       return (
-                        <div key={i} className="chatw-msg chatw-msg--bot">
+                        <div key={i} className="admin-chat-msg admin-chat-msg--bot">
                           <BotText text={item.text} />
                         </div>
                       );
                     }
                     if (item.kind === "tool") {
                       return (
-                        <div key={i} className="chatw-toolchip" title={item.detail}>
+                        <div key={i} className="admin-chat-toolchip" title={item.detail}>
                           Looked it up
                         </div>
                       );
                     }
                     return (
-                      <div key={i} className="chatw-msg chatw-msg--error">
+                      <div key={i} className="admin-chat-msg admin-chat-msg--error">
                         {item.text}
                       </div>
                     );
                   })}
 
-                  {pending && <div className="chatw-typing">Thinking…</div>}
+                  {pending && <div className="admin-chat-typing">Thinking…</div>}
                 </div>
 
-                <form className="chatw-composer" onSubmit={onSubmit}>
+                <form className="admin-chat-composer" onSubmit={onSubmit}>
                   <input
                     ref={inputRef}
                     type="text"
@@ -345,7 +345,7 @@ export function TeamChatWidget() {
                     disabled={pending}
                     aria-label="Message the team assistant"
                   />
-                  <button type="submit" className="chatw-send" disabled={pending || !input.trim()}>
+                  <button type="submit" className="admin-chat-send" disabled={pending || !input.trim()}>
                     Send
                   </button>
                 </form>

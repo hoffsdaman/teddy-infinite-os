@@ -65,21 +65,21 @@ export default async function CallDetailPage({ params }: { params: { id: string 
         }
       />
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 14 }}>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">Your talk ratio</div>
-          <div className="mp-kpi-val">{stats.talkRatio == null ? "—" : `${Math.round(stats.talkRatio * 100)}%`}</div>
-          <div className="mp-kpi-note">target under 45%</div>
+      <div className="admin-kpi-grid" style={{ marginBottom: 14 }}>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">Your talk ratio</div>
+          <div className="admin-kpi-val">{stats.talkRatio == null ? "—" : `${Math.round(stats.talkRatio * 100)}%`}</div>
+          <div className="admin-kpi-note">target under 45%</div>
         </div>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">Questions you asked</div>
-          <div className="mp-kpi-val">{stats.questionCount}</div>
-          <div className="mp-kpi-note">target 15+ on discovery</div>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">Questions you asked</div>
+          <div className="admin-kpi-val">{stats.questionCount}</div>
+          <div className="admin-kpi-note">target 15+ on discovery</div>
         </div>
-        <div className="mp-kpi">
-          <div className="mp-kpi-label">Coach score</div>
-          <div className="mp-kpi-val">{avg == null ? "—" : `${avg.toFixed(1)} / 5`}</div>
-          <div className="mp-kpi-note">{call.scorecard ? `scored ${formatDate(call.scorecard.scoredAt)}` : "not scored yet"}</div>
+        <div className="admin-kpi">
+          <div className="admin-kpi-label">Coach score</div>
+          <div className="admin-kpi-val">{avg == null ? "—" : `${avg.toFixed(1)} / 5`}</div>
+          <div className="admin-kpi-note">{call.scorecard ? `scored ${formatDate(call.scorecard.scoredAt)}` : "not scored yet"}</div>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default async function CallDetailPage({ params }: { params: { id: string 
           {coachingHtml && (
             <div style={{ marginTop: 12 }}>
               <div className="admin-shelf-heading" style={{ marginBottom: 8 }}>Coaching notes</div>
-              <div className="idea-plan" dangerouslySetInnerHTML={{ __html: coachingHtml }} />
+              <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: coachingHtml }} />
             </div>
           )}
         </div>

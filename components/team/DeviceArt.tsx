@@ -130,7 +130,7 @@ const ART: Record<string, () => JSX.Element> = {
 export function DeviceArt({ type }: { type: string }) {
   const Art = ART[type] ?? Box;
   return (
-    <svg viewBox="0 0 80 72" role="img" aria-hidden focusable="false" className="team-eq-art">
+    <svg viewBox="0 0 80 72" role="img" aria-hidden focusable="false" className="admin-team-eq-art">
       <Art />
     </svg>
   );

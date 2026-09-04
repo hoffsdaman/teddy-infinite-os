@@ -85,8 +85,8 @@ function ApprovalCard({
   const statusLabel =
     item.status === "approved" ? "Approved" : item.status === "declined" ? "Cancelled" : null;
   return (
-    <div className="chatw-approval">
-      <div className="chatw-approval-title">
+    <div className="admin-chat-approval">
+      <div className="admin-chat-approval-title">
         {isEmail
           ? "Send this email?"
           : isPortal
@@ -96,34 +96,34 @@ function ApprovalCard({
             : "Run this change?"}
       </div>
       {isEmail ? (
-        <div className="chatw-approval-email">
+        <div className="admin-chat-approval-email">
           <div>
-            <span className="chatw-approval-label">To</span> {String(item.input.to ?? "")}
+            <span className="admin-chat-approval-label">To</span> {String(item.input.to ?? "")}
           </div>
           <div>
-            <span className="chatw-approval-label">Subject</span>{" "}
+            <span className="admin-chat-approval-label">Subject</span>{" "}
             {String(item.input.subject ?? "")}
           </div>
           <pre>{String(item.input.body ?? "")}</pre>
         </div>
       ) : isPortal ? (
-        <div className="chatw-approval-email">
+        <div className="admin-chat-approval-email">
           <div>{String(item.input.summary ?? "")}</div>
         </div>
       ) : (
-        <pre className="chatw-approval-sql">{String(item.input.sql ?? "")}</pre>
+        <pre className="admin-chat-approval-sql">{String(item.input.sql ?? "")}</pre>
       )}
       {statusLabel ? (
         <div
-          className={`chatw-approval-status chatw-approval-status--${item.status}`}
+          className={`admin-chat-approval-status admin-chat-approval-status--${item.status}`}
         >
           {statusLabel}
         </div>
       ) : (
-        <div className="chatw-approval-actions">
+        <div className="admin-chat-approval-actions">
           <button
             type="button"
-            className="chatw-approve"
+            className="admin-chat-approve"
             disabled={disabled}
             onClick={() => onDecide(item.id, true)}
           >
@@ -131,7 +131,7 @@ function ApprovalCard({
           </button>
           <button
             type="button"
-            className="chatw-decline"
+            className="admin-chat-decline"
             disabled={disabled}
             onClick={() => onDecide(item.id, false)}
           >
@@ -363,7 +363,7 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
     <>
       <button
         type="button"
-        className="chatw-fab"
+        className="admin-chat-fab"
         aria-label="Open admin assistant"
         onClick={() => setOpen(true)}
       >
@@ -391,23 +391,23 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
             className="admin-drawer-backdrop"
             onClick={() => setOpen(false)}
           />
-          <aside className="admin-drawer chatw-panel" role="dialog" aria-label="Admin assistant">
+          <aside className="admin-drawer admin-chat-panel" role="dialog" aria-label="Admin assistant">
             <div className="admin-drawer-head">
               <div>
                 <div className="admin-drawer-eyebrow brand-label">8 Edges</div>
                 <h2 className="admin-drawer-title">Assistant</h2>
               </div>
-              <div className="chatw-head-actions">
+              <div className="admin-chat-head-actions">
                 <button
                   type="button"
-                  className={`chatw-history-btn${showHistory ? " chatw-history-btn--active" : ""}`}
+                  className={`admin-chat-history-btn${showHistory ? " admin-chat-history-btn--active" : ""}`}
                   aria-pressed={showHistory}
                   onClick={() => setShowHistory((v) => !v)}
                 >
                   {showHistory ? "Back" : "History"}
                 </button>
                 {(items.length > 0 || conversationId) && (
-                  <button type="button" className="chatw-newchat" onClick={newChat}>
+                  <button type="button" className="admin-chat-newchat" onClick={newChat}>
                     New chat
                   </button>
                 )}
@@ -431,9 +431,9 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
               />
             ) : (
               <>
-                <div className="chatw-msgs" ref={scrollRef}>
+                <div className="admin-chat-msgs" ref={scrollRef}>
                   {items.length === 0 && (
-                    <div className="chatw-empty">
+                    <div className="admin-chat-empty">
                       <p>Ask anything about the Company OS data:</p>
                       <ul>
                         <li>How many open deals do we have, and what is their total USD value?</li>
@@ -441,7 +441,7 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
                         <li>Who is on vacation next week?</li>
                         <li>Top 5 unpaid invoices by balance.</li>
                       </ul>
-                      <p className="chatw-empty-note">
+                      <p className="admin-chat-empty-note">
                         {canWrite
                           ? "It can also update records and send emails — every change and every email needs your approval first."
                           : "Read-only. The assistant never changes data."}
@@ -452,21 +452,21 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
                   {items.map((item, i) => {
                     if (item.kind === "user") {
                       return (
-                        <div key={i} className="chatw-msg chatw-msg--user">
+                        <div key={i} className="admin-chat-msg admin-chat-msg--user">
                           {item.text}
                         </div>
                       );
                     }
                     if (item.kind === "bot") {
                       return (
-                        <div key={i} className="chatw-msg chatw-msg--bot">
+                        <div key={i} className="admin-chat-msg admin-chat-msg--bot">
                           <BotText text={item.text} />
                         </div>
                       );
                     }
                     if (item.kind === "tool") {
                       return (
-                        <div key={i} className="chatw-toolchip" title={item.detail}>
+                        <div key={i} className="admin-chat-toolchip" title={item.detail}>
                           {CHIP_LABELS[item.name ?? ""] ?? "Queried the database"}
                         </div>
                       );
@@ -477,16 +477,16 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
                       );
                     }
                     return (
-                      <div key={i} className="chatw-msg chatw-msg--error">
+                      <div key={i} className="admin-chat-msg admin-chat-msg--error">
                         {item.text}
                       </div>
                     );
                   })}
 
-                  {pending && <div className="chatw-typing">Thinking…</div>}
+                  {pending && <div className="admin-chat-typing">Thinking…</div>}
                 </div>
 
-                <form className="chatw-composer" onSubmit={onSubmit}>
+                <form className="admin-chat-composer" onSubmit={onSubmit}>
                   <input
                     ref={inputRef}
                     type="text"
@@ -502,7 +502,7 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
                   />
                   <button
                     type="submit"
-                    className="chatw-send"
+                    className="admin-chat-send"
                     disabled={pending || hasPendingApproval || !input.trim()}
                   >
                     Send

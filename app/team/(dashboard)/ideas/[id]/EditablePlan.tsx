@@ -54,7 +54,7 @@ export function EditablePlan(props: {
           </button>
         </div>
         <p className="admin-page-sub" style={{ marginTop: 0 }}>{props.sub}</p>
-        <div className="idea-plan" dangerouslySetInnerHTML={{ __html: props.html }} />
+        <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: props.html }} />
       </div>
     );
   }

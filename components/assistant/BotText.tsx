@@ -50,7 +50,7 @@ function renderInline(text: string, keyBase: string): React.ReactNode[] {
       const [, alt, src] = img;
       if (SAFE_IMAGE.test(src)) {
         // eslint-disable-next-line @next/next/no-img-element
-        return <img key={key} className="assistant-photo" src={src} alt={alt || "photo"} loading="lazy" />;
+        return <img key={key} className="admin-assistant-photo" src={src} alt={alt || "photo"} loading="lazy" />;
       }
       // Untrusted host: link to it rather than loading it inline.
       return (

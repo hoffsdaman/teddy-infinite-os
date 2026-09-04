@@ -73,7 +73,7 @@ export default async function IdeaDetailPage({ params }: { params: { id: string 
             {aiHtml ? (
               <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
                 <h2 className="admin-card-title">The learning</h2>
-                <div className="idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
+                <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
               </div>
             ) : null}
             <div className="admin-card" style={{ padding: "22px 24px" }}>
@@ -124,7 +124,7 @@ export default async function IdeaDetailPage({ params }: { params: { id: string 
                 <p className="admin-page-sub" style={{ marginTop: 0 }}>
                   {`Written from ${idea.submitterName}'s 5D answers. It's in the company backlog.`}
                 </p>
-                <div className="idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
+                <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
               </div>
             ) : (
               <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>

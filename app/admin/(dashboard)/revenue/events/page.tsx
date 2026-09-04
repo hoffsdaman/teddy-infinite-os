@@ -207,7 +207,7 @@ export default async function EventsPage() {
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Total Collected" value={formatCents(totalCollected, "usd")} sub="USD · registered+" />
         <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth, "usd")} sub="USD · registered+" />
         <MetricCard label="Open events" value={openEvents} sub={`of ${activeRows.length} scheduled`} />

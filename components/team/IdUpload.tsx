@@ -50,17 +50,17 @@ export function IdUpload({
     <div className="team-id-slot">
       <button
         type="button"
-        className={`team-id-drop${present ? " is-present" : ""}`}
+        className={`admin-team-id-drop${present ? " is-present" : ""}`}
         onClick={() => inputRef.current?.click()}
         aria-label={present ? `Replace ${label}` : `Upload ${label}`}
       >
         {present ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={`/team/profile/id-image/${side}?v=${bust}`} alt={label} className="team-id-thumb" />
+          <img src={`/team/profile/id-image/${side}?v=${bust}`} alt={label} className="admin-team-id-thumb" />
         ) : (
-          <span className="team-id-ico" aria-hidden>⬆</span>
+          <span className="admin-team-id-ico" aria-hidden>⬆</span>
         )}
-        <span className="team-id-label">
+        <span className="admin-team-id-label">
           {pending ? "Uploading…" : present ? `${label} · replace` : `Add ${label.toLowerCase()}`}
         </span>
       </button>
@@ -71,7 +71,7 @@ export function IdUpload({
         hidden
         onChange={onPick}
       />
-      {error && <span className="team-avatar-err">{error}</span>}
+      {error && <span className="admin-team-avatar-err">{error}</span>}
     </div>
   );
 }

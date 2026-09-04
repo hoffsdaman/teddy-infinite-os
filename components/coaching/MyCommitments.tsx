@@ -59,7 +59,7 @@ export function MyCommitments({
         }}
       />
 
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <input
           className="admin-input"
           placeholder="Commit to something…"

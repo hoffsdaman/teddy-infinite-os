@@ -38,21 +38,21 @@ export function GalleryBrowser({
         </div>
       )}
 
-      <div className="gallery-masonry">
+      <div className="admin-gallery-masonry">
         {shown.map((p) => (
-          <div key={p.id} className="gallery-tile">
-            <a className="gallery-tile-media" href={p.image_url} target="_blank" rel="noreferrer">
+          <div key={p.id} className="admin-gallery-tile">
+            <a className="admin-gallery-tile-media" href={p.image_url} target="_blank" rel="noreferrer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={p.image_url} alt={p.caption || "Team photo"} loading="lazy" decoding="async" />
               {(p.caption || p.taken_on) && (
-                <span className="gallery-tile-cap">
+                <span className="admin-gallery-tile-cap">
                   {p.caption}
                   {p.caption && p.taken_on ? " · " : ""}
                   {p.taken_on ? formatDate(p.taken_on) : ""}
                 </span>
               )}
             </a>
-            <div className="gallery-tile-tags">
+            <div className="admin-gallery-tile-tags">
               <PhotoTagPicker
                 photoId={p.id}
                 tags={p.people ?? []}

@@ -374,7 +374,7 @@ export function CampaignHub({
 
       {/* Starting point: draft every asset from the brand's profile. */}
       <section className="admin-card admin-section-card">
-        <div className="mcr-section-head">
+        <div className="admin-campaign-section-head">
           <div>
             <div className="admin-card-title">Draft the assets</div>
             <p className="admin-page-sub" style={{ marginTop: 4, maxWidth: 640 }}>
@@ -454,7 +454,7 @@ export function CampaignHub({
                 </div>
               </div>
             ) : idea.trim() ? (
-              <p className="mcr-campaign-idea" style={{ marginTop: 12 }}>{idea}</p>
+              <p className="admin-campaign-campaign-idea" style={{ marginTop: 12 }}>{idea}</p>
             ) : (
               <div className="admin-empty" style={{ marginTop: 12 }}>
                 No idea written yet. Click Edit to pitch it.
@@ -499,7 +499,7 @@ export function CampaignHub({
 
         {tab === "seo" && (
           <section className="admin-card admin-section-card">
-            <div className="mcr-section-head">
+            <div className="admin-campaign-section-head">
               <div>
                 <div className="admin-card-title">SEO / GEO plan</div>
                 <p className="admin-page-sub" style={{ marginTop: 4, maxWidth: 640 }}>
@@ -584,7 +584,7 @@ function AssetsByChannel({
           {entries.length} asset{entries.length === 1 ? "" : "s"} across {channelCount} channel
           {channelCount === 1 ? "" : "s"}.
         </div>
-        <div className="mcr-toolbar-actions">
+        <div className="admin-campaign-toolbar-actions">
           <div className="admin-viewtoggle" role="group" aria-label="Asset view">
             <button type="button" className={view === "card" ? "is-active" : ""} onClick={() => pickView("card")} aria-pressed={view === "card"}>
               Cards
@@ -632,12 +632,12 @@ function AssetsByChannel({
       {entries.length === 0 ? (
         <div className="admin-empty">No assets yet. Use “Draft all assets with AI” above, or add one manually.</div>
       ) : view === "card" ? (
-        <div className="mcr-lanes">
+        <div className="admin-campaign-lanes">
           {CHANNELS.map((ch) => {
             const lane = entries.filter((a) => a.channel === ch.id);
             return (
-              <div key={ch.id} className="admin-card mcr-lane">
-                <div className="mcr-lane-head">
+              <div key={ch.id} className="admin-card admin-campaign-lane">
+                <div className="admin-campaign-lane-head">
                   <span className="admin-chip">{ch.label}</span>
                   <span className="admin-cell-muted">{lane.length}</span>
                 </div>
@@ -647,25 +647,25 @@ function AssetsByChannel({
                   lane.map((a) => (
                     <Link
                       key={a.id}
-                      className="mcr-asset"
+                      className="admin-campaign-asset"
                       href={`/admin/revenue/marketing/campaigns/${campaignId}/assets/${a.id}`}
                     >
                       {a.imageUrl ? (
-                        <span className="mcr-asset-cover">
+                        <span className="admin-campaign-asset-cover">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={a.imageUrl} alt="" loading="lazy" />
                         </span>
                       ) : (
-                        <span className="mcr-asset-cover mcr-asset-cover--empty">No image</span>
+                        <span className="admin-campaign-asset-cover admin-campaign-asset-cover--empty">No image</span>
                       )}
-                      <span className="mcr-asset-title">{a.title}</span>
-                      <span className="mcr-asset-foot">
+                      <span className="admin-campaign-asset-title">{a.title}</span>
+                      <span className="admin-campaign-asset-foot">
                         {a.channel === "email" && a.broadcastId ? (
                           <span className="admin-chip admin-chip--accent">Broadcast</span>
                         ) : (
                           <Badge tone={statusTone(a.status)}>{STATUS_LABEL[a.status]}</Badge>
                         )}
-                        <span className="mcr-asset-date">
+                        <span className="admin-campaign-asset-date">
                           {a.publishDate ? `Publishes ${fmtDate(a.publishDate)}` : "No date"}
                         </span>
                       </span>
@@ -738,9 +738,9 @@ function AssetsList({ campaignId, entries }: { campaignId: string; entries: Cale
                 <td>
                   {a.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img className="mcr-asset-thumb" src={a.imageUrl} alt="" loading="lazy" />
+                    <img className="admin-campaign-asset-thumb" src={a.imageUrl} alt="" loading="lazy" />
                   ) : (
-                    <span className="mcr-asset-thumb" aria-hidden />
+                    <span className="admin-campaign-asset-thumb" aria-hidden />
                   )}
                 </td>
                 <td className="admin-cell-strong">{a.title}</td>
@@ -766,14 +766,14 @@ function ReportPanel({ report }: { report: CampaignReport }) {
   const openRate = report.delivered > 0 ? `${Math.round((report.opened / report.delivered) * 100)}%` : "—";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      <div className="mp-kpi-grid">
+      <div className="admin-kpi-grid">
         <MetricCard label="Assets live" value={String(report.assetsLive)} sub={`of ${report.assetsTotal} planned`} />
         <MetricCard label="Emails delivered" value={report.delivered.toLocaleString()} sub={`${report.broadcasts.length} broadcast${report.broadcasts.length === 1 ? "" : "s"}`} />
         <MetricCard label="Open rate" value={openRate} sub={`${report.opened.toLocaleString()} opened`} />
         <MetricCard label="Clicks" value={report.clicked.toLocaleString()} sub="link clicks" />
       </div>
 
-      <div className="mcr-report-split">
+      <div className="admin-campaign-report-split">
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Email (Broadcasts)</div>
           {report.broadcasts.length === 0 ? (
@@ -781,7 +781,7 @@ function ReportPanel({ report }: { report: CampaignReport }) {
           ) : (
             <div style={{ marginTop: 10 }}>
               {report.broadcasts.map((b) => (
-                <div key={b.id} className="mcr-report-row">
+                <div key={b.id} className="admin-campaign-report-row">
                   <span style={{ flex: 1, fontSize: 13 }}>{b.title}</span>
                   <span className="admin-cell-mono" style={{ fontSize: 12 }}>
                     {b.sent > 0 ? `${b.sent.toLocaleString()} sent · ${b.openRate ?? "—"}% open` : b.status ?? "draft"}
@@ -801,7 +801,7 @@ function ReportPanel({ report }: { report: CampaignReport }) {
               {report.content
                 .filter((c) => c.channel !== "email")
                 .map((c) => (
-                  <div key={c.channel} className="mcr-report-row">
+                  <div key={c.channel} className="admin-campaign-report-row">
                     <span style={{ flex: 1, fontSize: 13, textTransform: "capitalize" }}>{c.channel}</span>
                     <span className="admin-cell-mono" style={{ fontSize: 12 }}>
                       {c.published} / {c.total} published

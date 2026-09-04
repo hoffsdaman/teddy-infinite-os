@@ -90,7 +90,7 @@ export default async function PortalTeamPage() {
         <div
           style={{
             display: "grid",
-            // auto-fit (not the shared .mp-kpi-grid's auto-fill) so these
+            // auto-fit (not the shared .admin-kpi-grid's auto-fill) so these
             // profile cards share the full row width when there are fewer
             // than would fit at the minimum — auto-fill instead leaves empty
             // trailing tracks and pins every card to the 212px floor, which
