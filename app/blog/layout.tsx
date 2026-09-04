@@ -1,3 +1,4 @@
+import './blog.css'
 import type { Metadata } from 'next'
 
 const title = 'Blog | AI Strategy, Agents & Leadership Insights | Edge8'
