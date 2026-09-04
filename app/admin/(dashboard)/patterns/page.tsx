@@ -470,6 +470,18 @@ export default function PatternsPage() {
             <div className="admin-empty">No results match these filters.</div>
           </div>
         </Section>
+        {/* ─── Core record components ─────────────── */}
+        <Section title="Core record components" sub="Classes added while moving boards, sprints, client hubs and contacts off inline styles. Data-driven widths stay inline with a layout-ok comment.">
+          <div className="u-stack u-gap-3">
+            <div className="admin-meter admin-meter--thin"><div className="admin-meter-fill" style={{ width: "62%" }} /* layout-ok: demo value */ /></div>
+            <div className="admin-callout--ok">Sprint closed — 14 of 16 cards delivered. <span className="u-strong">admin-callout--ok</span></div>
+            <div className="admin-row-divided u-wrap"><span className="admin-cell-strong">Divided row</span><span className="admin-cell-muted u-ml-auto u-sm u-help" title="Hover for help">admin-row-divided · u-help</span></div>
+            <div className="admin-divider-row"><span className="u-done">A done subtask (u-done)</span> <span className="admin-cell-muted admin-sprint-num">12 HT</span></div>
+            <div className="admin-num-xl">42 <span className="admin-cell-muted u-md u-strong">/ 60 delivered</span></div>
+            <div className="admin-text-block">admin-text-block keeps multi-line notes readable:{"\n"}second line preserved.</div>
+          </div>
+        </Section>
+
       </div>
     </div>
   );

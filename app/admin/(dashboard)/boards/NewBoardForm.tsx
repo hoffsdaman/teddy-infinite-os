@@ -34,7 +34,7 @@ export function NewBoardForm({
   }
 
   return (
-    <div className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
+    <div className="admin-card admin-section-card u-mb-4">
       <div className="admin-form">
         <div className="admin-field">
           <label className="admin-label">Board name</label>
@@ -59,7 +59,7 @@ export function NewBoardForm({
           <p className="admin-hint">A client board is read-only in that client&apos;s portal (internal cards hidden).</p>
         </div>
         {error && <div className="admin-alert admin-alert--err">{error}</div>}
-        <div className="admin-form-actions" style={{ display: "flex", gap: 8 }}>
+        <div className="admin-form-actions u-row">
           <button className="admin-btn admin-btn--primary" onClick={submit} disabled={saving}>
             {saving ? "Creating…" : "Create board"}
           </button>

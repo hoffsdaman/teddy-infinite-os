@@ -152,7 +152,7 @@ export default async function ProgramDetailPage({
             <Empty text="No repo connected. Delivery tracking starts once this program is linked to a GitHub repo." />
           ) : (
             <>
-              <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+              <div className="admin-kpi-grid u-mb-4">
                 <MetricCard label="Delivered hrs (total)" value={fmtHours(detail.deliveredHours)} />
                 <MetricCard label="AI tokens (total)" value={detail.aiTokens.toLocaleString()} />
                 <MetricCard
@@ -237,11 +237,11 @@ export default async function ProgramDetailPage({
         sub={detail.githubRepo ?? undefined}
         action={
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>{/* layout-ok: mirrors the company 360 PageHead action stack verbatim */}
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>{/* layout-ok: mirrors the company 360 badge row verbatim */}
+            <span className="u-row u-wrap">{/* layout-ok: mirrors the company 360 badge row verbatim */}
               <Badge tone={STATUS_TONE[detail.status]}>{detail.status}</Badge>
               {detail.githubRepo && <Badge tone="neutral">{detail.githubRepo}</Badge>}
             </span>
-            <span className="admin-cell-muted" style={{ fontSize: 13 }}>
+            <span className="admin-cell-muted u-sm">
               {detail.liveUrl && (
                 <>
                   <a href={detail.liveUrl} target="_blank" rel="noopener noreferrer">Live site</a>
@@ -254,7 +254,7 @@ export default async function ProgramDetailPage({
         }
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Delivered hrs"
           value={hasRepo ? fmtHours(detail.deliveredHours) : "Not tracked"}

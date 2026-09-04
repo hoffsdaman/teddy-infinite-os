@@ -37,7 +37,7 @@ export function ClientBoardView({
         return (
           <div className="admin-kanban-col" key={col.id}>
             <div className="admin-kanban-col-head">
-              <span className="admin-kanban-col-dot" style={{ background: accents[i] }} />
+              <span className="admin-kanban-col-dot" style={{ background: accents[i] }} /* layout-ok: runtime column accent (token variable) */ />
               <span className="admin-kanban-col-label">{col.name}</span>
               <span className="admin-kanban-col-count">{colCards.length}</span>
             </div>
@@ -61,7 +61,7 @@ export function ClientBoardView({
                         {who}
                       </span>
                       {c.dueDate && (
-                        <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
+                        <span className="admin-kanban-card-sub u-ml-auto">
                           {formatDate(c.dueDate)}
                         </span>
                       )}

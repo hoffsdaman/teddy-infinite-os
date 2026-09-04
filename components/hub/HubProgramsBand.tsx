@@ -33,9 +33,9 @@ export function HubProgramsBand({
     <>
       <div className="admin-hub-band-head">
         <h2 className="admin-card-title">Human Tokens</h2>
-        <span className="admin-cell-muted" style={{ fontSize: 12 }}>Company credit pool, shared by all AI Programs</span>
+        <span className="admin-cell-muted u-sm">Company credit pool, shared by all AI Programs</span>
       </div>
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Bought" value={usage.boughtTokens.toLocaleString()} sub="Purchased + allocated tokens" />
         <MetricCard label="Delivered" value={fmtHours(usage.deliveredHours)} sub="Hours of tracked work" />
         <MetricCard label="Balance" value={fmtHours(usage.balanceTokens)} sub="Bought minus delivered" />
@@ -51,7 +51,7 @@ export function HubProgramsBand({
         <h2 className="admin-card-title">AI Programs</h2>
       </div>
       {programs.length === 0 ? (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+        <div className="admin-card admin-section-card u-mb-5">
           <div className="admin-empty">No AI Programs yet. Created from the client portal or by Edge8.</div>
         </div>
       ) : (
@@ -65,13 +65,13 @@ export function HubProgramsBand({
                 className="admin-card admin-section-card admin-hub-program-card"
               >
                 <div className="admin-hub-program-head">
-                  <span className="admin-cell-strong" style={{ fontSize: 15 }}>{p.name}</span>
+                  <span className="admin-cell-strong u-lg">{p.name}</span>
                   <Badge tone={PROGRAM_STATUS_TONE[p.status]}>{p.status}</Badge>
                 </div>
-                <div className="admin-cell-muted admin-cell-mono" style={{ marginTop: 4, minHeight: 18, fontSize: 12, overflowWrap: "anywhere" }}>
+                <div className="admin-cell-muted admin-cell-mono u-mt-1 u-sm u-break-all">
                   {p.githubRepo ?? "No repo connected"}
                 </div>
-                <div style={{ marginTop: 14 }}>
+                <div className="u-mt-4">
                   <div className="admin-cell-muted admin-hub-program-progressrow">
                     <span>
                       {p.roadmapTotal === 0
@@ -81,10 +81,10 @@ export function HubProgramsBand({
                     {p.roadmapTotal > 0 && <span>{pct}%</span>}
                   </div>
                   <div className="admin-progress">
-                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} />
+                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                   </div>
                 </div>
-                <div className="admin-cell-muted" style={{ marginTop: 12, fontSize: 12 }}>
+                <div className="admin-cell-muted u-mt-3 u-sm">
                   {p.repoId
                     ? `${fmtHours(p.deliveredHours)} hrs delivered · ${p.prsMergedLast7d} PR${p.prsMergedLast7d === 1 ? "" : "s"} merged 7d · `
                     : ""}
