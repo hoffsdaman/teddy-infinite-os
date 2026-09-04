@@ -442,12 +442,12 @@ export function BacklogAdminEditor({
   return (
     <div className="cbe">
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      {err && <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>{err}</div>}
+      {err && <div className="admin-alert admin-alert--err u-mb-3">{err}</div>}
 
       {proposed.length > 0 && (
         <div className="cbe-proposed">
           <h3>Client proposed {proposed.length} item{proposed.length === 1 ? "" : "s"}: review below</h3>
-          <div style={{ fontSize: 13, color: "var(--admin-warn-ink)" }}>
+          <div className="u-warn">
             {proposed.map((p) => p.title).join(" · ")}
           </div>
         </div>

@@ -253,7 +253,7 @@ export function IndividualGoalsEditor({
   const goalRow = (g: CoachingGoal, gi: number) =>
     editingId === g.id ? (
       <div key={g.id} className="admin-edges-kr">
-        <div style={{ padding: "4px 0 10px" }}>
+        <div className="u-pt-1 u-pb-3">
           {goalForm(
             (e) => {
               e.preventDefault();
@@ -284,12 +284,12 @@ export function IndividualGoalsEditor({
         <>
           <div className="admin-edges-kr-row">
             <div className="admin-edges-kr-title">
-              <span style={{ color: "var(--admin-faint)", fontWeight: 750, fontSize: 10, marginRight: 7 }}>
+              <span className="admin-kr-index">
                 G{gi + 1}
               </span>
               {g.title}
               {g.status !== "active" && (
-                <span className={`admin-badge ${badgeTone(g.status)}`} style={{ marginLeft: 7 }}>
+                <span className={`admin-badge ${badgeTone(g.status)} u-ml-2`}>
                   {GOAL_STATUS_LABELS[g.status]}
                 </span>
               )}
@@ -302,7 +302,7 @@ export function IndividualGoalsEditor({
                   <span className="admin-edges-prog-bar">
                     <i
                       className={g.status === "achieved" ? "is-done" : ""}
-                      style={{ width: `${pct ?? 0}%` }}
+                      style={{ width: `${pct ?? 0}%` }} /* layout-ok: data-driven width */
                     />
                   </span>
                   <span className="admin-edges-prog-val">{val}</span>
@@ -310,7 +310,7 @@ export function IndividualGoalsEditor({
               ) : null;
             })()}
           </div>
-          <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+          <div className="admin-cell-muted u-sm">
             {g.ladder ? `⇗ ${g.ladder.label}` : "No ladder yet"}
           </div>
         </>
@@ -318,7 +318,7 @@ export function IndividualGoalsEditor({
     );
 
   const memberCard = (m: AdminMemberGoals) => (
-    <div key={m.teamMemberId} className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
+    <div key={m.teamMemberId} className="admin-card u-mb-4 u-p-0 u-clip">
       <div className="admin-edges-ohead">
         <h3>{m.name}</h3>
         <span className="admin-edges-ohead-note">
@@ -330,14 +330,14 @@ export function IndividualGoalsEditor({
       {m.goals.map((g, gi) => goalRow(g, gi))}
 
       {addingFor === m.teamMemberId ? (
-        <div style={{ padding: 14, borderTop: "1px solid var(--admin-line)" }}>
+        <div className="u-p-4 admin-divider-top">
           {goalForm((e) => {
             e.preventDefault();
             run(() => addMemberGoal(m.teamMemberId, inputOf()), "Goal added.");
           }, "Add goal")}
         </div>
       ) : (
-        <div className="admin-form-actions" style={{ padding: 12, borderTop: "1px solid var(--admin-line)" }}>
+        <div className="admin-form-actions u-p-3 admin-divider-top">
           <button className="admin-btn admin-btn--sm" onClick={() => openAdd(m.teamMemberId)} disabled={pending}>
             + Goal
           </button>
@@ -353,7 +353,7 @@ export function IndividualGoalsEditor({
       {withGoals.map(memberCard)}
 
       {withoutGoals.length > 0 && (
-        <div className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
+        <div className="admin-card u-mb-4 u-p-0 u-clip">
           <div className="admin-edges-ohead">
             <h3>No active goal yet</h3>
             <span className="admin-edges-ohead-note">
@@ -363,7 +363,7 @@ export function IndividualGoalsEditor({
           {withoutGoals.map((m) => (
             <div key={m.teamMemberId} className="admin-edges-kr">
               {addingFor === m.teamMemberId ? (
-                <div style={{ padding: "4px 0 10px" }}>
+                <div className="u-pt-1 u-pb-3">
                   {goalForm((e) => {
                     e.preventDefault();
                     run(() => addMemberGoal(m.teamMemberId, inputOf()), "Goal added.");

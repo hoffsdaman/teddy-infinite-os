@@ -67,7 +67,7 @@ export function CrmCommandBar({ kind, id, name, archived, assumeCompanyId, affil
   const listNoun = kind === "company" ? "companies" : "contacts";
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+    <div className="u-row u-wrap u-gap-2">
       {assumeCompanyId && (
         <button type="button" className="admin-btn admin-btn--sm" disabled={assuming} onClick={assume}>
           {assuming ? "Opening…" : "Assume"}
@@ -76,7 +76,7 @@ export function CrmCommandBar({ kind, id, name, archived, assumeCompanyId, affil
 
       {kind === "company" && affiliate != null && (
         affiliate.active ? (
-          <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+          <span className="u-row">
             <Badge tone="ok">Affiliate{affiliate.code ? ` · ${affiliate.code}` : ""}</Badge>
             <button type="button" className="admin-btn admin-btn--sm" disabled={busy} onClick={() => run(() => deactivateCompanyAffiliate(id))}>
               Remove affiliate
@@ -106,7 +106,7 @@ export function CrmCommandBar({ kind, id, name, archived, assumeCompanyId, affil
       )}
 
       {error && (
-        <span className="admin-cell-muted" style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>
+        <span className="u-err u-sm">
           {error}
         </span>
       )}

@@ -47,7 +47,7 @@ function RoutineTable({ rows }: { rows: Routine[] }) {
         <table className="admin-table">
           <thead>
             <tr>
-              <th style={{ minWidth: 260 }}>Routine</th>
+              <th className="admin-th--xl">Routine</th>
               <th>Schedule</th>
               <th>Content</th>
               <th>Skill / route</th>
@@ -59,17 +59,17 @@ function RoutineTable({ rows }: { rows: Routine[] }) {
             {rows.map((r) => (
               <tr key={r.id}>
                 <td>
-                  <div style={{ fontWeight: 600, color: "var(--admin-ink)" }}>{r.name}</div>
-                  <div className="admin-cell-muted" style={{ marginTop: 2, maxWidth: 420 }}>
+                  <div className="u-strong u-ink">{r.name}</div>
+                  <div className="admin-cell-muted u-mt-1 u-max-sm">
                     {r.description}
                   </div>
                 </td>
-                <td style={{ whiteSpace: "nowrap" }}>{r.schedule}</td>
+                <td className="u-nowrap">{r.schedule}</td>
                 <td>
                   <ChipList items={r.content} />
                 </td>
                 <td>
-                  <code style={{ fontSize: 12 }}>{r.skill}</code>
+                  <code className="u-sm">{r.skill}</code>
                 </td>
                 <td>
                   <ChipList items={r.apps} />
@@ -99,7 +99,7 @@ export default async function AgentsPage() {
       />
 
       {violations.length > 0 && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 16 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           <strong>
             {violations.length} {violations.length === 1 ? "routine is" : "routines are"} running on a
             laptop.
@@ -109,7 +109,7 @@ export default async function AgentsPage() {
         </div>
       )}
 
-      <div className="admin-kpi-grid admin-kpi-grid--2up" style={{ marginBottom: 24 }}>
+      <div className="admin-kpi-grid admin-kpi-grid--2up u-mb-5">
         <div className="admin-kpi">
           <div className="admin-kpi-label">Total routines</div>
           <div className="admin-kpi-val">{counts.total}</div>
@@ -127,8 +127,7 @@ export default async function AgentsPage() {
         <div className="admin-kpi">
           <div className="admin-kpi-label">On laptops</div>
           <div
-            className="admin-kpi-val"
-            style={{ color: counts.laptop > 0 ? "var(--admin-err-ink)" : "var(--admin-ok-ink)" }}
+            className={`admin-kpi-val ${counts.laptop > 0 ? "u-err" : "u-ok"}`}
           >
             {counts.laptop}
           </div>
@@ -136,8 +135,8 @@ export default async function AgentsPage() {
         </div>
       </div>
 
-      <section style={{ marginBottom: 32 }}>
-        <div className="admin-card-head" style={{ marginBottom: 12 }}>
+      <section className="u-mb-6">
+        <div className="admin-card-head u-mb-3">
           <h2 className="admin-card-title">
             Vercel <HostBadge host="vercel" label="Vercel" />
           </h2>
@@ -147,7 +146,7 @@ export default async function AgentsPage() {
       </section>
 
       <section>
-        <div className="admin-card-head" style={{ marginBottom: 12 }}>
+        <div className="admin-card-head u-mb-3">
           <h2 className="admin-card-title">
             Local <HostBadge host="laptop" label="Laptop" />
           </h2>

@@ -35,7 +35,7 @@ export function BarChart({
   const fmt = formatValue ?? ((n: number) => String(n));
   const max = Math.max(...data.map((d) => d.value));
   if (max <= 0) {
-    return <div className="admin-empty" style={{ padding: "32px 16px" }}>{emptyText}</div>;
+    return <div className="admin-empty admin-empty--tall">{emptyText}</div>;
   }
 
   const rowH = stacked ? STACK_ROW_H : ROW_H;
@@ -45,14 +45,13 @@ export function BarChart({
   const height = data.length * rowH;
   return (
     <svg
-      className="admin-chart"
+      className={`admin-chart admin-chart-bars${stacked ? " admin-chart-bars--stacked" : ""}`}
       viewBox={`0 0 ${chartW} ${height}`}
       role="img"
       aria-label={ariaLabel}
       // Cap the inline variant near its native CHART_W (320) so a wide container
       // never upscales the SVG and blows its 12px text up to ~34px; the stacked
       // variant keeps its own wider cap.
-      style={{ width: "100%", height: "auto", maxWidth: stacked ? 840 : 360 }}
     >
       <title>{ariaLabel}</title>
       {data.map((d, i) => {
@@ -82,7 +81,7 @@ export function BarChart({
               y={barY + 12}
               fontSize={12}
               fill="var(--admin-ink)"
-              style={{ fontVariantNumeric: "tabular-nums" }}
+              className="u-tabular"
             >
               {fmt(d.value)}
             </text>

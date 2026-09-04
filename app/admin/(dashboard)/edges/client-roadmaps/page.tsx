@@ -97,9 +97,9 @@ export default async function ClientBacklogPage({ searchParams }: { searchParams
           liveCardItemIds={liveCardItemIds}
           programs={programs}
         />
-        <section className="admin-card admin-section-card" style={{ marginTop: 18 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 4 }}>Documents</h2>
-          <p className="admin-page-sub" style={{ margin: "0 0 12px", fontSize: 13 }}>
+        <section className="admin-card admin-section-card u-mt-4">
+          <h2 className="admin-card-title u-mb-1">Documents</h2>
+          <p className="admin-page-sub u-m-0 u-mb-3">
             Shared with {selected.name}: everything here is visible in their portal and to the assigned team.
           </p>
           <CompanyDocuments companyId={selected.id} documents={documents} programs={programs} />
@@ -143,13 +143,13 @@ export default async function ClientBacklogPage({ searchParams }: { searchParams
         sub="Each client's AI Program roadmap: what they see in their portal. Open one to shape its groups, edit items, set priorities, and review their proposals."
       />
 
-      <div className="admin-card" style={{ padding: 0, overflow: "hidden" }}>
+      <div className="admin-card u-p-0 u-clip">
         <table className="admin-table">
           <thead>
             <tr>
               <th>Client</th>
-              <th style={{ width: 110, textAlign: "right" }}>Items</th>
-              <th style={{ width: 200 }}>To review</th>
+              <th className="admin-th--sm u-right">Items</th>
+              <th className="admin-th--lg">To review</th>
             </tr>
           </thead>
           <tbody>
@@ -162,7 +162,7 @@ export default async function ClientBacklogPage({ searchParams }: { searchParams
                       {c.name}
                     </Link>
                   </td>
-                  <td style={{ textAlign: "right" }}>
+                  <td className="u-right">
                     {counts ? counts.total : <span className="admin-cell-muted">—</span>}
                   </td>
                   <td>
@@ -181,7 +181,7 @@ export default async function ClientBacklogPage({ searchParams }: { searchParams
             })}
             {clients.length === 0 && (
               <tr>
-                <td colSpan={3} className="admin-cell-muted" style={{ padding: 18 }}>
+                <td colSpan={3} className="admin-cell-muted u-p-4">
                   No client companies found.
                 </td>
               </tr>

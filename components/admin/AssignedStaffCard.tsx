@@ -87,7 +87,7 @@ export function AssignedStaffCard({
       {assignments.length === 0 ? (
         <div className="admin-empty">No dedicated staff assigned yet.</div>
       ) : (
-        <div className="admin-list" style={{ marginBottom: 12 }}>
+        <div className="admin-list u-mb-3">
           {assignments.map((a) => (
             <div className="admin-list-row admin-staff-assign-row" key={a.id}>
               <div className="admin-list-main">
@@ -102,11 +102,10 @@ export function AssignedStaffCard({
                 </div>
               </div>
               <div className="admin-list-aside admin-staff-assign-actions">
-                <label className="admin-cell-muted" style={{ fontSize: 12 }}>
+                <label className="admin-cell-muted u-sm">
                   Approves leave
                   <select
-                    className="admin-input"
-                    style={{ marginLeft: 6, width: "auto", fontSize: 12, padding: "4px 8px" }}
+                    className="admin-select admin-select--sm u-ml-2"
                     value={a.client_manager_person_id ?? ""}
                     disabled={pending}
                     onChange={(e) => setClientManager(a.id, e.target.value)}
@@ -170,11 +169,11 @@ export function AssignedStaffCard({
           </select>
         </div>
         <div className="admin-field">
-          <label className="admin-label" style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <label className="admin-label admin-label--check">
             <input type="checkbox" checked={clientVisible} onChange={(e) => setClientVisible(e.target.checked)} />
             Show on the client&apos;s team roster
           </label>
-          <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 2 }}>
+          <div className="admin-cell-muted u-sm u-mt-1">
             Uncheck for internal-only staff who should see the account but not appear to the client.
           </div>
         </div>

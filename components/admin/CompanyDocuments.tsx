@@ -138,13 +138,12 @@ export function CompanyDocuments({
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+      <div className="u-row u-gap-3 u-wrap u-mb-3">
         {programs.length > 0 && (
           <select
-            className="admin-select"
+            className="admin-select u-max-5"
             value={programId}
             onChange={(e) => setProgramId(e.target.value)}
-            style={{ maxWidth: 320 }}
             aria-label="Tag uploads to an AI Program (optional)"
           >
             <option value="">No program tag</option>
@@ -160,14 +159,14 @@ export function CompanyDocuments({
       </div>
 
       {queue.length > 0 && (
-        <div className="admin-list" style={{ marginBottom: 12 }}>
+        <div className="admin-list u-mb-3">
           {queue.map((it) => (
             <div className="admin-list-row" key={it.id}>
               <div className="admin-list-main">
                 <div className="admin-list-title">{it.file.name}</div>
                 <div className="admin-list-sub">
                   {it.status === "error" ? (
-                    <span style={{ color: "var(--admin-err-ink)" }}>{it.error}</span>
+                    <span className="u-err">{it.error}</span>
                   ) : it.status === "uploading" ? (
                     `Uploading… ${Math.round(it.progress * 100)}%`
                   ) : (
@@ -217,7 +216,7 @@ export function CompanyDocuments({
           ))}
         </div>
       )}
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
     </div>
   );
 }

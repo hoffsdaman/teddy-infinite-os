@@ -85,16 +85,16 @@ function TicketCard({
   }
 
   return (
-    <div className="admin-card admin-section-card" style={{ display: "grid", gap: 10 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+    <div className="admin-card admin-section-card u-stack u-gap-3">
+      <div className="u-row-top u-gap-3 u-between">
+        <div className="u-min-0">
+          <div className="u-row u-wrap">
             {ticket.ticketNo && <span className="admin-cell-mono">{ticket.ticketNo}</span>}
             <Badge tone={columnTone(col)}>{col?.name ?? "—"}</Badge>
             {ticket.channel && <Badge>{CHANNEL_LABEL[ticket.channel] ?? ticket.channel}</Badge>}
             {ticket.orderNumber && <Badge tone="info">Order {ticket.orderNumber}</Badge>}
           </div>
-          <div className="admin-list-title" style={{ marginTop: 4 }}>
+          <div className="admin-list-title u-mt-1">
             {ticket.subject}
           </div>
           <div className="admin-list-sub">
@@ -108,7 +108,7 @@ function TicketCard({
             {ticket.customerEmail ? ` · ${ticket.customerEmail}` : ""}
           </div>
         </div>
-        <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+        <div className="u-right u-nowrap">
           <div className="admin-cell-muted" title={ticket.createdAt}>
             Arrived {timeAgo(ticket.createdAt)}
           </div>
@@ -121,13 +121,13 @@ function TicketCard({
       </div>
 
       {ticket.description && (
-        <p className="admin-list-sub" style={{ whiteSpace: "pre-wrap", margin: 0 }}>
+        <p className="admin-list-sub u-m-0 u-prewrap">
           {ticket.description}
         </p>
       )}
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <label className="admin-label" htmlFor={`status-${ticket.id}`} style={{ margin: 0 }}>
+      <div className="u-row u-wrap">
+        <label className="admin-label u-m-0" htmlFor={`status-${ticket.id}`}>
           Status
         </label>
         <select
@@ -151,7 +151,7 @@ function TicketCard({
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
 
       {expanded && (
-        <div style={{ display: "grid", gap: 8 }}>
+        <div className="u-stack">
           {ticket.comments.length === 0 ? (
             <div className="admin-empty">No notes yet. Add the first below.</div>
           ) : (
@@ -161,7 +161,7 @@ function TicketCard({
               ))}
             </div>
           )}
-          <form onSubmit={send} style={{ display: "grid", gap: 8 }}>
+          <form onSubmit={send} className="u-stack">
             <textarea
               className="admin-input"
               rows={3}
@@ -169,13 +169,12 @@ function TicketCard({
               placeholder={emailCustomer ? "Write the email to the customer…" : "Add an internal note…"}
               onChange={(e) => setReply(e.target.value)}
             />
-            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+            <div className="u-row u-wrap">
               <button type="submit" className="admin-btn admin-btn--primary" disabled={busy || !reply.trim()}>
                 {busy ? "Saving…" : emailCustomer ? "Send email" : "Add note"}
               </button>
               <label
-                className="admin-cell-muted"
-                style={{ display: "inline-flex", gap: 6, alignItems: "center", cursor: ticket.customerEmail ? "pointer" : "not-allowed" }}
+                className={`admin-cell-muted u-row u-gap-1 ${ticket.customerEmail ? "u-pointer" : "u-not-allowed"}`}
                 title={ticket.customerEmail ? `Email ${ticket.customerEmail}` : "No customer email on this ticket"}
               >
                 <input
@@ -186,7 +185,7 @@ function TicketCard({
                 />
                 Email the customer
               </label>
-              <span className="admin-cell-muted" style={{ marginLeft: "auto" }}>
+              <span className="admin-cell-muted u-ml-auto">
                 Commenting as {currentUserLabel}
               </span>
             </div>
@@ -205,32 +204,20 @@ function CommentRow({ c, currentUserLabel }: { c: SupportComment; currentUserLab
   const initial = (c.author.trim()[0] || "?").toUpperCase();
   return (
     <div className="admin-list-row">
-      <div className="admin-list-main" style={{ display: "flex", gap: 10 }}>
+      <div className="admin-list-main u-row u-gap-3">
         <span
           aria-hidden
-          style={{
-            flex: "0 0 auto",
-            width: 26,
-            height: 26,
-            borderRadius: "50%",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 12,
-            fontWeight: 700,
-            background: "var(--admin-info-bg)",
-            color: "var(--admin-info-ink)",
-          }}
+          className="admin-avatar-xs"
         >
           {initial}
         </span>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-            <strong style={{ fontSize: 13 }}>{c.author}</strong>
+        <div className="u-min-0">
+          <div className="u-row u-wrap">
+            <strong>{c.author}</strong>
             {mine && <Badge tone="info">you</Badge>}
             <span className="admin-cell-muted">· {timeAgo(c.createdAt)}</span>
           </div>
-          <div className="admin-list-sub" style={{ whiteSpace: "pre-wrap" }}>
+          <div className="admin-list-sub u-prewrap">
             {c.body}
           </div>
         </div>
@@ -315,21 +302,15 @@ export function SupportBoard({
   };
 
   const toolbar = (
-    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
-      <div style={{ display: "inline-flex", border: "1px solid var(--admin-line)", borderRadius: 8, overflow: "hidden" }}>
+    <div className="u-row u-end u-mb-3">
+      <div className="u-row u-clip admin-box">
         {(["board", "list"] as View[]).map((v) => (
           <button
             key={v}
             type="button"
             onClick={() => chooseView(v)}
-            className="admin-btn"
+            className={`admin-btn admin-seg-btn${view === v ? " is-on" : ""}`}
             aria-pressed={view === v}
-            style={{
-              border: "none",
-              borderRadius: 0,
-              fontWeight: view === v ? 700 : 400,
-              background: view === v ? "var(--admin-accent-soft)" : "transparent",
-            }}
           >
             {v === "board" ? "▦ Board" : "☰ List"}
           </button>
@@ -352,17 +333,17 @@ export function SupportBoard({
       {toolbar}
       {view === "board" ? (
         // Board (kanban): a column per stage, scrolling horizontally if narrow.
-        <div style={{ display: "flex", gap: 16, overflowX: "auto", paddingBottom: 8, alignItems: "flex-start" }}>
+        <div className="admin-board-scroll">
           {columns.map((col) => {
             const inCol = tickets.filter((t) => t.columnId === col.id);
             return (
-              <section key={col.id} style={{ flex: "0 0 320px", maxWidth: 320, display: "grid", gap: 10 }}>
-                <h2 className="admin-card-title" style={{ display: "flex", gap: 8, alignItems: "center", margin: 0 }}>
+              <section key={col.id} className="admin-board-col">
+                <h2 className="admin-card-title u-row u-m-0">
                   {col.name}
                   <span className="admin-cell-muted">{inCol.length}</span>
                 </h2>
                 {inCol.length === 0 ? (
-                  <div className="admin-empty" style={{ fontSize: 13 }}>
+                  <div className="admin-empty u-sm">
                     —
                   </div>
                 ) : (
@@ -384,7 +365,7 @@ export function SupportBoard({
         </div>
       ) : (
         // List: every ticket, newest first (server order), full width.
-        <div style={{ display: "grid", gap: 10 }}>
+        <div className="u-stack u-gap-3">
           {tickets.map((t) => (
             <TicketCard
               key={t.id}

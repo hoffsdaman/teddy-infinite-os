@@ -87,7 +87,7 @@ export function DataTable<T extends { id?: string | number }>({
         <TableSearch basePath={basePath} searchParams={searchParams} placeholder={searchPlaceholder} />
         {filterBar}
         {renderCards && (
-          <div className="admin-viewtoggle" style={{ marginLeft: "auto" }}>
+          <div className="admin-viewtoggle u-ml-auto">
             <Link
               href={basePath + mergeQuery(searchParams, { view: null })}
               className={view === "list" ? "is-active" : ""}
@@ -189,7 +189,7 @@ export function DataTable<T extends { id?: string | number }>({
               >
                 Prev
               </Link>
-              <span className="admin-pagebtn" aria-disabled style={{ pointerEvents: "none" }}>
+              <span className="admin-pagebtn u-no-events" aria-disabled>
                 {page} / {totalPages}
               </span>
               <Link

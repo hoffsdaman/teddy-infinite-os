@@ -101,7 +101,7 @@ export async function generateIdeaPlan(ideaId: string): Promise<Ok | Err> {
     return await runGeneration(ideaId);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error(`[idea-plan] ${ideaId} failed:`, msg);
+    console.error(`[admin-idea-plan] ${ideaId} failed:`, msg);
     return markFailed(ideaId, msg);
   }
 }
@@ -169,7 +169,7 @@ Turn this into a product plan and classify it into one office.`;
   });
 
   const out = readTextOutput(
-    "idea-plan",
+    "admin-idea-plan",
     MODEL,
     response,
     "The model declined to generate a plan for this idea.",

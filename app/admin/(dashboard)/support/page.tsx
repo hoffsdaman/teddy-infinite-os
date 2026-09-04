@@ -26,11 +26,11 @@ function humanDuration(ms: number): string {
 
 function Metric({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="admin-card admin-section-card" style={{ display: "grid", gap: 2 }}>
-      <span className="admin-label" style={{ margin: 0 }}>
+    <div className="admin-card admin-section-card u-stack u-gap-1">
+      <span className="admin-label u-m-0">
         {label}
       </span>
-      <strong style={{ fontSize: 24, lineHeight: 1.1 }}>{value}</strong>
+      <strong className="admin-stat-value">{value}</strong>
       {sub && <span className="admin-cell-muted">{sub}</span>}
     </div>
   );
@@ -50,7 +50,7 @@ export default async function SupportPage() {
 
       {/* PR6 — passive time-to-resolve metric, never an SLA. */}
       <div
-        style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", marginBottom: 20 }}
+        className="u-grid-auto-stat u-mb-5"
       >
         <Metric label="Open tickets" value={String(metrics.openCount)} />
         <Metric

@@ -126,8 +126,8 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
   return (
     <>
       <div className="admin-gallery-uploadbar">
-        <span className="admin-label" style={{ margin: 0 }}>Tag new uploads as</span>
-        <select className="admin-select" style={{ width: "auto" }} value={uploadCategory} onChange={(e) => setUploadCategory(e.target.value)}>
+        <span className="admin-label u-m-0">Tag new uploads as</span>
+        <select className="admin-select u-w-auto" value={uploadCategory} onChange={(e) => setUploadCategory(e.target.value)}>
           <option value="">Untagged</option>
           {GALLERY_CATEGORIES.map((c) => (
             <option key={c.key} value={c.key}>{c.label}</option>
@@ -168,7 +168,7 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
                   <div className="admin-gallery-bar">
                     <div
                       className={`admin-gallery-bar-fill${it.status === "done" ? " is-done" : ""}`}
-                      style={{ width: `${Math.round(it.progress * 100)}%` }}
+                      style={{ width: `${Math.round(it.progress * 100)}%` }} /* layout-ok: data-driven width */
                     />
                   </div>
                 )}
@@ -179,14 +179,14 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
             </div>
           ))}
           {!uploading && (
-            <button className="admin-btn admin-btn--sm" onClick={clearFinished} style={{ alignSelf: "flex-start" }}>
+            <button className="admin-btn admin-btn--sm u-self-start" onClick={clearFinished}>
               Clear
             </button>
           )}
         </div>
       )}
 
-      <div className="admin-tabs" role="tablist" aria-label="Category" style={{ marginTop: 18 }}>
+      <div className="admin-tabs u-mt-4" role="tablist" aria-label="Category">
         <button type="button" className={`admin-tab${filter === "" ? " is-active" : ""}`} role="tab" aria-selected={filter === ""} onClick={() => setFilter("")}>
           All ({photos.length})
         </button>

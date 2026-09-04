@@ -12,7 +12,7 @@ export function ViewToggle({ views, initial }: { views: ViewDef[]; initial?: str
   const current = views.find((v) => v.key === active) ?? views[0];
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 14 }}>
+      <div className="u-row u-end u-mb-4">
         <div className="admin-viewtoggle" role="tablist">
           {views.map((v) => (
             <button

@@ -46,14 +46,14 @@ export function NewTicketForm() {
   }
 
   return (
-    <form className="admin-card admin-section-card" onSubmit={submit} style={{ display: "grid", gap: 12 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <form className="admin-card admin-section-card u-stack u-gap-3" onSubmit={submit}>
+      <div className="u-row u-wrap u-between">
         <strong>New ticket</strong>
         <button type="button" className="admin-btn" onClick={() => setOpen(false)} disabled={saving}>
           Cancel
         </button>
       </div>
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+      <div className="u-stack u-gap-3 u-grid-2">
         <label className="admin-field">
           <span className="admin-label">Customer email</span>
           <input
@@ -75,7 +75,7 @@ export function NewTicketForm() {
           />
         </label>
       </div>
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "2fr 1fr" }}>
+      <div className="u-grid-2-1">
         <label className="admin-field">
           <span className="admin-label">Subject</span>
           <input

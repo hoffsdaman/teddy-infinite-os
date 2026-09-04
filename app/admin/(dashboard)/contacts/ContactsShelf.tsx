@@ -168,7 +168,7 @@ function ContactShelfBody({ row }: { row: ContactRow }) {
           </dl>
         )}
         {(row.archived_at || row.do_not_contact || row.is_team_member) && (
-          <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 12 }}>
+          <div className="u-row u-wrap u-gap-1 u-mt-3">
             {row.archived_at && <Badge tone="neutral">Archived</Badge>}
             {row.do_not_contact && <Badge tone="err">Do not contact</Badge>}
             {row.is_team_member && <Badge tone="info">Team</Badge>}

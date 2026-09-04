@@ -35,6 +35,7 @@ export function PersonSelect({
   id,
   ariaLabel,
   style,
+  className,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -48,6 +49,7 @@ export function PersonSelect({
   id?: string;
   ariaLabel?: string;
   style?: React.CSSProperties;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -122,7 +124,7 @@ export function PersonSelect({
   return (
     <div
       ref={rootRef}
-      className={`admin-personsel${compact ? " admin-personsel--compact" : ""}`}
+      className={`admin-personsel${compact ? " admin-personsel--compact" : ""}${className ? ` ${className}` : ""}`}
       style={style}
     >
       <button

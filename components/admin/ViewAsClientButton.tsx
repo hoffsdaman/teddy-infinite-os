@@ -19,7 +19,7 @@ export function ViewAsClientButton({ companyId }: { companyId: string }) {
   }
 
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+    <span className="u-row">
       <button className="admin-btn admin-btn--sm" disabled={pending} onClick={handleClick}>
         {pending ? "Opening…" : "View as client"}
       </button>

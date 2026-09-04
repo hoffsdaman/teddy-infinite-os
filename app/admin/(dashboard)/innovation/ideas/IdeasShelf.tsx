@@ -142,11 +142,10 @@ function IdeaShelfBody({ row }: { row: IdeaRow }) {
             </button>
           ) : (
             <select
-              className="admin-select"
+              className="admin-select u-w-auto"
               value={status}
               onChange={(e) => changeStatus(e.target.value)}
               aria-label="Idea status"
-              style={{ width: "auto" }}
             >
               {IDEA_STATUSES.map((s) => (
                 <option key={s} value={s}>
@@ -177,7 +176,7 @@ function IdeaShelfBody({ row }: { row: IdeaRow }) {
           )}
         </dl>
         {msg && (
-          <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`} style={{ marginTop: 10 }}>
+          <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"} u-mt-3`}>
             {msg.text}
           </div>
         )}
@@ -188,9 +187,9 @@ function IdeaShelfBody({ row }: { row: IdeaRow }) {
           {isLearning ? "The learning (as submitted)" : "The idea (their 5D answers)"}
         </div>
         {(isLearning ? LEARNING_SECTIONS : D_SECTIONS).map((s) => (
-          <div key={s.key} style={{ marginBottom: 12 }}>
-            <div className="admin-label" style={{ marginBottom: 2 }}>{s.label}</div>
-            <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{row[s.key]}</div>
+          <div key={s.key} className="u-mb-3">
+            <div className="admin-label u-mb-1">{s.label}</div>
+            <div className="u-prewrap">{row[s.key]}</div>
           </div>
         ))}
       </section>
@@ -205,7 +204,7 @@ function IdeaShelfBody({ row }: { row: IdeaRow }) {
         {row.planHtml ? (
           <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: row.planHtml }} />
         ) : (
-          <div className="admin-cell-muted" style={{ fontSize: 13 }}>
+          <div className="admin-cell-muted u-sm">
             {row.ai_error ? `Generation failed: ${row.ai_error}` : "No plan generated yet."}
           </div>
         )}

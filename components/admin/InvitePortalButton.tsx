@@ -41,7 +41,7 @@ export function InvitePortalButton({
 
   if (status === "none") {
     return (
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+      <span className="u-row">
         <button
           className="admin-btn admin-btn--sm"
           disabled={pending}
@@ -75,7 +75,7 @@ export function InvitePortalButton({
   // -signed-in) state so an admin can nudge them without opening the detail.
   if (!full) {
     return (
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <span className="u-row u-wrap">
         {badge}
         {status === "invited" && resend}
         {msg && <span className="admin-cell-muted">{msg}</span>}
@@ -84,7 +84,7 @@ export function InvitePortalButton({
   }
 
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+    <span className="u-row u-wrap">
       {badge}
       {resend}
       <button

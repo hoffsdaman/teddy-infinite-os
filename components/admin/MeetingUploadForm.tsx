@@ -46,7 +46,7 @@ export function MeetingUploadForm({
   }
 
   return (
-    <form ref={formRef} className="admin-form" onSubmit={handleSubmit} style={{ marginBottom: 16 }}>
+    <form ref={formRef} className="admin-form u-mb-4" onSubmit={handleSubmit}>
       {msg && (
         <div className={`admin-alert ${msg.tone === "ok" ? "admin-alert--ok" : "admin-alert--err"}`}>
           {msg.text}
@@ -69,25 +69,25 @@ export function MeetingUploadForm({
         </select>
       </div>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <div className="admin-field" style={{ flex: "1 1 160px" }}>
+      <div className="u-row u-wrap">
+        <div className="admin-field u-flex-1">
           <label className="admin-label" htmlFor="mn-date">Meeting date</label>
           <input id="mn-date" name="meetingDate" type="date" className="admin-input" />
-          <p className="admin-cell-muted" style={{ marginTop: 4 }}>Optional — AI detects it from the transcript.</p>
+          <p className="admin-cell-muted u-mt-1">Optional — AI detects it from the transcript.</p>
         </div>
-        <div className="admin-field" style={{ flex: "2 1 220px" }}>
+        <div className="admin-field u-flex-2">
           <label className="admin-label" htmlFor="mn-title">Title</label>
           <input id="mn-title" name="title" type="text" className="admin-input" placeholder="Optional — AI will generate" />
         </div>
       </div>
 
       <div className="admin-field">
-        <div style={{ display: "inline-flex", gap: 16, marginBottom: 8 }}>
-          <label style={{ display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+        <div className="u-row u-gap-4 u-mb-2">
+          <label className="admin-label--check">
             <input type="radio" name="mn-mode" checked={mode === "paste"} onChange={() => setMode("paste")} />
             Paste text
           </label>
-          <label style={{ display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+          <label className="admin-label--check">
             <input type="radio" name="mn-mode" checked={mode === "file"} onChange={() => setMode("file")} />
             Upload file
           </label>
@@ -96,15 +96,14 @@ export function MeetingUploadForm({
         {mode === "paste" ? (
           <textarea
             name="transcript"
-            className="admin-input"
+            className="admin-input admin-textarea--grow"
             rows={8}
             placeholder="Paste the meeting transcript here…"
-            style={{ resize: "vertical", fontFamily: "inherit" }}
           />
         ) : (
           <>
             <input type="file" name="file" className="admin-input" accept={MEETING_ACCEPT} />
-            <p className="admin-cell-muted" style={{ marginTop: 4 }}>
+            <p className="admin-cell-muted u-mt-1">
               .txt, .vtt, .srt, .md, or .docx (max 10 MB). For a PDF, paste the text instead.
             </p>
           </>

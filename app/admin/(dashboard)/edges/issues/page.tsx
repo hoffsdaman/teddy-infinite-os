@@ -38,7 +38,7 @@ export default async function IssuesPage() {
         sub="Anything blocking a goal, diagnosed before blamed: goal problem, system problem, or execution problem. Agents file them automatically when numbers slip."
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}

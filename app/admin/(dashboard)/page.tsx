@@ -219,7 +219,7 @@ export default async function DashboardPage() {
       />
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err.message}
         </div>
       )}

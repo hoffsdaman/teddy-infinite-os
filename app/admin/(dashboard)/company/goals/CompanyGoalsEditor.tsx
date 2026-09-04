@@ -92,7 +92,7 @@ export function CompanyGoalsEditor({
     <div>
       {banner && <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"}`}>{banner.text}</div>}
 
-      <div className="admin-form-actions" style={{ marginBottom: 16 }}>
+      <div className="admin-form-actions u-mb-4">
         {mode.kind === "add-objective" ? (
           <button className="admin-btn" onClick={() => setMode({ kind: "none" })} disabled={pending}>
             Cancel
@@ -127,7 +127,7 @@ export function CompanyGoalsEditor({
       {tree.length === 0 && mode.kind !== "add-objective" && <div className="admin-empty">{emptyLabel}</div>}
 
       {tree.map((o, oi) => (
-        <div key={o.id} className="admin-card" style={{ padding: 0, marginBottom: 14, overflow: "hidden" }}>
+        <div key={o.id} className="admin-card u-mb-4 u-p-0 u-clip">
           <div className="admin-edges-ohead">
             <span className={`admin-edges-ltag admin-edges-ltag--${o.brand ?? "company"}`}>
               {BRAND_LABELS[o.brand ?? "company"]}
@@ -146,7 +146,7 @@ export function CompanyGoalsEditor({
           </div>
 
           {mode.kind === "edit-objective" && mode.id === o.id ? (
-            <div style={{ padding: 14 }}>
+            <div className="u-p-4">
               <ObjectiveEditForm
                 objective={o}
                 pending={pending}
@@ -181,7 +181,7 @@ export function CompanyGoalsEditor({
               >
                 <div className="admin-edges-kr-row">
                   <div className="admin-edges-kr-title">
-                    <span style={{ color: "var(--admin-faint)", fontWeight: 750, fontSize: 10, marginRight: 7 }}>
+                    <span className="admin-kr-index">
                       KR{oi + 1}.{ki + 1}
                     </span>
                     {kr.title}
@@ -199,14 +199,14 @@ export function CompanyGoalsEditor({
                   </span>
                   <span className="admin-edges-prog">
                     <span className="admin-edges-prog-bar">
-                      <i className={barClass(kr)} style={{ width: `${Math.min(100, progressPct(kr))}%` }} />
+                      <i className={barClass(kr)} style={{ width: `${Math.min(100, progressPct(kr))}%` }} /* layout-ok: data-driven width */ />
                     </span>
                     <span className="admin-edges-prog-val">{fmtValue(kr)}</span>
                   </span>
                 </div>
 
                 {mode.kind === "edit-kr" && mode.id === kr.id ? (
-                  <div style={{ padding: "4px 0 10px" }}>
+                  <div className="u-pt-1 u-pb-3">
                     <KrForm
                       kr={kr}
                       pending={pending}
@@ -228,7 +228,7 @@ export function CompanyGoalsEditor({
                     />
                   </div>
                 ) : mode.kind === "checkin" && mode.id === kr.id ? (
-                  <div style={{ padding: "4px 0 10px" }}>
+                  <div className="u-pt-1 u-pb-3">
                     <CheckinForm
                       kr={kr}
                       pending={pending}
@@ -245,7 +245,7 @@ export function CompanyGoalsEditor({
 
           {/* Objective-level actions: edit the objective, or add a KR to it. */}
           {mode.kind === "add-kr" && mode.objectiveId === o.id ? (
-            <div style={{ padding: 14, borderTop: "1px solid var(--admin-border)" }}>
+            <div className="u-p-4 admin-divider-top">
               <KrForm
                 pending={pending}
                 onCancel={() => setMode({ kind: "none" })}
@@ -269,7 +269,7 @@ export function CompanyGoalsEditor({
             </div>
           ) : (
             mode.kind !== "edit-objective" && (
-              <div className="admin-form-actions" style={{ padding: 12, borderTop: "1px solid var(--admin-border)" }}>
+              <div className="admin-form-actions u-p-3 admin-divider-top">
                 <button className="admin-btn admin-btn--sm" onClick={() => setMode({ kind: "edit-objective", id: o.id })} disabled={pending}>
                   Edit objective
                 </button>
@@ -331,8 +331,7 @@ function ObjectiveForm({
   const [brand, setBusinessLine] = useState("");
   return (
     <form
-      className="admin-card admin-section-card admin-form"
-      style={{ marginBottom: 16 }}
+      className="admin-card admin-section-card admin-form u-mb-4"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit({ title, brand });
@@ -439,7 +438,7 @@ function KrForm({
         <label className="admin-label">Key result (a measurable outcome, not an activity)</label>
         <input className="admin-input" value={d.title} onChange={(e) => set("title", e.target.value)} placeholder="e.g. Client retention from 78% to 90%" required />
         {activity && (
-          <p className="admin-hint" style={{ color: "var(--admin-warn-strong)" }}>
+          <p className="admin-hint u-warn">
             This starts with a doing-verb, which usually means an activity. A key result is the outcome the activity should produce.
           </p>
         )}

@@ -28,9 +28,9 @@ export function OverviewEditor({ companyId, initialBody }: { companyId: string; 
   }
 
   return (
-    <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Overview <span style={{ fontWeight: 400, color: "var(--admin-ink-2)", fontSize: 13 }}>· shown to the client at the top of their roadmap</span></h2>
+    <section className="admin-card admin-section-card u-mb-4">
+      <div className="u-row u-gap-3 u-between u-mb-2">
+        <h2 className="admin-card-title u-ink-2">Overview <span>· shown to the client at the top of their roadmap</span></h2>
         {!editing && (
           <button type="button" className="admin-btn" onClick={() => { setBody(initialBody); setEditing(true); }}>
             {initialBody.trim() ? "Edit" : "Add overview"}
@@ -44,11 +44,11 @@ export function OverviewEditor({ companyId, initialBody }: { companyId: string; 
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={14}
-            style={{ width: "100%", fontFamily: "inherit", fontSize: 13, lineHeight: 1.55, padding: "10px 12px", border: "1px solid var(--admin-line)", borderRadius: 8, boxSizing: "border-box" }}
+            className="admin-input admin-textarea u-w-full"
             placeholder="Client-facing overview. Markdown: **bold** lead-ins, blank line between paragraphs, - for bullets."
           />
-          {err && <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>{err}</div>}
-          <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+          {err && <div className="admin-alert admin-alert--err u-mt-2">{err}</div>}
+          <div className="u-row u-mt-3">
             <button type="button" className="admin-btn admin-btn--primary" disabled={pending} onClick={save}>
               {pending ? "Saving…" : "Save overview"}
             </button>
@@ -56,11 +56,11 @@ export function OverviewEditor({ companyId, initialBody }: { companyId: string; 
           </div>
         </>
       ) : initialBody.trim() ? (
-        <div style={{ fontSize: 14, lineHeight: 1.6 }}>
+        <div className="u-lg">
           <BotText text={initialBody} />
         </div>
       ) : (
-        <p className="admin-page-sub" style={{ margin: 0 }}>
+        <p className="admin-page-sub u-m-0">
           No overview yet. Every roadmap should open with one: a short, client-facing summary of
           what this roadmap is and how the plan works.
         </p>

@@ -66,12 +66,12 @@ export function AssignmentsBlock({
       {assignments.length === 0 ? (
         <div className="admin-empty">Not assigned to any client yet.</div>
       ) : (
-        <div className="admin-list" style={{ marginBottom: 12 }}>
+        <div className="admin-list u-mb-3">
           {assignments.map((a) => (
             <div className="admin-list-row" key={a.id}>
               <div className="admin-list-main">
                 <div className="admin-list-title">{a.company_name || "—"}</div>
-                <div className="admin-list-sub" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <div className="admin-list-sub u-row">
                   {a.role_title || "No role set"}
                   {a.client_visible ? (
                     <Badge tone="ok">On client team</Badge>
@@ -84,7 +84,7 @@ export function AssignmentsBlock({
                   {a.client_manager_name ? `${a.client_manager_name} (client)` : "their Edge8 manager"}
                 </div>
               </div>
-              <div className="admin-list-aside" style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+              <div className="admin-list-aside admin-list-aside--row">
                 <button
                   className="admin-btn admin-btn--sm"
                   disabled={pending}
@@ -137,7 +137,7 @@ export function AssignmentsBlock({
           </select>
         </div>
         <div className="admin-field">
-          <label className="admin-label" style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <label className="admin-label admin-label--check">
             <input type="checkbox" checked={clientVisible} onChange={(e) => setClientVisible(e.target.checked)} />
             Show on the client&apos;s team roster
           </label>

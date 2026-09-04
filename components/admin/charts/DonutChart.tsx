@@ -30,7 +30,7 @@ export function DonutChart({
   const muted = new Set([neutralLabel, OTHER_LABEL]);
   const total = data.reduce((s, d) => s + d.value, 0);
   if (total <= 0) {
-    return <div className="admin-empty" style={{ padding: "32px 16px" }}>{emptyText}</div>;
+    return <div className="admin-empty admin-empty--tall">{emptyText}</div>;
   }
 
   // Named categories sorted desc; fold the tail, keep the neutral bucket last.
@@ -64,11 +64,10 @@ export function DonutChart({
   return (
     <div className="admin-donut">
       <svg
-        className="admin-chart"
+        className="admin-chart admin-chart-donut"
         viewBox="0 0 160 160"
         role="img"
         aria-label={ariaLabel}
-        style={{ width: 150, height: 150, flex: "0 0 auto" }}
       >
         <title>{ariaLabel}</title>
         {arcs.map((a) => (
@@ -96,7 +95,7 @@ export function DonutChart({
       <ul className="admin-chart-legend">
         {arcs.map((a) => (
           <li key={a.label}>
-            <span className="admin-chart-swatch" style={{ background: a.color }} />
+            <span className="admin-chart-swatch" style={{ background: a.color }} /* layout-ok: series colour is a token var chosen at runtime */ />
             <span className="admin-chart-legend-label">{a.label}</span>
             <span className="admin-chart-legend-count">{a.value}</span>
           </li>

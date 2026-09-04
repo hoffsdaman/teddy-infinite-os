@@ -164,7 +164,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
         </div>
       )}
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}

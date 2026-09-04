@@ -34,7 +34,7 @@ export function Expandable({
     <div>
       <div
         className={`admin-record-expand${clamped ? " admin-record-expand--clamped" : ""}`}
-        style={{ maxHeight: clamped ? collapsedHeight : undefined }}
+        style={{ maxHeight: clamped ? collapsedHeight : undefined }} /* layout-ok: data-driven clamp height */
       >
         <div ref={innerRef}>{children}</div>
       </div>

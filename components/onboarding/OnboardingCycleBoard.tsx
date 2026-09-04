@@ -107,23 +107,12 @@ function Avatar({ card, size = 28 }: { card: BoardCard; size?: number }) {
       alt=""
       width={size}
       height={size}
-      style={{ borderRadius: "50%", objectFit: "cover" }}
+      className="admin-avatar-img"
     />
   ) : (
     <span
       aria-hidden
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: "var(--admin-tint)",
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: 12,
-        fontWeight: 600,
-        flexShrink: 0,
-      }}
+      className="admin-avatar-initials" style={{ width: size, height: size }} /* layout-ok: size from props */
     >
       {card.name.slice(0, 1)}
     </span>
@@ -234,7 +223,7 @@ export function OnboardingCycleBoard({
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12, gap: 6 }}>
+      <div className="u-row u-end u-mb-3">
         <button
           type="button"
           className={`admin-btn${view === "board" ? " admin-btn--primary" : ""}`}
@@ -261,18 +250,18 @@ export function OnboardingCycleBoard({
           onCardClick={(card) => openCard(card.id)}
           renderCard={(card) => (
             <>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="u-row">
                 <Avatar card={card} />
-                <div style={{ minWidth: 0 }}>
-                  <div className="admin-cell-strong" style={{ fontSize: 13 }}>
+                <div className="u-min-0">
+                  <div className="admin-cell-strong u-sm">
                     {card.name}
                   </div>
-                  <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                  <div className="admin-cell-muted u-sm">
                     {card.positionTitle ?? "—"}
                   </div>
                 </div>
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, fontSize: 11 }}>
+              <div className="u-row u-wrap u-mt-2 u-xs">
                 <Badge>{dayLabel(card)}</Badge>
                 {planMissing(card) && !card.complete && <Badge tone="err">Plan missing</Badge>}
                 {card.day8Score !== null && <Badge tone="info">Day 8: {card.day8Score}/5</Badge>}
@@ -304,29 +293,23 @@ export function OnboardingCycleBoard({
               </thead>
               <tbody>
                 {listCards.map((card) => (
-                  <tr key={card.id} onClick={() => openCard(card.id)} style={{ cursor: "pointer" }}>
+                  <tr key={card.id} onClick={() => openCard(card.id)} className="u-pointer">
                     <td>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div className="u-row">
                         <Avatar card={card} size={24} />
-                        <div style={{ minWidth: 0 }}>
+                        <div className="u-min-0">
                           <div className="admin-cell-strong">{card.name}</div>
-                          <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                          <div className="admin-cell-muted u-sm">
                             {card.positionTitle ?? "—"}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <span className="u-row">
                         <span
                           aria-hidden
-                          style={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: "50%",
-                            background: card.complete ? "var(--admin-ok-strong)" : STAGE_ACCENTS[card.columnId],
-                            flexShrink: 0,
-                          }}
+                          className="admin-dot" style={{ background: card.complete ? "var(--admin-ok-strong)" : STAGE_ACCENTS[card.columnId] }} /* layout-ok: stage colour is a token var chosen at runtime */
                         />
                         {stageLabel(card)}
                       </span>
@@ -391,20 +374,19 @@ export function OnboardingCycleBoard({
         title={selected?.name ?? ""}
       >
         {selected && (
-          <div style={{ display: "grid", gap: 20 }}>
+          <div className="u-stack u-gap-5">
             <dl className="admin-kv">
               <div>
                 <dt>Stage</dt>
                 <dd>
                   <select
                     key={selected.id}
-                    className="admin-select"
+                    className="admin-select u-p-1 u-w-auto"
                     value={selected.complete ? "complete" : selected.columnId}
                     disabled={pending}
                     onChange={(e) => {
                       if (e.target.value !== "complete") moveStage(selected.id, e.target.value);
                     }}
-                    style={{ fontSize: 13, padding: "4px 8px", width: "auto" }}
                   >
                     {STAGE_COLUMNS.map((s) => (
                       <option key={s.key} value={s.key}>
@@ -426,13 +408,12 @@ export function OnboardingCycleBoard({
                     <input
                       key={selected.id}
                       type="date"
-                      className="admin-input"
+                      className="admin-input u-p-1 u-w-auto"
                       defaultValue={selected.startDate ?? ""}
                       disabled={pending}
                       onChange={(e) => {
                         if (e.target.value) submitStartDate(selected, e.target.value);
                       }}
-                      style={{ fontSize: 13, padding: "4px 8px", width: "auto" }}
                     />
                   ) : (
                     fmt(selected.startDate)
@@ -450,23 +431,23 @@ export function OnboardingCycleBoard({
             </dl>
 
             <section>
-              <h3 style={{ fontSize: 13, marginBottom: 8 }}>Onboarding plan</h3>
+              <h3 className="u-mb-2">Onboarding plan</h3>
               {selected.planUrl ? (
-                <p style={{ fontSize: 13 }}>
+                <p className="u-sm">
                   Added {fmt(selected.planAddedAt)} ·{" "}
                   <a href={selected.planUrl} target="_blank" rel="noreferrer">
                     View plan
                   </a>
                 </p>
               ) : selected.planHasFile ? (
-                <p style={{ fontSize: 13 }}>
+                <p className="u-sm">
                   Added {fmt(selected.planAddedAt)} ·{" "}
                   <a href={`${planHrefBase}/${selected.id}`} target="_blank" rel="noreferrer">
                     Read plan
                   </a>
                 </p>
               ) : (
-                <p style={{ fontSize: 13 }} className="admin-cell-muted">
+                <p className="admin-cell-muted">
                   No plan yet — due one week before Day 1. Daily reminders run until it is here.
                 </p>
               )}
@@ -475,16 +456,15 @@ export function OnboardingCycleBoard({
                   e.preventDefault();
                   submitPlanLink(selected);
                 }}
-                style={{ display: "flex", gap: 8, marginTop: 8 }}
+                className="u-row u-mt-2"
               >
                 <input
                   type="url"
-                  className="admin-input"
+                  className="admin-input u-grow"
                   placeholder="Paste the plan link (Google Doc, Lark…)"
                   value={linkDraft}
                   disabled={pending}
                   onChange={(e) => setLinkDraft(e.target.value)}
-                  style={{ flex: 1, fontSize: 13 }}
                 />
                 <button
                   type="submit"
@@ -494,7 +474,7 @@ export function OnboardingCycleBoard({
                   Save
                 </button>
               </form>
-              <p className="admin-cell-muted" style={{ fontSize: 12, margin: "10px 0 4px" }}>
+              <p className="admin-cell-muted u-sm u-m-0 u-mt-3 u-mb-1">
                 …or upload the file — Markdown preferred, it reads right in the app:
               </p>
               <input
@@ -506,45 +486,43 @@ export function OnboardingCycleBoard({
                   const f = e.target.files?.[0];
                   if (f && selected) submitPlanFile(selected, f);
                 }}
-                style={{ fontSize: 13 }}
               />
             </section>
 
             <section>
-              <h3 style={{ fontSize: 13, marginBottom: 8 }}>
+              <h3 className="u-mb-2">
                 Checklist
                 {selected.tasks.length > 0 && (
-                  <span className="admin-cell-muted" style={{ fontWeight: 400, marginLeft: 8 }}>
+                  <span className="admin-cell-muted u-ml-2">
                     {selected.tasks.filter((t) => t.done).length} of {selected.tasks.length} done
                   </span>
                 )}
               </h3>
               {selected.tasks.length === 0 ? (
-                <p style={{ fontSize: 13 }} className="admin-cell-muted">
+                <p className="admin-cell-muted">
                   The three orientation sessions appear here once the journey starts.
                 </p>
               ) : (
-                <div style={{ display: "grid", gap: 16 }}>
+                <div className="u-stack u-gap-4">
                   {taskGroups(selected.tasks).map(([group, items]) => {
                     const done = items.filter((t) => t.done).length;
                     return (
                       <div key={group}>
                         <div
-                          className="admin-cell-muted"
-                          style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}
+                          className="admin-cell-muted u-mb-2 u-xs u-label"
                         >
                           {group} · {done}/{items.length}
                         </div>
-                        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
+                        <ul className="u-stack u-m-0 u-p-0 u-list-plain">
                           {items.map((t) => (
-                            <li key={t.id} style={{ fontSize: 13 }}>
-                              <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer" }}>
+                            <li key={t.id}>
+                              <label className="u-row-top u-pointer">
                                 <input
                                   type="checkbox"
                                   checked={t.done}
                                   disabled={pending}
                                   onChange={(e) => toggleTask(t.id, e.target.checked)}
-                                  style={{ marginTop: 3 }}
+                                  className="u-mt-1"
                                 />
                                 <span style={t.done ? { textDecoration: "line-through", opacity: 0.6 } : undefined}>
                                   {t.title}
@@ -561,7 +539,7 @@ export function OnboardingCycleBoard({
             </section>
 
             <section>
-              <h3 style={{ fontSize: 13, marginBottom: 8 }}>Milestones</h3>
+              <h3 className="u-mb-2">Milestones</h3>
               <dl className="admin-kv">
                 <div>
                   <dt>Day 8 survey</dt>
@@ -603,7 +581,7 @@ export function OnboardingCycleBoard({
             </section>
 
             {error && (
-              <p style={{ color: "var(--admin-err-ink)", fontSize: 13 }} role="alert">
+              <p className="u-err" role="alert">
                 {error}
               </p>
             )}

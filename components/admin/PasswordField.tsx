@@ -22,14 +22,13 @@ export function PasswordField({
     <div className="admin-input-wrap">
       <input
         id={id}
-        className="admin-input"
+        className="admin-input admin-input--icon-right"
         type={show ? "text" : "password"}
         autoComplete={autoComplete}
         placeholder={placeholder}
         required
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        style={{ paddingRight: 42 }}
       />
       <button
         type="button"
