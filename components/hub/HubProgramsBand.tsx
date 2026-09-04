@@ -80,8 +80,8 @@ export function HubProgramsBand({
                     </span>
                     {p.roadmapTotal > 0 && <span>{pct}%</span>}
                   </div>
-                  <div className="admin-progress">
-                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
+                  <div className="admin-meter admin-meter--hairline">
+                    <div className="admin-meter-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                   </div>
                 </div>
                 <div className="admin-cell-muted u-mt-3 u-sm">

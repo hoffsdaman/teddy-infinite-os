@@ -51,7 +51,7 @@ function ThumbLink({ href, label }: { href: string; label: string }) {
           src={href}
           alt={label}
           onError={() => setBroken(true)}
-          className="admin-thumb-img"
+          className="admin-thumb admin-thumb--img"
         />
       )}
       <span className="admin-cell-muted u-xs">{label}</span>
