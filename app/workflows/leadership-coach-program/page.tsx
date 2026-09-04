@@ -37,7 +37,7 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm section-title--on-dark">
             The coach preps and drafts. The human decides.
           </h2>
-          <p className="wf-hero-sub" style={{ marginTop: 12 }}>
+          <p className="wf-hero-sub u-mt-3">
             The AI never tells the coach to promote, manage out, rank, or label a person. It surfaces the signal and
             proposes the move. The human coaches the team. Every other design decision in this plan sits under that
             one.
@@ -52,13 +52,13 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm">
             Define the problem
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The original problem: a leader&apos;s 1-1s are only as good as their prep and their memory. The first
             version proved the workflow (AI preps every biweekly 1-1, logs every commitment, reads retention risk, and
             holds the coach to coaching instead of telling). Moving it into the company OS solved two problems the
             prototype could not:
           </p>
-          <div className="wf-info-grid" style={{ marginTop: 32 }}>
+          <div className="wf-info-grid u-mt-6">
             <div className="wf-info-card">
               <h3>Privacy by access control, not discipline</h3>
               <ul>
@@ -79,7 +79,7 @@ export default function LeadershipCoachProgramPage() {
               </ul>
             </div>
           </div>
-          <p className="section-sub" style={{ marginTop: 32 }}>
+          <p className="section-sub u-mt-6">
             Success looks like: every team member has current FAST goals laddered to a company objective or KPI; every
             1-1 is prepped, held, and logged in the portal; retention risk is named early; the coach&apos;s
             coach / mentor / direct split moves toward 80/15/5; and the prototype tooling is fully retired.
@@ -96,7 +96,7 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm">
             Discover the data
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Everything the coach reads lives in the company OS. The coach never invents facts about people: thin reads
             are marked low-confidence, and an unset goal says so.
           </p>
@@ -163,7 +163,7 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm">
             Design the workflow
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The concept model first: four things that are never confused with each other.
           </p>
           <div className="wf-table-wrap">
@@ -212,7 +212,7 @@ export default function LeadershipCoachProgramPage() {
             </table>
           </div>
 
-          <div className="wf-info-grid" style={{ marginTop: 40 }}>
+          <div className="wf-info-grid u-mt-7">
             <div className="wf-info-card">
               <h3>The OCEAN profile</h3>
               <ul>
@@ -236,8 +236,8 @@ export default function LeadershipCoachProgramPage() {
             </div>
           </div>
 
-          <h3 style={{ fontSize: 22, fontWeight: 700, margin: '48px 0 0' }}>The biweekly cycle</h3>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <h3 className="wf-lead--lg u-m-0 u-mt-8">The biweekly cycle</h3>
+          <p className="section-sub u-mt-3">
             The heart of the design is a two-week loop with one human step:
           </p>
           <FlowRail
@@ -250,7 +250,7 @@ export default function LeadershipCoachProgramPage() {
             ]}
             repeatNote="The loop repeats every two weeks, and it is not a straight line: the recap has a review-then-publish gate, check-ins feed the next prep, and trends feed the coaching focus."
           />
-          <p className="section-sub" style={{ marginTop: 24 }}>
+          <p className="section-sub u-mt-5">
             The full operational document, loops and branches included, is published as its own workflow:{' '}
             <Link href="/workflows/one-on-one-coaching">The Biweekly 1-1 Coaching Cycle</Link>.
           </p>
@@ -266,7 +266,7 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm">
             Determine the ROI
           </h2>
-          <div className="wf-info-grid" style={{ marginTop: 32 }}>
+          <div className="wf-info-grid u-mt-6">
             <div className="wf-info-card">
               <h3>What the program returns</h3>
               <ul>
@@ -299,7 +299,7 @@ export default function LeadershipCoachProgramPage() {
           <h2 className="section-title section-title--sm">
             Deploy to production
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The runtime: the company OS database as the system of record, the team portal as the interface (a coaching
             dashboard for the coach, a my-coaching view for each member, goals transparent on team profiles), a daily
             07:45 cron as the scheduler, and Claude for prep, recaps, and trends, with every call failing soft so an
@@ -348,7 +348,7 @@ export default function LeadershipCoachProgramPage() {
               </tbody>
             </table>
           </div>
-          <div className="wf-info-grid" style={{ marginTop: 40 }}>
+          <div className="wf-info-grid u-mt-7">
             <div className="wf-info-card">
               <h3>Guardrails, always on</h3>
               <ul>

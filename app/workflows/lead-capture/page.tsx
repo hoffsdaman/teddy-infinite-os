@@ -38,13 +38,13 @@ export default function LeadCaptureWorkflowPage() {
       />
 
       {/* The flow */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             Six steps from form to customer
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The gate does the dirty work up front. Everything that survives it is a real person, already in the CRM,
             already assigned a stage.
           </p>

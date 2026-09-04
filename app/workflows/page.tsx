@@ -31,12 +31,12 @@ export default function WorkflowsPage() {
           <h2 className="section-title section-title--sm section-title--on-dark">
             One method behind every page
           </h2>
-          <p className="wf-hero-sub" style={{ marginTop: 12 }}>
+          <p className="wf-hero-sub u-mt-3">
             Every workflow here was planned with a 5D program brief, documented in seven elements, mapped step by step
             to humans and machines, tested with the New Hire Test, and shipped through three stage gates. It is the
             same method we teach in the AI Officer certification.
           </p>
-          <div className="wf-hero-meta" style={{ marginBottom: 28 }}>
+          <div className="wf-hero-meta u-mb-6">
             <span className="wf-meta-chip">Plan <strong>5D Brief</strong></span>
             <span className="wf-meta-chip">Document <strong>7 elements</strong></span>
             <span className="wf-meta-chip">Assign <strong>Centaur Map</strong></span>
@@ -48,12 +48,12 @@ export default function WorkflowsPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 64 }}>
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h2 className="section-title" style={{ fontSize: 30, marginBottom: 12 }}>
+      <section className="section u-pt-9">
+        <div className="container u-center-text">
+          <h2 className="section-title wf-title-lg u-mb-3">
             Want workflows like these in your company?
           </h2>
-          <p className="section-sub" style={{ margin: '0 auto 28px' }}>
+          <p className="section-sub u-mx-auto u-mb-6">
             Every system on this page was designed, built, and put into production by Edge8. We do the same for our
             clients.
           </p>

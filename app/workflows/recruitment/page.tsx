@@ -30,13 +30,6 @@ const PROBLEMS = [
   'A declined offer, a paused role, or a near-miss candidate has nowhere to go in a straight-line process, so all the work that went into them is just lost.',
 ]
 
-const loopCard: React.CSSProperties = {
-  background: 'var(--white)',
-  border: '1px solid color-mix(in srgb, var(--dark) 10%, transparent)',
-  borderRadius: 14,
-  padding: '20px 22px',
-}
-
 // The real selection flowchart: decision diamonds, labeled branches, backward
 // loops, and the pool as an explicit destination on the right. Hand-drawn SVG
 // so every condition is visible; horizontal scroll on small screens.
@@ -47,12 +40,12 @@ function SelectionFlowchart() {
   const nodeStroke = 'var(--tint-deep)'
   const halo = { paintOrder: 'stroke' as const, stroke: 'var(--white)', strokeWidth: 4 }
   return (
-    <div style={{ overflowX: 'auto', margin: '40px 0 8px' }}>
+    <div className="u-x-scroll u-mt-7 u-mb-2">
       <svg
         viewBox="0 0 940 1400"
         role="img"
         aria-label="Selection flowchart: application to AI screen, two gates, screening call, interview rounds, offer, hire, with every no branch and every exit landing in the candidate pool"
-        style={{ minWidth: 760, width: '100%', height: 'auto', display: 'block', fontFamily: 'inherit' }}
+        className="wf-diagram wf-diagram--wide"
       >
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -188,13 +181,13 @@ export default function RecruitmentWorkflowPage() {
       />
 
       {/* The problem */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The problem</span>
           <h2 className="section-title section-title--sm">
             Hiring is drawn as a line and lived as a loop
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Most hiring processes fail in the gap between the tidy diagram and the messy reality:
           </p>
           <div className="wf-problems">
@@ -221,39 +214,39 @@ export default function RecruitmentWorkflowPage() {
           <h2 className="section-title section-title--sm">
             Three loops orbiting one pool
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Each loop runs on its own clock. None of them waits for the others, and all of them read from and write to
             the same candidate pool.
           </p>
 
-          <div style={{ maxWidth: 900, margin: '40px auto 0' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
-              <div style={loopCard}>
-                <div style={{ fontWeight: 700, marginBottom: 6 }}>⟳ Demand loop</div>
-                <div style={{ fontSize: 14, opacity: 0.85 }}>
+          <div className="u-mx-auto u-mt-7 u-max-8">
+            <div className="wf-grid-cards">
+              <div className="wf-loop-card">
+                <div className="u-mb-2 u-strong">⟳ Demand loop</div>
+                <div className="u-lg wf-dim">
                   Roles open, pause, reopen, change shape mid-search, and close. Closing a role never throws away its
                   candidates.
                 </div>
               </div>
-              <div style={loopCard}>
-                <div style={{ fontWeight: 700, marginBottom: 6 }}>⟳ Sourcing loop</div>
-                <div style={{ fontSize: 14, opacity: 0.85 }}>
+              <div className="wf-loop-card">
+                <div className="u-mb-2 u-strong">⟳ Sourcing loop</div>
+                <div className="u-lg wf-dim">
                   Always on: inbound, LinkedIn, referrals, agencies, batch drops, and resurfacing people we already
                   know.
                 </div>
               </div>
-              <div style={loopCard}>
-                <div style={{ fontWeight: 700, marginBottom: 6 }}>⟳ Selection loop</div>
-                <div style={{ fontSize: 14, opacity: 0.85 }}>
+              <div className="wf-loop-card">
+                <div className="u-mb-2 u-strong">⟳ Selection loop</div>
+                <div className="u-lg wf-dim">
                   AI screen, screening call, as many interview rounds as the role needs, then offer. Moving backward
                   is normal.
                 </div>
               </div>
             </div>
-            <div style={{ textAlign: 'center', fontSize: 22, padding: '10px 0', opacity: 0.6 }}>⇅ ⇅ ⇅</div>
-            <div style={{ ...loopCard, textAlign: 'center', borderWidth: 2 }}>
-              <div style={{ fontWeight: 700, marginBottom: 4 }}>The Candidate Pool</div>
-              <div style={{ fontSize: 14, opacity: 0.85 }}>
+            <div className="wf-loop-arrows">⇅ ⇅ ⇅</div>
+            <div className="wf-loop-card wf-loop-card--pool">
+              <div className="u-mb-1 u-strong">The Candidate Pool</div>
+              <div className="u-lg wf-dim">
                 Everyone we have ever met: hired, rejected, parked, withdrawn. Ranked by AI screen, grouped by role
                 family, searchable forever. Every loop exits into it; the sourcing loop draws from it.
               </div>
@@ -451,13 +444,13 @@ export default function RecruitmentWorkflowPage() {
           <h2 className="section-title section-title--sm">
             The real flowchart, every branch included
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             One candidate’s path through selection. Solid lines are the working process; dashed lines are the pool’s
             memory. Every “no” leads somewhere, and none of them is a shredder.
           </p>
           <SelectionFlowchart />
 
-          <div className="wf-info-grid" style={{ marginTop: 40 }}>
+          <div className="wf-info-grid u-mt-7">
             <div className="wf-info-card">
               <h3>AI on the interview panel</h3>
               <ul>
@@ -603,11 +596,11 @@ export default function RecruitmentWorkflowPage() {
           <h2 className="section-title section-title--sm">
             Every exit is a pool entry
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             “Rejected” is a status, not a delete. Every way out of the three loops lands in the pool with full
             history:
           </p>
-          <div className="wf-info-grid" style={{ marginTop: 32 }}>
+          <div className="wf-info-grid u-mt-6">
             <div className="wf-info-card">
               <h3>The ways out</h3>
               <ul>

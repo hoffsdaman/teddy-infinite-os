@@ -1,10 +1,6 @@
 {
   "app/support/SupportForm.tsx": 3,
   "app/support/page.tsx": 1,
-  "app/workflows/graph.tsx": 1,
-  "app/workflows/method/page.tsx": 1,
-  "app/workflows/one-on-one-coaching/page.tsx": 1,
-  "app/workflows/recruitment/page.tsx": 2,
   "components/Nav.tsx": 1,
   "components/retreat/RetreatAgenda.tsx": 6
 }

@@ -95,13 +95,13 @@ export default function TimeOffWorkflowPage() {
       />
 
       {/* Swimlane */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             Request to decision in five steps
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The whole loop is request, decide, record. Nobody chases anybody, and the balance math never gets done by
             hand.
           </p>
@@ -115,7 +115,7 @@ export default function TimeOffWorkflowPage() {
             {NODES.map((n) => (
               <div key={n.num} className={`wf-node wf-node-${n.lane}`}>
                 <span className="wf-node-badge">{n.num}</span>
-                <div style={{ marginBottom: 8 }}>
+                <div className="u-mb-2">
                   <ActorChip actor={n.actor} label={n.actorLabel} />
                 </div>
                 <div className="wf-node-title">{n.title}</div>

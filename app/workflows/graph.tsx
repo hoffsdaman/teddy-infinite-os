@@ -109,18 +109,18 @@ function NodeShape({ n }: { n: GraphNode }) {
 
   switch (n.kind) {
     case 'trigger':
-      shape = <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'var(--dark)' }} />
+      shape = <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-ink" />
       titleFill = 'var(--white)'
       subFill = 'var(--mint)'
       break
     case 'action':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'var(--white)', stroke: 'var(--input-border)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-plain" />
       )
       break
     case 'write':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'color-mix(in srgb, var(--wf-green) 8%, transparent)', stroke: 'var(--wf-green)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-write" />
       )
       break
     case 'decision': {
@@ -137,32 +137,32 @@ function NodeShape({ n }: { n: GraphNode }) {
       ]
         .map((p) => p.join(','))
         .join(' ')
-      shape = <polygon points={pts} style={{ fill: 'color-mix(in srgb, var(--blue) 6%, transparent)', stroke: 'var(--blue)', strokeWidth: 1.5 }} />
+      shape = <polygon points={pts} className="wf-node-decision" />
       break
     }
     case 'wait':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={h / 2} style={{ fill: 'color-mix(in srgb, var(--wf-amber) 8%, transparent)', stroke: 'var(--wf-amber)', strokeWidth: 1.5, strokeDasharray: '5 4' }} />
+        <rect x={left} y={top} width={w} height={h} rx={h / 2} className="wf-node-wait" />
       )
       break
     case 'human':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'var(--white)', stroke: 'var(--dark)', strokeWidth: 2 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-human" />
       )
       break
     case 'terminal':
-      shape = <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'var(--white)', stroke: 'var(--tint-deep)', strokeWidth: 1.5 }} />
+      shape = <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-soft" />
       titleFill = 'var(--grey-mid)'
       subFill = 'var(--grey-mid)'
       break
     case 'flag':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'color-mix(in srgb, var(--wf-red) 6%, transparent)', stroke: 'var(--wf-red)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} className="wf-node-flag" />
       )
       break
     case 'state':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={h / 2} style={{ fill: 'var(--white)', stroke: 'var(--dark)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={h / 2} className="wf-node-pill" />
       )
       break
   }
@@ -176,7 +176,7 @@ function NodeShape({ n }: { n: GraphNode }) {
           x={x}
           y={firstBaseline + i * lineH}
           textAnchor="middle"
-          style={{ fill: titleFill, fontSize: 13.5, fontWeight: 600, fontFamily: 'var(--font-body)' }}
+          className="wf-node-title" style={{ fill: titleFill }} /* layout-ok: fill follows node kind */
         >
           {line}
         </text>
@@ -186,7 +186,7 @@ function NodeShape({ n }: { n: GraphNode }) {
           x={x}
           y={firstBaseline + lines.length * lineH - 2}
           textAnchor="middle"
-          style={{ fill: subFill, fontSize: 11.5, fontWeight: 500, fontFamily: 'var(--font-body)' }}
+          className="wf-node-sub" style={{ fill: subFill }} /* layout-ok: fill follows node kind */
         >
           {n.sub}
         </text>
@@ -199,14 +199,14 @@ export function WorkflowGraph({ graph, caption }: { graph: WorkflowGraphDef; cap
   const byId = new Map(graph.nodes.map((n) => [n.id, n]))
 
   return (
-    <figure style={{ margin: 0 }}>
+    <figure className="u-m-0">
       <div className="wf-graph-scroll">
         <svg
           viewBox={`0 0 ${graph.width} ${graph.height}`}
           width="100%"
           role="img"
           aria-label={caption}
-          style={{ minWidth: Math.min(graph.width, 720) }}
+          style={{ minWidth: Math.min(graph.width, 720) }} /* layout-ok: graph width from data */
         >
           <defs>
             {(Object.keys(EDGE_STROKE) as GraphEdgeKind[]).map((k) => (
@@ -220,7 +220,7 @@ export function WorkflowGraph({ graph, caption }: { graph: WorkflowGraphDef; cap
                 markerHeight="6.5"
                 orient="auto-start-reverse"
               >
-                <path d="M0 0L10 5L0 10z" style={{ fill: EDGE_STROKE[k].stroke }} />
+                <path d="M0 0L10 5L0 10z" style={{ fill: EDGE_STROKE[k].stroke }} /* layout-ok: marker colour per edge kind (token variable) */ />
               </marker>
             ))}
           </defs>
@@ -241,7 +241,7 @@ export function WorkflowGraph({ graph, caption }: { graph: WorkflowGraphDef; cap
                 <polyline
                   points={pts.map((p) => p.join(',')).join(' ')}
                   fill="none"
-                  style={{ stroke: stroke.stroke, strokeWidth: 1.5, strokeDasharray: stroke.dash }}
+                  className="wf-edge" style={{ stroke: stroke.stroke, strokeDasharray: stroke.dash }} /* layout-ok: edge colour and dash per kind (token variables) */
                   markerEnd={`url(#${graph.id}-ah-${kind})`}
                 />
                 {e.label ? (
@@ -249,15 +249,7 @@ export function WorkflowGraph({ graph, caption }: { graph: WorkflowGraphDef; cap
                     x={labelPos[0]}
                     y={labelPos[1]}
                     textAnchor="middle"
-                    style={{
-                      fill: kind === 'fail' ? 'var(--wf-red)' : kind === 'agent' ? 'var(--wf-green)' : 'var(--grey-mid)',
-                      fontSize: 11.5,
-                      fontWeight: 600,
-                      fontFamily: 'var(--font-body)',
-                      paintOrder: 'stroke',
-                      stroke: 'var(--white)',
-                      strokeWidth: 4,
-                    }}
+                    className={`wf-edge-label${kind === "fail" ? " wf-edge-label--fail" : kind === "agent" ? " wf-edge-label--agent" : ""}`}
                   >
                     {e.label}
                   </text>
@@ -293,7 +285,7 @@ export function GraphLegend({ items }: { items: Array<{ kind: string; label: str
         <span key={it.kind + it.label}>
           <i
             aria-hidden
-            style={{ display: 'inline-block', width: 14, height: 14, borderRadius: 4, ...LEGEND_SWATCH[it.kind] }}
+            className="wf-legend-swatch" style={LEGEND_SWATCH[it.kind]}
           />
           {it.label}
         </span>

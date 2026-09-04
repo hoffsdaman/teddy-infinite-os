@@ -39,13 +39,13 @@ export default function MonthlyInvoicingWorkflowPage() {
       />
 
       {/* The billing cycle timeline */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The cycle</span>
           <h2 className="section-title section-title--sm">
             One month, four dates
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The whole workflow hangs on a fixed calendar. Same dates every month, no judgment calls.
           </p>
           <div className="wf-timeline">

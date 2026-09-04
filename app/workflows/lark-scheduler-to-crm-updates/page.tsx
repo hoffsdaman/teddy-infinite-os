@@ -54,11 +54,11 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
       />
 
       {/* Orientation */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The shape, in ten seconds</span>
           <h2 className="section-title section-title--sm">Two agents, bracketing the call</h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             This rail is the orientation, not the workflow. Real life branches, fails, and loops; the diagrams below
             are the truth, drawn branch by branch.
           </p>
@@ -83,7 +83,7 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
             The reality &middot; agent 1
           </span>
           <h2 className="section-title section-title--sm">Booking to lead, every branch</h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Seven boxes in the rail; four decisions, three write paths, and two quiet endings in reality. The
             interesting work is in the branches: recognising who is already known, refusing to demote anyone, and
             ending in silence when there is nothing to say.
@@ -110,7 +110,7 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
         <div className="container">
           <span className="section-label">The reality &middot; agent 2</span>
           <h2 className="section-title section-title--sm">Call to CRM, every branch</h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The evening agent runs four gates before it writes anything: external, unseen, transcribed, matched. Only
             then does the transcript become CRM records, and only a priced opportunity becomes a deal. The follow-up is
             drafted, never sent; the day ends in one message to the owner.
@@ -138,7 +138,7 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
             The state machine
           </span>
           <h2 className="section-title section-title--sm">What the agents may do to a lead</h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Underneath both agents sits one entity with rules: the lead. The agents may create a lead at meeting
             booked, step it to connected after a held call, and open it into a deal. Everything else, outreach,
             nurture, disqualification, is a human move. The forbidden move matters most: nothing ever goes backwards.
@@ -161,7 +161,7 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
         <div className="container">
           <span className="section-label">When it goes sideways</span>
           <h2 className="section-title section-title--sm">Every exception has an owner</h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             An automation is defined by what happens off the happy path. Each row here is a real condition the agents
             hit, what they do about it, and where a human hears about it. Silence is only ever by design.
           </p>
@@ -232,11 +232,11 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
       <section className="section">
         <div className="container">
           <SevenElements elements={ELEMENTS} />
-          <p style={{ marginTop: 32, fontSize: 15, color: 'var(--body-text)' }}>
+          <p className="wf-lead u-mt-6">
             This workflow replaced our earlier Sales Call Intelligence pipeline: same philosophy, now running end to end
             on scheduled agents, and documented at the level a developer could rebuild it from. It feeds the same
             pipeline as{' '}
-            <Link href="/workflows/lead-capture" style={{ color: 'var(--blue)' }}>
+            <Link href="/workflows/lead-capture" className="u-accent">
               Lead Capture to CRM
             </Link>
             .

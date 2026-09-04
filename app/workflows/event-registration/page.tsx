@@ -38,13 +38,13 @@ export default function EventRegistrationWorkflowPage() {
       />
 
       {/* The flow */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             One setup step, then hands off
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The only human step is the first one. Everything between a visitor clicking register and a confirmed seat
             in the admin hub is automated.
           </p>
