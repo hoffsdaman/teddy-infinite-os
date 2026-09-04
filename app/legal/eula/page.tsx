@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'TeddyBed OS · Terms of Service',
-  description: 'Terms of service and end-user license agreement for Talent Edge LLC (d/b/a TeddyBed OS).',
+  description: 'Terms of service and end-user license agreement for Teddy Bed.',
 }
 
 const EFFECTIVE_DATE = 'July 18, 2026'
@@ -20,7 +20,7 @@ export default function TermsOfServicePage() {
         <PageHeader
           eyebrow={`Effective ${EFFECTIVE_DATE}`}
           title="Terms of Service"
-          lead="These terms (“Agreement”) govern your access to and use of the TeddyBed OS website, client portal, and related services, operated by Talent Edge LLC, doing business as TeddyBed OS (“TeddyBed OS,” “we,” “us”). By using our services, you agree to this Agreement."
+          lead="These terms (“Agreement”) govern your access to and use of the TeddyBed OS website, client portal, and related services, operated by Teddy Bed (“Teddy Bed,” “we,” “us”). By using our services, you agree to this Agreement."
         />
 
         <div className="xp-blocks">
@@ -34,9 +34,8 @@ export default function TermsOfServicePage() {
 
           <Block heading="Description of services">
             <p>
-              TeddyBed OS provides AI leadership training, automation consulting, global staffing, and
-              related programs, along with a client and team portal for managing engagements,
-              invoicing, and communication.
+              Teddy Bed operates this website and related online services, including, where
+              applicable, an account-based portal for managing orders, communication, and support.
             </p>
           </Block>
 

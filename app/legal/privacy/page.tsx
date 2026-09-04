@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'TeddyBed OS · Privacy Policy',
-  description: 'How Talent Edge LLC (d/b/a TeddyBed OS) collects, uses, and protects your information.',
+  description: 'How Teddy Bed collects, uses, and protects your information.',
 }
 
 const EFFECTIVE_DATE = 'July 18, 2026'
@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
         <PageHeader
           eyebrow={`Effective ${EFFECTIVE_DATE}`}
           title="Privacy Policy"
-          lead="This policy explains what information Talent Edge LLC, doing business as TeddyBed OS (“TeddyBed OS,” “we,” “us”), collects across our website, client portal, and related services, and how we use, share, and protect it."
+          lead="This policy explains what information Teddy Bed (“Teddy Bed,” “we,” “us”), collects across our website, client portal, and related services, and how we use, share, and protect it."
         />
 
         <div className="xp-blocks">
