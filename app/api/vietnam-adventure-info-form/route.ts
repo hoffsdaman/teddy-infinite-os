@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { notifyOps } from '@/lib/lark'
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
+import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = 'nodejs'
 
@@ -165,16 +166,16 @@ export async function POST(req: NextRequest) {
           html: `
             <h2>New Vietnam Adventure submission</h2>
             <table style="border-collapse:collapse;font-family:sans-serif;font-size:15px;margin-bottom:16px">
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Family</td><td><strong>${esc(family_name)}</strong></td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Contact</td><td>${esc(contact_name)}</td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Email</td><td><a href="mailto:${esc(contact_email)}">${esc(contact_email)}</a></td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Passport photos</td><td>${totalPhotos}</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Family</td><td><strong>${esc(family_name)}</strong></td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Contact</td><td>${esc(contact_name)}</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Email</td><td><a href="mailto:${esc(contact_email)}">${esc(contact_email)}</a></td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Passport photos</td><td>${totalPhotos}</td></tr>
             </table>
             <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
               <tr><th align="left" style="padding:4px 16px 4px 0">Name</th><th align="left" style="padding:4px 16px 4px 0">Size</th><th align="left">Passports</th></tr>
               ${memberRowsHtml}
             </table>
-            <p style="color:#999;font-size:12px;margin-top:16px">Passport links expire after 7 days. Photos are auto-deleted within 30 days of the trip.</p>
+            <p style="color:${P.muted};font-size:12px;margin-top:16px">Passport links expire after 7 days. Photos are auto-deleted within 30 days of the trip.</p>
           `,
         })
       } catch (mailErr) {

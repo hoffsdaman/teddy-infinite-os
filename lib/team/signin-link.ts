@@ -20,6 +20,7 @@ import { supabase, companyOs } from "@/lib/supabase";
 import { PORTAL_STATUSES } from "@/lib/team-auth";
 import { siteOrigin, findAuthUserByEmail, bannedUntil } from "@/lib/admin/portal-invite";
 import { sendTransactionalEmail } from "@/lib/email";
+import { PALETTE as P } from "@/lib/design/palette";
 
 const SELF_SERVE_COOLDOWN_MS = 60_000;
 const lastSelfServeSend = new Map<string, number>();
@@ -81,8 +82,8 @@ export async function sendTeamSelfServeSignInLink(rawEmail: string): Promise<voi
     subject: "Your 8 Edges Team sign-in link",
     html: `
       <p>Here is your sign-in link for the 8 Edges Team workspace:</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the 8 Edges Team workspace</a></p>
-      <p style="font-size:13px;color:#64748b;">The button takes you to a sign-in page. Press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/team/login">${siteOrigin()}/team/login</a>.</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the 8 Edges Team workspace</a></p>
+      <p style="font-size:13px;color:${P.inkBody};">The button takes you to a sign-in page. Press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/team/login">${siteOrigin()}/team/login</a>.</p>
     `,
     logMeta: { source: "team_self_serve_link" },
   });
@@ -112,8 +113,8 @@ export async function sendTeamSelfServePasswordReset(rawEmail: string): Promise<
     subject: "Reset your 8 Edges Team password",
     html: `
       <p>We received a request to reset the password on your 8 Edges Team workspace account.</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Choose a new password</a></p>
-      <p style="font-size:13px;color:#64748b;">The button takes you to a page where you can set a new password. If you did not request this, you can safely ignore this email, and you can always sign in without a password at <a href="${siteOrigin()}/team/login">${siteOrigin()}/team/login</a>.</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Choose a new password</a></p>
+      <p style="font-size:13px;color:${P.inkBody};">The button takes you to a page where you can set a new password. If you did not request this, you can safely ignore this email, and you can always sign in without a password at <a href="${siteOrigin()}/team/login">${siteOrigin()}/team/login</a>.</p>
     `,
     logMeta: { source: "team_self_serve_reset" },
   });

@@ -3,17 +3,17 @@
 
 .page {
   min-height: 100vh;
-  background: #f1f5f9;
+  background: var(--color-grey-50);
   padding: 40px 16px 80px;
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
-  color: #0f172a;
+  color: var(--color-primary-dark);
 }
 
 .card {
   max-width: 640px;
   margin: 0 auto;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-card-border);
   border-radius: 16px;
   padding: 32px 28px;
 }
@@ -23,20 +23,20 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--color-text-body);
   margin-bottom: 6px;
 }
 
 .title {
   font-size: clamp(22px, 4vw, 28px);
   font-weight: 700;
-  color: #04102d;
+  color: var(--color-primary-dark);
   margin: 0 0 4px;
 }
 
 .meta {
   font-size: 13px;
-  color: #64748b;
+  color: var(--color-text-body);
   margin: 0 0 20px;
 }
 
@@ -49,7 +49,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--color-text-body);
   margin-bottom: 8px;
 }
 
@@ -63,27 +63,27 @@
   margin-top: 20px;
   padding: 12px 16px;
   border-radius: 10px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--color-grey-50);
+  border: 1px solid var(--color-card-border);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .noticeWarn {
-  background: #fffbeb;
-  border-color: #fde68a;
+  background: var(--color-warn-bg);
+  border-color: var(--color-warn-strong);
 }
 
 .noticeOk {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
+  background: var(--color-ok-bg);
+  border-color: var(--color-ok-strong);
 }
 
 .adminNote {
   margin: 12px 0 0;
   padding: 12px 16px;
-  border-left: 3px solid #cbd5e1;
-  background: #f8fafc;
+  border-left: 3px solid var(--color-input-border);
+  background: var(--color-grey-50);
   border-radius: 0 8px 8px 0;
   white-space: pre-wrap;
   font-size: 14px;
@@ -103,24 +103,24 @@
 .field span {
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
+  color: var(--color-text-body);
 }
 
 .field input,
 .field textarea {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--color-input-border);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 14px;
   font-family: inherit;
-  color: #0f172a;
-  background: #ffffff;
+  color: var(--color-primary-dark);
+  background: var(--color-bg-primary);
 }
 
 .field input:focus,
 .field textarea:focus {
-  outline: 2px solid #04102d33;
-  border-color: #04102d;
+  outline: 2px solid color-mix(in srgb, var(--color-primary-dark) 20%, transparent);
+  border-color: var(--color-primary-dark);
 }
 
 .hp {
@@ -133,8 +133,8 @@
 
 .submit {
   justify-self: start;
-  background: #04102d;
-  color: #ffffff;
+  background: var(--color-primary-dark);
+  color: var(--color-bg-primary);
   border: 0;
   border-radius: 10px;
   padding: 12px 28px;
@@ -151,9 +151,9 @@
 .error {
   padding: 10px 14px;
   border-radius: 10px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
+  background: var(--color-err-bg);
+  border: 1px solid var(--color-err-line);
+  color: var(--color-err-deep);
   font-size: 14px;
 }
 
@@ -173,12 +173,12 @@
 }
 
 .eventWhen {
-  color: #64748b;
+  color: var(--color-text-body);
   font-size: 12px;
 }
 
 .eventBody {
   white-space: pre-wrap;
   margin-top: 2px;
-  color: #334155;
+  color: var(--color-text-body);
 }

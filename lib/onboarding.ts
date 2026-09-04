@@ -19,6 +19,7 @@ import { recordAudit } from "@/lib/admin/audit";
 import { promoteSelfieToAvatar } from "@/lib/avatars";
 import { ensureJourney } from "@/lib/onboarding-cycle";
 import type { SurveyFieldRow } from "@/lib/admin/surveys";
+import { PALETTE as P } from "@/lib/design/palette";
 
 const OPS_EMAIL = "mai@edge8.ai";
 
@@ -361,7 +362,7 @@ async function notifyOpsBackfill(
       <p>A new member completed onboarding but has <strong>no application on file</strong>, so this looks like a direct hire.</p>
       <p><strong>${name ?? "(no name)"}</strong> &lt;${email}&gt; is now in <strong>pre-boarding</strong>.</p>
       <p>Please backfill the hiring-side record (department, position, employee number) and send their portal invite from the Team admin when ready.</p>
-      <p style="color:#64748b;font-size:13px;">person_id: ${personId}</p>
+      <p style="color:${P.inkBody};font-size:13px;">person_id: ${personId}</p>
     `,
     logMeta: { source: "onboarding" },
   });

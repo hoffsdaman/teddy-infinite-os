@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { companyOs } from "@/lib/supabase";
 import { sendTransactionalEmail } from "@/lib/email";
 import { getSiteOrigin } from "@/lib/site-origin";
+import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -98,18 +99,18 @@ export async function GET(req: Request) {
     const items = person.cards
       .map((c) => {
         const due = c.overdue
-          ? `<span style="color:#b0332f;font-weight:600">${esc(fmtDue(c.due))} (overdue)</span>`
-          : `<span style="color:#797c82">${esc(fmtDue(c.due))}</span>`;
-        return `<li style="margin:0 0 8px"><a href="${origin}/team/boards/${esc(c.slug)}" style="color:#287BE8;text-decoration:none;font-weight:600">${esc(
+          ? `<span style="color:${P.errInk};font-weight:600">${esc(fmtDue(c.due))} (overdue)</span>`
+          : `<span style="color:${P.inkBody}">${esc(fmtDue(c.due))}</span>`;
+        return `<li style="margin:0 0 8px"><a href="${origin}/team/boards/${esc(c.slug)}" style="color:${P.blue};text-decoration:none;font-weight:600">${esc(
           c.title,
-        )}</a><br><span style="font-size:13px;color:#797c82">${esc(c.board)} · </span>${due}</li>`;
+        )}</a><br><span style="font-size:13px;color:${P.inkBody}">${esc(c.board)} · </span>${due}</li>`;
       })
       .join("");
-    const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;color:#1a2340">
+    const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;color:${P.dark}">
       <p style="font-size:16px">Morning ${esc(person.name)},</p>
-      <p style="font-size:15px;color:#5a6480">You have ${n} open task${n === 1 ? "" : "s"} across your boards:</p>
+      <p style="font-size:15px;color:${P.inkBody}">You have ${n} open task${n === 1 ? "" : "s"} across your boards:</p>
       <ul style="padding-left:18px;font-size:15px">${items}</ul>
-      <p style="font-size:14px"><a href="${origin}/team/my-work-boards" style="color:#287BE8">Open My Work Boards →</a></p>
+      <p style="font-size:14px"><a href="${origin}/team/my-work-boards" style="color:${P.blue}">Open My Work Boards →</a></p>
     </div>`;
     const ok = await sendTransactionalEmail({
       to: person.email,
