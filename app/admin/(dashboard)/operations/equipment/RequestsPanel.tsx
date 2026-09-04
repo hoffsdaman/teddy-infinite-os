@@ -27,37 +27,29 @@ export function RequestsPanel({ requests }: { requests: PendingRequest[] }) {
   }
 
   return (
-    <div className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
-      <div className="admin-shelf-heading" style={{ marginBottom: 10 }}>
+    <div className="admin-card admin-section-card u-mb-4">
+      <div className="admin-shelf-heading u-mb-3">
         Equipment requests
         <Badge tone="warn">{requests.length} open</Badge>
       </div>
-      {err && <div className="admin-alert admin-alert--err" style={{ marginBottom: 10 }}>{err}</div>}
-      <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 12 }}>
+      {err && <div className="admin-alert admin-alert--err u-mb-3">{err}</div>}
+      <ul className="u-stack u-gap-3 u-m-0 u-p-0 u-list-plain">
         {requests.map((r) => (
           <li
             key={r.id}
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 10,
-              borderLeft: "2px solid var(--admin-line)",
-              paddingLeft: 12,
-            }}
+            className="u-row u-wrap u-between u-gap-3 admin-quote"
           >
-            <div style={{ minWidth: 0 }}>
+            <div className="u-min-0">
               <div className="admin-cell-strong">
                 {r.person?.full_name ?? "Unknown"} · {humanize(r.type)}
               </div>
-              {r.reason && <div style={{ fontSize: 13 }}>{r.reason}</div>}
-              <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+              {r.reason && <div className="u-sm">{r.reason}</div>}
+              <div className="admin-cell-muted u-sm">
                 Asked {formatDate(r.created_at)}
                 {r.needed_by && ` · needed by ${formatDate(r.needed_by)}`}
               </div>
             </div>
-            <div style={{ display: "flex", gap: 8, flex: "none" }}>
+            <div className="u-row u-shrink-0">
               <button
                 type="button"
                 className="admin-btn admin-btn--sm"

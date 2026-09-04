@@ -27,14 +27,14 @@ export function ImportRunner() {
 
   return (
     <div className="admin-timeoff">
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
 
       <button className="admin-btn admin-btn--primary" onClick={run} disabled={pending}>
         {pending ? "Importing… (takes a minute or two)" : "Run Day Off import"}
       </button>
 
       {report && (
-        <div className="admin-card" style={{ marginTop: 20, padding: "18px 20px" }}>
+        <div className="admin-card u-mt-5 u-p-4">
           <h2 className="admin-card-title">Import report — anchor {report.anchorDate}</h2>
           <ul className="admin-import-summary">
             <li><strong>{report.employees.matched.length + report.employees.created.length}</strong> of {report.employees.total} Day Off employees imported ({report.employees.matched.length} matched, {report.employees.created.length} newly created, {report.employees.skippedCustomer.length} customer accounts skipped)</li>
@@ -46,35 +46,35 @@ export function ImportRunner() {
 
           {report.employees.created.length > 0 && (
             <>
-              <h3 className="admin-card-title" style={{ marginTop: 14 }}>New records created (had no CRM presence)</h3>
+              <h3 className="admin-card-title u-mt-4">New records created (had no CRM presence)</h3>
               <ul>{report.employees.created.map((u) => (
                 <li key={u.dayoffId}>
                   {u.name} — {u.email} ({u.status})
-                  {u.flaggedEntity && <strong style={{ color: "var(--admin-warn-ink)" }}> ⚑ review legal entity</strong>}
+                  {u.flaggedEntity && <strong className="u-warn"> ⚑ review legal entity</strong>}
                 </li>
               ))}</ul>
             </>
           )}
           {report.employees.unmatchedDayoff.length > 0 && (
             <>
-              <h3 className="admin-card-title" style={{ marginTop: 14 }}>Unmatched Day Off employees (snapshot only)</h3>
+              <h3 className="admin-card-title u-mt-4">Unmatched Day Off employees (snapshot only)</h3>
               <ul>{report.employees.unmatchedDayoff.map((u) => <li key={u.dayoffId}>{u.name} — {u.email ?? "no email"}</li>)}</ul>
             </>
           )}
           {report.employees.unmatchedLocal.length > 0 && (
             <>
-              <h3 className="admin-card-title" style={{ marginTop: 14 }}>Team members with no Day Off account</h3>
+              <h3 className="admin-card-title u-mt-4">Team members with no Day Off account</h3>
               <ul>{report.employees.unmatchedLocal.map((u) => <li key={u.teamMemberId}>{u.name} — {u.email}</li>)}</ul>
             </>
           )}
           {report.warnings.length > 0 && (
             <>
-              <h3 className="admin-card-title" style={{ marginTop: 14 }}>Warnings</h3>
+              <h3 className="admin-card-title u-mt-4">Warnings</h3>
               <ul>{report.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
             </>
           )}
 
-          <details style={{ marginTop: 14 }}>
+          <details className="u-mt-4">
             <summary>Full report JSON</summary>
             <pre className="admin-import-json">{JSON.stringify(report, null, 2)}</pre>
           </details>

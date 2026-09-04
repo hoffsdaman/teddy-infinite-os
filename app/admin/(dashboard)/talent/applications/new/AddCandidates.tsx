@@ -94,7 +94,7 @@ function CandidateFields({
     onChange({ ...value, [k]: e.target.value });
   return (
     <>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Full name *</label>
           <input className="admin-input" value={value.fullName} disabled={disabled} onChange={set("fullName")} />
@@ -110,7 +110,7 @@ function CandidateFields({
           />
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Phone</label>
           <input className="admin-input" type="tel" value={value.phone} disabled={disabled} onChange={set("phone")} />
@@ -127,7 +127,7 @@ function CandidateFields({
           />
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Current title</label>
           <input
@@ -268,10 +268,10 @@ function ResumeIntake({ jobReqs, initialReqId }: { jobReqs: JobReqOption[]; init
   const extracting = drafts.some((d) => d.state === "extracting");
 
   return (
-    <div style={{ maxWidth: 860 }}>
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+    <div className="u-max-narrow">
+      <div className="admin-card admin-section-card u-mb-4">
         <div className="admin-form">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 10, alignItems: "end" }}>
+          <div className="admin-form-row">
             <div className="admin-field">
               <label className="admin-label">Position *</label>
               <JobReqSelect jobReqs={jobReqs} value={reqId} onChange={setReqId} />
@@ -285,7 +285,7 @@ function ResumeIntake({ jobReqs, initialReqId }: { jobReqs: JobReqOption[]; init
                 type="file"
                 multiple
                 accept={RESUME_ACCEPT}
-                style={{ display: "none" }}
+                className="u-hidden-input"
                 onChange={onFiles}
               />
             </div>
@@ -298,7 +298,7 @@ function ResumeIntake({ jobReqs, initialReqId }: { jobReqs: JobReqOption[]; init
       </div>
 
       {drafts.length > 0 && (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+        <div className="admin-card-head">
           <div className="admin-cell-muted">
             {drafts.length} {drafts.length === 1 ? "resume" : "resumes"}
             {extracting ? " · reading…" : ""}
@@ -318,8 +318,8 @@ function ResumeIntake({ jobReqs, initialReqId }: { jobReqs: JobReqOption[]; init
       )}
 
       {drafts.map((d) => (
-        <div key={d.key} className="admin-card admin-section-card" style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
+        <div key={d.key} className="admin-card admin-section-card u-mb-3">
+          <div className="u-row u-between u-mb-3">
             <span className="admin-cell-strong">{d.fileName}</span>
             <span className="admin-cell-muted">
               {d.state === "extracting" && "Reading resume…"}
@@ -437,7 +437,7 @@ function ManualEntry({ jobReqs, initialReqId }: { jobReqs: JobReqOption[]; initi
   }
 
   return (
-    <div className="admin-card admin-section-card" style={{ maxWidth: 720 }}>
+    <div className="admin-card admin-section-card u-max-7">
       <div className="admin-form">
         <div className="admin-field">
           <label className="admin-label">Position *</label>

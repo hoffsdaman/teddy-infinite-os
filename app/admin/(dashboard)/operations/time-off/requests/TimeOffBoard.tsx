@@ -192,7 +192,7 @@ export function TimeOffBoard({
             {rows.map((l) => (
               <tr key={l.id}>
                 <td className="admin-cell-strong">{l.name}</td>
-                <td style={{ textAlign: "right" }}>{formatDays(l.days)}</td>
+                <td className="u-right">{formatDays(l.days)}</td>
               </tr>
             ))}
           </tbody>
@@ -210,23 +210,18 @@ export function TimeOffBoard({
       )}
 
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: 12,
-        }}
+        className="u-row u-between u-mb-3"
       >
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Upcoming &amp; pending</h2>
+        <h2 className="admin-card-title">Upcoming &amp; pending</h2>
         <button className="admin-btn" onClick={() => setShowForm((v) => !v)}>
           {showForm ? "Hide form" : "Log time off"}
         </button>
       </div>
 
       {showForm && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+        <div className="admin-card admin-section-card u-mb-5">
           <h2 className="admin-card-title">Log time off for someone</h2>
-          <p className="admin-cell-muted" style={{ marginBottom: 12 }}>
+          <p className="admin-cell-muted u-mb-3">
             Logged entries are approved immediately — you are the approver.
           </p>
           <form className="admin-form" onSubmit={submit}>
@@ -324,18 +319,13 @@ export function TimeOffBoard({
       {requestsTable(upcoming, "No upcoming or pending leave.")}
 
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: 20,
-          margin: "20px 0",
-        }}
+        className="u-grid-auto-md u-gap-5 u-my-5"
       >
         {leaderCard("Most time off — 2026", topFive)}
         {leaderCard("Least time off — 2026", bottomFive)}
       </div>
 
-      <h2 className="admin-card-title" style={{ marginBottom: 12 }}>All requests</h2>
+      <h2 className="admin-card-title u-mb-3">All requests</h2>
       {requestsTable(all, "No time off requests yet.")}
     </div>
   );

@@ -41,7 +41,7 @@ export function ApplicationsView({
 
   return (
     <>
-      <div className="admin-toolbar" style={{ gap: 6, marginBottom: 4 }}>
+      <div className="admin-toolbar u-gap-2 u-mb-1">
         <button
           type="button"
           className={`admin-btn admin-btn--sm${view === "list" ? " admin-btn--primary" : ""}`}

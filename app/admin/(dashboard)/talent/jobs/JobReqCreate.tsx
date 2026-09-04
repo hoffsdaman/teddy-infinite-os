@@ -78,7 +78,7 @@ export function JobReqCreate() {
               autoFocus
             />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
+          <div className="u-grid-auto-sm">
             <div className="admin-field">
               <label className="admin-label">Type</label>
               <select className="admin-select" value={employmentType} onChange={(e) => setEmploymentType(e.target.value)}>
@@ -109,7 +109,7 @@ export function JobReqCreate() {
               placeholder="e.g. Ho Chi Minh City, Vietnam"
             />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 90px", gap: 10 }}>
+          <div className="u-grid-2-fixed">
             <div className="admin-field">
               <label className="admin-label">Salary min</label>
               <input
@@ -158,7 +158,7 @@ export function JobReqCreate() {
 
           {error && <div className="admin-alert admin-alert--err">{error}</div>}
 
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div className="u-row">
             <button type="button" className="admin-btn admin-btn--primary" disabled={busy || !title.trim()} onClick={submit}>
               {busy ? "Creating…" : "Create req"}
             </button>

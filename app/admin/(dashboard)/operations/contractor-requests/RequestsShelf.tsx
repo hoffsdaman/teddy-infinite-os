@@ -152,7 +152,7 @@ function DecisionAction({
   }
 
   return (
-    <div style={{ display: "grid", gap: 8, width: "100%" }}>
+    <div className="u-stack u-w-full">
       <textarea
         rows={3}
         value={note}
@@ -161,7 +161,7 @@ function DecisionAction({
         autoFocus
       />
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button
           type="button"
           className={primary ? "admin-btn admin-btn--primary" : "admin-btn"}
@@ -245,7 +245,7 @@ function RequestShelfBody({ row, onClose }: { row: RequestRow; onClose: () => vo
 
       <section>
         <div className="admin-shelf-heading">Brief</div>
-        <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{row.brief}</div>
+        <div className="u-prewrap">{row.brief}</div>
       </section>
 
       {row.estimated_hours !== null && (
@@ -255,7 +255,7 @@ function RequestShelfBody({ row, onClose }: { row: RequestRow; onClose: () => vo
             {kv("Estimated hours", formatHours(row.estimated_hours))}
             {kv("Submitted", timeAgo(row.estimate_submitted_at))}
           </dl>
-          {row.plan_text && <div style={{ whiteSpace: "pre-wrap", fontSize: 13, marginTop: 8 }}>{row.plan_text}</div>}
+          {row.plan_text && <div className="u-mt-2 u-prewrap">{row.plan_text}</div>}
         </section>
       )}
 
@@ -276,7 +276,7 @@ function RequestShelfBody({ row, onClose }: { row: RequestRow; onClose: () => vo
             {kv("Submitted", timeAgo(row.work_submitted_at))}
           </dl>
           {row.work_summary && (
-            <div style={{ whiteSpace: "pre-wrap", fontSize: 13, marginTop: 8 }}>{row.work_summary}</div>
+            <div className="u-mt-2 u-prewrap">{row.work_summary}</div>
           )}
         </section>
       )}
@@ -284,7 +284,7 @@ function RequestShelfBody({ row, onClose }: { row: RequestRow; onClose: () => vo
       {(status === "estimate_submitted" || status === "work_submitted" || status === "draft" || open) && (
         <section>
           <div className="admin-shelf-heading">Actions</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          <div className="u-row u-wrap">
             {status === "draft" && (
               <DecisionAction
                 label="Send to contractor"
@@ -373,16 +373,16 @@ function RequestShelfBody({ row, onClose }: { row: RequestRow; onClose: () => vo
         ) : events.length === 0 ? (
           <div className="admin-cell-muted">No events.</div>
         ) : (
-          <div style={{ display: "grid", gap: 10 }}>
+          <div className="u-stack u-gap-3">
             {events.map((e) => (
-              <div key={e.id} style={{ fontSize: 13 }}>
-                <div style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
+              <div key={e.id}>
+                <div className="u-row">
                   <strong>{EVENT_LABEL[e.type] ?? humanize(e.type)}</strong>
                   <span className="admin-cell-muted">
                     {e.actor || humanize(e.actor_type)} · {timeAgo(e.created_at)}
                   </span>
                 </div>
-                {e.body && <div style={{ whiteSpace: "pre-wrap", marginTop: 2 }}>{e.body}</div>}
+                {e.body && <div className="u-mt-1 u-prewrap">{e.body}</div>}
               </div>
             ))}
           </div>

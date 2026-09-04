@@ -26,7 +26,7 @@ export default async function DayoffImportPage() {
         sub="One-time migration from day-off.app. Idempotent — re-running updates in place."
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Snapshots captured" value={snapRes.count ?? 0} />
         <MetricCard label="Members linked" value={linkedRes.count ?? 0} />
         <MetricCard label="Requests imported" value={reqRes.count ?? 0} />

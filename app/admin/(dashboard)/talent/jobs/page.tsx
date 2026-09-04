@@ -100,12 +100,12 @@ export default async function JobsPage() {
         sub={`${rows.length.toLocaleString()} ${rows.length === 1 ? "requisition" : "requisitions"}`}
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Open" value={openCount} sub="accepting applications" />
         <MetricCard label="Filled" value={filledCount} sub="hired" />
       </div>

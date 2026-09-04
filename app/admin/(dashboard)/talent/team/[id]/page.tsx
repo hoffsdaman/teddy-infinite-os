@@ -192,7 +192,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+      <div className="u-row-top u-gap-4">
         {m.person_id && (
           <AvatarUpload
             name={name}
@@ -201,7 +201,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
             size={60}
           />
         )}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="u-grow u-min-0">
           <PageHead
             eyebrow={<Link href="/admin/talent/team">← Team</Link>}
             title={name}
@@ -214,7 +214,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
       </div>
 
       {total !== null && (
-        <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+        <div className="admin-kpi-grid u-mb-5">
           <MetricCard label="Entitled" value={formatLeaveBalance(total)} sub="days this period" />
           <MetricCard label="Used" value={formatLeaveBalance(used)} sub="days taken" />
           <MetricCard
@@ -321,7 +321,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
 
           <div className="admin-card admin-section-card">
             <h2 className="admin-card-title">Portal access</h2>
-            <p className="admin-page-sub" style={{ marginTop: 0 }}>{m.email}</p>
+            <p className="admin-page-sub u-mt-0">{m.email}</p>
             {!m.person_id ? (
               <span className="admin-cell-muted">No linked person record.</span>
             ) : m.status === "terminated" || m.status === "alumni" ? (
@@ -344,7 +344,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
         <div>
           <div className="admin-card admin-section-card">
             <h2 className="admin-card-title">Reviews ({reviewHistory.length})</h2>
-            <dl className="admin-kv" style={{ marginBottom: 14 }}>
+            <dl className="admin-kv u-mb-4">
               <dt>Next review</dt>
               <dd>
                 {nextReview ? (
@@ -363,7 +363,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
               </dd>
             </dl>
 
-            <div style={{ marginBottom: reviewHistory.length ? 16 : 0 }}>
+            <div className={reviewHistory.length ? "u-mb-4" : "u-mb-0"}>
               <SendReviewButton teamMemberId={m.id} defaultType={defaultReviewType} />
             </div>
 
@@ -456,7 +456,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
               </div>
             )}
             {isLeaving && heldNow.length > 0 && (
-              <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+              <div className="admin-alert admin-alert--err u-mt-3">
                 Leaving with {heldNow.length} {heldNow.length === 1 ? "item" : "items"} still out.
                 Close {heldNow.length === 1 ? "it" : "them"} on the{" "}
                 <Link href="/admin/operations/equipment">equipment register</Link> before the last day.
@@ -475,7 +475,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
                     <tr>
                       <th>Survey</th>
                       <th>Submitted</th>
-                      <th style={{ textAlign: "right" }}>Answered</th>
+                      <th className="u-right">Answered</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -485,7 +485,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
                         title={s.surveyName}
                         eyebrow={`Submitted ${formatDate(s.submittedAt)}`}
                         preview={
-                          <div style={{ display: "grid", gap: 14 }}>
+                          <div className="u-stack u-gap-4">
                             {s.fields.map((f) => (
                               <div key={f.fieldId}>
                                 <div className="admin-cell-muted">{f.label}</div>
@@ -503,7 +503,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
                       >
                         <td className="admin-cell-strong">{s.surveyName}</td>
                         <td title={formatDate(s.submittedAt)}>{formatDate(s.submittedAt)}</td>
-                        <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                        <td className="admin-cell-mono u-right">
                           {s.answeredCount}/{s.fieldCount}
                         </td>
                       </PreviewRow>

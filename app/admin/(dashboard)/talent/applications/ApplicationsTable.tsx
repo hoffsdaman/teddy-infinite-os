@@ -158,10 +158,9 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
 
   return (
     <>
-      <div className="admin-toolbar" style={{ gap: 10, flexWrap: "wrap" }}>
+      <div className="admin-toolbar u-gap-3 u-wrap">
         <input
-          className="admin-input"
-          style={{ maxWidth: 280 }}
+          className="admin-input u-max-4"
           placeholder="Search candidate, headline, or role…"
           value={search}
           onChange={(e) => {
@@ -171,8 +170,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
           aria-label="Search applications"
         />
         <select
-          className="admin-select"
-          style={{ maxWidth: 240 }}
+          className="admin-select u-max-3"
           value={reqFilter}
           onChange={(e) => {
             setReqFilter(e.target.value);
@@ -188,8 +186,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
           ))}
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 160 }}
+          className="admin-select u-max-2"
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
@@ -205,8 +202,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
           ))}
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 180 }}
+          className="admin-select u-max-3"
           value={stageFilter}
           onChange={(e) => {
             setStageFilter(e.target.value);
@@ -222,8 +218,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
           ))}
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 130 }}
+          className="admin-select u-max-1"
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
@@ -256,7 +251,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
           <table className="admin-table">
             <thead>
               <tr>
-                <th style={{ width: 44 }}>#</th>
+                <th className="admin-th--xs">#</th>
                 <th>
                   <button type="button" className="admin-th-sort" onClick={() => onSort("candidate")}>
                     Candidate{sortArrow("candidate")}
@@ -272,12 +267,12 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
                     Stage{sortArrow("stage")}
                   </button>
                 </th>
-                <th style={{ textAlign: "right" }}>
+                <th className="u-right">
                   <button type="button" className="admin-th-sort" onClick={() => onSort("ai")}>
                     AI fit{sortArrow("ai")}
                   </button>
                 </th>
-                <th style={{ textAlign: "right" }}>
+                <th className="u-right">
                   <button type="button" className="admin-th-sort" onClick={() => onSort("recruiter")}>
                     Recruiter{sortArrow("recruiter")}
                   </button>
@@ -323,17 +318,17 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
                         {r.candidateName || "—"}
                       </span>
                       {r.archivedAt && (
-                        <span style={{ marginLeft: 8 }}>
+                        <span className="u-ml-2">
                           <Badge tone="neutral">Archived</Badge>
                         </span>
                       )}
                     </td>
                     <td>{r.jobReqTitle || <span className="admin-cell-muted">—</span>}</td>
                     <td>{r.stageName || <span className="admin-cell-muted">—</span>}</td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.aiRating != null ? r.aiRating.toFixed(1) : <span className="admin-cell-muted">—</span>}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.rating != null ? `${r.rating}★` : <span className="admin-cell-muted">—</span>}
                     </td>
                     <td>
@@ -365,7 +360,7 @@ export function ApplicationsTable({ rows }: { rows: AppRow[] }) {
               >
                 Prev
               </button>
-              <span className="admin-pagebtn" aria-disabled style={{ pointerEvents: "none" }}>
+              <span className="admin-pagebtn u-no-events" aria-disabled>
                 {clampedPage} / {totalPages}
               </span>
               <button

@@ -78,9 +78,9 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
   if (rows.length === 0) return null;
 
   return (
-    <div style={{ marginTop: 26 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-        <div style={{ fontWeight: 700, fontSize: 15 }}>AI resume screen</div>
+    <div className="u-mt-6">
+      <div className="u-row u-gap-3 u-mb-3">
+        <div className="u-lg u-strong">AI resume screen</div>
         {unscanned > 0 && (
           <button type="button" className="admin-btn admin-btn--sm" onClick={scanAll} disabled={isPending}>
             {isPending && busyId == null ? "Scanning…" : `Scan ${unscanned} unscanned`}
@@ -88,7 +88,7 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
         )}
       </div>
       {notice && (
-        <div className="admin-cell-muted" style={{ fontSize: 13, marginBottom: 8 }}>
+        <div className="admin-cell-muted u-mb-2">
           {notice}
         </div>
       )}
@@ -98,13 +98,13 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
           <table className="admin-table">
             <thead>
               <tr>
-                <th style={{ width: 40 }}>#</th>
+                <th className="admin-th--xs">#</th>
                 <th>Candidate</th>
-                <th style={{ textAlign: "right" }}>AI rating</th>
+                <th className="u-right">AI rating</th>
                 <th>Screen</th>
                 <th>Stage</th>
                 <th>Scanned</th>
-                <th style={{ width: 90 }} />
+                <th className="u-w-90" />
               </tr>
             </thead>
             <tbody>
@@ -132,7 +132,7 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
                           {r.candidateName || "—"}
                         </span>
                       </td>
-                      <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                      <td className="admin-cell-mono u-right">
                         {r.aiRating != null ? `${r.aiRating.toFixed(1)}/5` : <span className="admin-cell-muted">—</span>}
                       </td>
                       <td>
@@ -157,31 +157,31 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
                     </tr>
                     {open && (
                       <tr>
-                        <td colSpan={7} style={{ background: "var(--admin-bg)" }}>
+                        <td colSpan={7} className="admin-td-inset">
                           {r.aiStatus === "failed" && r.aiError && (
-                            <div style={{ fontSize: 13, color: "var(--admin-err-ink)", padding: "10px 4px" }}>
+                            <div className="u-py-3 u-err">
                               Scan failed: {r.aiError}
                             </div>
                           )}
                           {s ? (
-                            <div style={{ padding: "12px 4px", display: "flex", flexDirection: "column", gap: 12, fontSize: 14 }}>
+                            <div className="u-stack u-gap-3 u-py-3 u-lg">
                               <div>
-                                <div className="admin-label" style={{ marginBottom: 4 }}>Overview</div>
-                                <div style={{ whiteSpace: "pre-wrap" }}>{s.overview}</div>
+                                <div className="admin-label u-mb-1">Overview</div>
+                                <div className="u-prewrap">{s.overview}</div>
                               </div>
                               <div>
-                                <div className="admin-label" style={{ marginBottom: 4 }}>Skills</div>
-                                <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 4 }}>
+                                <div className="admin-label u-mb-1">Skills</div>
+                                <ul className="u-stack u-gap-1 u-m-0 u-pl-4">
                                   {s.skills.map((sk, j) => (
                                     <li key={j}>{sk}</li>
                                   ))}
                                 </ul>
                               </div>
-                              <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+                              <div className="u-row u-wrap">
                                 <span><span className="admin-label">English</span> {s.english}</span>
                                 <span><span className="admin-label">Notice period</span> {s.notice_period}</span>
                               </div>
-                              <div style={{ display: "flex", gap: 16 }}>
+                              <div className="u-row">
                                 {r.resumeDocumentId && (
                                   <a href={`/admin/talent/resume/${r.resumeDocumentId}`} target="_blank" rel="noreferrer">
                                     Resume ↗
@@ -192,7 +192,7 @@ export function AiRanking({ jobReqId, rows }: { jobReqId: string; rows: AiRankRo
                             </div>
                           ) : (
                             r.aiStatus !== "failed" && (
-                              <div className="admin-cell-muted" style={{ padding: "10px 4px", fontSize: 13 }}>
+                              <div className="admin-cell-muted u-py-3">
                                 No screen result yet.
                               </div>
                             )

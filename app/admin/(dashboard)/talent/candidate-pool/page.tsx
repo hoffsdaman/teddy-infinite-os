@@ -127,7 +127,7 @@ export default async function CandidatePoolPage() {
         sub={`${poolRows.length} candidates · ${screened} AI-screened · ${ROLE_FAMILIES.length} role families`}
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error.message}
         </div>
       )}

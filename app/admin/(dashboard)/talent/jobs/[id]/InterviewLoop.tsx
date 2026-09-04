@@ -46,7 +46,7 @@ export function InterviewLoop({
   const totalMinutes = steps.reduce((sum, s) => sum + (s.durationMinutes ?? 0), 0);
 
   return (
-    <section className="admin-card" style={{ marginTop: 26, padding: "18px 20px" }}>
+    <section className="admin-card admin-section-card u-mt-6">
       <div className="admin-card-title">
         Interview loop{" "}
         <span className="admin-cell-muted">
@@ -79,26 +79,24 @@ export function InterviewLoop({
         />
       ))}
 
-      <div className="admin-form" style={{ marginTop: 16 }}>
+      <div className="admin-form u-mt-4">
         <div className="admin-label">Add an interview</div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-start" }}>
+        <div className="u-row-top u-wrap">
           <input
-            className="admin-input"
+            className="admin-input u-flex-2"
             placeholder="Technical, Founder, Culture…"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            style={{ flex: "1 1 200px" }}
             aria-label="Interview name"
           />
           <input
-            className="admin-input"
+            className="admin-input u-w-120"
             type="number"
             min={5}
             max={480}
             step={5}
             value={newDuration}
             onChange={(e) => setNewDuration(e.target.value)}
-            style={{ width: 110 }}
             aria-label="Minutes"
           />
           <InterviewerPicker
@@ -165,23 +163,21 @@ function StepRow({
 
       <div className="admin-loop-step-body">
         {editing ? (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="u-row u-wrap">
             <input
-              className="admin-input"
+              className="admin-input u-flex-1"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ flex: "1 1 180px" }}
               aria-label="Interview name"
             />
             <input
-              className="admin-input"
+              className="admin-input u-w-90"
               type="number"
               min={5}
               max={480}
               step={5}
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-              style={{ width: 100 }}
               aria-label="Minutes"
             />
             <button
@@ -301,13 +297,12 @@ function InterviewerPicker({
 }) {
   return (
     <select
-      className="admin-input"
+      className={`admin-input ${compact ? "u-w-full u-mt-2" : "u-w-200"}`}
       multiple
       size={compact ? 3 : 4}
       value={selected}
       disabled={disabled}
       aria-label="Interviewers"
-      style={{ width: compact ? "100%" : 200, marginTop: compact ? 8 : 0 }}
       onChange={(e) =>
         onChange(Array.from(e.target.selectedOptions).map((o) => o.value))
       }

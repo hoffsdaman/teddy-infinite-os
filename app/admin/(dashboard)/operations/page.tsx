@@ -109,7 +109,7 @@ export default async function OperationsCockpitPage() {
       />
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err.message}
         </div>
       )}
@@ -119,12 +119,12 @@ export default async function OperationsCockpitPage() {
         label="Time off"
         note={pending > 0 ? `${pending} ${pending === 1 ? "request" : "requests"} pending` : "no pending requests"}
       />
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="Days off · 30d" value={daysOff30} sub="approved leave" href="/admin/operations/time-off/requests" />
         <MetricCard label="Out today" value={outToday} sub={outToday === 0 ? "everyone's in" : "on leave now"} href="/admin/operations/time-off/requests" />
         <MetricCard label="Pending requests" value={pending} sub="awaiting approval" href="/admin/operations/time-off/requests" />
       </div>
-      <div className="admin-cockpit-cols" style={{ marginBottom: 8 }}>
+      <div className="admin-cockpit-cols u-mb-2">
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Days off by month · {year}</div>
           <BarChart data={leaveByMonth} ariaLabel="Approved time off by month" emptyText="No time off this year." />
@@ -148,7 +148,7 @@ export default async function OperationsCockpitPage() {
                   </div>
                 </div>
               ))}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/operations/time-off/requests" className="admin-auth-link">
                   Open time off →
                 </Link>
@@ -160,7 +160,7 @@ export default async function OperationsCockpitPage() {
 
       {/* ── WORKPLACE & SERVICE ── */}
       <Band label="Workplace & service" note={chips ? `goals: ${chips}` : undefined} />
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Equipment value"
           value={`$${Math.round(equipUsd).toLocaleString("en-US")}`}
@@ -195,7 +195,7 @@ export default async function OperationsCockpitPage() {
                   </div>
                 </div>
               ))}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/operations/contractor-requests" className="admin-auth-link">
                   Open requests →
                 </Link>

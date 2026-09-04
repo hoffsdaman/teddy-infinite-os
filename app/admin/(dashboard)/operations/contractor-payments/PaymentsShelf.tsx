@@ -122,10 +122,10 @@ function NoteAction({
   }
 
   return (
-    <div style={{ display: "grid", gap: 8, width: "100%" }}>
+    <div className="u-stack u-w-full">
       <textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder={placeholder} autoFocus />
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button
           type="button"
           className={primary ? "admin-btn admin-btn--primary" : "admin-btn"}
@@ -198,15 +198,15 @@ function PaymentShelfBody({ row, onClose }: { row: PaymentRow; onClose: () => vo
           {kv("Overtime hours", Number(row.total_overtime_hours) > 0 ? formatHours(row.total_overtime_hours) : null)}
           {kv(
             "Amount",
-            <span className="admin-cell-mono" style={{ fontWeight: 600 }}>
+            <span className="admin-cell-mono u-strong">
               {formatCents(row.amount_cents, row.currency)}
             </span>,
           )}
           {kv("Decided", row.decided_at ? `${humanize(row.status)} by ${row.decided_by} · ${formatDate(row.decided_at)}` : null)}
         </dl>
-        {row.summary && <div className="admin-cell-muted" style={{ marginTop: 8, fontSize: 12 }}>{row.summary}</div>}
+        {row.summary && <div className="admin-cell-muted u-mt-2 u-sm">{row.summary}</div>}
         {row.note && (
-          <div style={{ whiteSpace: "pre-wrap", fontSize: 13, marginTop: 8 }}>
+          <div className="u-mt-2 u-prewrap">
             <strong>Note:</strong> {row.note}
           </div>
         )}
@@ -219,17 +219,17 @@ function PaymentShelfBody({ row, onClose }: { row: PaymentRow; onClose: () => vo
         ) : items.length === 0 ? (
           <div className="admin-cell-muted">No linked work requests.</div>
         ) : (
-          <div style={{ display: "grid", gap: 10 }}>
+          <div className="u-stack u-gap-3">
             {items.map((i) => (
-              <div key={i.id} style={{ fontSize: 13 }}>
-                <div style={{ display: "flex", gap: 8, alignItems: "baseline", justifyContent: "space-between" }}>
+              <div key={i.id}>
+                <div className="u-row u-between">
                   <strong>{i.title}</strong>
                   <span className="admin-cell-mono">
                     {formatHours(i.actual_hours)}
                     {Number(i.actual_overtime_hours) > 0 ? ` + ${formatHours(i.actual_overtime_hours)} OT` : ""}
                   </span>
                 </div>
-                <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                <div className="admin-cell-muted u-sm">
                   Accepted {timeAgo(i.accepted_at)}
                   {i.work_link && (
                     <>
@@ -249,7 +249,7 @@ function PaymentShelfBody({ row, onClose }: { row: PaymentRow; onClose: () => vo
       {undecided && (
         <section>
           <div className="admin-shelf-heading">Actions</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          <div className="u-row u-wrap">
             <NoteAction
               label="Mark paid"
               primary
@@ -273,9 +273,9 @@ function PaymentShelfBody({ row, onClose }: { row: PaymentRow; onClose: () => vo
             />
           </div>
 
-          <div style={{ marginTop: 14 }}>
+          <div className="u-mt-4">
             {overriding ? (
-              <div style={{ display: "grid", gap: 8 }}>
+              <div className="u-stack">
                 <label className="admin-field">
                   <span>Override amount ({row.currency.toUpperCase()})</span>
                   <input type="number" min="0" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
@@ -287,7 +287,7 @@ function PaymentShelfBody({ row, onClose }: { row: PaymentRow; onClose: () => vo
                   placeholder="Why the override? (required)"
                 />
                 {overrideError && <div className="admin-alert admin-alert--err">{overrideError}</div>}
-                <div style={{ display: "flex", gap: 8 }}>
+                <div className="u-row">
                   <button type="button" className="admin-btn admin-btn--primary" onClick={saveOverride} disabled={pending}>
                     {pending ? "Saving…" : "Save amount"}
                   </button>

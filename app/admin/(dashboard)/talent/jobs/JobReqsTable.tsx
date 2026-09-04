@@ -66,10 +66,9 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
 
   return (
     <>
-      <div className="admin-toolbar" style={{ gap: 10, flexWrap: "wrap" }}>
+      <div className="admin-toolbar u-gap-3 u-wrap">
         <input
-          className="admin-input"
-          style={{ maxWidth: 280 }}
+          className="admin-input u-max-4"
           placeholder="Search title, company, location, or hiring manager…"
           value={search}
           onChange={(e) => {
@@ -79,8 +78,7 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
           aria-label="Search job reqs"
         />
         <select
-          className="admin-select"
-          style={{ maxWidth: 160 }}
+          className="admin-select u-max-2"
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
@@ -96,8 +94,7 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
           ))}
         </select>
         <select
-          className="admin-select"
-          style={{ maxWidth: 130 }}
+          className="admin-select u-max-1"
           value={pageSize}
           onChange={(e) => {
             setPageSize(Number(e.target.value));
@@ -111,7 +108,7 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
             </option>
           ))}
         </select>
-        <div style={{ marginLeft: "auto" }}>
+        <div className="u-ml-auto">
           <JobReqCreate />
         </div>
       </div>
@@ -126,8 +123,8 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
                 <th>Hiring manager</th>
                 <th>Type</th>
                 <th>Location</th>
-                <th style={{ textAlign: "right" }}>Salary</th>
-                <th style={{ textAlign: "right" }}>Applicants</th>
+                <th className="u-right">Salary</th>
+                <th className="u-right">Applicants</th>
                 <th>Status</th>
                 <th>Opened</th>
               </tr>
@@ -178,12 +175,12 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
                         <span className="admin-cell-muted">—</span>
                       )}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {salaryBand(r.salaryMinCents, r.salaryMaxCents, r.currency) || (
                         <span className="admin-cell-muted">—</span>
                       )}
                     </td>
-                    <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                    <td className="admin-cell-mono u-right">
                       {r.applicationCount || <span className="admin-cell-muted">0</span>}
                     </td>
                     <td>
@@ -215,7 +212,7 @@ export function JobReqsTable({ rows, managers }: { rows: JobReqRow[]; managers: 
               >
                 Prev
               </button>
-              <span className="admin-pagebtn" aria-disabled style={{ pointerEvents: "none" }}>
+              <span className="admin-pagebtn u-no-events" aria-disabled>
                 {clampedPage} / {totalPages}
               </span>
               <button

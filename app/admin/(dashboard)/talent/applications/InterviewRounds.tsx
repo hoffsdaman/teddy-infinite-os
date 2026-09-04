@@ -62,8 +62,8 @@ export function InterviewRounds({ applicationId }: { applicationId: string }) {
   const teamById = new Map(team.map((t) => [t.id, t.name]));
 
   return (
-    <div style={{ marginTop: 18 }}>
-      <div className="admin-label" style={{ marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+    <div className="u-mt-4">
+      <div className="admin-label u-row u-between u-mb-2">
         <span>Interview journey</span>
         {rounds && rounds.length > 0 && (
           <span className="admin-cell-muted">
@@ -77,7 +77,7 @@ export function InterviewRounds({ applicationId }: { applicationId: string }) {
       {rounds && rounds.length === 0 && <div className="admin-empty">No interview rounds yet.</div>}
 
       {rounds && rounds.length > 0 && (
-        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+        <ol className="u-stack u-gap-3 u-m-0 u-p-0 u-list-plain">
           {rounds.map((round, i) => (
             <RoundCard key={round.id} index={i} round={round} teamById={teamById} onChange={reload} />
           ))}
@@ -95,7 +95,7 @@ export function InterviewRounds({ applicationId }: { applicationId: string }) {
           onCancel={() => setAdding(false)}
         />
       ) : (
-        <div style={{ marginTop: 12 }}>
+        <div className="u-mt-3">
           <button type="button" className="admin-btn admin-btn--sm" onClick={() => setAdding(true)}>
             + Add round
           </button>
@@ -133,17 +133,10 @@ function RoundCard({
   }
 
   return (
-    <li style={{ border: "1px solid var(--admin-line)", borderRadius: 10, padding: "14px 16px" }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+    <li className="u-p-4 admin-box">
+      <div className="u-row u-wrap u-mb-2">
         <span
-          style={{
-            fontSize: 11,
-            fontWeight: 700,
-            color: "var(--admin-bg)",
-            background: "var(--admin-ink)",
-            borderRadius: 6,
-            padding: "1px 7px",
-          }}
+          className="admin-badge-inverse"
         >
           {index + 1}
         </span>
@@ -152,7 +145,7 @@ function RoundCard({
           {MODE_LABEL.get(round.mode) || round.mode}
           {round.scheduledAt ? ` · ${formatDate(round.scheduledAt)}` : ""}
         </span>
-        <span style={{ marginLeft: "auto", fontSize: 12 }} className="admin-cell-muted">
+        <span className="admin-cell-muted u-ml-auto u-sm">
           {submitted}/{humans.length} scorecard{humans.length === 1 ? "" : "s"} in
         </span>
         <button type="button" className="admin-btn admin-btn--sm" disabled={busy} onClick={del}>
@@ -162,7 +155,7 @@ function RoundCard({
 
       <TranscriptPanel round={round} onChange={onChange} />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 10 }}>
+      <div className="u-stack u-mt-3">
         {round.seats.map((seat) => (
           <PanelSeatRow
             key={seat.interviewerId}
@@ -231,9 +224,9 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
   }
 
   return (
-    <div style={{ background: "var(--admin-muted-bg)", borderRadius: 8, padding: "8px 10px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", fontSize: 13 }}>
-        <span className="admin-label" style={{ margin: 0 }}>
+    <div className="admin-panel-soft">
+      <div className="u-row u-wrap">
+        <span className="admin-label u-m-0">
           Transcript
         </span>
         {round.transcriptDocId ? (
@@ -246,7 +239,7 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
         ) : (
           <span className="admin-cell-muted">none yet</span>
         )}
-        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 6 }}>
+        <span className="u-row u-ml-auto">
           <button
             type="button"
             className="admin-btn admin-btn--sm"
@@ -268,13 +261,13 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
           ref={inputRef}
           type="file"
           accept=".txt,.md,.vtt,.srt,text/plain"
-          style={{ display: "none" }}
+          className="u-hidden-input"
           onChange={onFile}
         />
       </div>
 
       {showPaste && (
-        <div style={{ marginTop: 8 }}>
+        <div className="u-mt-2">
           <textarea
             className="admin-input"
             rows={5}
@@ -282,7 +275,7 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
             value={paste}
             onChange={(e) => setPaste(e.target.value)}
           />
-          <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+          <div className="u-row u-mt-2">
             <button
               type="button"
               className="admin-btn admin-btn--primary admin-btn--sm"
@@ -299,23 +292,14 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
       )}
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {err}
         </div>
       )}
 
       {open && (
         <div
-          style={{
-            marginTop: 8,
-            maxHeight: 260,
-            overflow: "auto",
-            whiteSpace: "pre-wrap",
-            fontSize: 13,
-            lineHeight: 1.5,
-            borderLeft: "2px solid var(--admin-line-strong)",
-            paddingLeft: 10,
-          }}
+          className="u-mt-2 u-pl-3 admin-quote u-prewrap admin-scroll-sm"
         >
           {text === null ? <span className="admin-hint">Loading transcript…</span> : text || "—"}
         </div>
@@ -369,35 +353,27 @@ function PanelSeatRow({
   }
 
   return (
-    <div style={{ border: "1px solid var(--admin-line)", borderRadius: 8, padding: "8px 10px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+    <div className="u-p-2 admin-box">
+      <div className="u-row u-wrap">
         <span
           aria-hidden
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: ".04em",
-            padding: "2px 7px",
-            borderRadius: 999,
-            background: seat.isAi ? "var(--admin-accent-soft)" : "var(--admin-muted-bg)",
-            color: seat.isAi ? "var(--admin-accent)" : "var(--admin-muted-ink)",
-          }}
+          className={`admin-tag-xs${seat.isAi ? " admin-tag-xs--accent" : ""}`}
         >
           {seat.isAi ? "AI" : seat.role === "lead" ? "LEAD" : seat.role.toUpperCase()}
         </span>
         <span className="admin-cell-strong">{seat.name}</span>
         {rec && !aiBlind && (
-          <span style={{ fontSize: 12, fontWeight: 600, color: recTone(rec.tone) }}>
+          <span className="u-sm u-strong" style={{ color: recTone(rec.tone) }} /* layout-ok: tone is a token var chosen at runtime */>
             {rec.label}
             {sc?.overallScore != null ? ` · ${sc.overallScore}/5` : ""}
           </span>
         )}
         {aiBlind && (
-          <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+          <span className="admin-cell-muted u-sm">
             scored · hidden
           </span>
         )}
-        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 6 }}>
+        <span className="u-row u-ml-auto">
           {seat.isAi ? (
             <button
               type="button"
@@ -422,13 +398,13 @@ function PanelSeatRow({
       </div>
 
       {aiErr && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 6 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {aiErr}
         </div>
       )}
 
       {seat.isAi && !sc && !aiErr && (
-        <div className="admin-hint" style={{ marginTop: 4 }}>
+        <div className="admin-hint u-mt-1">
           {hasTranscript
             ? "The AI panelist scores automatically when a transcript is added. Run it now if needed."
             : "Add a transcript for this round and the AI panelist scores it automatically."}
@@ -436,20 +412,20 @@ function PanelSeatRow({
       )}
 
       {aiBlind && (
-        <div className="admin-hint" style={{ marginTop: 4 }}>
+        <div className="admin-hint u-mt-1">
           The AI has scored this round. It stays hidden until every interviewer submits, so it can’t sway the panel.
         </div>
       )}
 
       {showScorecard && sc && (
-        <div style={{ marginTop: 6, fontSize: 13, display: "flex", flexDirection: "column", gap: 6 }}>
+        <div className="u-stack u-mt-2">
           {sc.scores.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <div className="u-stack">
               {sc.scores.map((s) => {
                 const flag = seat.isAi && humansAllIn && disagrees(s.score, humanScores(humanScorecards, s.criterion));
                 return (
-                  <div key={s.criterion} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
-                    <span className="admin-cell-muted" style={{ minWidth: 130 }}>
+                  <div key={s.criterion} className="u-row">
+                    <span className="admin-cell-muted u-min-1">
                       {s.criterion}
                     </span>
                     <span className="admin-cell-strong">{s.score != null ? `${s.score}/5` : "—"}</span>
@@ -461,11 +437,11 @@ function PanelSeatRow({
             </div>
           )}
           {seat.isAi && humansAllIn && disagrees(sc.overallScore, humanScorecards.map((h) => h.overallScore)) && (
-            <div style={{ fontSize: 12 }}>
+            <div className="u-sm">
               <DisagreeTag /> <span className="admin-cell-muted">overall differs from a human panelist by a full point</span>
             </div>
           )}
-          {sc.summary && <div style={{ whiteSpace: "pre-wrap" }}>{sc.summary}</div>}
+          {sc.summary && <div className="u-prewrap">{sc.summary}</div>}
           {sc.submittedAt && (
             <div className="admin-cell-muted">
               {seat.isAi ? "Scored" : "Submitted"} {formatDate(sc.submittedAt)}
@@ -491,15 +467,7 @@ function PanelSeatRow({
 function DisagreeTag() {
   return (
     <span
-      style={{
-        fontSize: 10,
-        fontWeight: 700,
-        letterSpacing: ".04em",
-        padding: "1px 6px",
-        borderRadius: 999,
-        background: "var(--admin-warn-bg)",
-        color: "var(--admin-warn-ink)",
-      }}
+      className="admin-tag-xs admin-tag-xs--warn"
     >
       GAP
     </span>
@@ -558,10 +526,10 @@ function ScorecardForm({
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 10 }}>
+    <div className="admin-form u-mt-3">
       <div className="admin-field">
         <label className="admin-label">Recommendation</label>
-        <div style={{ display: "flex", gap: 6 }}>
+        <div className="u-row">
           {RECOMMENDATIONS.map((r) => {
             const on = recommendation === r.key;
             return (
@@ -591,13 +559,12 @@ function ScorecardForm({
 
       <div className="admin-field">
         <label className="admin-label">Criteria</label>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="u-stack">
           {rows.map((row, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <div key={i} className="u-stack u-gap-1">
+              <div className="u-row u-wrap">
                 <input
-                  className="admin-input"
-                  style={{ flex: "1 1 130px", maxWidth: 180 }}
+                  className="admin-input u-flex-1 u-max-3"
                   value={row.criterion}
                   placeholder="Criterion"
                   onChange={(e) => setRow(i, { criterion: e.target.value })}
@@ -614,8 +581,7 @@ function ScorecardForm({
           ))}
           <button
             type="button"
-            className="admin-btn admin-btn--sm"
-            style={{ alignSelf: "flex-start" }}
+            className="admin-btn admin-btn--sm u-self-start"
             onClick={() => setRows((cur) => [...cur, { criterion: "", score: null, comment: "" }])}
           >
             + Add criterion
@@ -647,7 +613,7 @@ function ScorecardForm({
 
 function ScoreButtons({ value, onChange }: { value: number | null; onChange: (v: number | null) => void }) {
   return (
-    <div style={{ display: "inline-flex", gap: 4 }}>
+    <div className="u-row">
       {[1, 2, 3, 4, 5].map((n) => {
         const on = value === n;
         return (
@@ -657,17 +623,7 @@ function ScoreButtons({ value, onChange }: { value: number | null; onChange: (v:
             aria-label={`Score ${n}`}
             aria-pressed={on}
             onClick={() => onChange(on ? null : n)}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              border: "1px solid var(--admin-line-strong)",
-              background: on ? "var(--admin-accent)" : "transparent",
-              color: on ? "var(--color-bg-primary)" : "var(--admin-ink)",
-              cursor: "pointer",
-              fontSize: 13,
-              fontWeight: 600,
-            }}
+            className={`admin-score-btn${on ? " is-on" : ""}`}
           >
             {n}
           </button>
@@ -708,7 +664,7 @@ function AddSeatControl({
 
   if (!open) {
     return (
-      <div style={{ marginTop: 8 }}>
+      <div className="u-mt-2">
         <button type="button" className="admin-btn admin-btn--sm" onClick={() => setOpen(true)}>
           + Add panelist
         </button>
@@ -717,10 +673,9 @@ function AddSeatControl({
   }
 
   return (
-    <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+    <div className="u-row u-wrap u-mt-2">
       <select
-        className="admin-select"
-        style={{ maxWidth: 220 }}
+        className="admin-select u-max-3"
         value={personId}
         onChange={(e) => setPersonId(e.target.value)}
       >
@@ -737,7 +692,7 @@ function AddSeatControl({
       <button type="button" className="admin-btn admin-btn--sm" onClick={() => setOpen(false)}>
         Cancel
       </button>
-      {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+      {err && <span className="u-sm u-err">{err}</span>}
     </div>
   );
 }
@@ -775,7 +730,7 @@ function AddRoundForm({
   }
 
   return (
-    <div className="admin-form" style={{ marginTop: 12, border: "1px solid var(--admin-line)", borderRadius: 10, padding: "14px 16px" }}>
+    <div className="admin-form u-mt-3 u-p-4 admin-box">
       <div className="admin-field">
         <label className="admin-label">Round title</label>
         <input
@@ -785,7 +740,7 @@ function AddRoundForm({
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Mode</label>
           <select className="admin-select" value={mode} onChange={(e) => setMode(e.target.value)}>
@@ -807,7 +762,7 @@ function AddRoundForm({
         {team.length === 0 ? (
           <div className="admin-hint">Loading team…</div>
         ) : (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 160, overflow: "auto" }}>
+          <div className="u-row u-wrap u-gap-2 admin-scroll-xs">
             {team.map((t) => {
               const on = panelists.includes(t.id);
               return (
@@ -826,7 +781,7 @@ function AddRoundForm({
             })}
           </div>
         )}
-        <div className="admin-hint" style={{ marginTop: 4 }}>
+        <div className="admin-hint u-mt-1">
           The AI panelist is seated automatically.
         </div>
       </div>

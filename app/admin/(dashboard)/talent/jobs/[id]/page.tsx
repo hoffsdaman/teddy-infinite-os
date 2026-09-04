@@ -154,15 +154,15 @@ export default async function JobReqDetailPage({ params }: { params: { id: strin
         }
       />
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginBottom: 20 }}>
+      <div className="u-row u-wrap u-mb-5">
         {req.status && <Badge tone={statusTone(req.status)}>{humanize(req.status)}</Badge>}
         {req.employment_type && <Badge>{humanize(req.employment_type)}</Badge>}
         {req.remote_policy && <Badge>{humanize(req.remote_policy)}</Badge>}
         {req.location && <Badge>{req.location}</Badge>}
-        {req.opened_at && <span className="admin-cell-muted" style={{ fontSize: 13 }}>Opened {formatDate(req.opened_at)}</span>}
+        {req.opened_at && <span className="admin-cell-muted u-sm">Opened {formatDate(req.opened_at)}</span>}
       </div>
 
-      <div style={{ fontWeight: 700, fontSize: 15, margin: "4px 0 10px" }}>
+      <div className="u-strong u-lg u-m-0 u-mt-1 u-mb-3">
         Hiring pipeline · {cards.length} {cards.length === 1 ? "applicant" : "applicants"}
       </div>
       <JobReqBoard jobReqId={id} columns={columns} initialCards={cards} />
@@ -188,11 +188,11 @@ export default async function JobReqDetailPage({ params }: { params: { id: strin
       />
 
       {sections.length > 0 && (
-        <div style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 16 }}>
+        <div className="u-mt-6 u-stack u-gap-4">
           {sections.map((s) => (
             <div key={s.label}>
-              <div className="admin-label" style={{ marginBottom: 4 }}>{s.label}</div>
-              <div className="admin-card" style={{ padding: "14px 16px", whiteSpace: "pre-wrap", fontSize: 14 }}>{s.body}</div>
+              <div className="admin-label u-mb-1">{s.label}</div>
+              <div className="admin-card u-p-4 u-lg u-prewrap">{s.body}</div>
             </div>
           ))}
         </div>

@@ -176,22 +176,21 @@ export function RankTable({
         ))}
       </div>
 
-      <div className="admin-toolbar" style={{ gap: 10, flexWrap: "wrap" }}>
+      <div className="admin-toolbar u-gap-3 u-wrap">
         <input
-          className="admin-input"
-          style={{ maxWidth: 260 }}
+          className="admin-input u-max-4"
           placeholder="Search name, email, req…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search candidates"
         />
-        <span className="admin-cell-muted" style={{ fontSize: 12, marginLeft: "auto" }}>
+        <span className="admin-cell-muted u-ml-auto u-sm">
           Sorted by {SORT_LABEL[sort.key]} ({sort.dir === "desc" ? "high→low" : "low→high"})
         </span>
       </div>
 
       {saveErr && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {saveErr}
         </div>
       )}
@@ -201,7 +200,7 @@ export function RankTable({
           <table className="admin-table">
             <thead>
               <tr>
-                <th style={{ width: 44 }}>#</th>
+                <th className="admin-th--xs">#</th>
                 <th>
                   <button type="button" className="admin-th-sort" onClick={() => onSort("name")}>
                     Candidate{sortArrow("name")}
@@ -219,12 +218,12 @@ export function RankTable({
                     Applied for{sortArrow("req")}
                   </button>
                 </th>
-                <th style={{ textAlign: "right" }}>
+                <th className="u-right">
                   <button type="button" className="admin-th-sort" onClick={() => onSort("ai")}>
                     AI fit{sortArrow("ai")}
                   </button>
                 </th>
-                <th style={{ textAlign: "right" }}>
+                <th className="u-right">
                   <button type="button" className="admin-th-sort" onClick={() => onSort("recruiter")}>
                     Recruiter{sortArrow("recruiter")}
                   </button>
@@ -283,10 +282,10 @@ export function RankTable({
                         </td>
                       )}
                       <td>{r.reqTitles.join(", ") || <span className="admin-cell-muted">—</span>}</td>
-                      <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                      <td className="admin-cell-mono u-right">
                         {r.rating != null ? r.rating.toFixed(1) : <span className="admin-cell-muted">—</span>}
                       </td>
-                      <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                      <td className="admin-cell-mono u-right">
                         {rec != null ? `${rec}★` : <span className="admin-cell-muted">—</span>}
                       </td>
                       <td>
@@ -331,9 +330,9 @@ export function RankTable({
         }
       >
         {selected && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, fontSize: 14 }}>
+          <div className="u-stack u-gap-4 u-lg">
             {selected.appliedAt && (
-              <div className="admin-cell-muted" style={{ fontSize: 13 }}>
+              <div className="admin-cell-muted u-sm">
                 Applied {formatDate(selected.appliedAt)}
               </div>
             )}
@@ -348,7 +347,7 @@ export function RankTable({
 
             {/* Recruiter's own rating — editable, saves on click */}
             <div>
-              <div className="admin-label" style={{ marginBottom: 4 }}>
+              <div className="admin-label u-mb-1">
                 Recruiter rating{" "}
                 {savingId === selected.applicationId ? <span className="admin-cell-muted">· saving…</span> : null}
               </div>
@@ -358,7 +357,7 @@ export function RankTable({
                 onPick={(n) => setRecruiter(selected, n)}
               />
               {selected.recruiterRating && (
-                <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 4 }}>
+                <div className="admin-cell-muted u-sm u-mt-1">
                   Imported score: {selected.recruiterRating}
                 </div>
               )}
@@ -366,7 +365,7 @@ export function RankTable({
 
             {selected.reqTitles.length > 0 && (
               <div>
-                <div className="admin-label" style={{ marginBottom: 4 }}>Applied for</div>
+                <div className="admin-label u-mb-1">Applied for</div>
                 <div>{selected.reqTitles.join(", ")}</div>
               </div>
             )}
@@ -374,17 +373,17 @@ export function RankTable({
             {selected.overview ? (
               <>
                 <div>
-                  <div className="admin-label" style={{ marginBottom: 4 }}>
+                  <div className="admin-label u-mb-1">
                     AI screen — overview{selected.rating != null ? ` · fit ${selected.rating.toFixed(1)}/5` : ""}
                   </div>
-                  <div style={{ whiteSpace: "pre-wrap" }}>{selected.overview}</div>
+                  <div className="u-prewrap">{selected.overview}</div>
                 </div>
                 {selected.strengths.length > 0 && (
                   <div>
-                    <div className="admin-label" style={{ marginBottom: 4 }}>
+                    <div className="admin-label u-mb-1">
                       {selected.screenSource === "app" ? "Skills & assessment" : "Strengths"}
                     </div>
-                    <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 4 }}>
+                    <ul className="u-stack u-gap-1 u-m-0 u-pl-4">
                       {selected.strengths.map((s, j) => (
                         <li key={j}>{s}</li>
                       ))}
@@ -393,8 +392,8 @@ export function RankTable({
                 )}
                 {selected.gaps.length > 0 && (
                   <div>
-                    <div className="admin-label" style={{ marginBottom: 4 }}>Gaps</div>
-                    <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 4 }}>
+                    <div className="admin-label u-mb-1">Gaps</div>
+                    <ul className="u-stack u-gap-1 u-m-0 u-pl-4">
                       {selected.gaps.map((g, j) => (
                         <li key={j}>{g}</li>
                       ))}
@@ -410,8 +409,8 @@ export function RankTable({
             )}
 
             <div>
-              <div className="admin-label" style={{ marginBottom: 4 }}>Contact</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <div className="admin-label u-mb-1">Contact</div>
+              <div className="u-stack">
                 {selected.email ? <a href={`mailto:${selected.email}`}>{selected.email}</a> : null}
                 {selected.phone && <span>{selected.phone}</span>}
                 {selected.linkedinUrl && (
@@ -425,7 +424,7 @@ export function RankTable({
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: 16, paddingTop: 4 }}>
+            <div className="u-row u-gap-4 u-pt-1">
               <Link href={`/admin/contacts/${selected.personId}`} className="admin-btn">
                 Open person record →
               </Link>
@@ -448,7 +447,7 @@ function StarRating({
   onPick: (n: number) => void;
 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 4, height: 34 }}>
+    <div className="u-row u-gap-1">
       {[1, 2, 3, 4, 5].map((n) => (
         <button
           key={n}
@@ -457,15 +456,7 @@ function StarRating({
           aria-pressed={value != null && n <= value}
           disabled={disabled}
           onClick={() => onPick(n)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: disabled ? "default" : "pointer",
-            padding: 0,
-            fontSize: 22,
-            lineHeight: 1,
-            color: value != null && n <= value ? "var(--admin-accent)" : "var(--admin-line-strong)",
-          }}
+          className="admin-btn-reset admin-star-btn"
         >
           {value != null && n <= value ? "★" : "☆"}
         </button>

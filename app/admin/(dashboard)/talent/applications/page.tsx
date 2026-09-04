@@ -176,12 +176,12 @@ export default async function ApplicationsPage() {
         }
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Active" value={activeRows.filter((r) => r.status === "active").length} sub="in pipeline" />
         <MetricCard label="On hold" value={activeRows.filter((r) => r.status === "on_hold").length} sub="parked" />
         <MetricCard label="Hired" value={activeRows.filter((r) => r.status === "hired").length} sub="closed won" />

@@ -85,10 +85,9 @@ export function ApplicationsBoard({
 
   return (
     <>
-      <div className="admin-toolbar" style={{ gap: 10, flexWrap: "wrap" }}>
+      <div className="admin-toolbar u-gap-3 u-wrap">
         <select
-          className="admin-select"
-          style={{ maxWidth: 280 }}
+          className="admin-select u-max-4"
           value={reqFilter}
           onChange={(e) => setReqFilter(e.target.value)}
           aria-label="Filter board by job req"
@@ -103,13 +102,13 @@ export function ApplicationsBoard({
       </div>
 
       {banner && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>
+        <div className="admin-alert admin-alert--err u-mb-3">
           {banner}
         </div>
       )}
 
       {cards.length === 0 ? (
-        <div className="admin-card" style={{ padding: "16px 18px" }}>
+        <div className="admin-card u-p-4">
           <span className="admin-cell-muted">No applications match.</span>
         </div>
       ) : (
@@ -125,14 +124,14 @@ export function ApplicationsBoard({
                 <div className="admin-kanban-card-title">{c.row.candidateName || "(unknown)"}</div>
                 <div className="admin-kanban-card-sub">{c.row.headline || c.row.currentTitle || "—"}</div>
                 <div className="admin-kanban-card-meta">
-                  <span className="admin-kanban-role-tag" style={{ color, background: `${color}1f` }}>
+                  <span className="admin-kanban-role-tag" style={{ color, background: `${color}1f` }} /* layout-ok: stage colour is a token var chosen at runtime */>
                     {c.row.jobReqTitle || "—"}
                   </span>
                 </div>
                 <div className="admin-kanban-card-meta">
                   {c.row.status && <Badge tone={statusTone(c.row.status)}>{humanize(c.row.status)}</Badge>}
                   {c.row.aiRating != null && (
-                    <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
+                    <span className="admin-kanban-card-sub u-ml-auto">
                       AI {c.row.aiRating.toFixed(1)}
                     </span>
                   )}

@@ -174,7 +174,7 @@ function VendorShelfBody({ row, onClose }: { row: VendorRow; onClose: () => void
       {vendor.notes && (
         <section>
           <div className="admin-shelf-heading">Notes</div>
-          <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{vendor.notes}</div>
+          <div className="u-prewrap">{vendor.notes}</div>
         </section>
       )}
 

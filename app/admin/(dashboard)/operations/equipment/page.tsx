@@ -112,7 +112,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Se
       header: "Status",
       sortable: true,
       cell: (r) => (
-        <span style={{ display: "inline-flex", gap: 4 }}>
+        <span className="u-row">
           {r.archived_at && <Badge tone="neutral">Archived</Badge>}
           <Badge tone={statusTone(r.status)}>{statusLabel(r.status)}</Badge>
         </span>
@@ -150,7 +150,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Se
         title="Equipment"
         sub={sub}
         action={
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div className="u-row">
             <ArchivedToggle basePath="/admin/operations/equipment" searchParams={searchParams} showArchived={showArchived} />
             <Link href="/admin/operations/equipment/fitness" className="admin-btn">
               Fitness
@@ -161,7 +161,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Se
           </div>
         }
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <RequestsPanel requests={requests} />
       <EquipmentShelfProvider people={peopleOptions} vendors={vendors}>
         <DataTable

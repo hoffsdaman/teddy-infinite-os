@@ -52,7 +52,7 @@ export default async function ContractorsPage({ searchParams }: { searchParams: 
       cell: (r) => (
         <div>
           <span className="admin-cell-strong">{r.full_name || r.email}</span>
-          <div className="admin-cell-muted" style={{ fontSize: 12 }}>{r.email}</div>
+          <div className="admin-cell-muted u-sm">{r.email}</div>
         </div>
       ),
     },
@@ -78,7 +78,7 @@ export default async function ContractorsPage({ searchParams }: { searchParams: 
             : `${rows.length} ${rows.length === 1 ? "contractor" : "contractors"}`
         }
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <ContractorsShelfProvider canSeePay={canSeePay}>
         <DataTable
           columns={columns}

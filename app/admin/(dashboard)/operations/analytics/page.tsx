@@ -80,7 +80,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
         }
       />
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 14 }}>
+      <div className="u-row u-gap-3 u-wrap u-mb-4">
         <div className="admin-viewtoggle" role="group" aria-label="Traffic segment">
           {SEGMENTS.map((s) => (
             <Link
@@ -93,15 +93,14 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
             </Link>
           ))}
         </div>
-        <div className="admin-tabs" role="tablist" style={{ marginBottom: 0 }}>
+        <div className="admin-tabs u-mb-0" role="tablist">
           {RANGES.map((r) => (
             <Link
               key={r.key}
               href={`/admin/operations/analytics${mergeQuery(searchParams, { range: r.key === "all" ? null : r.key })}`}
               role="tab"
               aria-selected={r.key === range}
-              className={`admin-tab${r.key === range ? " is-active" : ""}`}
-              style={{ textDecoration: "none" }}
+              className={`admin-tab${r.key === range ? " is-active" : ""} u-link-plain`}
             >
               {r.label}
             </Link>
@@ -133,14 +132,14 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
           </div>
 
           {isInternal && (
-            <p className="admin-hint" style={{ marginTop: -4 }}>
+            <p className="admin-hint">
               Vercel counts browsers, not verified logins: the same person on a phone and a laptop,
               or across a long window, can count more than once. Read these as usage of each screen
               rather than a headcount.
             </p>
           )}
 
-          <div className="admin-summary-grid" style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}>
+          <div className="admin-summary-grid u-grid-2">
             <div className="admin-card admin-chart-card">
               <div className="admin-kpi-label">Daily page views</div>
               <BarChart data={overview.daily} ariaLabel="Daily page views" />
@@ -159,7 +158,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
             <div className="admin-card-title">
               {isInternal ? "Most used screens" : "Top pages"}
             </div>
-            <p className="admin-page-sub" style={{ marginTop: 4 }}>
+            <p className="admin-page-sub u-mt-1">
               {isInternal
                 ? "Ranked by how many people opened each screen, not how often. Adoption is a people question."
                 : "Ranked by page views."}{" "}
@@ -169,7 +168,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
                 : 0}
               % of {overview.coverage.totalPageviews.toLocaleString()} page views in this window.
             </p>
-            <div className="admin-table-wrap" style={{ marginTop: 12 }}>
+            <div className="admin-table-wrap u-mt-3">
               {overview.topPages.length === 0 ? (
                 <div className="admin-empty">No page data in this window.</div>
               ) : (
@@ -178,9 +177,9 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
                     <thead>
                       <tr>
                         <th>{isInternal ? "Screen" : "Page"}</th>
-                        <th style={{ textAlign: "right" }}>Unique users</th>
-                        <th style={{ textAlign: "right" }}>Page views</th>
-                        <th style={{ textAlign: "right" }}>Views each</th>
+                        <th className="u-right">Unique users</th>
+                        <th className="u-right">Page views</th>
+                        <th className="u-right">Views each</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -191,18 +190,18 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
                             <td className="admin-cell-strong">
                               {isInternal ? prettyPath(row.label) : row.label}
                               {isInternal && (
-                                <div className="admin-cell-muted" style={{ fontSize: 12 }}>
+                                <div className="admin-cell-muted u-sm">
                                   {row.label}
                                 </div>
                               )}
                             </td>
-                            <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                            <td className="admin-cell-mono u-right">
                               {row.visitors.toLocaleString()}
                             </td>
-                            <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                            <td className="admin-cell-mono u-right">
                               {row.pageviews.toLocaleString()}
                             </td>
-                            <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                            <td className="admin-cell-mono u-right">
                               {row.visitors > 0 ? (row.pageviews / row.visitors).toFixed(1) : "—"}
                             </td>
                           </tr>

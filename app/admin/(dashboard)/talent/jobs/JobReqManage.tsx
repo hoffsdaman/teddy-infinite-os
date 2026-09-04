@@ -157,7 +157,7 @@ export function JobReqManage({
 
   return (
     <>
-      <dl className="admin-kv" style={{ marginBottom: 16 }}>
+      <dl className="admin-kv u-mb-4">
         <dt>Status</dt>
         <dd>
           {req.status && <Badge tone={statusTone(req.status)}>{humanize(req.status)}</Badge>}{" "}
@@ -200,7 +200,7 @@ export function JobReqManage({
       </dl>
 
       <div className="admin-form">
-        <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+        <div className="u-row u-end u-sm">
           <AutosaveIndicator status={status} />
         </div>
 
@@ -213,7 +213,7 @@ export function JobReqManage({
             onBlur={(e) => commit("title", e.target.value)}
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
+        <div className="u-grid-auto-sm">
           <div className="admin-field">
             <label className="admin-label">Type</label>
             <select
@@ -268,7 +268,7 @@ export function JobReqManage({
             onBlur={(e) => commit("location", e.target.value)}
           />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 90px", gap: 10 }}>
+        <div className="u-grid-2-fixed">
           <div className="admin-field">
             <label className="admin-label">Salary min</label>
             <input
@@ -326,7 +326,7 @@ export function JobReqManage({
         {status.state === "error" && <div className="admin-alert admin-alert--err">{status.error}</div>}
       </div>
 
-      <div style={{ marginTop: 16, display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <div className="u-row u-wrap u-mt-4">
         <Link href={`/admin/talent/jobs/${req.id}`} className="admin-btn">
           Hiring board & posting
         </Link>
@@ -343,7 +343,7 @@ export function JobReqManage({
       </div>
 
       {closing && (
-        <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="u-stack u-mt-3">
           <select className="admin-select" aria-label="Close outcome" value={outcome} onChange={(e) => setOutcome(e.target.value)}>
             <option value="">How did this req end?</option>
             {CLOSE_OUTCOMES.map(([v, l]) => (
@@ -352,7 +352,7 @@ export function JobReqManage({
               </option>
             ))}
           </select>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="u-row">
             <button type="button" className="admin-btn admin-btn--primary" disabled={!outcome || busy} onClick={close}>
               {busy ? "Closing…" : "Close req"}
             </button>
@@ -364,7 +364,7 @@ export function JobReqManage({
         </div>
       )}
 
-      <div className="admin-danger-zone" style={{ marginTop: 18 }}>
+      <div className="admin-danger-zone u-mt-4">
         <div className="admin-danger-zone-title">Danger zone</div>
         <div className="admin-danger-row">
           <span className="admin-danger-row-text">

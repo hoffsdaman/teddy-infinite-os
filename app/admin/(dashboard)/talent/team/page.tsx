@@ -285,7 +285,7 @@ export default async function TeamPage({ searchParams }: { searchParams: SearchP
   return (
     <>
       <PageHead eyebrow="Talent" title="Team" sub={`${total.toLocaleString()} ${total === 1 ? "team member" : "team members"}`} />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <nav className="admin-tabs" role="tablist" aria-label="Team segment">
         {SEGMENTS.map((s, i) => (
           <Link

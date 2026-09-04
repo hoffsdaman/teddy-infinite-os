@@ -93,7 +93,7 @@ export default async function SurveysPage({
       header: "Last response",
       sortable: true,
       cell: (r) => (
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <span className="u-row">
           {formatDate(r.last_response_at)}
           {isRecent(r.last_response_at) && (
             <Badge tone="ok" dot>
@@ -113,7 +113,7 @@ export default async function SurveysPage({
       key: "actions",
       header: "",
       cell: (r) => (
-        <span style={{ display: "inline-flex", gap: 8 }}>
+        <span className="u-row">
           <Link className="admin-btn admin-btn--sm" href={`${BASE}/${r.id}/results`}>
             Results
           </Link>
@@ -143,7 +143,7 @@ export default async function SurveysPage({
 
       {list.error && <div className="admin-alert admin-alert--err">{list.error}</div>}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Surveys" value={total} />
         <MetricCard label="Published" value={published} />
         <MetricCard label="Responses" value={responses} />

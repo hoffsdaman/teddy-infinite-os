@@ -496,7 +496,7 @@ function TeamShelfBody({ row, options }: { row: TeamShelfRowData; options: Shelf
 
   return (
     <div className="admin-shelf-sections">
-      <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12, minHeight: 16 }}>
+      <div className="u-row u-end u-sm">
         <AutosaveIndicator status={status} />
       </div>
 
