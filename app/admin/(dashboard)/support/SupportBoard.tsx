@@ -218,8 +218,8 @@ function CommentRow({ c, currentUserLabel }: { c: SupportComment; currentUserLab
             justifyContent: "center",
             fontSize: 12,
             fontWeight: 700,
-            background: "var(--admin-info-bg, rgba(40,123,232,0.15))",
-            color: "var(--admin-info-ink, #2b6cb0)",
+            background: "var(--admin-info-bg)",
+            color: "var(--admin-info-ink)",
           }}
         >
           {initial}
@@ -316,7 +316,7 @@ export function SupportBoard({
 
   const toolbar = (
     <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
-      <div style={{ display: "inline-flex", border: "1px solid var(--admin-line, rgba(0,0,0,0.12))", borderRadius: 8, overflow: "hidden" }}>
+      <div style={{ display: "inline-flex", border: "1px solid var(--admin-line)", borderRadius: 8, overflow: "hidden" }}>
         {(["board", "list"] as View[]).map((v) => (
           <button
             key={v}
@@ -328,7 +328,7 @@ export function SupportBoard({
               border: "none",
               borderRadius: 0,
               fontWeight: view === v ? 700 : 400,
-              background: view === v ? "var(--admin-accent-bg, rgba(40,123,232,0.12))" : "transparent",
+              background: view === v ? "var(--admin-accent-soft)" : "transparent",
             }}
           >
             {v === "board" ? "▦ Board" : "☰ List"}

@@ -41,7 +41,7 @@ export function CalendarBoard({
           <div className="sap-card-meta" style={{ marginTop: 6 }}>
             <span
               className="admin-cal-chip"
-              style={{ background: CHANNEL_ACCENT[c.channel], color: "#fff" }}
+              style={{ background: CHANNEL_ACCENT[c.channel], color: "var(--color-bg-primary)" }}
             >
               {CHANNEL_LABEL[c.channel]}
             </span>

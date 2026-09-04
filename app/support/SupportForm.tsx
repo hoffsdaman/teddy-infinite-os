@@ -43,32 +43,32 @@ export function SupportForm() {
   }
 
   const sending = status.kind === "sending";
-  const labelStyle: React.CSSProperties = { display: "grid", gap: 6, fontSize: 14, fontWeight: 600, color: "var(--dark, #1a1a2e)" };
+  const labelStyle: React.CSSProperties = { display: "grid", gap: 6, fontSize: 14, fontWeight: 600, color: "var(--dark)" };
   const inputStyle: React.CSSProperties = {
     padding: "12px 14px",
     borderRadius: 10,
-    border: "1px solid rgba(0,0,0,0.15)",
+    border: "1px solid color-mix(in srgb, var(--dark) 15%, transparent)",
     fontSize: 15,
     fontFamily: "inherit",
     width: "100%",
-    background: "#fff",
-    color: "#1a1a2e",
+    background: "var(--white)",
+    color: "var(--dark)",
   };
 
   if (status.kind === "ok") {
     return (
       <div
         style={{
-          background: "#fff",
+          background: "var(--white)",
           borderRadius: 16,
           padding: "32px 28px",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
+          boxShadow: "0 10px 40px color-mix(in srgb, var(--dark) 8%, transparent)",
           textAlign: "center",
         }}
       >
         <div style={{ fontSize: 40, marginBottom: 8 }}>✅</div>
         <h3 style={{ margin: "0 0 8px", fontSize: 22 }}>Thanks — we&rsquo;ve got it.</h3>
-        <p style={{ margin: 0, color: "rgba(0,0,0,0.6)" }}>
+        <p style={{ margin: 0, color: "color-mix(in srgb, var(--dark) 60%, transparent)" }}>
           {status.ticketNo ? (
             <>
               Your reference is <strong>{status.ticketNo}</strong>. We&rsquo;ll be in touch shortly.
@@ -81,7 +81,7 @@ export function SupportForm() {
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
           className="btn"
-          style={{ marginTop: 20, background: "transparent", border: "1px solid rgba(0,0,0,0.2)", padding: "10px 20px", borderRadius: 40, cursor: "pointer" }}
+          style={{ marginTop: 20, background: "transparent", border: "1px solid color-mix(in srgb, var(--dark) 20%, transparent)", padding: "10px 20px", borderRadius: 40, cursor: "pointer" }}
         >
           Send another
         </button>
@@ -92,7 +92,7 @@ export function SupportForm() {
   return (
     <form
       onSubmit={submit}
-      style={{ background: "#fff", borderRadius: 16, padding: "28px", boxShadow: "0 10px 40px rgba(0,0,0,0.08)", display: "grid", gap: 16 }}
+      style={{ background: "var(--white)", borderRadius: 16, padding: "28px", boxShadow: "0 10px 40px color-mix(in srgb, var(--dark) 8%, transparent)", display: "grid", gap: 16 }}
     >
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
         <label style={labelStyle}>
@@ -100,22 +100,22 @@ export function SupportForm() {
           <input style={inputStyle} type="text" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
         <label style={labelStyle}>
-          Email <span style={{ color: "#d33" }}>*</span>
+          Email <span style={{ color: "var(--color-err-strong)" }}>*</span>
           <input style={inputStyle} type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
       </div>
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
         <label style={labelStyle}>
-          Subject <span style={{ color: "#d33" }}>*</span>
+          Subject <span style={{ color: "var(--color-err-strong)" }}>*</span>
           <input style={inputStyle} type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g. Mattress warranty question" />
         </label>
         <label style={labelStyle}>
-          Order number <span style={{ fontWeight: 400, color: "rgba(0,0,0,0.45)" }}>(optional)</span>
-          <input style={inputStyle} type="text" value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="e.g. #1234" />
+          Order number <span style={{ fontWeight: 400, color: "color-mix(in srgb, var(--dark) 45%, transparent)" }}>(optional)</span>
+          <input style={inputStyle} type="text" value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} placeholder="e.g. 1234" />
         </label>
       </div>
       <label style={labelStyle}>
-        How can we help? <span style={{ color: "#d33" }}>*</span>
+        How can we help? <span style={{ color: "var(--color-err-strong)" }}>*</span>
         <textarea style={{ ...inputStyle, resize: "vertical" }} rows={6} required value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
       {/* Honeypot — hidden from humans, catches bots. */}
@@ -130,7 +130,7 @@ export function SupportForm() {
         style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
       />
       {status.kind === "err" && (
-        <div style={{ background: "rgba(211,51,51,0.1)", color: "#a11", padding: "10px 14px", borderRadius: 10, fontSize: 14 }}>
+        <div style={{ background: "var(--color-err-bg)", color: "var(--color-err-deep)", padding: "10px 14px", borderRadius: 10, fontSize: 14 }}>
           {status.message}
         </div>
       )}

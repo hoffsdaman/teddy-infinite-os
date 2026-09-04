@@ -92,7 +92,7 @@ export function NewTicketForm() {
             className="admin-input"
             value={orderNumber}
             onChange={(e) => setOrderNumber(e.target.value)}
-            placeholder="#1234"
+            placeholder="1234"
           />
         </label>
       </div>

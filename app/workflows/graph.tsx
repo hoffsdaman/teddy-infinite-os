@@ -120,7 +120,7 @@ function NodeShape({ n }: { n: GraphNode }) {
       break
     case 'write':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'rgba(47, 191, 113, 0.08)', stroke: 'var(--wf-green)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'color-mix(in srgb, var(--wf-green) 8%, transparent)', stroke: 'var(--wf-green)', strokeWidth: 1.5 }} />
       )
       break
     case 'decision': {
@@ -137,12 +137,12 @@ function NodeShape({ n }: { n: GraphNode }) {
       ]
         .map((p) => p.join(','))
         .join(' ')
-      shape = <polygon points={pts} style={{ fill: 'rgba(40, 123, 232, 0.06)', stroke: 'var(--blue)', strokeWidth: 1.5 }} />
+      shape = <polygon points={pts} style={{ fill: 'color-mix(in srgb, var(--blue) 6%, transparent)', stroke: 'var(--blue)', strokeWidth: 1.5 }} />
       break
     }
     case 'wait':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={h / 2} style={{ fill: 'rgba(232, 155, 40, 0.08)', stroke: 'var(--wf-amber)', strokeWidth: 1.5, strokeDasharray: '5 4' }} />
+        <rect x={left} y={top} width={w} height={h} rx={h / 2} style={{ fill: 'color-mix(in srgb, var(--wf-amber) 8%, transparent)', stroke: 'var(--wf-amber)', strokeWidth: 1.5, strokeDasharray: '5 4' }} />
       )
       break
     case 'human':
@@ -157,7 +157,7 @@ function NodeShape({ n }: { n: GraphNode }) {
       break
     case 'flag':
       shape = (
-        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'rgba(229, 72, 77, 0.06)', stroke: 'var(--wf-red)', strokeWidth: 1.5 }} />
+        <rect x={left} y={top} width={w} height={h} rx={10} style={{ fill: 'color-mix(in srgb, var(--wf-red) 6%, transparent)', stroke: 'var(--wf-red)', strokeWidth: 1.5 }} />
       )
       break
     case 'state':
@@ -276,13 +276,13 @@ export function WorkflowGraph({ graph, caption }: { graph: WorkflowGraphDef; cap
 }
 
 const LEGEND_SWATCH: Record<string, CSSProperties> = {
-  decision: { background: 'rgba(40, 123, 232, 0.06)', border: '1.5px solid var(--blue)' },
-  write: { background: 'rgba(47, 191, 113, 0.08)', border: '1.5px solid var(--wf-green)' },
+  decision: { background: 'color-mix(in srgb, var(--blue) 6%, transparent)', border: '1.5px solid var(--blue)' },
+  write: { background: 'color-mix(in srgb, var(--wf-green) 8%, transparent)', border: '1.5px solid var(--wf-green)' },
   action: { background: 'var(--white)', border: '1.5px solid var(--input-border)' },
-  wait: { background: 'rgba(232, 155, 40, 0.08)', border: '1.5px dashed var(--wf-amber)', borderRadius: 9 },
+  wait: { background: 'color-mix(in srgb, var(--wf-amber) 8%, transparent)', border: '1.5px dashed var(--wf-amber)', borderRadius: 9 },
   human: { background: 'var(--white)', border: '2px solid var(--dark)' },
   terminal: { background: 'var(--white)', border: '1.5px solid var(--tint-deep)' },
-  flag: { background: 'rgba(229, 72, 77, 0.06)', border: '1.5px solid var(--wf-red)' },
+  flag: { background: 'color-mix(in srgb, var(--wf-red) 6%, transparent)', border: '1.5px solid var(--wf-red)' },
   trigger: { background: 'var(--dark)', border: '1.5px solid var(--dark)' },
 }
 

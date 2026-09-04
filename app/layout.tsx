@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import './styles/tokens.css'
 import './globals.css'
 import SiteFrame from '@/components/SiteFrame'
 

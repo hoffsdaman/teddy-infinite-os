@@ -52,7 +52,7 @@ export function PasswordInput({
           padding: 0,
           border: 0,
           background: "transparent",
-          color: "#797c82",
+          color: "var(--admin-ink-2)",
           cursor: "pointer",
         }}
       >

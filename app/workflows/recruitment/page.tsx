@@ -32,7 +32,7 @@ const PROBLEMS = [
 
 const loopCard: React.CSSProperties = {
   background: 'var(--white)',
-  border: '1px solid rgba(15, 23, 42, 0.1)',
+  border: '1px solid color-mix(in srgb, var(--dark) 10%, transparent)',
   borderRadius: 14,
   padding: '20px 22px',
 }
@@ -41,11 +41,11 @@ const loopCard: React.CSSProperties = {
 // loops, and the pool as an explicit destination on the right. Hand-drawn SVG
 // so every condition is visible; horizontal scroll on small screens.
 function SelectionFlowchart() {
-  const ink = '#0f172a'
-  const sub = '#64748b'
-  const line = '#64748b'
-  const nodeStroke = '#cbd5e1'
-  const halo = { paintOrder: 'stroke' as const, stroke: '#ffffff', strokeWidth: 4 }
+  const ink = 'var(--dark)'
+  const sub = 'var(--grey-mid)'
+  const line = 'var(--grey-mid)'
+  const nodeStroke = 'var(--tint-deep)'
+  const halo = { paintOrder: 'stroke' as const, stroke: 'var(--white)', strokeWidth: 4 }
   return (
     <div style={{ overflowX: 'auto', margin: '40px 0 8px' }}>
       <svg
@@ -61,7 +61,7 @@ function SelectionFlowchart() {
         </defs>
 
         {/* ── The pool lane ─────────────────────────────────────────────── */}
-        <rect x="686" y="224" width="224" height="1024" rx="16" fill="#f8fafc" stroke={nodeStroke} />
+        <rect x="686" y="224" width="224" height="1024" rx="16" fill="var(--color-grey-50)" stroke={nodeStroke} />
         <text x="798" y="262" textAnchor="middle" fontSize="13.5" fontWeight="700" letterSpacing="1" fill={ink}>THE CANDIDATE POOL</text>
         <text x="798" y="292" textAnchor="middle" fontSize="12.5" fill={sub}>Everyone we have ever met,</text>
         <text x="798" y="310" textAnchor="middle" fontSize="12.5" fill={sub}>ranked by best AI screen,</text>
@@ -86,19 +86,19 @@ function SelectionFlowchart() {
 
         {/* ── Spine ─────────────────────────────────────────────────────── */}
         {/* Entry */}
-        <rect x="200" y="24" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="24" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="52" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Application lands</text>
         <text x="330" y="72" textAnchor="middle" fontSize="12" fill={sub}>careers · batch drop · agency · referral</text>
         <path d="M 330 88 L 330 124" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* AI screen */}
-        <rect x="200" y="124" width="260" height="64" rx="12" fill="#eff6ff" stroke="#bfdbfe" />
+        <rect x="200" y="124" width="260" height="64" rx="12" fill="var(--color-accent-soft)" stroke="var(--color-accent-line)" />
         <text x="330" y="152" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>AI screen (Claude)</text>
         <text x="330" y="172" textAnchor="middle" fontSize="12" fill={sub}>0–5 rating · reasoning · strengths · gaps</text>
         <path d="M 330 188 L 330 224" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* D1: two gates */}
-        <polygon points="330,224 470,304 330,384 190,304" fill="#ffffff" stroke="#94a3b8" />
+        <polygon points="330,224 470,304 330,384 190,304" fill="var(--white)" stroke="var(--grey-light)" />
         <text x="330" y="298" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>Two gates</text>
         <text x="330" y="318" textAnchor="middle" fontSize="12" fill={sub}>AI score × recruiter</text>
         <path d="M 470 304 L 682 304" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
@@ -108,20 +108,20 @@ function SelectionFlowchart() {
 
         {/* Gates disagree: second human look */}
         <path d="M 190 304 L 164 304" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
-        <rect x="30" y="276" width="130" height="56" rx="10" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="30" y="276" width="130" height="56" rx="10" fill="var(--white)" stroke={nodeStroke} />
         <text x="95" y="299" textAnchor="middle" fontSize="12.5" fontWeight="700" fill={ink}>Gates disagree</text>
         <text x="95" y="317" textAnchor="middle" fontSize="12" fill={sub}>second human look</text>
         <path d="M 95 332 L 95 456 L 196 456" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
         <text x="102" y="442" fontSize="12" fill={sub} style={halo}>worth a call</text>
 
         {/* Screening call */}
-        <rect x="200" y="424" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="424" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="452" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Screening call</text>
         <text x="330" y="472" textAnchor="middle" fontSize="12" fill={sub}>recruiter: motivation · salary · notice</text>
         <path d="M 330 488 L 330 524" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* D2: right role, right now */}
-        <polygon points="330,524 470,604 330,684 190,604" fill="#ffffff" stroke="#94a3b8" />
+        <polygon points="330,524 470,604 330,684 190,604" fill="var(--white)" stroke="var(--grey-light)" />
         <text x="330" y="598" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>Right role,</text>
         <text x="330" y="618" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>right now?</text>
         <path d="M 470 604 L 682 604" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
@@ -130,13 +130,13 @@ function SelectionFlowchart() {
         <path d="M 330 684 L 330 724" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* Interview rounds */}
-        <rect x="200" y="724" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="724" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="752" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Interview rounds</text>
         <text x="330" y="772" textAnchor="middle" fontSize="12" fill={sub}>hiring team + AI panelist · as many as it takes</text>
         <path d="M 330 788 L 330 824" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* D3: panel decision */}
-        <polygon points="330,824 470,904 330,984 190,904" fill="#ffffff" stroke="#94a3b8" />
+        <polygon points="330,824 470,904 330,984 190,904" fill="var(--white)" stroke="var(--grey-light)" />
         <text x="330" y="898" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>Panel</text>
         <text x="330" y="918" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>decision</text>
         <path d="M 470 904 L 682 904" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
@@ -147,13 +147,13 @@ function SelectionFlowchart() {
         <path d="M 330 984 L 330 1024" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* Offer */}
-        <rect x="200" y="1024" width="260" height="64" rx="12" fill="#ffffff" stroke={nodeStroke} />
+        <rect x="200" y="1024" width="260" height="64" rx="12" fill="var(--white)" stroke={nodeStroke} />
         <text x="330" y="1052" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Offer + negotiation ⟲</text>
         <text x="330" y="1072" textAnchor="middle" fontSize="12" fill={sub}>terms move both ways</text>
         <path d="M 330 1088 L 330 1124" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* D4: accepted? */}
-        <polygon points="330,1124 470,1204 330,1284 190,1204" fill="#ffffff" stroke="#94a3b8" />
+        <polygon points="330,1124 470,1204 330,1284 190,1204" fill="var(--white)" stroke="var(--grey-light)" />
         <text x="330" y="1210" textAnchor="middle" fontSize="14" fontWeight="700" fill={ink}>Accepted?</text>
         {/* declined: back to the warm shortlist (rejoins the spine above interviews) */}
         <path d="M 190 1204 L 60 1204 L 60 706 L 322 706" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
@@ -162,7 +162,7 @@ function SelectionFlowchart() {
         <path d="M 330 1284 L 330 1320" fill="none" stroke={line} strokeWidth="1.6" markerEnd="url(#arr)" />
 
         {/* Hired */}
-        <rect x="200" y="1320" width="260" height="64" rx="12" fill="#ecfdf5" stroke="#a7f3d0" />
+        <rect x="200" y="1320" width="260" height="64" rx="12" fill="var(--color-ok-bg)" stroke="var(--color-ok-strong)" />
         <text x="330" y="1348" textAnchor="middle" fontSize="15" fontWeight="700" fill={ink}>Hired</text>
         <text x="330" y="1368" textAnchor="middle" fontSize="12" fill={sub}>hands off to New Member Onboarding</text>
         <path d="M 460 1352 L 795 1352 L 795 1252" fill="none" stroke={line} strokeWidth="1.6" strokeDasharray="5 5" markerEnd="url(#arr)" />

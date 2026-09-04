@@ -59,12 +59,12 @@ export type BoardCard = {
 };
 
 const STAGE_ACCENTS: Record<string, string> = {
-  preboarding: "#94a3b8",
-  day_1: "#38bdf8",
-  day_8: "#818cf8",
-  day_45: "#f59e0b",
-  day_60: "#34d399",
-  day_180: "#0f2c52",
+  preboarding: "var(--admin-muted)",
+  day_1: "var(--admin-chart-6)",
+  day_8: "var(--admin-chart-3)",
+  day_45: "var(--admin-warn-strong)",
+  day_60: "var(--admin-chart-2)",
+  day_180: "var(--admin-ink)",
 };
 
 const DECISION_LABEL: Record<string, string> = {
@@ -116,7 +116,7 @@ function Avatar({ card, size = 28 }: { card: BoardCard; size?: number }) {
         width: size,
         height: size,
         borderRadius: "50%",
-        background: "var(--tint, #eef2f7)",
+        background: "var(--admin-tint)",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
@@ -324,7 +324,7 @@ export function OnboardingCycleBoard({
                             width: 8,
                             height: 8,
                             borderRadius: "50%",
-                            background: card.complete ? "#16a34a" : STAGE_ACCENTS[card.columnId],
+                            background: card.complete ? "var(--admin-ok-strong)" : STAGE_ACCENTS[card.columnId],
                             flexShrink: 0,
                           }}
                         />
@@ -603,7 +603,7 @@ export function OnboardingCycleBoard({
             </section>
 
             {error && (
-              <p style={{ color: "#b91c1c", fontSize: 13 }} role="alert">
+              <p style={{ color: "var(--admin-err-ink)", fontSize: 13 }} role="alert">
                 {error}
               </p>
             )}

@@ -705,7 +705,7 @@ function MediaSection({
             alt="Cover"
             width={96}
             height={64}
-            style={{ borderRadius: 8, objectFit: "cover", border: "1px solid var(--admin-border, #e2e2e8)" }}
+            style={{ borderRadius: 8, objectFit: "cover", border: "1px solid var(--admin-line)" }}
           />
         ) : (
           <span className="admin-cell-muted">None. The signup page renders without a hero.</span>

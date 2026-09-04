@@ -33,7 +33,7 @@ export function TeamMembersTab({ blocks }: { blocks: AgendaBlock[] }) {
                 alignItems: "baseline",
                 padding: "6px 12px",
                 borderRadius: 999,
-                border: "1px solid var(--admin-border, #e2e2e8)",
+                border: "1px solid var(--admin-line)",
               }}
             >
               <strong>{p.name}</strong>

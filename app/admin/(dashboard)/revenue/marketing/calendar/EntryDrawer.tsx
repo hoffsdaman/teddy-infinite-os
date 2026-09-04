@@ -453,7 +453,7 @@ export function EntryDrawer({
           {selectedImage && (
             <a href={selectedImage.url} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: 10 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={selectedImage.url} alt="Selected" style={{ maxWidth: "100%", borderRadius: 10, border: "1px solid var(--admin-border, #e5e7eb)" }} />
+              <img src={selectedImage.url} alt="Selected" style={{ maxWidth: "100%", borderRadius: 10, border: "1px solid var(--admin-line)" }} />
             </a>
           )}
 

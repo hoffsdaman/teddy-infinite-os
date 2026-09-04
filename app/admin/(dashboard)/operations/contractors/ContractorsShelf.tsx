@@ -137,7 +137,7 @@ function WorkRequestsSection({ personId }: { personId: string }) {
                 alignItems: "center",
                 gap: 10,
                 padding: "8px 10px",
-                border: "1px solid var(--admin-line, #e2e8f0)",
+                border: "1px solid var(--admin-line)",
                 borderRadius: 8,
                 textDecoration: "none",
                 color: "inherit",

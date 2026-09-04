@@ -30,7 +30,7 @@ export function OverviewEditor({ companyId, initialBody }: { companyId: string; 
   return (
     <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Overview <span style={{ fontWeight: 400, color: "#797c82", fontSize: 13 }}>· shown to the client at the top of their roadmap</span></h2>
+        <h2 className="admin-card-title" style={{ margin: 0 }}>Overview <span style={{ fontWeight: 400, color: "var(--admin-ink-2)", fontSize: 13 }}>· shown to the client at the top of their roadmap</span></h2>
         {!editing && (
           <button type="button" className="admin-btn" onClick={() => { setBody(initialBody); setEditing(true); }}>
             {initialBody.trim() ? "Edit" : "Add overview"}
@@ -44,7 +44,7 @@ export function OverviewEditor({ companyId, initialBody }: { companyId: string; 
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={14}
-            style={{ width: "100%", fontFamily: "inherit", fontSize: 13, lineHeight: 1.55, padding: "10px 12px", border: "1px solid var(--admin-border,#E6E6E6)", borderRadius: 8, boxSizing: "border-box" }}
+            style={{ width: "100%", fontFamily: "inherit", fontSize: 13, lineHeight: 1.55, padding: "10px 12px", border: "1px solid var(--admin-line)", borderRadius: 8, boxSizing: "border-box" }}
             placeholder="Client-facing overview. Markdown: **bold** lead-ins, blank line between paragraphs, - for bullets."
           />
           {err && <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>{err}</div>}

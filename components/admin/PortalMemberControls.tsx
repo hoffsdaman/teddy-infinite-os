@@ -127,7 +127,7 @@ export function PortalMemberControls({
             style={{ flexBasis: "100%", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}
           >
             <span>Temporary password:</span>
-            <code style={{ fontSize: 14, fontWeight: 600, padding: "2px 8px", borderRadius: 6, background: "rgba(0,0,0,0.06)" }}>
+            <code style={{ fontSize: 14, fontWeight: 600, padding: "2px 8px", borderRadius: 6, background: "var(--admin-tint)" }}>
               {tempPw}
             </code>
             <button

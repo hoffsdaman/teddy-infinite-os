@@ -52,7 +52,7 @@ export function ProbationDecision({ subjectId, subjectName }: { subjectId: strin
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
             <div>
               <div style={{ fontWeight: 700, fontSize: 14 }}>{c.label}</div>
-              <div style={{ fontSize: 12, color: "var(--admin-muted, #797c82)" }}>{c.hint}</div>
+              <div style={{ fontSize: 12, color: "var(--admin-muted)" }}>{c.hint}</div>
             </div>
             {confirm === c.choice ? (
               <div style={{ display: "flex", gap: 8, flex: "none" }}>
@@ -85,7 +85,7 @@ export function ProbationDecision({ subjectId, subjectName }: { subjectId: strin
       {result && !result.ok && (
         <div className="admin-alert admin-alert--err">{result.message}</div>
       )}
-      <p style={{ fontSize: 12, color: "var(--admin-muted, #797c82)", margin: "2px 0 0" }}>
+      <p style={{ fontSize: 12, color: "var(--admin-muted)", margin: "2px 0 0" }}>
         Recording a decision for {subjectName} takes effect immediately.
       </p>
     </div>

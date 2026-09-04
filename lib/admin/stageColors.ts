@@ -8,26 +8,26 @@
  * docs/product/edge8-design-system-data.md.
  *
  * Previously these arrays were copy-pasted across four files with drifting values
- * (e.g. `#287BE8` vs the accent token, `#D1458B` vs `--data-chart-4`). This module
+ * (e.g. `var(--admin-accent)` vs the accent token, `var(--admin-chart-4)` vs a raw hex). This module
  * is the single source; the per-page duplicates now import from here.
  */
 
 /** First / "new" stage — brand blue. CSS var so it tracks the accent token. */
 export const STAGE_LEAD = "var(--admin-accent)";
 /** Terminal outcome — won (data chart-3, green). */
-export const STAGE_WON = "#1a9e74";
+export const STAGE_WON = "var(--admin-ok-strong)";
 /** Terminal outcome — lost (neutral gray). */
-export const STAGE_LOST = "#9ca3af";
+export const STAGE_LOST = "var(--admin-muted)";
 /** Default / unclassified in-progress stage (slate). */
-export const STAGE_NEUTRAL = "#6b7194";
+export const STAGE_NEUTRAL = "var(--admin-muted)";
 /** Rotating in-progress accent — discovery (data chart-4, pink). */
-export const STAGE_DISCOVERY = "#D1458B";
+export const STAGE_DISCOVERY = "var(--admin-chart-4)";
 /** Rotating in-progress accent — proposal (amber). */
-export const STAGE_PROPOSAL = "#f59e0b";
+export const STAGE_PROPOSAL = "var(--admin-warn-strong)";
 /** Late in-progress accent — contract sent, awaiting payment (teal, near-won). */
-export const STAGE_CONTRACT = "#0ea5a4";
+export const STAGE_CONTRACT = "var(--admin-chart-2)";
 /** "New from SDR" handoff column (violet). */
-export const STAGE_HANDOFF = "#8b5cf6";
+export const STAGE_HANDOFF = "var(--admin-chart-3)";
 
 /**
  * Full rotating cycle including terminal colors, for position-agnostic pipeline

@@ -124,7 +124,7 @@ function QrBlock({ title, link, downloadName }: { title: string; link: QrLink; d
           alt={`QR code for ${link.url}`}
           width={96}
           height={96}
-          style={{ borderRadius: 8, border: "1px solid var(--admin-border, #e2e2e8)" }}
+          style={{ borderRadius: 8, border: "1px solid var(--admin-line)" }}
         />
         <div style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
           <code className="admin-cell-mono" style={{ wordBreak: "break-all" }}>

@@ -30,7 +30,7 @@ export default function Nav() {
     <>
       <nav
         id="navbar"
-        style={{ background: scrolled ? 'rgba(255,255,255,0.99)' : 'rgba(255,255,255,0.97)' }}
+        style={{ background: scrolled ? 'color-mix(in srgb, var(--white) 99%, transparent)' : 'color-mix(in srgb, var(--white) 97%, transparent)' }}
       >
         <div className="container">
           <div className="nav-inner">

@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="os-footer-cols">
           <div className="os-footer-col">
             <div className="os-wordmark">
-              <span className="os-wordmark-text" style={{ color: '#ffffff', fontSize: 20 }}>
+              <span className="os-wordmark-text" style={{ color: 'var(--white)', fontSize: 20 }}>
                 TeddyBed
               </span>
               <span className="os-wordmark-chip" style={{ fontSize: 11 }}>
