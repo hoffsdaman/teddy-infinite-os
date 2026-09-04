@@ -46,7 +46,7 @@ export default async function CareersPage() {
       <HeroStats />
 
       {/* ═══ WHY WORK HERE ════════════════════════════════════ */}
-      <section className="section" style={{ background: 'var(--tint)' }}>
+      <section className="section section--tint-bg">
         <div className="container">
           <div className="reveal">
             <span className="section-label">Why Edge8</span>

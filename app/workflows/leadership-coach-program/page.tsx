@@ -29,12 +29,12 @@ export default function LeadershipCoachProgramPage() {
       />
 
       {/* The guardrail */}
-      <section className="section" style={{ background: 'var(--dark)', padding: '64px 0' }}>
+      <section className="section section--dark section--tight">
         <div className="container">
           <span className="section-label section-label--on-dark">
             The rule above the whole plan
           </span>
-          <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>
+          <h2 className="section-title section-title--sm section-title--on-dark">
             The coach preps and drafts. The human decides.
           </h2>
           <p className="wf-hero-sub" style={{ marginTop: 12 }}>
@@ -88,9 +88,9 @@ export default function LeadershipCoachProgramPage() {
       </section>
 
       {/* 2D Discover */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             2D · Discover
           </span>
           <h2 className="section-title section-title--sm">
@@ -258,9 +258,9 @@ export default function LeadershipCoachProgramPage() {
       </section>
 
       {/* 4D Determine */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             4D · Determine
           </span>
           <h2 className="section-title section-title--sm">

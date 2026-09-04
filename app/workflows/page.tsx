@@ -23,12 +23,12 @@ export default function WorkflowsPage() {
 
       <WorkflowsBrowser workflows={allWorkflows} />
 
-      <section className="section" style={{ background: 'var(--dark)', padding: '72px 0' }}>
+      <section className="section section--dark">
         <div className="container">
           <span className="section-label section-label--on-dark">
             The method
           </span>
-          <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>
+          <h2 className="section-title section-title--sm section-title--on-dark">
             One method behind every page
           </h2>
           <p className="wf-hero-sub" style={{ marginTop: 12 }}>
