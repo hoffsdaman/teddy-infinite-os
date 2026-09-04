@@ -152,7 +152,7 @@ export function SevenElements({ elements }: { elements: WorkflowElement[] }) {
       <h2 className="section-title section-title--sm">
         The seven elements
       </h2>
-      <p className="section-sub" style={{ marginTop: 12 }}>
+      <p className="section-sub u-mt-3">
         Every workflow we document has the same anatomy: seven elements, each assigned to a human, a machine, or both.
         This is the Centaur Map from <Link href="/workflows/method">our workflow design method</Link>.
       </p>

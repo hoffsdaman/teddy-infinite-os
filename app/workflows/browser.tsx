@@ -127,7 +127,7 @@ export default function WorkflowsBrowser({ workflows }: { workflows: Workflow[] 
 
   return (
     <>
-      <section style={{ padding: '36px 0 0' }}>
+      <section className="wf-section--top">
         <div className="container">
           <div className="wf-controls">
             <div className="wf-views" role="tablist" aria-label="View workflows by">
@@ -177,7 +177,7 @@ export default function WorkflowsBrowser({ workflows }: { workflows: Workflow[] 
       </section>
 
       {matches.length === 0 ? (
-        <section style={{ padding: '48px 0 72px' }}>
+        <section className="wf-section--pad">
           <div className="container">
             <p className="wf-empty">No workflows match &ldquo;{query}&rdquo;. Try a different word, or clear the search.</p>
           </div>
@@ -186,17 +186,16 @@ export default function WorkflowsBrowser({ workflows }: { workflows: Workflow[] 
         visibleOffices.map(({ office, workflows: officeWorkflows }, i) => (
           <section
             key={office}
-            className="section"
-            style={{ padding: '64px 0', background: i % 2 === 1 ? 'var(--tint)' : undefined }}
+            className="section wf-section--alt"
           >
             <div className="container">
               <span className="section-label" style={i % 2 === 1 ? { background: 'var(--white)' } : undefined}>
                 {office} office
               </span>
-              <h2 className="section-title" style={{ fontSize: 32, marginBottom: 8 }}>
+              <h2 className="section-title section-title--sm u-mb-2">
                 {office}
               </h2>
-              <p className="section-sub" style={{ marginBottom: 32 }}>
+              <p className="section-sub u-mb-6">
                 {OFFICE_TAGLINES[office]}
               </p>
               <WorkflowSet workflows={officeWorkflows} layout={layout} />
@@ -204,7 +203,7 @@ export default function WorkflowsBrowser({ workflows }: { workflows: Workflow[] 
           </section>
         ))
       ) : (
-        <section className="section" style={{ padding: '48px 0 72px' }}>
+        <section className="section wf-section--pad">
           <div className="container">
             <WorkflowSet workflows={sorted} layout={layout} />
           </div>

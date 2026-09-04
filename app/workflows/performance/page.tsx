@@ -45,13 +45,13 @@ export default function PerformanceWorkflowPage() {
       />
 
       {/* The problem */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The problem</span>
           <h2 className="section-title section-title--sm">
             Speed work goes wrong before it starts
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Performance is the easiest thing to work on and the easiest to work on badly:
           </p>
           <div className="wf-problems">
@@ -212,7 +212,7 @@ export default function PerformanceWorkflowPage() {
       </section>
 
       {/* Why it works */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section u-pt-0">
         <div className="container">
           <SevenElements elements={ELEMENTS} />
           <div className="wf-info-grid">

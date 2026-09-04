@@ -38,13 +38,13 @@ export default function BlogPublishingWorkflowPage() {
       />
 
       {/* The pipeline */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The pipeline</span>
           <h2 className="section-title section-title--sm">
             Human in front, AI behind
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The handoff is a single sentence: &ldquo;Photos are in. Build the post.&rdquo; Everything before it is
             human judgment. Everything after it is automated.
           </p>

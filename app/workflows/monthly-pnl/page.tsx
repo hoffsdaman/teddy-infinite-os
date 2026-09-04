@@ -38,13 +38,13 @@ export default function MonthlyPnlWorkflowPage() {
       />
 
       {/* The cycle */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The cycle</span>
           <h2 className="section-title section-title--sm">
             One month, four beats
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The P&amp;L is not an event, it is the last step of a pipeline that runs all month. By the time the month
             closes, most of the work is already done.
           </p>

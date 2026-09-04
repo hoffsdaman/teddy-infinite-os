@@ -76,13 +76,13 @@ export default function MethodPage() {
       </section>
 
       {/* The invisibility problem */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">Why document at all</span>
           <h2 className="section-title section-title--sm">
             The invisibility problem
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Every organization runs on workflows nobody has written down. They live in the heads of the people who run
             them, which means they stall when that person is out, they cannot be improved because they cannot be seen,
             and they can never be handed to AI. The work your team relies on most is usually the work that is least
@@ -100,7 +100,7 @@ export default function MethodPage() {
           <h2 className="section-title section-title--sm">
             The 5D Program Brief
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             No workflow gets built without a one-page brief covering five Ds. It keeps the program honest: a real
             problem, real data, a documented flow, a determined return, and a deployment plan.
           </p>
@@ -115,7 +115,7 @@ export default function MethodPage() {
           <h2 className="section-title section-title--sm">
             Seven elements, every time
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             A workflow is not a paragraph, it is a structure. We break every one into the same seven elements. The
             assignment chips below show the typical split; every workflow page in this section carries its own map.
           </p>
@@ -133,7 +133,7 @@ export default function MethodPage() {
             The Centaur Map and the New Hire Test
           </h2>
           <div className="wf-info-grid">
-            <div className="wf-info-card" style={{ background: 'var(--white)' }}>
+            <div className="wf-info-card wf-section--white">
               <h3>Centaur Map: human, machine, or both</h3>
               <ul>
                 <li>Every element gets an explicit assignment based on comparative advantage</li>
@@ -142,7 +142,7 @@ export default function MethodPage() {
                 <li>Where the machine needs data it does not have yet, the map names it</li>
               </ul>
             </div>
-            <div className="wf-info-card wf-info-card-mint" style={{ background: 'var(--white)' }}>
+            <div className="wf-info-card wf-info-card-mint wf-section--white">
               <h3>New Hire Test: the quality gate</h3>
               <ul>
                 <li>Someone who has never run the workflow runs it from the document alone</li>
@@ -162,7 +162,7 @@ export default function MethodPage() {
           <h2 className="section-title section-title--sm">
             Three stage gates
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             A documented workflow earns its way into production. It does not get declared into it.
           </p>
           <div className="wf-stages">
@@ -193,7 +193,7 @@ export default function MethodPage() {
           <h2 className="section-title section-title--sm">
             The frameworks behind the workflows
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The workflows in this section do not float free. They draw on a library of business frameworks we teach in
             our leadership and AI Officer programs, each one producing a dataset that AI can work from.
           </p>
@@ -221,15 +221,15 @@ export default function MethodPage() {
 
       {/* CTA */}
       <section className="section">
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h2 className="section-title" style={{ fontSize: 30, marginBottom: 12 }}>
+        <div className="container u-center-text">
+          <h2 className="section-title wf-title-lg u-mb-3">
             This method is teachable. And buildable.
           </h2>
-          <p className="section-sub" style={{ margin: '0 auto 28px' }}>
+          <p className="section-sub u-mx-auto u-mb-6">
             We certify leaders in this method through the AI Officer program, and we build these workflows directly for
             clients. Either way, your invisible processes become systems.
           </p>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="u-row u-gap-3 u-center u-wrap">
             <Link href="/workflows/certification" className="btn btn-ghost-light">
               Explore certification
             </Link>
@@ -237,8 +237,8 @@ export default function MethodPage() {
               Talk to us →
             </a>
           </div>
-          <p style={{ marginTop: 32 }}>
-            <Link href="/workflows" className="wf-back" style={{ color: 'var(--grey-mid)', textDecoration: 'none' }}>
+          <p className="u-mt-6">
+            <Link href="/workflows" className="wf-back wf-link-muted">
               ← All workflows
             </Link>
           </p>

@@ -96,13 +96,13 @@ export default function IdeasBacklogWorkflowPage() {
       />
 
       {/* Swimlane */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             From suggestion to decision
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Most idea programs die between the suggestion and the evaluation, because evaluating raw ideas is
             expensive. Here the expansion work happens automatically, so triage is cheap and nothing rots in the inbox.
           </p>
@@ -116,7 +116,7 @@ export default function IdeasBacklogWorkflowPage() {
             {NODES.map((n) => (
               <div key={n.num} className={`wf-node wf-node-${n.lane}`}>
                 <span className="wf-node-badge">{n.num}</span>
-                <div style={{ marginBottom: 8 }}>
+                <div className="u-mb-2">
                   <ActorChip actor={n.actor} label={n.actorLabel} />
                 </div>
                 <div className="wf-node-title">{n.title}</div>

@@ -39,13 +39,13 @@ export default function CertificationWorkflowPage() {
       />
 
       {/* The flow */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             Five steps, repeated per mission
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The AI Officer program runs as six missions, each ending in a real artifact. The loop below runs inside
             every one of them, and each artifact becomes raw material for the next mission.
           </p>
@@ -164,9 +164,9 @@ export default function CertificationWorkflowPage() {
               </ul>
             </div>
           </div>
-          <p style={{ marginTop: 32, fontSize: 15, color: 'var(--body-text)' }}>
+          <p className="wf-lead u-mt-6">
             This is the same method documented across this whole section.{' '}
-            <Link href="/workflows/method" style={{ color: 'var(--blue)' }}>
+            <Link href="/workflows/method" className="u-accent">
               See how we design workflows →
             </Link>
           </p>

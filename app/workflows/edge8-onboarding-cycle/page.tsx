@@ -104,13 +104,13 @@ export default function Edge8OnboardingCycleWorkflowPage() {
       />
 
       {/* Swimlane */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             From pre-boarding to staying
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Onboarding fails on follow-through: the plan nobody wrote, the check-in nobody scheduled, the probation
             decision that slipped. Here the calendar does the chasing, so every hire gets the same six stages whether
             anyone remembers or not.
@@ -125,7 +125,7 @@ export default function Edge8OnboardingCycleWorkflowPage() {
             {NODES.map((n) => (
               <div key={n.num} className={`wf-node wf-node-${n.lane}`}>
                 <span className="wf-node-badge">{n.num}</span>
-                <div style={{ marginBottom: 8 }}>
+                <div className="u-mb-2">
                   <ActorChip actor={n.actor} label={n.actorLabel} />
                 </div>
                 <div className="wf-node-title">{n.title}</div>

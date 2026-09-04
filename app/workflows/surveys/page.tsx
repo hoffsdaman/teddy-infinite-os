@@ -38,7 +38,7 @@ export default function SurveysWorkflowPage() {
       />
 
       {/* The flow */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">

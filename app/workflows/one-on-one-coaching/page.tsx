@@ -42,12 +42,12 @@ function CoachingCycleFlowchart() {
   const nodeStroke = 'var(--tint-deep)'
   const halo = { paintOrder: 'stroke' as const, stroke: 'var(--white)', strokeWidth: 4 }
   return (
-    <div style={{ overflowX: 'auto', margin: '40px 0 8px' }}>
+    <div className="u-x-scroll u-mt-7 u-mb-2">
       <svg
         viewBox="0 0 940 1060"
         role="img"
         aria-label="Biweekly coaching cycle flowchart: AI prep, the human 1-1, transcript auto-detection with a paste fallback, AI drafting both recap tiers, the coach review and publish gate, the shared recap, the mid-cycle check-in looping into the next prep, the private coach layer that never publishes, and monthly trend analysis feeding the next cycle"
-        style={{ minWidth: 760, width: '100%', height: 'auto', display: 'block', fontFamily: 'inherit' }}
+        className="wf-diagram wf-diagram--wide"
       >
         <defs>
           <marker id="carr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -167,13 +167,13 @@ export default function OneOnOneCoachingWorkflowPage() {
       />
 
       {/* The problem */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The problem</span>
           <h2 className="section-title section-title--sm">
             1-1s fail quietly, in five ways
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Most leaders do not skip 1-1s. They run them without a system, and the same five things slip:
           </p>
           <div className="wf-problems">
@@ -200,7 +200,7 @@ export default function OneOnOneCoachingWorkflowPage() {
           <h2 className="section-title section-title--sm">
             A loop with a gate, not a line
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             One person&apos;s two-week cycle. Solid lines are the working loop; dashed lines are the private layer&apos;s
             memory and the trend feedback. The recap has a review-then-publish branch, and nothing crosses from the
             private tier to the member without the coach opening the gate.
@@ -323,7 +323,7 @@ export default function OneOnOneCoachingWorkflowPage() {
           <h2 className="section-title section-title--sm">
             Goals, priorities, KPIs, commitments
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Four concepts, four horizons, and they are never confused with each other:
           </p>
           <div className="wf-table-wrap">
@@ -376,7 +376,7 @@ export default function OneOnOneCoachingWorkflowPage() {
               </tbody>
             </table>
           </div>
-          <div className="wf-info-grid" style={{ marginTop: 32 }}>
+          <div className="wf-info-grid u-mt-6">
             <div className="wf-info-card">
               <h3>Goals ladder up ⇅ progress flows down</h3>
               <ul>
@@ -408,10 +408,10 @@ export default function OneOnOneCoachingWorkflowPage() {
           <h2 className="section-title section-title--sm">
             What the coach knows, and who gets to see it
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Two standing reads per person keep the coaching grounded, and both live behind explicit rules:
           </p>
-          <div className="wf-info-grid" style={{ marginTop: 32 }}>
+          <div className="wf-info-grid u-mt-6">
             <div className="wf-info-card">
               <h3>The OCEAN profile</h3>
               <ul>
@@ -446,7 +446,7 @@ export default function OneOnOneCoachingWorkflowPage() {
           <h2 className="section-title section-title--sm">
             Privacy by access control, not discipline
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             The private coach layer and the person-facing layer are separate columns with separate query scopes.
             Mixing them is a code bug, not a human slip. The full access matrix:
           </p>
@@ -514,7 +514,7 @@ export default function OneOnOneCoachingWorkflowPage() {
               </tbody>
             </table>
           </div>
-          <p className="section-sub" style={{ marginTop: 24 }}>
+          <p className="section-sub u-mt-5">
             The assistant lockout is total: none of the coaching tables are readable by the company&apos;s internal AI
             assistants, the same treatment as sensitive HR data. Private coaching data never transits an assistant.
           </p>
@@ -587,7 +587,7 @@ export default function OneOnOneCoachingWorkflowPage() {
           <h2 className="section-title section-title--sm section-title--on-dark">
             The AI preps and drafts. The human decides.
           </h2>
-          <p className="wf-hero-sub" style={{ marginTop: 12 }}>
+          <p className="wf-hero-sub u-mt-3">
             The rule that sits above every step: the AI never recommends promoting, managing out, ranking, or labeling
             a person. It surfaces the signal and proposes the move; the coach coaches the team. No permanent people
             decision is made during an emotional spike, and every claim the AI makes points to a behavior in the data.
@@ -624,7 +624,7 @@ export default function OneOnOneCoachingWorkflowPage() {
               </ul>
             </div>
           </div>
-          <p className="section-sub" style={{ marginTop: 40 }}>
+          <p className="section-sub u-mt-7">
             This cycle is the operational half of a larger build. The program plan behind it, from problem statement
             to deployment, is published as{' '}
             <Link href="/workflows/leadership-coach-program">The Leadership Coach: AI Program Plan</Link>.

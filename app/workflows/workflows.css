@@ -675,3 +675,44 @@
 .wf-table td { padding: 12px 14px; border-bottom: 1px solid var(--tint); vertical-align: top; color: var(--dark); }
 .wf-table td:first-child { font-weight: 600; }
 .wf-table td:last-child { color: var(--body-text); }
+
+/* ─── Inline styles the library pages carried, now classes (design-debt #3) ── */
+.wf-section--white { background: var(--white); }
+.wf-section--tint { background: var(--tint); padding: 64px 0; }
+.wf-section--dark { background: var(--dark); padding: 64px 0; }
+.wf-section--dark-sm { background: var(--dark); padding: 64px 0; }
+.wf-section--alt { padding: 64px 0; }
+.wf-section--alt:nth-child(even) { background: var(--tint); }
+.wf-section--top { padding: 40px 0 0; }
+.wf-section--pad { padding: 48px 0 72px; }
+.wf-lead { font-size: 15px; color: var(--body-text); }
+.wf-lead--lg { font-size: 22px; font-weight: 700; }
+.wf-figure { border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.wf-diagram { display: block; width: 100%; height: auto; min-width: 600px; font-family: inherit; }
+.wf-diagram--wide { min-width: 760px; }
+.wf-link-accent { color: var(--blue); font-weight: 600; }
+.wf-link-muted { color: var(--grey-mid); text-decoration: none; }
+.wf-dim { opacity: 0.85; }
+.wf-title-xl { font-size: 32px; color: var(--white); }
+.wf-title-lg { font-size: 28px; }
+.wf-grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.wf-loop-card { background: var(--white); border: 1px solid color-mix(in srgb, var(--dark) 10%, transparent); border-radius: 14px; padding: 20px 24px; }
+.wf-loop-card--pool { text-align: center; border-width: 2px; }
+.wf-loop-arrows { text-align: center; font-size: 22px; padding: 10px 0; opacity: 0.6; }
+/* Flowchart nodes (graph.tsx): SVG paint per node kind. */
+.wf-node-ink { fill: var(--dark); }
+.wf-node-plain { fill: var(--white); stroke: var(--input-border); stroke-width: 1.5; }
+.wf-node-write { fill: color-mix(in srgb, var(--wf-green) 8%, transparent); stroke: var(--wf-green); stroke-width: 1.5; }
+.wf-node-decision { fill: color-mix(in srgb, var(--blue) 6%, transparent); stroke: var(--blue); stroke-width: 1.5; }
+.wf-node-wait { fill: color-mix(in srgb, var(--wf-amber) 8%, transparent); stroke: var(--wf-amber); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.wf-node-human { fill: var(--white); stroke: var(--dark); stroke-width: 2; }
+.wf-node-soft { fill: var(--white); stroke: var(--tint-deep); stroke-width: 1.5; }
+.wf-node-flag { fill: color-mix(in srgb, var(--wf-red) 6%, transparent); stroke: var(--wf-red); stroke-width: 1.5; }
+.wf-node-pill { fill: var(--white); stroke: var(--dark); stroke-width: 1.5; }
+.wf-node-title { font-size: 14px; font-weight: 600; font-family: var(--font-body); }
+.wf-node-sub { font-size: 12px; font-weight: 500; font-family: var(--font-body); }
+.wf-edge { stroke-width: 1.5; }
+.wf-edge-label { fill: var(--grey-mid); font-size: 12px; font-weight: 600; font-family: var(--font-body); paint-order: stroke; stroke: var(--white); stroke-width: 4; }
+.wf-edge-label--fail { fill: var(--wf-red); }
+.wf-edge-label--agent { fill: var(--wf-green); }
+.wf-legend-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }

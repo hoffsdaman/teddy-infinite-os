@@ -117,13 +117,13 @@ export default function ContractorPaymentsWorkflowPage() {
       />
 
       {/* Swimlane diagram */}
-      <section className="section" style={{ paddingBottom: 48 }}>
+      <section className="section u-pb-8">
         <div className="container">
           <span className="section-label">The flow</span>
           <h2 className="section-title section-title--sm">
             Three lanes, seven steps
           </h2>
-          <p className="section-sub" style={{ marginTop: 12 }}>
+          <p className="section-sub u-mt-3">
             Work passes between the admin, the system, and the contractor. The system carries every handoff, so nobody
             has to remember to follow up.
           </p>
@@ -137,7 +137,7 @@ export default function ContractorPaymentsWorkflowPage() {
             {NODES.map((n) => (
               <div key={n.num} className={`wf-node wf-node-${n.lane}`}>
                 <span className="wf-node-badge">{n.num}</span>
-                <div style={{ marginBottom: 8 }}>
+                <div className="u-mb-2">
                   <ActorChip actor={n.actor} label={n.actorLabel} />
                 </div>
                 <div className="wf-node-title">{n.title}</div>
@@ -233,7 +233,7 @@ export default function ContractorPaymentsWorkflowPage() {
                         <strong>More information</strong>: the contractor gets a specific follow-up question
                       </li>
                     </ul>
-                    <p style={{ marginTop: 10 }}>
+                    <p className="u-mt-3">
                       Every response triggers a notification back to the contractor, so the loop never stalls waiting
                       on a status update.
                     </p>
