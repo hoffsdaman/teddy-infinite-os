@@ -21,7 +21,7 @@
 .os-btn {
   display: inline-block;
   border-radius: 40px;
-  padding: 15px 26px;
+  padding: 14px 24px;
   font-family: var(--font-brand-body);
   font-size: 15px;
   font-weight: 500;
@@ -55,7 +55,7 @@
   color: var(--teddy-yogi);
   font-size: 13px;
   font-weight: 600;
-  padding: 7px 16px;
+  padding: 6px 16px;
   border-radius: 40px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
@@ -89,7 +89,7 @@
 }
 .os-wordmark-text {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 400;
   color: var(--teddy-yogi);
   letter-spacing: -0.5px;
@@ -100,7 +100,7 @@
   font-family: var(--font-brand-body);
   font-size: 11px;
   font-weight: 700;
-  padding: 4px 9px;
+  padding: 4px 8px;
   border-radius: 40px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -135,13 +135,13 @@
   align-items: center;
   text-align: center;
   gap: 24px;
-  padding: 88px 80px 76px;
+  padding: 80px 80px 80px;
 }
 .os-hero h1 {
   margin: 0;
   max-width: 920px;
   font-family: var(--font-display);
-  font-size: 60px;
+  font-size: 56px;
   line-height: 1.08;
   font-weight: 400;
   letter-spacing: -0.5px;
@@ -151,7 +151,7 @@
 .os-hero p {
   margin: 0;
   max-width: 620px;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 300;
   line-height: 1.65;
   color: var(--teddy-slate);
@@ -169,7 +169,7 @@
   margin: 0;
   max-width: 760px;
   font-family: var(--font-display);
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 400;
   letter-spacing: -0.3px;
   color: var(--teddy-yogi);
@@ -183,7 +183,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 44px;
+  gap: 40px;
 }
 .os-console-grid {
   display: grid;
@@ -196,7 +196,7 @@
   background: var(--teddy-polar);
   border: 1px solid var(--teddy-booboo);
   border-radius: 24px;
-  padding: 38px 32px;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -218,7 +218,7 @@
 .os-console-card h3 {
   margin: 6px 0 0;
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 400;
   color: var(--teddy-yogi);
 }
@@ -255,7 +255,7 @@
 
 /* ── Unique ── */
 .os-unique {
-  padding: 92px 80px;
+  padding: 96px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -275,7 +275,7 @@
 }
 .os-unique-num {
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 400;
   color: var(--teddy-winnie);
   line-height: 1;
@@ -283,7 +283,7 @@
 .os-unique-item h3 {
   margin: 4px 0 0;
   font-family: var(--font-display);
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 400;
   color: var(--teddy-yogi);
 }
@@ -297,10 +297,10 @@
 
 /* ── Newsletter ── */
 .os-newsletter {
-  margin: 0 80px 92px;
+  margin: 0 80px 96px;
   background: var(--teddy-yogi);
   border-radius: 28px;
-  padding: 52px 56px;
+  padding: 48px 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -309,7 +309,7 @@
 .os-newsletter h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 400;
   letter-spacing: -0.3px;
   color: var(--teddy-polar);
@@ -355,10 +355,10 @@
 /* ── Footer ── */
 .os-footer {
   background: var(--teddy-yogi);
-  padding: 60px 80px 40px;
+  padding: 56px 80px 40px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 32px;
   margin-top: auto;
 }
 .os-footer-cols {
@@ -422,18 +422,18 @@
     display: none;
   }
   .os-hero {
-    padding: 48px 24px 52px;
+    padding: 48px 24px 48px;
   }
   .os-hero h1 {
-    font-size: 38px;
+    font-size: 40px;
     letter-spacing: -0.3px;
   }
   .os-hero p {
-    font-size: 17px;
+    font-size: 16px;
   }
   .os-consoles {
-    padding: 52px 24px;
-    gap: 30px;
+    padding: 48px 24px;
+    gap: 28px;
   }
   .os-console-grid,
   .os-unique-grid {
@@ -443,15 +443,15 @@
     font-size: 28px;
   }
   .os-unique {
-    padding: 60px 24px;
-    gap: 34px;
+    padding: 56px 24px;
+    gap: 32px;
   }
   .os-unique-grid {
-    gap: 30px;
+    gap: 28px;
   }
   .os-newsletter {
-    margin: 0 24px 60px;
-    padding: 34px 28px;
+    margin: 0 24px 56px;
+    padding: 32px 28px;
     flex-direction: column;
     align-items: stretch;
     gap: 20px;
@@ -464,7 +464,7 @@
     min-width: 0;
   }
   .os-footer {
-    padding: 44px 24px 28px;
+    padding: 40px 24px 28px;
   }
   .os-footer-cols {
     flex-direction: column;

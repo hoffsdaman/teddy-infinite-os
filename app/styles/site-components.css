@@ -14,8 +14,8 @@
 .site-wordmark { font-family: var(--font-display); font-size: 24px; font-weight: 400; color: var(--dark); letter-spacing: -0.5px; }
 .site-wordmark--on-dark { font-size: 26px; color: var(--white); }
 /* Badges */
-.site-badge-mint { display: inline-block; background: var(--mint); color: var(--dark); font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: var(--radius-btn); letter-spacing: 0.5px; text-transform: uppercase; }
-.site-badge-mint--xs { font-size: 10px; padding: 3px 7px; }
+.site-badge-mint { display: inline-block; background: var(--mint); color: var(--dark); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: var(--radius-btn); letter-spacing: 0.5px; text-transform: uppercase; }
+.site-badge-mint--xs { font-size: 11px; padding: 2px 6px; }
 /* Cards */
 .site-card { display: block; padding: 16px 18px; border: 1px solid color-mix(in srgb, var(--dark) 12%, transparent); border-radius: 12px; text-decoration: none; color: inherit; background: var(--white); }
 .site-card--done { background: var(--color-ok-bg); border-color: var(--color-ok-strong); }
@@ -35,24 +35,24 @@
 .site-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .site-form-error { background: var(--color-err-bg); color: var(--color-err-deep); padding: 10px 14px; border-radius: 10px; font-size: 14px; }
 .site-btn-ghost { background: transparent; border: 1px solid color-mix(in srgb, var(--dark) 20%, transparent); padding: 10px 20px; border-radius: var(--radius-btn); cursor: pointer; }
-.site-btn-submit { padding: 13px 32px; border-radius: var(--radius-btn); font-weight: 700; font-size: 15px; cursor: pointer; }
+.site-btn-submit { padding: 12px 32px; border-radius: var(--radius-btn); font-weight: 700; font-size: 15px; cursor: pointer; }
 .site-btn-submit:disabled { cursor: default; opacity: 0.7; }
 /* Support page */
-.site-support-main { min-height: 70vh; padding: 72px 0 96px; background: linear-gradient(180deg, var(--color-grey-50) 0%, var(--white) 100%); }
+.site-support-main { min-height: 70vh; padding: 64px 0 96px; background: linear-gradient(180deg, var(--color-grey-50) 0%, var(--white) 100%); }
 .site-support-title { font-family: var(--font-display); font-size: 40px; margin: 0 0 10px; color: var(--dark); }
-.site-support-sub { font-size: 17px; color: color-mix(in srgb, var(--dark) 60%, transparent); }
+.site-support-sub { font-size: 16px; color: color-mix(in srgb, var(--dark) 60%, transparent); }
 /* My Retreat */
 .site-gate-main { min-height: 70vh; padding: clamp(48px, 10vh, 140px) 20px 80px; }
 .site-gate-title { font-size: 24px; margin: 0 0 6px; }
 .site-gate-sub { margin: 0 0 18px; opacity: 0.75; font-size: 15px; }
-.site-retreat-main { max-width: 780px; margin: 0 auto; padding: clamp(104px, 14vh, 168px) 20px 96px; }
+.site-retreat-main { max-width: 780px; margin: 0 auto; padding: clamp(96px, 14vh, 160px) 20px 96px; }
 .site-retreat-head { margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid color-mix(in srgb, var(--dark) 8%, transparent); }
 .site-retreat-title { font-size: 32px; margin: 8px 0 10px; line-height: 1.1; letter-spacing: -0.01em; }
 .site-retreat-meta { opacity: 0.75; font-size: 16px; }
 .site-retreat-cover { width: 100%; max-height: 320px; object-fit: cover; border-radius: 14px; margin-top: 18px; }
-.site-retreat-body { margin-bottom: 32px; line-height: 1.6; font-size: 17px; }
+.site-retreat-body { margin-bottom: 32px; line-height: 1.6; font-size: 16px; }
 /* Retreat agenda (renders on my-retreat and in the admin event record) */
 .site-agenda-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--admin-ink); flex-shrink: 0; }
-.site-agenda-day { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.site-agenda-day { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
 .site-agenda-row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--admin-line); }
 .site-agenda-tag { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: var(--admin-tint); color: var(--admin-ink); }
