@@ -33,7 +33,6 @@ export default function Footer() {
             <div className="footer-links">
               <Link href="/blog">Blog</Link>
               <Link href="/workflows">Workflows</Link>
-              <Link href="/careers">Careers</Link>
             </div>
           </div>
 

@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
 import { allWorkflows } from '@/lib/workflowsData'
-import { getActiveJobs } from '@/lib/jobs'
 import { getAllPublishedPosts } from '@/lib/blog'
 
 const BASE = 'https://teddy-infinite-os.vercel.app'
@@ -15,7 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }[] = [
     { path: '/', priority: 1.0, changeFrequency: 'weekly' },
     { path: '/blog/', priority: 0.8, changeFrequency: 'daily' },
-    { path: '/careers/', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/workflows/', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/workflows/method/', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/legal/privacy/', priority: 0.3, changeFrequency: 'yearly' },
@@ -46,14 +44,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // Postings live in the ATS, so this list changes without a deploy.
-  // getActiveJobs() returns [] on a read failure — the sitemap degrades to the
-  // static routes rather than failing the build.
-  const jobEntries: MetadataRoute.Sitemap = (await getActiveJobs()).map((j) => ({
-    url: `${BASE}/careers/${j.slug}/`,
-    lastModified: j.posted ? new Date(j.posted) : now,
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }))
 
-  return [...staticEntries, ...postEntries, ...workflowEntries, ...jobEntries]
+  return [...staticEntries, ...postEntries, ...workflowEntries]
 }
