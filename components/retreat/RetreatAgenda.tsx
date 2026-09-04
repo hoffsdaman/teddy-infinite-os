@@ -14,7 +14,7 @@ import {
 // and the marketing hub. No client hooks — safe as a server component.
 
 const timeStyle: React.CSSProperties = {
-  fontFamily: "var(--font-mono, ui-monospace, monospace)",
+  fontFamily: "var(--admin-font-mono)",
   fontSize: 13,
   letterSpacing: "0.02em",
   color: "var(--admin-muted)",
