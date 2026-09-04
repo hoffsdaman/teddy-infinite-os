@@ -66,7 +66,7 @@ export function PhotoTagPicker({
   }
 
   return (
-    <div className="phototag">
+    <div className="admin-phototag">
       <div className="admin-phototag-chips">
         {tags.map((t) => (
           <span key={t.person_id} className="admin-phototag-chip">
