@@ -56,17 +56,17 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
           }
         />
 
-        <div className="admin-ideas-tabs">
+        <div className="admin-admin-ideas-tabs">
           <Link
             href="/team/ideas?compose=build"
-            className={`ideas-tab${compose === "build" ? " ideas-tab--active" : ""}`}
+            className={`admin-ideas-tab${compose === "build" ? " admin-ideas-tab--active" : ""}`}
             aria-current={compose === "build" ? "page" : undefined}
           >
             What should we build?
           </Link>
           <Link
             href="/team/ideas?compose=learning"
-            className={`ideas-tab${compose === "learning" ? " ideas-tab--active" : ""}`}
+            className={`admin-ideas-tab${compose === "learning" ? " admin-ideas-tab--active" : ""}`}
             aria-current={compose === "learning" ? "page" : undefined}
           >
             What have I learned?
@@ -127,12 +127,12 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
       <div className="admin-ideas-history">
         <div className="admin-ideas-history-head">
           <h2 className="admin-ideas-history-title">History</h2>
-          <div className="admin-ideas-tabs">
+          <div className="admin-admin-ideas-tabs">
             {tabs.map((t) => (
               <Link
                 key={t.key}
                 href={t.href}
-                className={`ideas-tab${view === t.key ? " ideas-tab--active" : ""}`}
+                className={`admin-ideas-tab${view === t.key ? " admin-ideas-tab--active" : ""}`}
                 aria-current={view === t.key ? "page" : undefined}
               >
                 {t.label}
