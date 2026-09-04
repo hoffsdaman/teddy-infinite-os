@@ -82,9 +82,9 @@ export function BoardsIndex({
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 18 }}>
+      <div className="u-row u-gap-3 u-between u-mb-4">
         <button
-          className="admin-btn admin-btn--primary admin-btn--sm"
+          className="admin-btn admin-btn--primary admin-btn--sm admin-card admin-section-card is-clickable"
           onClick={() => setCreating(true)}
           disabled={creating}
         >
@@ -107,7 +107,7 @@ export function BoardsIndex({
           <span className="admin-cell-muted">No boards yet.</span>
         </div>
       ) : view === "cards" ? (
-        <div className="admin-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+        <div className="admin-kpi-grid">
           {boards.map((b) => {
             const total = b.open_count + b.done_count;
             const pct = total > 0 ? Math.round((b.done_count / total) * 100) : 0;
@@ -117,33 +117,29 @@ export function BoardsIndex({
               <Link
                 key={b.id}
                 href={`/admin/boards/${b.slug}`}
-                className="admin-card admin-section-card is-clickable"
-                style={{ display: "flex", flexDirection: "column", gap: 0, textDecoration: "none" }}
+                className="admin-card admin-section-card is-clickable admin-hub-program-card"
               >
-                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
-                  <span className="admin-cell-strong" style={{ fontSize: 15 }}>
+                <div className="u-row u-between">
+                  <span className="admin-cell-strong u-lg">
                     {b.name}
                   </span>
                   {b.client_name && <Badge tone="info">Client</Badge>}
                 </div>
-                <div className="admin-cell-muted" style={{ marginTop: 4, minHeight: 18 }}>
+                <div className="admin-cell-muted u-mt-1">
                   {b.client_name ?? "Internal"}
                 </div>
-                <div style={{ marginTop: 14 }}>
-                  <div
-                    className="admin-cell-muted"
-                    style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 5 }}
-                  >
+                <div className="u-mt-4">
+                  <div className="admin-cell-muted u-row u-between u-mb-1 u-sm">
                     <span>
                       {total === 0 ? "No cards yet" : b.open_count === 0 ? "All done" : `${b.open_count} open`}
                     </span>
                     {total > 0 && <span>{pct}% done</span>}
                   </div>
                   <div className="admin-progress">
-                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} />
+                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                   </div>
                 </div>
-                <div style={{ marginTop: 12, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div className="u-row u-between u-mt-3">
                   <span className="admin-board-avatar-stack">
                     {shown.map((name, i) => (
                       <span key={`${name}-${i}`} className="admin-kanban-avatar" title={name}>
@@ -152,7 +148,7 @@ export function BoardsIndex({
                     ))}
                     {extra > 0 && <span className="admin-board-avatar-more">+{extra}</span>}
                     {b.member_names.length === 0 && (
-                      <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+                      <span className="admin-cell-muted u-sm">
                         No members
                       </span>
                     )}
@@ -172,7 +168,7 @@ export function BoardsIndex({
                     <th key={c.key}>
                       <button
                         type="button"
-                        className="admin-th-sort"
+                        className="admin-th-sort is-clickable"
                         onClick={() => toggleSort(c.key)}
                         aria-label={`Sort by ${c.label}`}
                       >
@@ -194,7 +190,6 @@ export function BoardsIndex({
                   return (
                     <tr
                       key={b.id}
-                      className="is-clickable"
                       tabIndex={0}
                       onClick={() => router.push(`/admin/boards/${b.slug}`)}
                       onKeyDown={(e) => {
@@ -204,7 +199,7 @@ export function BoardsIndex({
                       <td className="admin-cell-strong">{b.name}</td>
                       <td>
                         {b.client_name ? (
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <span className="u-row">
                             {b.client_name} <Badge tone="info">Client</Badge>
                           </span>
                         ) : (
@@ -216,7 +211,7 @@ export function BoardsIndex({
                           <Link
                             href={`/admin/boards/${b.slug}/sprints/${b.current_sprint.id}`}
                             onClick={(e) => e.stopPropagation()}
-                            style={{ color: "var(--admin-accent)", textDecoration: "none", fontWeight: 600 }}
+                            className="u-link-strong"
                             title={b.current_sprint.ends_on ? `Ends ${b.current_sprint.ends_on}` : undefined}
                           >
                             {b.current_sprint.name}
@@ -230,9 +225,9 @@ export function BoardsIndex({
                         {total === 0 ? (
                           <span className="admin-cell-muted">—</span>
                         ) : (
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                            <span className="admin-progress" style={{ width: 72, display: "inline-block" }}>
-                              <span className="admin-progress-fill" style={{ width: `${pct}%`, display: "block" }} />
+                          <span className="u-row">
+                            <span className="admin-progress u-inline-block u-w-90">
+                              <span className="admin-progress-fill u-block" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                             </span>
                             <span className="admin-cell-mono">{pct}%</span>
                           </span>

@@ -17,7 +17,7 @@ export function InvoicesPanel({ invoices }: { invoices: HubInvoice[] }) {
             <div className="admin-list-title">{inv.docNumber ? `#${inv.docNumber}` : "Invoice"}</div>
             <div className="admin-list-sub">{formatDate(inv.txnDate)}</div>
           </div>
-          <div className="admin-list-aside" style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <div className="admin-list-aside admin-list-aside--row">
             <span className="admin-cell-mono">{formatCents(inv.amountCents, inv.currency)}</span>
             <Badge tone={statusTone(inv.status)}>{humanize(inv.status) || "Open"}</Badge>
           </div>

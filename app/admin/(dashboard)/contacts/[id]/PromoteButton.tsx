@@ -12,7 +12,7 @@ export function PromoteButton({ personId }: { personId: string }) {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <span style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+    <span className="u-row">
       {error && <span className="admin-cell-muted">{error}</span>}
       <button
         type="button"

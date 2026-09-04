@@ -78,7 +78,7 @@ export function MeetingsPanel({
 
   return (
     <>
-      {err && <div className="admin-alert admin-alert--err" style={{ marginBottom: 10 }}>{err}</div>}
+      {err && <div className="admin-alert admin-alert--err u-mb-3">{err}</div>}
       <div className="admin-list">
         {meetings.map((m) => {
           const published = !!m.publishedAt;
@@ -99,14 +99,13 @@ export function MeetingsPanel({
                   </div>
                 )}
               </div>
-              <div className="admin-list-aside" style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <div className="admin-list-aside admin-list-aside--row">
                 {canTag && (
                   <select
-                    className="admin-select"
+                    className="admin-select u-max-3"
                     value={m.aiProgramId ?? ""}
                     disabled={pending && busyId === m.id}
                     onChange={(e) => setProgram(m.id, e.target.value || null)}
-                    style={{ maxWidth: 220 }}
                     aria-label="Tag this meeting to an AI Program (optional)"
                   >
                     <option value="">Company-wide</option>

@@ -16,11 +16,11 @@ export function RoadmapView({ roadmap }: { roadmap: CompanyRoadmap }) {
   const { overview, groups, items } = roadmap;
 
   return (
-    <div style={{ maxWidth: 860 }}>
+    <div className="u-max-narrow">
       {overview && (
-        <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Overview</h2>
-          <div style={{ fontSize: 14, lineHeight: 1.65, whiteSpace: "pre-wrap" }}>{overview}</div>
+        <section className="admin-card admin-section-card u-mb-4">
+          <h2 className="admin-card-title u-mb-2">Overview</h2>
+          <div className="admin-text-block">{overview}</div>
         </section>
       )}
 
@@ -31,10 +31,10 @@ export function RoadmapView({ roadmap }: { roadmap: CompanyRoadmap }) {
           const groupItems = items.filter((i) => i.group_key === g.key);
           if (groupItems.length === 0) return null;
           return (
-            <section className="admin-card admin-section-card" key={g.key} style={{ marginBottom: 14 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+            <section className="admin-card admin-section-card u-mb-4" key={g.key}>
+              <div className="u-row u-gap-3 u-wrap u-mb-3">
                 {g.step_label && <Badge tone="info">{g.step_label}</Badge>}
-                <h2 className="admin-card-title" style={{ margin: 0 }}>{g.title}</h2>
+                <h2 className="admin-card-title">{g.title}</h2>
               </div>
               <div className="admin-list">
                 {groupItems.map((it) => {
@@ -44,7 +44,7 @@ export function RoadmapView({ roadmap }: { roadmap: CompanyRoadmap }) {
                       <div className="admin-list-main">
                         <div className="admin-list-title">{it.ref ? `${it.ref} · ` : ""}{it.title}</div>
                       </div>
-                      <div className="admin-list-aside" style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                      <div className="admin-list-aside admin-list-aside--row">
                         <Badge tone={BACKLOG_PRIORITY_TONE[priority]}>{PRIORITY_LABEL[priority]}</Badge>
                       </div>
                     </div>

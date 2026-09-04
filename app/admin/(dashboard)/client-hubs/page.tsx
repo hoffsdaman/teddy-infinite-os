@@ -64,12 +64,12 @@ export default async function ClientHubsPage({ searchParams }: { searchParams: S
         title="Client Hubs"
         sub={`${rows.length} ${noun}${rows.length === 1 ? "" : "s"}. Open one to work their hub.`}
       />
-      <div style={{ marginBottom: 18 }}>
+      <div className="u-mb-4">
         <ClientHubFilter active={status} defaultStatus={DEFAULT_STATUS} counts={counts} searchParams={searchParams} />
       </div>
       {rows.length === 0 ? (
-        <div className="admin-card admin-section-card" style={{ padding: 22 }}>
-          <p className="admin-page-sub" style={{ margin: 0 }}>No {noun}s.</p>
+        <div className="admin-card admin-section-card">
+          <p className="admin-page-sub u-m-0">No {noun}s.</p>
         </div>
       ) : (
         <ClientCards

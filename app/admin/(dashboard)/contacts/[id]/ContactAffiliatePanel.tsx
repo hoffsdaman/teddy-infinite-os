@@ -16,17 +16,17 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
 
   return (
     <div className="admin-card admin-section-card">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginBottom: 12 }}>
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Affiliate</h2>
-        <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+      <div className="admin-card-head">
+        <h2 className="admin-card-title">Affiliate</h2>
+        <span className="u-row">
           {activeCode && <Badge tone="ok">{activeCode}</Badge>}
-          <Link href="/admin/revenue/affiliates" className="admin-cell-muted" style={{ fontSize: 12 }}>
+          <Link href="/admin/revenue/affiliates" className="admin-cell-muted u-sm">
             Program ↗
           </Link>
         </span>
       </div>
 
-      <div className="admin-kpi-grid" style={{ marginBottom: affiliate.referredDeals.length || affiliate.commissions.length ? 16 : 0 }}>
+      <div className={`admin-kpi-grid ${affiliate.referredDeals.length || affiliate.commissions.length ? "u-mb-4" : "u-mb-0"}`}>
         <MetricCard label="Pipeline" value={formatCents(pipelineCents, "usd")} sub="open referrals" />
         <MetricCard label="Converted" value={formatCents(affiliate.accruedGrossCents, "usd")} sub="referred revenue paid" />
         <MetricCard
@@ -38,7 +38,7 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
 
       {affiliate.referredDeals.length > 0 && (
         <>
-          <div className="admin-shelf-heading" style={{ marginBottom: 6 }}>Referrals &amp; proposals</div>
+          <div className="admin-shelf-heading u-mb-2">Referrals &amp; proposals</div>
           <div className="admin-list">
             {affiliate.referredDeals.map((d) => (
               <div className="admin-list-row" key={d.id}>
@@ -66,7 +66,7 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
 
       {affiliate.commissions.length > 0 && (
         <>
-          <div className="admin-shelf-heading" style={{ margin: "16px 0 6px" }}>Commissions</div>
+          <div className="admin-shelf-heading u-m-0 u-mt-4 u-mb-2">Commissions</div>
           <div className="admin-list">
             {affiliate.commissions.map((c) => (
               <div className="admin-list-row" key={c.id}>

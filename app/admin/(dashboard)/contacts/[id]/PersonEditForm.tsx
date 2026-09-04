@@ -32,7 +32,7 @@ export function PersonEditForm({ person, onDone }: { person: Person; onDone?: ()
 
   return (
     <div className="admin-form">
-      <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+      <div className="u-row u-end u-sm">
         <AutosaveIndicator status={status} />
       </div>
       <div className="admin-field">
@@ -111,7 +111,7 @@ export function PersonEditForm({ person, onDone }: { person: Person; onDone?: ()
           onBlur={(e) => commit("notes", e.target.value)}
         />
       </div>
-      <label className="admin-field" style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+      <label className="u-row">
         <input
           type="checkbox"
           checked={form.do_not_contact}
@@ -120,7 +120,7 @@ export function PersonEditForm({ person, onDone }: { person: Person; onDone?: ()
             commit("do_not_contact", e.target.checked);
           }}
         />
-        <span className="admin-label" style={{ margin: 0 }}>
+        <span className="admin-label">
           Do not contact
         </span>
       </label>

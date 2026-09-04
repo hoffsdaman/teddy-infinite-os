@@ -241,7 +241,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
           {applications.length === 0 ? (
             <Empty text="No applications." />
           ) : (
-            <div className="admin-list" style={{ marginTop: 8 }}>
+            <div className="admin-list u-mt-2">
               {applications.map((a) => (
                 <div className="admin-list-row" key={a.id}>
                   <div className="admin-list-main">
@@ -318,8 +318,8 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
         title={name}
         sub={person.email}
         action={
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+          <div className="u-stack u-items-end" /* layout-ok: no cross-axis end utility (needs .u-items-end) */>
+            <span className="u-row u-wrap">
               {person.archived_at && <Badge tone="neutral">Archived</Badge>}
               {person.do_not_contact && <Badge tone="err">Do not contact</Badge>}
               {person.is_team_member && <Badge tone="info">Team</Badge>}

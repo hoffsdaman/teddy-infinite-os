@@ -114,8 +114,8 @@ export function SprintView({
   }, [cards]);
 
   const bar = (pct: number) => (
-    <div style={{ height: 6, borderRadius: 99, background: "var(--admin-line)", overflow: "hidden" }}>
-      <div style={{ width: `${Math.min(pct, 100)}%`, height: "100%", background: "var(--admin-accent)" }} />
+    <div className="admin-meter admin-meter--thin">
+      <div className="admin-meter-fill" style={{ width: `${Math.min(pct, 100)}%` }} /* layout-ok: data-driven width */ />
     </div>
   );
 
@@ -123,14 +123,7 @@ export function SprintView({
   // over readable body text, sections separated by hairlines.
   const eyebrow = (text: string) => (
     <div
-      style={{
-        fontSize: 11,
-        fontWeight: 700,
-        letterSpacing: ".07em",
-        textTransform: "uppercase",
-        color: "var(--admin-accent)",
-        marginBottom: 6,
-      }}
+      className="u-label u-strong u-accent u-mb-2 admin-textarea"
     >
       {text}
     </div>
@@ -138,14 +131,13 @@ export function SprintView({
 
   const bodyText = (display: string | null, placeholder: string) =>
     display ? (
-      <div style={{ fontSize: 14, lineHeight: 1.55, whiteSpace: "pre-wrap" }}>{display}</div>
+      <div className="u-lg u-prewrap">{display}</div>
     ) : (
-      <div className="admin-cell-muted" style={{ fontSize: 13 }}>{placeholder}</div>
+      <div className="admin-cell-muted u-sm">{placeholder}</div>
     );
 
   const briefInput = (key: keyof typeof brief, placeholder: string, rows = 2) => (
     <textarea
-      className="admin-textarea"
       rows={rows}
       value={brief[key]}
       placeholder={placeholder}
@@ -158,42 +150,42 @@ export function SprintView({
   const cardRow = (c: BoardCard) => (
     <div
       key={c.id}
-      style={{ display: "flex", gap: 10, alignItems: "center", padding: "8px 0", borderTop: "1px solid var(--admin-line)", flexWrap: "wrap" }}
+      className="admin-row-divided u-wrap admin-select u-max-5"
     >
       <Badge tone={PRIORITY_TONE[c.priority]}>{PRIORITY_LABEL[c.priority]}</Badge>
-      <span className={c.status === "done" ? "admin-cell-muted" : "admin-cell-strong"} style={{ flex: "1 1 240px" }}>
+      <span className={`${c.status === "done" ? "admin-cell-muted" : "admin-cell-strong"} u-flex-2`}>
         {c.title}
       </span>
-      <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+      <span className="admin-cell-muted u-sm">
         {c.board_column_id ? columnName.get(c.board_column_id) ?? "" : ""}
       </span>
       {c.assignee_name && (
-        <span className="admin-cell-muted" style={{ fontSize: 12 }} title={c.assignee_name}>
+        <span className="admin-cell-muted u-sm" title={c.assignee_name}>
           {initials(c.assignee_name)}
         </span>
       )}
-      <span className="admin-cell-muted" style={{ fontSize: 12, width: 52, textAlign: "right" }}>
+      <span className="admin-cell-muted admin-sprint-num">
         {c.human_tokens != null ? `${c.human_tokens} HT` : "–"}
       </span>
     </div>
   );
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div className="u-stack u-gap-4">
       {banner && <div className="admin-alert admin-alert--err">{banner}</div>}
 
-      <section className="admin-card" style={{ padding: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
-          <h2 style={{ margin: 0, fontSize: 15 }}>Sprint brief</h2>
+      <section className="admin-card u-p-4">
+        <div className="u-row u-gap-3 u-wrap u-mb-2">
+          <h2 className="u-m-0 u-lg">Sprint brief</h2>
           <Badge tone={sprint.status === "active" ? "ok" : "neutral"}>{sprint.status}</Badge>
           {(sprint.starts_on || sprint.ends_on) && (
-            <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <span className="admin-cell-muted u-sm">
               {sprint.starts_on ? formatDate(sprint.starts_on) : "?"} to {sprint.ends_on ? formatDate(sprint.ends_on) : "?"}
             </span>
           )}
-          <span style={{ marginLeft: "auto" }}>
+          <span className="u-ml-auto">
             {editing ? (
-              <span style={{ display: "flex", gap: 8 }}>
+              <span className="u-row">
                 <button className="admin-btn admin-btn--sm admin-btn--primary" onClick={saveBrief} disabled={saving}>
                   Save
                 </button>
@@ -210,12 +202,10 @@ export function SprintView({
         </div>
         <div className="admin-field">
           <label className="admin-label">Planning meeting</label>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <div className="u-row u-wrap">
             <select
-              className="admin-select"
               value={meetingPick}
               onChange={(e) => setMeetingPick(e.target.value)}
-              style={{ maxWidth: 340 }}
             >
               <option value="">No meeting attached</option>
               {meetingOptions.map((m) => (
@@ -240,7 +230,7 @@ export function SprintView({
             )}
           </div>
           {pulled && (
-            <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 4 }}>
+            <div className="admin-cell-muted u-sm u-mt-1">
               Draft pulled from the meeting for {board.client_name ?? board.name}. Review the fields below, then Save.
             </div>
           )}
@@ -259,12 +249,12 @@ export function SprintView({
         </div>
 
         <div style={sectionStyle}>
-          <div style={{ background: "var(--admin-accent-soft)", borderRadius: 10, padding: "12px 14px" }}>
+          <div className="admin-callout">
             {eyebrow("#1 improvement")}
             {editing ? (
               <>
                 {briefInput("focusImprovement", "The one improvement this sprint, from the retrospective.")}
-                <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 4 }}>
+                <div className="admin-cell-muted u-sm u-mt-1">
                   Keep it short. One sentence is ideal.
                 </div>
               </>
@@ -279,14 +269,14 @@ export function SprintView({
             type="button"
             onClick={() => setSummaryOpen((o) => !o)}
             aria-expanded={summaryOpen || editing}
-            style={{ display: "flex", gap: 8, alignItems: "center", background: "none", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}
+            className="admin-btn-reset u-gap-2 admin-row-divided u-wrap"
           >
             {eyebrow("Meeting summary")}
-            <span aria-hidden style={{ fontSize: 10, color: "var(--admin-accent)", marginBottom: 6 }}>
+            <span aria-hidden className="u-xs u-accent u-mb-2">
               {summaryOpen || editing ? "▲" : "▼"}
             </span>
             {!(summaryOpen || editing) && sprint.meeting_summary && (
-              <span className="admin-cell-muted" style={{ fontSize: 12, marginBottom: 6 }}>
+              <span className="admin-cell-muted u-mb-2 u-sm">
                 {sprint.meeting_summary.slice(0, 80)}…
               </span>
             )}
@@ -298,26 +288,26 @@ export function SprintView({
         </div>
       </section>
 
-      <section className="admin-card" style={{ padding: 16 }}>
-        <h2 style={{ margin: "0 0 12px", fontSize: 15 }}>Plan vs actual</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+      <section className="admin-card u-p-4">
+        <h2 className="u-m-0 u-mb-3 u-lg">Plan vs actual</h2>
+        <div className="u-grid-auto-md">
           <div>
             <div className="admin-label">Cards</div>
-            <div style={{ fontSize: 22, fontWeight: 700 }}>
+            <div className="admin-num-xl">
               {done.length}
-              <span className="admin-cell-muted" style={{ fontSize: 14, fontWeight: 600 }}> / {cards.length} done</span>
+              <span className="admin-cell-muted u-lg u-strong"> / {cards.length} done</span>
             </div>
             {bar(cardPct)}
           </div>
           <div>
             <div className="admin-label">Human Tokens</div>
-            <div style={{ fontSize: 22, fontWeight: 700 }}>
+            <div className="admin-num-xl">
               {doneHT}
-              <span className="admin-cell-muted" style={{ fontSize: 14, fontWeight: 600 }}> / {plannedHT} delivered</span>
+              <span className="admin-cell-muted u-md u-strong"> / {plannedHT} delivered</span>
             </div>
             {bar(htPct)}
             {unestimated > 0 && (
-              <div className="admin-cell-muted" style={{ fontSize: 12, marginTop: 4 }}>
+              <div className="admin-cell-muted u-sm u-mt-1">
                 {unestimated} card{unestimated === 1 ? "" : "s"} without an estimate
               </div>
             )}
@@ -325,18 +315,17 @@ export function SprintView({
         </div>
 
         {byAssignee.length > 0 && (
-          <div style={{ marginTop: 16 }}>
+          <div className="u-mt-4">
             <div className="admin-label">By assignee</div>
             {byAssignee.map((p) => (
               <div
                 key={p.name}
-                style={{ display: "flex", gap: 10, alignItems: "center", padding: "6px 0", borderTop: "1px solid var(--admin-line)" }}
               >
-                <span className="admin-cell-strong" style={{ flex: "1 1 160px" }}>{p.name}</span>
-                <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+                <span className="admin-cell-strong u-flex-1">{p.name}</span>
+                <span className="admin-cell-muted u-sm">
                   {p.done}/{p.total} cards
                 </span>
-                <span className="admin-cell-muted" style={{ fontSize: 12, width: 110, textAlign: "right" }}>
+                <span className="admin-cell-muted admin-sprint-num admin-sprint-num--wide">
                   {p.doneHT}/{p.totalHT} HT
                 </span>
               </div>
@@ -345,15 +334,15 @@ export function SprintView({
         )}
       </section>
 
-      <section className="admin-card" style={{ padding: 16 }}>
-        <h2 style={{ margin: "0 0 4px", fontSize: 15 }}>
-          In play <span className="admin-cell-muted" style={{ fontWeight: 600 }}>({open.length})</span>
+      <section className="admin-card u-p-4">
+        <h2 className="u-m-0 u-mb-1 u-lg">
+          In play <span className="admin-cell-muted u-strong">({open.length})</span>
         </h2>
-        {open.length ? open.map(cardRow) : <div className="admin-cell-muted" style={{ fontSize: 13 }}>Nothing open.</div>}
-        <h2 style={{ margin: "16px 0 4px", fontSize: 15 }}>
-          Done <span className="admin-cell-muted" style={{ fontWeight: 600 }}>({done.length})</span>
+        {open.length ? open.map(cardRow) : <div className="admin-cell-muted u-sm">Nothing open.</div>}
+        <h2 className="u-lg u-m-0 u-mt-4 u-mb-1">
+          Done <span className="admin-cell-muted u-strong">({done.length})</span>
         </h2>
-        {done.length ? done.map(cardRow) : <div className="admin-cell-muted" style={{ fontSize: 13 }}>Nothing finished yet.</div>}
+        {done.length ? done.map(cardRow) : <div className="admin-cell-muted u-sm">Nothing finished yet.</div>}
       </section>
     </div>
   );

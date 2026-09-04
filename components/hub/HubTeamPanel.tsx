@@ -6,9 +6,9 @@ import type { HubTeam } from "@/lib/team/clients";
 // Shared across the team hub, the admin 360 hub, and the portal.
 export function HubTeamPanel({ team }: { team: HubTeam }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div className="u-stack u-gap-4">
       <section className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Edge8 team</h2>
+        <h2 className="admin-card-title u-mb-3">Edge8 team</h2>
         {team.edge8.length === 0 ? (
           <div className="admin-empty">No staff assigned yet.</div>
         ) : (
@@ -30,7 +30,7 @@ export function HubTeamPanel({ team }: { team: HubTeam }) {
       </section>
 
       <section className="admin-card admin-section-card">
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Client contacts</h2>
+        <h2 className="admin-card-title u-mb-3">Client contacts</h2>
         {team.client.length === 0 ? (
           <div className="admin-empty">No contacts linked yet.</div>
         ) : (

@@ -5060,3 +5060,12 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-banner-warn { background: var(--admin-warn-bg); color: var(--admin-warn-ink); border-bottom: 1px solid var(--admin-line-strong); padding: 6px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--admin-space-2); font-size: var(--admin-text-sm); line-height: 1.4; }
 .admin-chat-bubble { align-self: flex-start; max-width: 92%; }
 .admin-chat-bubble--me { align-self: flex-end; max-width: 85%; background: var(--admin-accent-soft); padding: 8px 12px; border-radius: 12px; }
+/* ─── Core record pages (boards, sprints, client hubs, contacts) ─────────── */
+.u-help { cursor: help; }
+.u-md { font-size: var(--admin-text-md); }
+.u-done { text-decoration: line-through; color: var(--admin-muted); }
+.admin-callout--ok { background: var(--admin-ok-bg); color: var(--admin-ok-ink); border-radius: var(--admin-radius-sm); padding: 10px 12px; }
+.admin-input--w-xxs { width: 64px; flex: 0 0 auto; }
+.admin-sprint-num { width: 52px; text-align: right; font-size: var(--admin-text-sm); }
+.admin-sprint-num--wide { width: 110px; }
+.admin-text-block { font-size: var(--admin-text-md); line-height: 1.65; white-space: pre-wrap; }
