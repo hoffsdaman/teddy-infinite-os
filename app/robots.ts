@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/t/', '/workflows/private/', '/board/'],
+        disallow: ['/api/', '/t/', '/workflows/private/', '/board/', '/careers/'],
       },
     ],
     sitemap: 'https://teddy-infinite-os.vercel.app/sitemap.xml',

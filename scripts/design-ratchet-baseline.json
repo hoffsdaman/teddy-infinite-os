@@ -38,5 +38,5 @@
     "components/onboarding/OnboardingCycleBoard.tsx": 2,
     "components/team/AvatarUpload.tsx": 1
   },
-  "pagePrefixedSelectors": 79
+  "pagePrefixedSelectors": 99
 }
