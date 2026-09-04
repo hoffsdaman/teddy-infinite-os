@@ -72,9 +72,9 @@ export function LearningForm() {
 
   if (submitting) {
     return (
-      <div className="admin-card" style={{ padding: "28px 24px", textAlign: "center" }}>
+      <div className="admin-card admin-empty--tall u-center-text">
         <h2 className="admin-card-title">Sharing your learning…</h2>
-        <p className="admin-page-sub" style={{ marginTop: 6 }}>
+        <p className="admin-page-sub u-mt-2">
           It&apos;s saved. Claude is giving it a quick polish for the team feed — this takes a few
           seconds.
         </p>
@@ -83,15 +83,15 @@ export function LearningForm() {
   }
 
   return (
-    <div className="admin-card" style={{ padding: "22px 24px" }}>
+    <div className="admin-card u-p-5">
       <h2 className="admin-card-title">Share what you learned</h2>
-      <p className="admin-page-sub" style={{ marginTop: 0 }}>
+      <p className="admin-page-sub u-mt-0">
         Learn and Share is how we work: something you figured out this week is something the whole
         team gets to skip figuring out. Type or tap the mic and talk — it goes straight onto the
         team feed.
       </p>
 
-      <div className="admin-form" style={{ marginTop: 14 }}>
+      <div className="admin-form u-mt-4">
         <div className="admin-field">
           <label className="admin-label" htmlFor="learning-title">Title</label>
           <input
@@ -107,7 +107,7 @@ export function LearningForm() {
 
         {FIELDS.map((f) => (
           <div key={f.key} className="admin-field">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="u-row u-wrap u-between">
               <label className="admin-label" htmlFor={`learning-${f.key}`}>{f.label}</label>
               {canDictate && (
                 <button
@@ -120,7 +120,7 @@ export function LearningForm() {
                 </button>
               )}
             </div>
-            <p className="admin-page-sub" style={{ marginTop: 0, marginBottom: 6 }}>{f.teach}</p>
+            <p className="admin-page-sub u-mt-0 u-mb-2">{f.teach}</p>
             <textarea
               id={`learning-${f.key}`}
               className="admin-textarea"
@@ -135,13 +135,13 @@ export function LearningForm() {
 
         <div className="admin-field">
           <label className="admin-label">Where did this come from?</label>
-          <p className="admin-page-sub" style={{ marginTop: 0, marginBottom: 6 }}>
+          <p className="admin-page-sub u-mt-0 u-mb-2">
             Optional — link the article, doc, or thread this learning came from, so a teammate can
             go straight to the source.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="u-stack">
             {sourceUrls.map((url, i) => (
-              <div key={i} style={{ display: "flex", gap: 8 }}>
+              <div key={i} className="u-row">
                 <input
                   className="admin-input"
                   type="url"
@@ -165,8 +165,7 @@ export function LearningForm() {
           </div>
           <button
             type="button"
-            className="admin-btn admin-btn--sm"
-            style={{ alignSelf: "flex-start", marginTop: 8 }}
+            className="admin-btn admin-btn--sm u-mt-2 u-self-start"
             onClick={() => setSourceUrls((prev) => [...prev, ""])}
           >
             + Add another link

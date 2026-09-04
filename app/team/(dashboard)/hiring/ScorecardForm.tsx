@@ -65,8 +65,8 @@ export function ScorecardForm({
 
   return (
     <div className="admin-form">
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <div className="admin-field" style={{ flex: "1 1 200px" }}>
+      <div className="u-row u-wrap">
+        <div className="admin-field u-flex-2">
           <label className="admin-label">Recommendation</label>
           <select
             className="admin-select"
@@ -82,7 +82,7 @@ export function ScorecardForm({
           </select>
         </div>
 
-        <div className="admin-field" style={{ flex: "0 0 140px" }}>
+        <div className="admin-field u-flex-fixed-sm">
           <label className="admin-label">Overall score</label>
           <select
             className="admin-select"
@@ -100,7 +100,7 @@ export function ScorecardForm({
       </div>
 
       <div>
-        <label className="admin-label" style={{ display: "block", marginBottom: 6 }}>
+        <label className="admin-label u-block u-mb-2">
           Rubric
         </label>
         <div className="admin-hire-criteria">
@@ -140,9 +140,9 @@ export function ScorecardForm({
         />
       </div>
 
-      {error && <div className="admin-hint" style={{ color: "var(--admin-err-ink)" }}>{error}</div>}
+      {error && <div className="admin-hint u-err">{error}</div>}
       {done && !error && (
-        <div className="admin-hint" style={{ color: "var(--admin-ok-ink)" }}>
+        <div className="admin-hint u-ok">
           Scorecard saved. The rest of the panel is now visible below.
         </div>
       )}

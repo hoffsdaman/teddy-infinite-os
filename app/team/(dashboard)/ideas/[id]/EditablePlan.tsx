@@ -46,23 +46,23 @@ export function EditablePlan(props: {
 
   if (!editing) {
     return (
-      <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
+      <div className="admin-card u-p-5 u-mb-5">
+        <div className="u-row u-wrap u-between">
           <h2 className="admin-card-title">Your product plan</h2>
           <button type="button" className="admin-btn admin-btn--sm" onClick={startEditing}>
             Edit plan
           </button>
         </div>
-        <p className="admin-page-sub" style={{ marginTop: 0 }}>{props.sub}</p>
+        <p className="admin-page-sub u-mt-0">{props.sub}</p>
         <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: props.html }} />
       </div>
     );
   }
 
   return (
-    <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
+    <div className="admin-card u-p-5 u-mb-5">
       <h2 className="admin-card-title">Edit your plan</h2>
-      <p className="admin-page-sub" style={{ marginTop: 0 }}>
+      <p className="admin-page-sub u-mt-0">
         Markdown works here (headings, lists, bold). Your original 5D answers below stay untouched.
       </p>
       <div className="admin-field">
@@ -87,8 +87,8 @@ export function EditablePlan(props: {
           autoFocus
         />
       </div>
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
-      <div className="admin-form-actions" style={{ marginTop: 14 }}>
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
+      <div className="admin-form-actions u-mt-4">
         <button type="button" className="admin-btn" onClick={() => setEditing(false)} disabled={saving}>
           Cancel
         </button>

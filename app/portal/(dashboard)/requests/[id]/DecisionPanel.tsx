@@ -50,10 +50,10 @@ function DecisionAction({
   }
 
   return (
-    <div style={{ display: "grid", gap: 8, width: "100%" }}>
+    <div className="u-stack u-w-full">
       <textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder={placeholder} autoFocus />
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row">
         <button
           type="button"
           className={primary ? "admin-btn admin-btn--primary" : "admin-btn"}
@@ -92,7 +92,7 @@ export function DecisionPanel({ id, status }: { id: string; status: WorkRequestS
 
   return (
     <div className="admin-card admin-section-card">
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+      <h2 className="admin-card-title u-mb-3">
         {status === "estimate_submitted"
           ? "Your decision — approve this estimate?"
           : status === "work_submitted"
@@ -101,8 +101,8 @@ export function DecisionPanel({ id, status }: { id: string; status: WorkRequestS
               ? "Need more done?"
               : "Status"}
       </h2>
-      {note && <p className="admin-page-sub" style={{ marginTop: 0 }}>{note}</p>}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      {note && <p className="admin-page-sub u-mt-0">{note}</p>}
+      <div className="u-row u-wrap">
         {status === "estimate_submitted" && (
           <>
             <DecisionAction
@@ -159,19 +159,19 @@ export function DecisionPanel({ id, status }: { id: string; status: WorkRequestS
         )}
       </div>
       {addable && (
-        <p className="admin-cell-muted" style={{ marginTop: 10, marginBottom: 0, fontSize: 12 }}>
+        <p className="admin-cell-muted u-mt-3 u-mb-0 u-sm">
           Adding scope sends the request back to the contractor for an updated estimate. Nothing extra is billed until
           you accept the finished work.
         </p>
       )}
       {status === "estimate_submitted" && (
-        <p className="admin-cell-muted" style={{ marginTop: 10, marginBottom: 0, fontSize: 12 }}>
+        <p className="admin-cell-muted u-mt-3 u-mb-0 u-sm">
           Approving means the contractor starts the work; you&apos;ll review and accept the result before
           anything is invoiced.
         </p>
       )}
       {status === "work_submitted" && (
-        <p className="admin-cell-muted" style={{ marginTop: 10, marginBottom: 0, fontSize: 12 }}>
+        <p className="admin-cell-muted u-mt-3 u-mb-0 u-sm">
           Accepting closes the project and triggers your invoice at the agreed hourly rate.
         </p>
       )}

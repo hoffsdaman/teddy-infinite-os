@@ -275,18 +275,17 @@ function CommitmentCard({
       </div>
       {boardPush &&
         (pushedCard ? (
-          <div className="admin-cell-muted" style={{ marginTop: 6, fontSize: 12 }}>
+          <div className="admin-cell-muted u-mt-2 u-sm">
             On {pushedCard.boardName}: {pushedCard.done ? "Done" : pushedCard.columnName || "—"}
           </div>
         ) : (
-          <div style={{ display: "flex", gap: 6, marginTop: 6, alignItems: "center", flexWrap: "wrap" }}>
+          <div className="u-row u-wrap u-mt-2">
             <select
-              className="admin-input"
+              className="admin-input u-max-3"
               value={pushBoardId}
               onChange={(e) => setPushBoardId(e.target.value)}
               disabled={busy}
               aria-label="Board"
-              style={{ maxWidth: 200 }}
             >
               <option value="">Push to board…</option>
               {boardPush.boards.map((b) => (

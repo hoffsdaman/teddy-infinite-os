@@ -492,6 +492,21 @@ export default function PatternsPage() {
           </div>
         </Section>
 
+        {/* ─── Team & portal components ─────────────── */}
+        <Section title="Team & portal components" sub="Added while moving the team intranet and client portal off inline styles: roadmap assist, request cards, program plan chat.">
+          <div className="u-stack u-gap-3">
+            <div className="admin-assist-box u-max-6">
+              <div className="u-stack u-gap-2 u-mb-2">
+                <div className="admin-assist-msg">What problem should this roadmap item solve?</div>
+                <div className="admin-assist-msg admin-assist-msg--me">Our returns process is chaos.</div>
+              </div>
+              <div className="u-row"><input className="admin-input u-grow" placeholder="admin-assist-box · admin-assist-msg" readOnly /><button type="button" className="admin-btn">Send</button></div>
+            </div>
+            <div className="admin-card admin-section-card admin-card--inset u-max-6"><span className="admin-cell-strong">admin-card--inset</span> <span className="admin-cell-muted">sits on the page canvas colour</span></div>
+            <ul className="admin-list-md u-max-6"><li>admin-list-md keeps bullet lists readable</li><li>admin-text-md is the paragraph equivalent</li></ul>
+          </div>
+        </Section>
+
       </div>
     </div>
   );

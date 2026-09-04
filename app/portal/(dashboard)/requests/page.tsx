@@ -47,58 +47,58 @@ export default async function PortalRequestsPage() {
       />
 
       {canCreate && (<>
-      <h2 className="admin-section-label" style={{ marginTop: 0 }}>Start a request</h2>
-      <div className="admin-kpi-grid admin-kpi-grid--2up" style={{ marginBottom: 20, gridAutoRows: "1fr" }}>
-        <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>General request</h2>
-          <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>
+      <h2 className="admin-section-label u-mt-0">Start a request</h2>
+      <div className="admin-kpi-grid admin-kpi-grid--2up u-mb-5 u-rows-equal">
+        <div className="admin-card admin-section-card u-stack">
+          <h2 className="admin-card-title u-mb-2">General request</h2>
+          <p className="admin-page-sub u-m-0 u-minh-40">
             Not sure who you need? Describe it and the Edge8 team will pick it up.
           </p>
-          <div style={{ marginTop: "auto", paddingTop: 16 }}>
+          <div className="u-mt-auto u-pt-4">
             <GeneralRequest />
           </div>
         </div>
-        <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Project for a contractor</h2>
-          <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>
+        <div className="admin-card admin-section-card u-stack">
+          <h2 className="admin-card-title u-mb-2">Project for a contractor</h2>
+          <p className="admin-page-sub u-m-0 u-minh-40">
             Brief a contractor directly. They estimate the hours, you approve, work starts.
           </p>
-          <div style={{ marginTop: "auto", paddingTop: 16 }}>
+          <div className="u-mt-auto u-pt-4">
             <Link href="/portal/requests/new" className="admin-btn admin-btn--primary">
               New project request
             </Link>
           </div>
         </div>
-        <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Human tokens</h2>
-          <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>
+        <div className="admin-card admin-section-card u-stack">
+          <h2 className="admin-card-title u-mb-2">Human tokens</h2>
+          <p className="admin-page-sub u-m-0 u-minh-40">
             {tokens.balanceTokens > 0
               ? `You have ${tokens.balanceTokens} tokens (1 token = 1 hour of skilled work).`
               : "Pre-buy packs of skilled hours: 40 tokens per pack, $2,000."}
           </p>
-          <div style={{ marginTop: "auto", paddingTop: 16 }}>
+          <div className="u-mt-auto u-pt-4">
             <Link href="/portal/tokens" className="admin-btn admin-btn--primary">
               {tokens.balanceTokens > 0 ? "View & buy tokens" : "Buy token packs"}
             </Link>
           </div>
         </div>
-        <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Build Your Team</h2>
-          <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>
+        <div className="admin-card admin-section-card u-stack">
+          <h2 className="admin-card-title u-mb-2">Build Your Team</h2>
+          <p className="admin-page-sub u-m-0 u-minh-40">
             Hire dedicated full-time team members in Vietnam. 10% off for teams of 3 or more.
           </p>
-          <div style={{ marginTop: "auto", paddingTop: 16 }}>
+          <div className="u-mt-auto u-pt-4">
             <Link href="/portal/requests/hire" className="admin-btn admin-btn--primary">
               Build your team
             </Link>
           </div>
         </div>
-        <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Add AI Program Plan</h2>
-          <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>
+        <div className="admin-card admin-section-card u-stack">
+          <h2 className="admin-card-title u-mb-2">Add AI Program Plan</h2>
+          <p className="admin-page-sub u-m-0 u-minh-40">
             Plan an AI program: upload your documents, or build a 5Ds AI Program Brief with our guided assistant.
           </p>
-          <div style={{ marginTop: "auto", paddingTop: 16 }}>
+          <div className="u-mt-auto u-pt-4">
             <Link href="/portal/programs/add" className="admin-btn admin-btn--primary">
               Add AI Program Plan
             </Link>
@@ -108,8 +108,8 @@ export default async function PortalRequestsPage() {
       </>)}
 
       <h2 className="admin-section-label">Your requests</h2>
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Project requests</h2>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">Project requests</h2>
         {requests.length === 0 ? (
           <div className="admin-empty">No project requests yet.</div>
         ) : (
@@ -118,8 +118,7 @@ export default async function PortalRequestsPage() {
               <Link
                 key={r.id}
                 href={`/portal/requests/${r.id}`}
-                className="admin-list-row"
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="admin-list-row u-link-plain"
               >
                 <div className="admin-list-main">
                   <div className="admin-list-title">{r.title}</div>
@@ -129,7 +128,7 @@ export default async function PortalRequestsPage() {
                     {r.actualHours !== null && ` · delivered ${formatHours(r.actualHours)}`}
                   </div>
                 </div>
-                <div className="admin-list-aside" style={{ alignItems: "flex-end" }}>
+                <div className="admin-list-aside u-items-end">
                   {NEEDS_CLIENT.includes(r.status) && <Badge tone="warn">Your review needed</Badge>}
                   <Badge tone={workRequestTone(r.status)}>
                     {WORK_REQUEST_STATUS_LABEL[r.status as WorkRequestStatus] ?? humanize(r.status)}
@@ -143,7 +142,7 @@ export default async function PortalRequestsPage() {
 
       {inquiries.length > 0 && (
         <div className="admin-card admin-section-card">
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Recent general requests</h2>
+          <h2 className="admin-card-title u-mb-3">Recent general requests</h2>
           <div className="admin-list">
             {inquiries.map((i) => (
               <div className="admin-list-row" key={i.id}>

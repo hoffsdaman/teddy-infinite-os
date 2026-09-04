@@ -81,9 +81,9 @@ export function TimeOffPanel({ rows, autoApprove }: { rows: OwnRequestRow[]; aut
         </div>
       )}
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+      <div className="admin-card admin-section-card u-mb-5">
         <h2 className="admin-card-title">Request time off</h2>
-        <p className="admin-cell-muted" style={{ marginBottom: 12 }}>
+        <p className="admin-cell-muted u-mb-3">
           {autoApprove
             ? "Your policy approves time off automatically — your manager and ops are notified."
             : "Requests are reviewed by ops before they're approved."}

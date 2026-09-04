@@ -58,7 +58,7 @@ export default async function IdeaDetailPage({ params }: { params: { id: string 
         }
       />
 
-      <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+      <div className="u-row u-mb-4">
         {idea.office && <Badge tone={officeTone(idea.office)}>{OFFICE_LABEL[idea.office as IdeaOffice]}</Badge>}
         {!isLearning && (
           <Badge tone={ideaStatusTone(idea.status)}>
@@ -71,27 +71,27 @@ export default async function IdeaDetailPage({ params }: { params: { id: string 
         {isLearning ? (
           <>
             {aiHtml ? (
-              <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
+              <div className="admin-card u-p-5 u-mb-5">
                 <h2 className="admin-card-title">The learning</h2>
                 <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
               </div>
             ) : null}
-            <div className="admin-card" style={{ padding: "22px 24px" }}>
+            <div className="admin-card u-p-5">
               <h2 className="admin-card-title">{aiHtml ? (isOwner ? "What you shared" : "As shared") : "The learning"}</h2>
               <dl className="admin-kv">
-                <div style={{ gridColumn: "1 / -1", marginBottom: 10 }}>
-                  <dt style={{ marginBottom: 2 }}>What happened</dt>
-                  <dd style={{ whiteSpace: "pre-wrap" }}>{idea.story ?? ""}</dd>
+                <div className="u-span-all u-mb-3">
+                  <dt className="u-mb-1">What happened</dt>
+                  <dd className="u-prewrap">{idea.story ?? ""}</dd>
                 </div>
-                <div style={{ gridColumn: "1 / -1", marginBottom: idea.source_urls?.length ? 10 : 0 }}>
-                  <dt style={{ marginBottom: 2 }}>The takeaway</dt>
-                  <dd style={{ whiteSpace: "pre-wrap" }}>{idea.takeaway ?? ""}</dd>
+                <div className={`u-span-all ${idea.source_urls?.length ? "u-mb-3" : "u-mb-0"}`}>
+                  <dt className="u-mb-1">The takeaway</dt>
+                  <dd className="u-prewrap">{idea.takeaway ?? ""}</dd>
                 </div>
                 {idea.source_urls && idea.source_urls.length > 0 && (
-                  <div style={{ gridColumn: "1 / -1" }}>
-                    <dt style={{ marginBottom: 2 }}>Source</dt>
+                  <div className="u-span-all">
+                    <dt className="u-mb-1">Source</dt>
                     <dd>
-                      <ul style={{ margin: 0, paddingLeft: 18 }}>
+                      <ul className="u-list">
                         {idea.source_urls.map((url) => (
                           <li key={url}>
                             <a href={url} target="_blank" rel="noopener noreferrer">
@@ -119,32 +119,32 @@ export default async function IdeaDetailPage({ params }: { params: { id: string 
                 }
               />
             ) : aiHtml ? (
-              <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
+              <div className="admin-card u-p-5 u-mb-5">
                 <h2 className="admin-card-title">The product plan</h2>
-                <p className="admin-page-sub" style={{ marginTop: 0 }}>
+                <p className="admin-page-sub u-mt-0">
                   {`Written from ${idea.submitterName}'s 5D answers. It's in the company backlog.`}
                 </p>
                 <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: aiHtml }} />
               </div>
             ) : (
-              <div className="admin-card" style={{ padding: "22px 24px", marginBottom: 20 }}>
+              <div className="admin-card u-p-5 u-mb-5">
                 <h2 className="admin-card-title">Plan not ready yet</h2>
-                <p className="admin-page-sub" style={{ marginTop: 0 }}>
+                <p className="admin-page-sub u-mt-0">
                   The idea is safely in the backlog, but the product plan didn&apos;t generate. It
                   will be retried — check back here soon.
                 </p>
               </div>
             )}
 
-            <div className="admin-card" style={{ padding: "22px 24px" }}>
+            <div className="admin-card u-p-5">
               <h2 className="admin-card-title">{isOwner ? "What you submitted" : "The 5D answers"}</h2>
               <dl className="admin-kv">
                 {D_SECTIONS.map((s) => (
-                  <div key={s.key as string} style={{ gridColumn: "1 / -1", marginBottom: 10 }}>
-                    <dt style={{ marginBottom: 2 }}>
+                  <div key={s.key as string} className="u-span-all u-mb-3">
+                    <dt className="u-mb-1">
                       {s.d} · {s.label}
                     </dt>
-                    <dd style={{ whiteSpace: "pre-wrap" }}>{String(idea[s.key] ?? "")}</dd>
+                    <dd className="u-prewrap">{String(idea[s.key] ?? "")}</dd>
                   </div>
                 ))}
               </dl>

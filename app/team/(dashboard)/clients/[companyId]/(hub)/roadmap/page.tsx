@@ -40,9 +40,9 @@ export default async function TeamClientRoadmapTab({ params }: { params: { compa
       <style dangerouslySetInnerHTML={{ __html: ROADMAP_STYLES }} />
 
       {overview && (
-        <section className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Overview</h2>
-          <div style={{ fontSize: 14, lineHeight: 1.65 }}>
+        <section className="admin-card admin-section-card u-mb-4">
+          <h2 className="admin-card-title u-mb-2">Overview</h2>
+          <div className="admin-text-md">
             <BotText text={overview} />
           </div>
         </section>
@@ -51,8 +51,8 @@ export default async function TeamClientRoadmapTab({ params }: { params: { compa
       <AddItemForm companyId={params.companyId} groups={groups} />
 
       {items.length === 0 ? (
-        <div className="admin-card admin-section-card" style={{ padding: 22 }}>
-          <p className="admin-page-sub" style={{ margin: 0 }}>No roadmap items yet for this client.</p>
+        <div className="admin-card admin-section-card u-p-5">
+          <p className="admin-page-sub u-m-0">No roadmap items yet for this client.</p>
         </div>
       ) : (
         groups.map((g) => {

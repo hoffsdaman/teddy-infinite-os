@@ -80,7 +80,7 @@ export function ProgramDocuments({
           </div>
         ))}
       </div>
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
     </div>
   );
 }

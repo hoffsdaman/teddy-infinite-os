@@ -25,7 +25,7 @@ export default async function TeamClientDocumentsTab({ params }: { params: { com
 
   return (
     <section className="admin-card admin-section-card">
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Documents</h2>
+      <h2 className="admin-card-title u-mb-3">Documents</h2>
       <ClientDocumentsList documents={shown} companyId={params.companyId} actorEmail={actorEmail} />
     </section>
   );

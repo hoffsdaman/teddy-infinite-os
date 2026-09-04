@@ -197,7 +197,7 @@ export function BacklogPortalView({
                       </button>
                     ))
                   ) : (
-                    <span className={`cbp-pill on-${eff}`} style={{ cursor: "default" }}>{PRIORITY_LABEL[eff]}</span>
+                    <span className={`cbp-pill on-${eff} u-cursor-default`}>{PRIORITY_LABEL[eff]}</span>
                   )}
                 </span>
               </div>
@@ -292,8 +292,8 @@ export function BacklogPortalView({
                   <select value={pPriority} onChange={(e) => setPPriority(e.target.value as BacklogPriority)}>
                     {BACKLOG_PRIORITIES.map((p) => <option key={p} value={p}>{PRIORITY_LABEL[p]}</option>)}
                   </select>
-                  {pHint && <div className="cbp-hint" style={{ marginBottom: 8 }}>{pHint}</div>}
-                  <div style={{ display: "flex", gap: 8 }}>
+                  {pHint && <div className="cbp-hint u-mb-2">{pHint}</div>}
+                  <div className="u-row">
                     <button
                       type="button"
                       className="cbp-btn"
@@ -309,7 +309,7 @@ export function BacklogPortalView({
                   </div>
                 </div>
               ) : (
-                <button type="button" className="cbp-link" style={{ marginTop: 6 }} onClick={() => setProposeGroup(g.key)}>
+                <button type="button" className="cbp-link u-mt-2" onClick={() => setProposeGroup(g.key)}>
                   + Propose an item for {g.step_label || g.title}
                 </button>
               ))}

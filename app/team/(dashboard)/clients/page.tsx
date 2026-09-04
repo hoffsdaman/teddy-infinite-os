@@ -118,8 +118,8 @@ export default async function TeamClientsPage({ searchParams }: { searchParams: 
       />
 
       {empty ? (
-        <div className="admin-card admin-section-card" style={{ padding: 22 }}>
-          <p className="admin-page-sub" style={{ margin: 0 }}>
+        <div className="admin-card admin-section-card">
+          <p className="admin-page-sub u-m-0">
             You&apos;re not assigned to any clients yet. When you&apos;re assigned to a client
             account, it shows up here with their roadmap.
           </p>

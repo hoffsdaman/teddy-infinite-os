@@ -183,21 +183,20 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
     <div>
       <div
         ref={scrollRef}
-        className="admin-card admin-section-card"
-        style={{ maxHeight: "58vh", overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}
+        className="admin-card admin-section-card admin-scroll-vh u-stack u-gap-3"
       >
         {items.length === 0 && pending && <div className="admin-cell-muted">Starting…</div>}
         {items.map((item, i) => {
           if (item.kind === "user") {
             return (
-              <div key={i} style={{ alignSelf: "flex-end", maxWidth: "85%", background: "var(--admin-accent-soft)", padding: "8px 12px", borderRadius: 12 }}>
+              <div key={i} className="admin-chat-bubble--me">
                 {item.text}
               </div>
             );
           }
           if (item.kind === "bot") {
             return (
-              <div key={i} style={{ alignSelf: "flex-start", maxWidth: "92%" }}>
+              <div key={i} className="admin-chat-bubble">
                 <BotText text={item.text} />
               </div>
             );
@@ -210,8 +209,8 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
       </div>
 
       {brief && (
-        <div className="admin-card admin-section-card" style={{ marginTop: 14, borderColor: "var(--admin-ok-ink)" }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Your AI Program Brief is ready</h2>
+        <div className="admin-card admin-section-card admin-card--ok u-mt-4">
+          <h2 className="admin-card-title u-mb-2">Your AI Program Brief is ready</h2>
           <label className="admin-label" htmlFor="plan-name">Program name</label>
           <input
             id="plan-name"
@@ -221,7 +220,7 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
             disabled={saving}
           />
           {companies.length > 1 && (
-            <div style={{ marginTop: 12 }}>
+            <div className="u-mt-3">
               <label className="admin-label" htmlFor="plan-company">Company</label>
               <select id="plan-company" className="admin-select" value={companyId} onChange={(e) => setCompanyId(e.target.value)} disabled={saving}>
                 {companies.map((c) => (
@@ -230,8 +229,8 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
               </select>
             </div>
           )}
-          {saveError && <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>{saveError}</div>}
-          <div style={{ marginTop: 14 }}>
+          {saveError && <div className="admin-alert admin-alert--err u-mt-3">{saveError}</div>}
+          <div className="u-mt-4">
             <button type="button" className="admin-btn admin-btn--primary" onClick={save} disabled={saving}>
               {saving ? "Saving…" : "Save this plan"}
             </button>
@@ -239,15 +238,14 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
         </div>
       )}
 
-      <form onSubmit={onSubmit} style={{ marginTop: 14, display: "flex", gap: 8 }}>
+      <form onSubmit={onSubmit} className="u-row u-mt-4">
         <input
-          className="admin-input"
+          className="admin-input u-grow"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your answer…"
           disabled={pending}
           aria-label="Message the plan assistant"
-          style={{ flex: 1 }}
         />
         <button type="submit" className="admin-btn admin-btn--primary" disabled={pending || !input.trim()}>
           Send

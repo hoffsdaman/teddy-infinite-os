@@ -53,19 +53,19 @@ export default async function PortalRequestDetailPage({ params }: { params: { id
         action={<Badge tone={workRequestTone(status)}>{WORK_REQUEST_STATUS_LABEL[status] ?? humanize(status)}</Badge>}
       />
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Brief</h2>
-        <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{r.brief}</div>
+      <div className="admin-card admin-section-card u-mb-4">
+        <h2 className="admin-card-title u-mb-3">Brief</h2>
+        <div className="u-prewrap">{r.brief}</div>
       </div>
 
       {r.estimatedHours !== null && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <h2 className="admin-card-title u-mb-3">
             Estimate — {formatHours(r.estimatedHours)}
           </h2>
-          {r.planText && <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{r.planText}</div>}
+          {r.planText && <div className="u-prewrap">{r.planText}</div>}
           {r.estimateSubmittedAt && (
-            <div className="admin-cell-muted" style={{ marginTop: 8, fontSize: 12 }}>
+            <div className="admin-cell-muted u-mt-2 u-sm">
               Submitted {timeAgo(r.estimateSubmittedAt)}
             </div>
           )}
@@ -73,20 +73,20 @@ export default async function PortalRequestDetailPage({ params }: { params: { id
       )}
 
       {r.workSubmittedAt && (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+        <div className="admin-card admin-section-card u-mb-4">
+          <h2 className="admin-card-title u-mb-3">
             Delivered work — {formatHours(r.actualHours)}
             {Number(r.actualOvertimeHours) > 0 && ` (+ ${formatHours(r.actualOvertimeHours)} overtime)`}
           </h2>
-          {r.workSummary && <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{r.workSummary}</div>}
+          {r.workSummary && <div className="u-prewrap">{r.workSummary}</div>}
           {r.workLink && (
-            <p style={{ marginTop: 8, marginBottom: 0, fontSize: 13 }}>
+            <p className="u-mt-2 u-mb-0">
               <a href={r.workLink} target="_blank" rel="noreferrer">
                 View the result
               </a>
             </p>
           )}
-          <div className="admin-cell-muted" style={{ marginTop: 8, fontSize: 12 }}>
+          <div className="admin-cell-muted u-mt-2 u-sm">
             Delivered {timeAgo(r.workSubmittedAt)}
           </div>
         </div>
@@ -94,22 +94,22 @@ export default async function PortalRequestDetailPage({ params }: { params: { id
 
       {canDecide && <DecisionPanel id={r.id} status={status} />}
 
-      <div className="admin-card admin-section-card" style={{ marginTop: 16 }}>
-        <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Timeline</h2>
+      <div className="admin-card admin-section-card u-mt-4">
+        <h2 className="admin-card-title u-mb-3">Timeline</h2>
         {events.length === 0 ? (
           <div className="admin-empty">No activity yet.</div>
         ) : (
-          <div style={{ display: "grid", gap: 10 }}>
+          <div className="u-stack u-gap-3">
             {events.map((e) => (
-              <div key={e.id} style={{ fontSize: 13 }}>
-                <div style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
+              <div key={e.id}>
+                <div className="u-row">
                   <strong>{EVENT_LABEL[e.type] ?? humanize(e.type)}</strong>
                   <span className="admin-cell-muted">
                     {e.actorType === "client" ? "You" : e.actorType === "contractor" ? r.contractorName ?? "Contractor" : "Edge8"} ·{" "}
                     {timeAgo(e.createdAt)}
                   </span>
                 </div>
-                {e.body && <div style={{ whiteSpace: "pre-wrap", marginTop: 2 }}>{e.body}</div>}
+                {e.body && <div className="u-mt-1 u-prewrap">{e.body}</div>}
               </div>
             ))}
           </div>

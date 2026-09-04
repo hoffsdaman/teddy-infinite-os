@@ -59,14 +59,14 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
         <div className="admin-ideas-tabs">
           <Link
             href="/team/ideas?compose=build"
-            className={`admin-ideas-tab${compose === "build" ? " admin-ideas-tab--active" : ""}`}
+            className={`ideas-tab${compose === "build" ? " ideas-tab--active" : ""}`}
             aria-current={compose === "build" ? "page" : undefined}
           >
             What should we build?
           </Link>
           <Link
             href="/team/ideas?compose=learning"
-            className={`admin-ideas-tab${compose === "learning" ? " admin-ideas-tab--active" : ""}`}
+            className={`ideas-tab${compose === "learning" ? " ideas-tab--active" : ""}`}
             aria-current={compose === "learning" ? "page" : undefined}
           >
             What have I learned?
@@ -132,7 +132,7 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
               <Link
                 key={t.key}
                 href={t.href}
-                className={`admin-ideas-tab${view === t.key ? " admin-ideas-tab--active" : ""}`}
+                className={`ideas-tab${view === t.key ? " ideas-tab--active" : ""}`}
                 aria-current={view === t.key ? "page" : undefined}
               >
                 {t.label}
@@ -167,29 +167,29 @@ function LearningsFeed({
   }
 
   return (
-    <div className="admin-content" style={{ display: "grid", gap: 14 }}>
+    <div className="admin-content u-stack u-gap-4">
       {learnings.map((l) => {
         const html = summaryHtml.get(l.id);
         return (
-          <div key={l.id} className="admin-card" style={{ padding: "20px 24px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-              <h2 className="admin-card-title" style={{ marginBottom: 0 }}>
+          <div key={l.id} className="admin-card u-p-5">
+            <div className="u-row u-wrap u-between">
+              <h2 className="admin-card-title u-mb-0">
                 <Link href={`/team/ideas/${l.id}`}>{l.title}</Link>
               </h2>
               {l.office && (
                 <Badge tone={officeTone(l.office)}>{OFFICE_LABEL[l.office as IdeaOffice]}</Badge>
               )}
             </div>
-            <p className="admin-page-sub" style={{ marginTop: 2 }}>
+            <p className="admin-page-sub u-mt-1">
               {l.submitterName} · {formatDate(l.created_at)}
             </p>
             {html ? (
               <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html }} />
             ) : (
               <>
-                <p style={{ whiteSpace: "pre-wrap", marginBottom: 8 }}>{l.story}</p>
+                <p className="u-mb-2 u-prewrap">{l.story}</p>
                 {l.takeaway && (
-                  <p style={{ whiteSpace: "pre-wrap", fontWeight: 600, marginBottom: 0 }}>{l.takeaway}</p>
+                  <p className="u-mb-0 u-strong u-prewrap">{l.takeaway}</p>
                 )}
               </>
             )}

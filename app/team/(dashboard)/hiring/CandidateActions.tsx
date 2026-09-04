@@ -35,9 +35,9 @@ export function CandidateActions({
   }
 
   return (
-    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "center" }}>
+    <div className="u-row u-end u-wrap">
       {error && (
-        <span className="admin-cell-muted" style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>
+        <span className="admin-cell-muted u-sm u-err">
           {error}
         </span>
       )}

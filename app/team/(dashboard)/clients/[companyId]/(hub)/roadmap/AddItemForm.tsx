@@ -56,7 +56,7 @@ export function AddItemForm({
 
   if (!open) {
     return (
-      <div style={{ marginBottom: 18 }}>
+      <div className="u-mb-4">
         <button type="button" className="admin-btn" onClick={() => setOpen(true)}>
           + Add roadmap item
         </button>
@@ -65,9 +65,9 @@ export function AddItemForm({
   }
 
   return (
-    <section className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Add roadmap item</h2>
-      <div style={{ display: "grid", gap: 10, maxWidth: 560 }}>
+    <section className="admin-card admin-section-card u-mb-4">
+      <h2 className="admin-card-title u-mb-3">Add roadmap item</h2>
+      <div className="u-stack u-gap-3 u-max-8">
         <label className="admin-label">
           Section
           <select className="admin-select" value={groupKey} onChange={(e) => setGroupKey(e.target.value)}>
@@ -86,7 +86,7 @@ export function AddItemForm({
           What we&apos;d build (optional)
           <textarea className="admin-input" rows={3} value={buildDesc} onChange={(e) => setBuildDesc(e.target.value)} />
         </label>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="u-row">
           <button type="button" className="admin-btn admin-btn--primary" disabled={busy} onClick={submit}>
             {busy ? "Adding…" : "Add item"}
           </button>

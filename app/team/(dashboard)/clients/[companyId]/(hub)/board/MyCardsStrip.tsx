@@ -57,8 +57,8 @@ export function MyCardsStrip({
   if (cards.length === 0) return null;
 
   return (
-    <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
-      <h2 className="admin-card-title" style={{ marginBottom: 10 }}>
+    <section className="admin-card admin-section-card u-mb-4">
+      <h2 className="admin-card-title u-mb-3">
         My tasks ({cards.length})
       </h2>
       <div className="admin-list">
@@ -71,10 +71,9 @@ export function MyCardsStrip({
                 {c.dueDate && ` · due ${formatDay(c.dueDate)}`}
               </div>
             </div>
-            <div className="admin-list-aside" style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <div className="admin-list-aside u-row">
               <select
-                className="admin-select"
-                style={{ width: "auto", fontSize: 13 }}
+                className="admin-select u-w-auto"
                 value={c.columnId ?? ""}
                 disabled={pending && busyId === c.id}
                 onChange={(e) => e.target.value && move(c.id, e.target.value)}
@@ -98,7 +97,7 @@ export function MyCardsStrip({
           </div>
         ))}
       </div>
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
     </section>
   );
 }

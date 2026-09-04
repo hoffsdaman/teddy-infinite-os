@@ -140,7 +140,7 @@ export function ClientDocumentsList({
   return (
     <div>
       <div
-        className={`admin-gallery-drop${drag ? " is-drag" : ""}`}
+        className={`admin-gallery-drop${drag ? " is-drag" : ""} u-mb-3`}
         role="button"
         tabIndex={0}
         onClick={() => inputRef.current?.click()}
@@ -155,7 +155,6 @@ export function ClientDocumentsList({
           setDrag(false);
           addFiles(Array.from(e.dataTransfer.files));
         }}
-        style={{ marginBottom: 12 }}
       >
         <span className="admin-gallery-drop-ico" aria-hidden>⬆</span>
         <span className="admin-gallery-drop-title">Drag files here, or click to browse</span>
@@ -164,14 +163,14 @@ export function ClientDocumentsList({
       </div>
 
       {queue.length > 0 && (
-        <div className="admin-list" style={{ marginBottom: 12 }}>
+        <div className="admin-list u-mb-3">
           {queue.map((it) => (
             <div className="admin-list-row" key={it.id}>
               <div className="admin-list-main">
                 <div className="admin-list-title">{it.file.name}</div>
                 <div className="admin-list-sub">
                   {it.status === "error" ? (
-                    <span style={{ color: "var(--admin-err-ink)" }}>{it.error}</span>
+                    <span className="u-err">{it.error}</span>
                   ) : it.status === "uploading" ? (
                     `Uploading… ${Math.round(it.progress * 100)}%`
                   ) : (
@@ -223,7 +222,7 @@ export function ClientDocumentsList({
           ))}
         </div>
       )}
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-3">{error}</div>}
     </div>
   );
 }

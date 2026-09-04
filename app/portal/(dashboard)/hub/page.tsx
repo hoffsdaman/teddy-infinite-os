@@ -59,7 +59,7 @@ export default async function PortalHubPage() {
         }
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Human Tokens" value={fmtTokens(overview.balanceTokens)} sub={boughtSub} />
         <MetricCard label="AI Tokens" value={fmtCompact(overview.aiTokens)} sub="Claude + app tokens used" />
         <MetricCard
@@ -76,13 +76,13 @@ export default async function PortalHubPage() {
 
       {programs.length === 0 ? (
         <div className="admin-card admin-section-card">
-          <h2 className="admin-card-title" style={{ marginBottom: 8 }}>No AI Programs yet</h2>
-          <p className="admin-page-sub" style={{ margin: 0 }}>
+          <h2 className="admin-card-title u-mb-2">No AI Programs yet</h2>
+          <p className="admin-page-sub u-m-0">
             This is where you plan and track AI programs with Edge8. Start one from a guided plan or by
             uploading your own documents.
           </p>
           {canCreate && (
-            <div style={{ marginTop: 16 }}>
+            <div className="u-mt-4">
               <Link href="/portal/programs/add" className="admin-btn admin-btn--primary">
                 Add AI Program
               </Link>
@@ -91,7 +91,7 @@ export default async function PortalHubPage() {
         </div>
       ) : (
         <div className="admin-card admin-section-card">
-          <h2 className="admin-card-title" style={{ marginBottom: 10 }}>Your programs</h2>
+          <h2 className="admin-card-title u-mb-3">Your programs</h2>
           <div className="admin-list">
             {programs.map((p) => {
               const meta = [
@@ -107,8 +107,7 @@ export default async function PortalHubPage() {
                 <Link
                   key={p.id}
                   href={`/portal/programs/${p.id}`}
-                  className="admin-list-row"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="admin-list-row u-link-plain"
                 >
                   <div className="admin-list-main">
                     <div className="admin-list-title">{p.name}</div>

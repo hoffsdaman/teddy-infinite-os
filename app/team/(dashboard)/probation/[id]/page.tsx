@@ -58,8 +58,8 @@ export default async function ProbationDecisionPage({ params }: { params: { id: 
       />
 
       {!onProbation ? (
-        <div className="admin-card" style={{ padding: "18px 20px" }}>
-          <p style={{ margin: 0 }}>
+        <div className="admin-card u-p-4">
+          <p className="u-m-0">
             {name} is no longer on probation
             {stage ? (
               <>
@@ -71,9 +71,9 @@ export default async function ProbationDecisionPage({ params }: { params: { id: 
           </p>
         </div>
       ) : (
-        <div className="admin-card" style={{ padding: "18px 20px", maxWidth: 560 }}>
+        <div className="admin-card u-p-4 u-max-form">
           <div className="admin-card-title">Record your decision</div>
-          <p className="admin-hint" style={{ marginTop: 0 }}>
+          <p className="admin-hint u-mt-0">
             One decision, applied immediately. An extension moves the dates; a full-time offer promotes them when
             probation ends.
           </p>

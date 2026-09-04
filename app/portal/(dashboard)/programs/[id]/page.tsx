@@ -123,7 +123,7 @@ export default async function AiProgramDetailPage({
               <Empty text="Delivery tracking starts when a repo is connected." />
             ) : (
               <>
-                <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+                <div className="admin-kpi-grid u-mb-4">
                   <MetricCard
                     label="Human Tokens"
                     value={fmtHours(delivery.deliveredHours)}
@@ -148,16 +148,16 @@ export default async function AiProgramDetailPage({
                   emptyText="No delivered hours tracked in the last 8 weeks."
                   formatValue={(n) => `${fmtHours(n)}h`}
                 />
-                <h2 className="admin-card-title" style={{ marginTop: 20 }}>Shipped highlights</h2>
+                <h2 className="admin-card-title u-mt-5">Shipped highlights</h2>
                 {highlights.length === 0 ? (
                   <Empty text="Nothing shipped in the last 8 weeks yet." />
                 ) : (
                   highlights.map((w) => (
-                    <div key={w.isoWeek} style={{ marginBottom: 14 }}>
-                      <div className="admin-cell-muted" style={{ fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+                    <div key={w.isoWeek} className="u-mb-4">
+                      <div className="admin-cell-muted u-mb-1 u-sm u-strong">
                         Week {w.isoWeek.slice(5).replace("W", "")} ({w.isoWeek.slice(0, 4)})
                       </div>
-                      <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.7 }}>
+                      <ul className="admin-list-md">
                         {w.titles.map((t, i) => (
                           <li key={`${w.isoWeek}-${i}`}>{t}</li>
                         ))}
@@ -169,12 +169,12 @@ export default async function AiProgramDetailPage({
             )}
           </section>
           {program.plans.length > 0 && (
-            <section className="admin-card admin-section-card" style={{ maxWidth: 900, marginTop: 16 }}>
-              <h2 className="admin-card-title" style={{ marginBottom: 12 }}>Plan</h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <section className="admin-card admin-section-card u-max-narrow u-mt-4">
+              <h2 className="admin-card-title u-mb-3">Plan</h2>
+              <div className="u-stack u-gap-4">
                 {program.plans.map((pl) => (
                   <div key={pl.id}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                    <div className="u-row u-mb-2">
                       <strong>{pl.title}</strong>
                       <Badge>{pl.method === "chat" ? "Guided plan" : "Documents"}</Badge>
                       <span className="admin-cell-muted">{formatDate(pl.createdAt)}</span>
@@ -220,7 +220,7 @@ export default async function AiProgramDetailPage({
       content: boardView ? (
         <>
           {programBoards.length > 1 && (
-            <div className="admin-viewtoggle" style={{ marginBottom: 14 }}>
+            <div className="admin-viewtoggle u-mb-4">
               {programBoards.map((b) => (
                 <Link
                   key={b.id}
@@ -245,7 +245,7 @@ export default async function AiProgramDetailPage({
       label: "Documents",
       count: program.documents.length,
       content: (
-        <section className="admin-card admin-section-card" style={{ maxWidth: 900 }}>
+        <section className="admin-card admin-section-card u-max-narrow">
           {program.documents.length === 0 ? (
             <Empty text="No documents uploaded." />
           ) : (
@@ -259,7 +259,7 @@ export default async function AiProgramDetailPage({
       label: "Meetings",
       count: meetings.length,
       content: (
-        <section className="admin-card admin-section-card" style={{ maxWidth: 900 }}>
+        <section className="admin-card admin-section-card u-max-narrow">
           <MeetingsPanel meetings={meetings} detailBasePath="/portal/meetings" />
         </section>
       ),

@@ -56,9 +56,9 @@ export function ProfileForm({
 
   return (
     <form onSubmit={submit}>
-      <section className="admin-card admin-section-card" style={{ marginBottom: 16 }}>
+      <section className="admin-card admin-section-card u-mb-4">
         <h2 className="admin-card-title">Your details</h2>
-        <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+        <div className="u-grid-auto-md u-gap-3">
           <Field label="Full name">
             <input className="admin-input" value={v.fullName} onChange={set("fullName")} disabled={pending} />
           </Field>
@@ -113,7 +113,7 @@ export function ProfileForm({
             />
           </Field>
         </div>
-        <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 12 }}>
+        <div className="u-row u-gap-3 u-mt-4">
           <button type="submit" className="admin-btn admin-btn--primary" disabled={pending}>
             {pending ? "Saving…" : "Save changes"}
           </button>
@@ -160,7 +160,7 @@ export function ProfileForm({
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="admin-field" style={{ display: "block" }}>
+    <label className="admin-field u-block">
       <span className="admin-label">{label}</span>
       {children}
     </label>

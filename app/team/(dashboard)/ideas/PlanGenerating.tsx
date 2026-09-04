@@ -33,7 +33,7 @@ export function PlanGenerating() {
   return (
     <div className="admin-card admin-idea-gen" role="status">
       <h2 className="admin-card-title">Building your product plan</h2>
-      <p className="admin-page-sub" style={{ marginTop: 6 }}>
+      <p className="admin-page-sub u-mt-2">
         Your idea is safely saved. Claude is turning it into a product plan, which takes about 20
         seconds.
       </p>
@@ -55,7 +55,7 @@ export function PlanGenerating() {
           <span
             key={i}
             className={`admin-idea-gen-line${i === visibleLines - 1 ? " is-fresh" : ""}`}
-            style={{ width: `${w}%` }}
+            style={{ width: `${w}%` }} /* layout-ok: data-driven width */
           />
         ))}
         <span className="admin-idea-gen-caret" />

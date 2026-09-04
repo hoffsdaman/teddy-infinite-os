@@ -20,19 +20,7 @@ export function AssumeBanner({
 
   return (
     <div
-      style={{
-        background: "var(--admin-warn-bg)",
-        color: "var(--admin-warn-ink)",
-        borderBottom: "1px solid var(--admin-line-strong)",
-        padding: "6px 16px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: 8,
-        fontSize: 12,
-        lineHeight: 1.4,
-      }}
+      className="admin-banner-warn"
     >
       <span>
         <strong>Admin view</strong> — viewing as {viewingAsName}

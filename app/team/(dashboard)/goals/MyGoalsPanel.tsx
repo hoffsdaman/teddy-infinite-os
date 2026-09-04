@@ -327,12 +327,12 @@ export function MyGoalsPanel({
       )}
 
       {adding ? (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+        <div className="admin-card admin-section-card u-mb-5">
           <h2 className="admin-card-title">Add a FAST goal</h2>
           {goalForm}
         </div>
       ) : (
-        <div className="admin-form-actions" style={{ marginBottom: 20 }}>
+        <div className="admin-form-actions u-mb-5">
           <button className="admin-btn admin-btn--primary" onClick={openAdd} disabled={pending}>
             Add a goal
           </button>
@@ -377,7 +377,7 @@ export function MyGoalsPanel({
                 {measure && <div className="admin-cell-muted">{measure}</div>}
                 {pct !== null && (
                   <div className="admin-goals-bar" aria-label={`${pct}% of target`}>
-                    <span style={{ width: `${pct}%` }} />
+                    <span style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                   </div>
                 )}
                 {g.ladderLabel && (

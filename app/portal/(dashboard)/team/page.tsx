@@ -15,9 +15,9 @@ export const dynamic = "force-dynamic";
 // too long for that, not because a sibling column ate half the space.
 function Field({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div style={{ marginBottom: 10 }}>
-      <div style={{ fontSize: 12, color: "var(--admin-muted)" }}>{label}</div>
-      <div style={{ fontSize: 13, color: "var(--admin-ink)", overflowWrap: "anywhere" }}>
+    <div className="u-mb-3">
+      <div className="u-sm u-muted">{label}</div>
+      <div className="u-ink u-break-all">
         {value}
       </div>
     </div>
@@ -45,25 +45,13 @@ function Avatar({ name, avatarUrl }: { name: string; avatarUrl: string | null })
         alt=""
         width={size}
         height={size}
-        style={{ width: size, height: size, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+        className="admin-avatar-img u-shrink-0" style={{ width: size, height: size }} /* layout-ok: size from props */
       />
     );
   }
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: "var(--admin-accent-soft)",
-        color: "var(--admin-accent-strong)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: 600,
-        fontSize: 16,
-        flexShrink: 0,
-      }}
+      className="admin-avatar-initials admin-avatar-initials--accent" style={{ width: size, height: size }} /* layout-ok: size from props */
     >
       {initials(name)}
     </div>
@@ -87,21 +75,7 @@ export default async function PortalTeamPage() {
           <div className="admin-empty">No dedicated staff assigned yet.</div>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            // auto-fit (not the shared .admin-kpi-grid's auto-fill) so these
-            // profile cards share the full row width when there are fewer
-            // than would fit at the minimum — auto-fill instead leaves empty
-            // trailing tracks and pins every card to the 212px floor, which
-            // also starves the admin-kv dt/dd grid inside each card down to
-            // a near-zero value column.
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            alignItems: "stretch", // cards in a row match the tallest one instead of each sizing to its own content
-            gap: 16,
-            marginBottom: 20,
-          }}
-        >
+        <div className="u-grid-auto-md u-mb-5 u-items-stretch">
           {team.map((m) => {
             const name = m.fullName || "Team member";
             const addr = address(m);
@@ -109,10 +83,10 @@ export default async function PortalTeamPage() {
               // marginTop: 0 cancels the global `.admin-section-card + .admin-section-card`
               // stacking margin, which otherwise pushes every card after the first
               // 16px down inside its stretched grid track (staggered, unequal cards).
-              <div className="admin-card admin-section-card" style={{ marginTop: 0 }} key={m.teamMemberId}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+              <div className="admin-card admin-section-card u-mt-0" key={m.teamMemberId}>
+                <div className="u-row u-gap-3 u-mb-4">
                   <Avatar name={name} avatarUrl={m.avatarUrl} />
-                  <h2 className="admin-card-title" style={{ margin: 0 }}>{name}</h2>
+                  <h2 className="admin-card-title">{name}</h2>
                 </div>
                 <Field label="Role" value={m.roleTitle || m.positionTitle || "—"} />
                 <Field

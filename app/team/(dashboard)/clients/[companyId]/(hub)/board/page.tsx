@@ -41,8 +41,8 @@ export default async function TeamClientBoardTab({ params }: { params: { company
 
   if (!board) {
     return (
-      <div className="admin-card admin-section-card" style={{ padding: 22 }}>
-        <p className="admin-page-sub" style={{ margin: 0 }}>
+      <div className="admin-card admin-section-card u-p-5">
+        <p className="admin-page-sub u-m-0">
           {hasPrograms
             ? "No company-wide work board. Program boards live in their AI Program view."
             : "This client has no active work board yet."}
@@ -68,7 +68,7 @@ export default async function TeamClientBoardTab({ params }: { params: { company
 
   return (
     <>
-      <p className="admin-page-sub" style={{ margin: "0 0 14px" }}>
+      <p className="admin-page-sub u-m-0 u-mb-4">
         {board.boardName}: what the client sees on their portal.{" "}
         {isMember ? (
           <>Work the full board at <Link href={`/team/boards/${board.boardSlug}`}>Work Boards</Link>.</>
@@ -83,7 +83,7 @@ export default async function TeamClientBoardTab({ params }: { params: { company
           return (
             <div className="admin-kanban-col" key={col.id}>
               <div className="admin-kanban-col-head">
-                <span className="admin-kanban-col-dot" style={{ background: accents[i] }} />
+                <span className="admin-kanban-col-dot" style={{ background: accents[i] }} /* layout-ok: runtime column accent (token variable) */ />
                 <span className="admin-kanban-col-label">{col.name}</span>
                 <span className="admin-kanban-col-count">{colCards.length}</span>
               </div>
@@ -109,7 +109,7 @@ export default async function TeamClientBoardTab({ params }: { params: { company
                           {who}
                         </span>
                         {c.dueDate && (
-                          <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
+                          <span className="admin-kanban-card-sub u-ml-auto">
                             {formatDate(c.dueDate)}
                           </span>
                         )}

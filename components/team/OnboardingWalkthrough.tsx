@@ -106,7 +106,7 @@ export function OnboardingWalkthrough({
           <button className="admin-team-tour-skip" onClick={finish} disabled={pending}>
             {last ? "" : "Skip"}
           </button>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="u-row">
             {i > 0 && (
               <button className="admin-btn admin-btn--sm" onClick={() => setI((n) => n - 1)}>Back</button>
             )}

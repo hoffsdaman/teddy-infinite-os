@@ -39,23 +39,23 @@ export function ProbationDecision({ subjectId, subjectName }: { subjectId: strin
 
   if (result?.ok) {
     return (
-      <div className="admin-alert admin-alert--ok" style={{ marginTop: 4 }}>
+      <div className="admin-alert admin-alert--ok u-mt-1">
         {result.message}
       </div>
     );
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+    <div className="u-stack u-gap-3">
       {CHOICES.map((c) => (
-        <div key={c.choice} className="admin-card" style={{ padding: "12px 14px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        <div key={c.choice} className="admin-card u-p-3">
+          <div className="u-row u-wrap u-between">
             <div>
-              <div style={{ fontWeight: 700, fontSize: 14 }}>{c.label}</div>
-              <div style={{ fontSize: 12, color: "var(--admin-muted)" }}>{c.hint}</div>
+              <div className="u-lg u-strong">{c.label}</div>
+              <div className="u-sm u-muted">{c.hint}</div>
             </div>
             {confirm === c.choice ? (
-              <div style={{ display: "flex", gap: 8, flex: "none" }}>
+              <div className="u-row u-shrink-0">
                 <button
                   type="button"
                   className={`admin-btn${c.danger ? "" : " admin-btn--primary"}`}
@@ -71,8 +71,7 @@ export function ProbationDecision({ subjectId, subjectName }: { subjectId: strin
             ) : (
               <button
                 type="button"
-                className="admin-btn"
-                style={{ flex: "none" }}
+                className="admin-btn u-shrink-0"
                 onClick={() => setConfirm(c.choice)}
                 disabled={pending}
               >
@@ -85,7 +84,7 @@ export function ProbationDecision({ subjectId, subjectName }: { subjectId: strin
       {result && !result.ok && (
         <div className="admin-alert admin-alert--err">{result.message}</div>
       )}
-      <p style={{ fontSize: 12, color: "var(--admin-muted)", margin: "2px 0 0" }}>
+      <p className="u-m-0 u-mt-1 u-sm u-muted">
         Recording a decision for {subjectName} takes effect immediately.
       </p>
     </div>

@@ -124,9 +124,9 @@ export default async function TeamProgramDetailPage({
           <style dangerouslySetInnerHTML={{ __html: ROADMAP_STYLES }} />
 
           {overview && (
-            <section className="admin-card admin-section-card" style={{ marginBottom: 18 }}>
-              <h2 className="admin-card-title" style={{ marginBottom: 8 }}>Overview</h2>
-              <div style={{ fontSize: 14, lineHeight: 1.65 }}>
+            <section className="admin-card admin-section-card u-mb-4">
+              <h2 className="admin-card-title u-mb-2">Overview</h2>
+              <div className="admin-text-md">
                 <BotText text={overview} />
               </div>
             </section>
@@ -135,8 +135,8 @@ export default async function TeamProgramDetailPage({
           <AddItemForm companyId={company.id} groups={addableGroups} programId={detail.id} />
 
           {detail.roadmapItems.length === 0 ? (
-            <div className="admin-card admin-section-card" style={{ padding: 22 }}>
-              <p className="admin-page-sub" style={{ margin: 0 }}>No roadmap items on this program yet.</p>
+            <div className="admin-card admin-section-card u-p-5">
+              <p className="admin-page-sub u-m-0">No roadmap items on this program yet.</p>
             </div>
           ) : (
             detail.roadmapGroups.map((g) => {
@@ -200,7 +200,7 @@ export default async function TeamProgramDetailPage({
             <Empty text="No repo connected. Delivery tracking starts once this program is linked to a GitHub repo." />
           ) : (
             <>
-              <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+              <div className="admin-kpi-grid u-mb-4">
                 <MetricCard label="Delivered hrs (total)" value={fmtHours(detail.deliveredHours)} />
                 <MetricCard label="AI tokens (total)" value={detail.aiTokens.toLocaleString()} />
                 <MetricCard
@@ -278,18 +278,18 @@ export default async function TeamProgramDetailPage({
   ];
 
   return (
-    <div style={{ maxWidth: 1100 }}>
+    <div className="u-max-wide">
       <PageHead
         eyebrow={<Link href={`/team/clients/${company.id}`}>← {company.name}</Link>}
         title={detail.name}
         sub={detail.githubRepo ?? undefined}
         action={
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>{/* layout-ok: mirrors the admin program PageHead action stack verbatim */}
-            <span style={{ display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>{/* layout-ok: mirrors the admin program badge row verbatim */}
+            <span className="u-row u-wrap">{/* layout-ok: mirrors the admin program badge row verbatim */}
               <Badge tone={STATUS_TONE[detail.status]}>{detail.status}</Badge>
               {detail.githubRepo && <Badge tone="neutral">{detail.githubRepo}</Badge>}
             </span>
-            <span className="admin-cell-muted" style={{ fontSize: 13 }}>
+            <span className="admin-cell-muted u-sm">
               {detail.liveUrl && (
                 <>
                   <a href={detail.liveUrl} target="_blank" rel="noopener noreferrer">Live site</a>
@@ -302,7 +302,7 @@ export default async function TeamProgramDetailPage({
         }
       />
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Delivered hrs"
           value={hasRepo ? fmtHours(detail.deliveredHours) : "Not tracked"}

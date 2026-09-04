@@ -121,7 +121,7 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
   }
 
   return (
-    <div style={{ maxWidth: 620 }}>
+    <div className="u-max-form">
       <label className="admin-label" htmlFor="program-name">Program name</label>
       <input
         id="program-name"
@@ -133,7 +133,7 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
       />
 
       {companies.length > 1 && (
-        <div style={{ marginTop: 14 }}>
+        <div className="u-mt-4">
           <label className="admin-label" htmlFor="program-company">Company</label>
           <select
             id="program-company"
@@ -149,7 +149,7 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
         </div>
       )}
 
-      <div style={{ marginTop: 18 }}>
+      <div className="u-mt-4">
         <label className="admin-label">Documents</label>
         <div
           className={`admin-gallery-drop${drag ? " is-drag" : ""}`}
@@ -176,14 +176,14 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
       </div>
 
       {queue.length > 0 && (
-        <div className="admin-list" style={{ marginTop: 14 }}>
+        <div className="admin-list u-mt-4">
           {queue.map((it) => (
             <div className="admin-list-row" key={it.id}>
               <div className="admin-list-main">
                 <div className="admin-list-title">{it.file.name}</div>
                 <div className="admin-list-sub">
                   {it.status === "error" ? (
-                    <span style={{ color: "var(--admin-err-ink)" }}>{it.error}</span>
+                    <span className="u-err">{it.error}</span>
                   ) : it.status === "uploading" ? (
                     `Uploading… ${Math.round(it.progress * 100)}%`
                   ) : it.status === "done" ? (
@@ -207,9 +207,9 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
         </div>
       )}
 
-      {error && <div className="admin-alert admin-alert--err" style={{ marginTop: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mt-4">{error}</div>}
 
-      <div style={{ marginTop: 18, display: "flex", gap: 8 }}>
+      <div className="u-row u-mt-4">
         <button type="button" className="admin-btn admin-btn--primary" onClick={submit} disabled={busy}>
           {busy ? "Creating…" : "Create program"}
         </button>
