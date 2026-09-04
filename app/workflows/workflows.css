@@ -20,7 +20,7 @@
   background: var(--dark);
   position: relative;
   overflow: hidden;
-  padding: 140px 0 72px;
+  padding: 140px 0 64px;
 }
 .wf-hero::before {
   content: '';
@@ -60,7 +60,7 @@
   color: color-mix(in srgb, var(--white) 75%, transparent);
   border: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
   border-radius: 40px;
-  padding: 5px 14px;
+  padding: 4px 14px;
 }
 .wf-meta-chip strong { color: var(--mint); font-weight: 600; }
 
@@ -87,7 +87,7 @@
   font-size: 12px;
   font-weight: 600;
   border-radius: 40px;
-  padding: 3px 11px;
+  padding: 2px 10px;
   white-space: nowrap;
 }
 .wf-actor::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
@@ -295,7 +295,7 @@
 }
 .wf-tl-day-danger { border-color: var(--wf-red); }
 .wf-tl-day strong { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--dark); line-height: 1; }
-.wf-tl-day span { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey-light); margin-top: 2px; }
+.wf-tl-day span { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey-light); margin-top: 2px; }
 .wf-tl-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
 .wf-tl-desc { font-size: 14px; color: var(--body-text); line-height: 1.55; max-width: 220px; margin: 0 auto; }
 
@@ -420,7 +420,7 @@
 }
 .wf-table td { padding: 14px 20px; border-top: 1px solid var(--card-border); color: var(--body-text); line-height: 1.5; vertical-align: top; }
 .wf-table td:first-child { color: var(--dark); font-weight: 600; white-space: nowrap; }
-.wf-tag { display: inline-flex; font-size: 12px; font-weight: 600; border-radius: 40px; padding: 3px 11px; white-space: nowrap; }
+.wf-tag { display: inline-flex; font-size: 12px; font-weight: 600; border-radius: 40px; padding: 2px 10px; white-space: nowrap; }
 .wf-tag-expense { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
 .wf-tag-pass { background: color-mix(in srgb, var(--wf-amber) 14%, transparent); color: var(--wf-amber); }
 .wf-tag-never { background: color-mix(in srgb, var(--wf-red) 10%, transparent); color: var(--wf-red); }
@@ -464,7 +464,7 @@
   font-size: 11px;
   font-weight: 600;
   border-radius: 40px;
-  padding: 3px 10px;
+  padding: 2px 10px;
   white-space: nowrap;
 }
 .wf-assign-machine { background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); }
@@ -486,7 +486,7 @@
   gap: 2px;
   border: 1.5px solid var(--tint-deep);
   border-radius: 14px;
-  padding: 14px 22px;
+  padding: 14px 20px;
 }
 .wf-stage strong { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--dark); }
 .wf-stage span { font-size: 12px; color: var(--grey-mid); }
@@ -540,7 +540,7 @@
   .wf-problems-4 { grid-template-columns: 1fr; }
 
   .wf-rail { grid-auto-flow: row; grid-auto-columns: unset; gap: 28px; justify-items: start; }
-  .wf-rail-step { text-align: left; padding: 0 0 0 72px; }
+  .wf-rail-step { text-align: left; padding: 0 0 0 64px; }
   .wf-rail-step::before, .wf-rail-step::after { display: none; }
   .wf-rail-num { position: absolute; left: 0; top: 0; }
 
@@ -589,7 +589,7 @@
   flex: 1;
   min-width: 220px;
   max-width: 340px;
-  padding: 9px 14px;
+  padding: 8px 14px;
   border-radius: var(--radius-btn);
   border: 1px solid var(--card-border);
   background: var(--white);
@@ -658,10 +658,10 @@
 /* ─── GRAPH ENGINE (real control-flow diagrams) ───── */
 .wf-graph-scroll { overflow-x: auto; margin: 28px 0 8px; }
 .wf-graph-scroll svg { display: block; }
-.wf-graph-caption { font-size: 13.5px; color: var(--body-text); margin: 6px 0 0; }
+.wf-graph-caption { font-size: 13px; color: var(--body-text); margin: 6px 0 0; }
 .wf-graph-legend {
   display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
-  margin-top: 14px; font-size: 12.5px; color: var(--grey-mid);
+  margin-top: 14px; font-size: 12px; color: var(--grey-mid);
 }
 .wf-graph-legend span { display: inline-flex; align-items: center; gap: 6px; }
 
@@ -684,7 +684,7 @@
 .wf-section--alt { padding: 64px 0; }
 .wf-section--alt:nth-child(even) { background: var(--tint); }
 .wf-section--top { padding: 40px 0 0; }
-.wf-section--pad { padding: 48px 0 72px; }
+.wf-section--pad { padding: 48px 0 64px; }
 .wf-lead { font-size: 15px; color: var(--body-text); }
 .wf-lead--lg { font-size: 22px; font-weight: 700; }
 .wf-figure { border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
