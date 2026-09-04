@@ -30,7 +30,7 @@ function Metric({ label, value, sub }: { label: string; value: string; sub?: str
       <span className="admin-label u-m-0">
         {label}
       </span>
-      <strong className="admin-stat-value">{value}</strong>
+      <strong className="admin-num admin-num--stat">{value}</strong>
       {sub && <span className="admin-cell-muted">{sub}</span>}
     </div>
   );

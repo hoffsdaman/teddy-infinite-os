@@ -52,7 +52,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
   return (
     <div className="admin-team-profile">
       <div className="admin-team-profile-head">
-        <div className="admin-team-avatar admin-avatar-lg">
+        <div className="admin-team-avatar admin-avatar--lg">
           {profile.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={profile.avatarUrl} alt={profile.name} />

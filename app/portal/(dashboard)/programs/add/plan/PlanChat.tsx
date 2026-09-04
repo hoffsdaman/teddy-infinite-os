@@ -183,7 +183,7 @@ export function PlanChat({ companies }: { companies: CompanyOption[] }) {
     <div>
       <div
         ref={scrollRef}
-        className="admin-card admin-section-card admin-scroll-vh u-stack u-gap-3"
+        className="admin-card admin-section-card admin-scroll admin-scroll--vh u-stack u-gap-3"
       >
         {items.length === 0 && pending && <div className="admin-cell-muted">Starting…</div>}
         {items.map((item, i) => {

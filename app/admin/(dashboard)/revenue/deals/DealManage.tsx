@@ -240,7 +240,7 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
 
           <div className="admin-record-head-actions admin-deal-head-actions">
             <div className="u-right">
-              <div className="admin-money-lg">
+              <div className="admin-num admin-num--money">
                 {formatCents(deal.amountCents, currency)}
               </div>
               <div className="admin-cell-muted u-sm u-mt-1 u-tabular">

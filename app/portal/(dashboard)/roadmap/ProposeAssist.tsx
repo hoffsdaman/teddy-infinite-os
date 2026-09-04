@@ -73,7 +73,7 @@ export function ProposeAssist({ onDraft }: { onDraft: (draft: RoadmapDraft) => v
   }
 
   return (
-    <div className="admin-assist-box">
+    <div className="admin-box admin-box--soft u-p-3 u-mb-3">
       <div className="u-row u-mb-2">
         <strong className="u-sm u-grow">Draft assistant</strong>
         <button type="button" className="cbp-link" onClick={() => setOpen(false)}>Close</button>
@@ -84,7 +84,7 @@ export function ProposeAssist({ onDraft }: { onDraft: (draft: RoadmapDraft) => v
         </p>
       )}
       {messages.length > 0 && (
-        <div ref={scrollRef} className="admin-scroll-xs u-stack u-gap-2 u-mb-2">
+        <div ref={scrollRef} className="admin-scroll admin-scroll--xs u-stack u-gap-2 u-mb-2">
           {messages.map((m, i) => (
             <div
               key={i}

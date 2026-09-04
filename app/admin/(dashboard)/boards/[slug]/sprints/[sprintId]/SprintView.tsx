@@ -293,7 +293,7 @@ export function SprintView({
         <div className="u-grid-auto-md">
           <div>
             <div className="admin-label">Cards</div>
-            <div className="admin-num-xl">
+            <div className="admin-num admin-num--xl">
               {done.length}
               <span className="admin-cell-muted u-lg u-strong"> / {cards.length} done</span>
             </div>
@@ -301,7 +301,7 @@ export function SprintView({
           </div>
           <div>
             <div className="admin-label">Human Tokens</div>
-            <div className="admin-num-xl">
+            <div className="admin-num admin-num--xl">
               {doneHT}
               <span className="admin-cell-muted u-md u-strong"> / {plannedHT} delivered</span>
             </div>

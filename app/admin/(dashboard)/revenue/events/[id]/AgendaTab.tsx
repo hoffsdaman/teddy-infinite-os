@@ -154,7 +154,7 @@ export function AgendaTab({
         <div className="admin-empty">No agenda blocks yet. Add the first block, or clone from another retreat.</div>
       ) : (
         days.map((day) => (
-          <section key={day.dayIndex} className="admin-box-pad">
+          <section key={day.dayIndex} className="admin-box u-p-4">
             <div className="u-mb-2 u-strong">
               {day.dayLabel || `Day ${day.dayIndex}`}
               {day.dayDate ? <span className="u-dim"> · {day.dayDate}</span> : null}
@@ -236,7 +236,7 @@ function BlockFormCard({
 }) {
   const set = (patch: Partial<BlockForm>) => setForm({ ...form, ...patch });
   return (
-    <div className="admin-box-pad u-stack u-gap-3">
+    <div className="admin-box u-p-4 u-stack u-gap-3">
       <div className="u-strong">{form.id ? "Edit block" : "New block"}</div>
       <div className="u-grid-auto-sm">
         <Field label="Day #">
@@ -343,7 +343,7 @@ function BlockCard({
         {block.staff.map((s) => (
           <span
             key={s.id}
-            className="admin-tag-pill"
+            className="admin-tag-xs admin-tag-xs--soft"
           >
             {s.personName ?? "Unknown"} · {STAFF_ROLE_LABELS[s.role]}
             <button

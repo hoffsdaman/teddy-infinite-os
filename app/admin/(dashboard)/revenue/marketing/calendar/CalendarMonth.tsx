@@ -79,7 +79,7 @@ export function CalendarMonth({
         </div>
       </div>
 
-      <div className="admin-cal-scroll">
+      <div className="u-x-scroll">
         <div className="admin-cal-grid">
           {DOW.map((d) => (
             <div key={d} className="admin-cal-dow">{d}</div>

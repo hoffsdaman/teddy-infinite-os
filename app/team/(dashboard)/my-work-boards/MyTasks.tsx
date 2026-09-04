@@ -92,8 +92,8 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                       </span>
                       {total > 0 && <span>{pct}% done</span>}
                     </div>
-                    <div className="admin-progress">
-                      <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
+                    <div className="admin-meter admin-meter--hairline">
+                      <div className="admin-meter-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                     </div>
                   </div>
                   <div className="admin-cell-muted u-mt-3 u-sm">
