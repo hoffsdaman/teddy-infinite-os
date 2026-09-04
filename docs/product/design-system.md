@@ -130,6 +130,22 @@ workflows (public) 223, components 190, operations 180, boards 117, edges 43,
 patterns 36, support (admin) 36, my-retreat 26, company 26, support (public)
 22, settings 20, innovation 16, contacts 16, careers 11, other 12.
 
+
+## Design-debt backlog: cleared (4 Sep 2026)
+
+After the migration, a ten-point audit (`docs/product/design-debt.md`) found the
+remaining debt and PRs #21 to #31 cleared it: `.u-*` utilities moved to
+`app/styles/utilities.css`; a CI workflow (`design-guardrails.yml`) plus the
+inline-style / page-prefix ratchet (`scripts/check-design-ratchet.mjs`) and a
+retired-name scan (`scripts/design/check-old-names.mjs`); the public workflow
+library and marketing pages converted off inline styles; type and spacing
+snapped to the scales; nine overlapping component families consolidated to one
+class with modifiers each; the email / OG / QR builders and the three
+`.module.css` sheets now read `lib/design/palette.json` / `tokens.css`; the
+three roadmap `<style>` blocks folded into `admin.css`; and blog / careers /
+post styles moved into route stylesheets. Styled inline styles 63 → 10 (all
+data-driven), raw colours outside the token file 129 → 0.
+
 ## Rolling out to another repo
 
 `scripts/design/inline-to-classes.pl` (exact patterns) and

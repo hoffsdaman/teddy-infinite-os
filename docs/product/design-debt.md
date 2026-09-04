@@ -79,3 +79,46 @@ normalisation, consolidation, long tail. One PR each.
 | 11 | Page-prefixed selectors on the public site | `globals.css`, `home.css` | 1304 rules / ~50 prefixes (261 on the ratchet); `os-*` 79 | Page-local rules move into `app/<route>/<route>.css` beside each route layout; shared sections renamed into `site-*` in `site-components.css`; `home.css` becomes the home route sheet; ratchet baseline shrinks to the shared root classes | #30 |
 | 12 | `company_os.tags.color` is free text | database | 0 rows | Nothing to migrate; the admin tag editor writes a token name, not hex, and the column comment says so | #31 |
 | 13 | Close out | docs | — | After numbers, baselines and ceilings refreshed; every stylesheet holds only its namespace and `.u-*` | #32 |
+
+
+## State after the backlog (4 Sep 2026)
+
+Cleared by PRs #21 to #31. Every stylesheet now holds one namespace plus, where
+it is a surface sheet, nothing else: `admin.css` is `.admin-*` only (1,587
+rules), `utilities.css` is `.u-*` (193), `site-components.css` is `.site-*`
+(44), `workflows.css` is `.wf-*` (241), `home.css` is `.os-*` (76), the three
+route sheets are `.blog-*` / `.careers-*` / `.post-*`. `globals.css` keeps only
+the shared public-site marketing sections (99 page-prefixed selectors on the
+ratchet, down from 261).
+
+| # | Measure | Before | After |
+|---|---|---|---|
+| 1 | `style={{` blocks in `app/`, `components/`, `lib/` | 293 in 76 files | 53 in 37 files |
+| 1 | …styled (colour / border / font / radius); the guardrail ceiling | 63 | 10, every one data-driven and `layout-ok` |
+| 1 | …layout-only | 209 | 22 |
+| 2 | Class prefixes in `admin.css` | `admin` + `u` + `is` + a bare `.phototag` | `admin` only (`.u-*` in utilities.css) |
+| 3 | Raw-colour lines outside the token file, all exemptions removed | 129 in 20 files | 0 (palette.json is the sole mirror) |
+| 4 | Off type-scale / off spacing-scale declarations | 103 / 223 | 0 / 0 |
+| 5 | Page-level `maxWidth` bypassing sanctioned widths | 7 | 0 (`check:design` clean) |
+| 6 | Private `<style>` blocks / colour aliases | 114 rules, 16 aliases | 0 |
+| 7 | Undefined custom properties / hiding fallbacks | 2 / 6 | 0 / 0 (`--n` documented) |
+| 9 | Overlapping component families | 9 (progress, avatar, box, chip, divider, scroll, number, text, thumb) | 1 each, modifiers |
+| 10 | Renderers reading one palette module | 0 of 16 | 16 of 16 (`palette.json`) |
+| 11 | Page-prefixed selectors in `globals.css` | 1,304 rules / 261 on ratchet | route sheets carry blog/careers/post; 99 shared marketing on ratchet |
+| 12 | `company_os.tags.color` free-text hex | 0 rows | 0 rows — nothing to migrate |
+
+Guardrails now on every PR (`.github/workflows/design-guardrails.yml`):
+`check-tokens` (no raw colour outside `tokens.css` / `palette.*`, styled-inline
+ceiling 10), `check-assets` (assets exist, font weights backed, off-scale zero,
+inline-layout ratchet), `check-design-ratchet` (inline blocks and page-prefixed
+selectors only shrink), `check-old-names` (653 retired class names stay retired),
+`check-crons`. `check:tokens` also runs as `prebuild`.
+
+Item 12 needed no code change: `company_os.tags.color` holds zero rows and no
+code path writes a hex value into it. The intended contract — the column stores
+a **token name** (e.g. `admin-accent`), never a raw hex, resolved through
+`tokens.css` — is recorded here; the production database is reachable read-only
+from this environment, so the matching `COMMENT ON COLUMN` is left for whoever
+has write access to apply.
+
+The backlog is empty.
