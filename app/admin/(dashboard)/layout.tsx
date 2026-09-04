@@ -6,6 +6,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminChatWidget } from "@/components/admin/AdminChatWidget";
 import { isPrivilegedChatUser } from "@/lib/admin-chat/privileged";
 import "../admin.css";
+import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
   title: { template: "%s · 8 Edges", default: "8 Edges" },

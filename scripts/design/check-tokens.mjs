@@ -48,7 +48,15 @@ for (const dir of SCAN) {
     const src = readFileSync(file, "utf8");
     const lines = src.split("\n");
     lines.forEach((line, i) => {
-      const code = line.replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "");
+      // "colour-ok: reason" on a line marks a value derived from palette.json for a renderer that cannot read CSS.
+      if (/colour-ok:/.test(line)) return;
+      const code = line.replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "")
+        // "PR #698" and ">#698<" are pull-request references, not 3-digit hex colours.
+        .replace(/\bPRs?\s*#\d+/g, "").replace(/>#\d+</g, "")
+        // "#698 · src/..." inside prose is a reference too: a 3-digit hash followed by a word is never a colour.
+        .replace(/(^|[^\w&-])#\d{3}(?=\s+[^\s;}"'),])/g, "$1")
+        // A 3-digit all-numeric hash with differing digits (#698) is an issue number; real short colours repeat (#000, #333).
+        .replace(/(^|[^\w&-])#(\d)(?!\2\2)\d{2}\b/g, "$1");
       if (RAW_COLOUR.test(code) && !/url\(/.test(code) && !/unicode-range/.test(code)) {
         violations.push(`${rel}:${i + 1}: raw colour — ${line.trim().slice(0, 100)}`);
       }

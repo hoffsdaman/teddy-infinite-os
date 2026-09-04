@@ -10,6 +10,7 @@
     "lint": "next lint",
     "check:design": "node scripts/design/check-assets.mjs",
     "check:tokens": "node scripts/design/check-tokens.mjs",
+    "check:design-ratchet": "node scripts/check-design-ratchet.mjs",
     "check:crons": "node scripts/check-crons.mjs"
   },
   "dependencies": {

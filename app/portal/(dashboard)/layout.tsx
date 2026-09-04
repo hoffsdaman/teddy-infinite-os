@@ -10,6 +10,7 @@ import { hasBacklog } from "@/lib/portal/backlog";
 import { PortalSidebar } from "@/components/portal/PortalSidebar";
 import { AssumeBanner } from "@/components/portal/AssumeBanner";
 import "../../admin/admin.css";
+import "@/app/styles/utilities.css";
 
 export const metadata: Metadata = {
   title: { template: "%s · 8 Edges Client Portal", default: "8 Edges Client Portal" },
