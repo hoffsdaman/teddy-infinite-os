@@ -171,7 +171,7 @@ function VendorFields({
       </div>
       <div className="admin-field">
         <label className="admin-label">Primary contact</label>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 }}>
+        <div className="u-grid-auto-sm">
           <input
             className="admin-input"
             value={form.primary_contact_name}
@@ -198,7 +198,7 @@ function VendorFields({
       </div>
       <div className="admin-field">
         <label className="admin-label">Secondary contact</label>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10 }}>
+        <div className="u-grid-auto-sm">
           <input
             className="admin-input"
             value={form.secondary_contact_name}
@@ -287,7 +287,7 @@ function VendorAutosaveForm({
 
   return (
     <div className="admin-form">
-      <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+      <div className="u-row u-end u-sm">
         <AutosaveIndicator status={status} />
       </div>
       <VendorFields form={form} onChange={field} onBlur={commit} />

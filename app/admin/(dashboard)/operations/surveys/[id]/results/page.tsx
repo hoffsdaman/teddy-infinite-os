@@ -46,7 +46,7 @@ type AnswerRow = {
 // the respondent name links to. The selfie is exempt (it is a public avatar).
 function Redacted() {
   return (
-    <span className="admin-cell-muted" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+    <span className="admin-cell-muted u-row">
       <span aria-hidden>🔒</span> Hidden — see employee profile
     </span>
   );
@@ -54,14 +54,9 @@ function Redacted() {
 
 function Bar({ pct }: { pct: number }) {
   return (
-    <div style={{ background: "var(--admin-line-soft)", borderRadius: 4, flex: 1 }}>
+    <div className="admin-meter admin-meter--flat">
       <div
-        style={{
-          width: `${Math.max(2, Math.round(pct))}%`,
-          background: "var(--admin-accent)",
-          height: 8,
-          borderRadius: 4,
-        }}
+        className="admin-meter-fill" style={{ width: `${Math.max(2, Math.round(pct))}%` }} /* layout-ok: data-driven width */
       />
     </div>
   );
@@ -70,12 +65,12 @@ function Bar({ pct }: { pct: number }) {
 function DistRow({ label, count, total }: { label: string; count: number; total: number }) {
   const pct = total > 0 ? (count / total) * 100 : 0;
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      <span style={{ minWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+    <div className="u-row">
+      <span className="u-min-1 u-truncate">
         {label}
       </span>
       <Bar pct={pct} />
-      <span className="admin-cell-mono" style={{ minWidth: 70, textAlign: "right" }}>
+      <span className="admin-cell-mono u-right u-min-1">
         {count} · {Math.round(pct)}%
       </span>
     </div>
@@ -98,8 +93,8 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
         })()
       : null;
     return (
-      <div style={{ display: "grid", gap: 8 }}>
-        <div style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
+      <div className="u-stack">
+        <div className="u-row u-gap-4">
           <span className="admin-kpi-val">{avg === null ? "—" : avg.toFixed(1)}</span>
           <span className="admin-cell-muted">average of {nums.length}</span>
           {nps !== null && (
@@ -125,7 +120,7 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
       }
     }
     return (
-      <div style={{ display: "grid", gap: 8 }}>
+      <div className="u-stack">
         {[...counts.entries()].map(([choice, count]) => (
           <DistRow key={choice} label={choice} count={count} total={total} />
         ))}
@@ -137,7 +132,7 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
     const yes = values.filter((v) => v === true).length;
     const no = values.filter((v) => v === false).length;
     return (
-      <div style={{ display: "grid", gap: 8 }}>
+      <div className="u-stack">
         <DistRow label="Yes" count={yes} total={total} />
         <DistRow label="No" count={no} total={total} />
       </div>
@@ -148,9 +143,9 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
   return texts.length === 0 ? (
     <div className="admin-empty">No answers yet.</div>
   ) : (
-    <div style={{ display: "grid", gap: 8, maxHeight: 260, overflowY: "auto" }}>
+    <div className="u-stack admin-scroll-sm">
       {texts.slice(0, 50).map((t, i) => (
-        <div key={i} style={{ borderLeft: "3px solid var(--admin-line)", paddingLeft: 10 }}>
+        <div key={i} className="admin-quote">
           {t}
         </div>
       ))}
@@ -245,7 +240,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
     <>
       <PageHead
         eyebrow={
-          <Link href={`/admin/operations/surveys/${survey.id}`} style={{ textDecoration: "none" }}>
+          <Link href={`/admin/operations/surveys/${survey.id}`} className="u-link-plain">
             Operations · Surveys · {survey.name}
           </Link>
         }
@@ -258,12 +253,12 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
         }
       />
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+      <div className="u-row u-mb-4">
         <Badge tone={surveyStatusTone(survey.status)}>{survey.status}</Badge>
         {survey.is_anonymous && <Badge tone="info">anonymous</Badge>}
       </div>
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Responses" value={responses.length} />
         <MetricCard label="Team" value={teamCount} />
         <MetricCard label="Client" value={clientCount} />
@@ -273,7 +268,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
       {fields.length === 0 ? (
         <div className="admin-empty">This survey has no questions.</div>
       ) : (
-        <div style={{ display: "grid", gap: 20, marginBottom: 24 }}>
+        <div className="u-stack u-gap-5 u-mb-5">
           {fields.map((f, i) => {
             const sensitive = isSensitiveSurveyField(f);
             const rows = answersByField.get(f.id) ?? [];
@@ -285,7 +280,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
                 <h2 className="admin-card-title">
                   {i + 1}. {f.label}
                 </h2>
-                <div className="admin-cell-muted" style={{ marginBottom: 12 }}>
+                <div className="admin-cell-muted u-mb-3">
                   {FIELD_TYPE_LABEL[f.type as FieldType] ?? f.type} · {values.length} answer
                   {values.length === 1 ? "" : "s"}
                 </div>
@@ -312,7 +307,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
                   <th>Submitted</th>
                   <th>Respondent</th>
                   <th>Kind</th>
-                  <th style={{ textAlign: "right" }}>Answered</th>
+                  <th className="u-right">Answered</th>
                 </tr>
               </thead>
               <tbody>
@@ -351,7 +346,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
                             {r.respondent_kind ?? "external"}
                           </Badge>
                         </td>
-                        <td className="admin-cell-mono" style={{ textAlign: "right" }}>
+                        <td className="admin-cell-mono u-right">
                           {answers?.size ?? 0}/{fields.length}
                         </td>
                       </>
@@ -362,7 +357,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
                         title={respondentLabel(r)}
                         eyebrow={`Submitted ${formatDate(r.submitted_at)}`}
                         preview={
-                          <div style={{ display: "grid", gap: 14 }}>
+                          <div className="u-stack u-gap-4">
                             {fields.map((f) => {
                               const value = answers?.get(f.id)?.value ?? null;
                               return (

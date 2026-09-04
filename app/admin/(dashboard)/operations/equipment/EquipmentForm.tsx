@@ -143,7 +143,7 @@ function EquipmentFields({
       </div>
 
       {showSpecs && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
+        <div className="u-grid-4 u-gap-3">
           {text("processor", "Processor", "M3")}
           {text("ram", "RAM", "16GB")}
           {text("storage", "Storage", "512GB")}
@@ -313,7 +313,7 @@ function EquipmentAutosaveForm({
 
   return (
     <div className="admin-form">
-      <div style={{ display: "flex", justifyContent: "flex-end", fontSize: 12 }}>
+      <div className="u-row u-end u-sm">
         <AutosaveIndicator status={status} />
       </div>
       <EquipmentFields form={form} onChange={field} onBlur={commit} vendors={vendors} />

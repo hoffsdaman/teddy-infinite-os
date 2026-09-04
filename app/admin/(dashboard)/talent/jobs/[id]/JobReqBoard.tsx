@@ -46,7 +46,7 @@ export function JobReqBoard({
 
   if (!columns.length) {
     return (
-      <div className="admin-card" style={{ padding: "16px 18px" }}>
+      <div className="admin-card u-p-4">
         <span className="admin-cell-muted">This req has no hiring stages defined yet.</span>
       </div>
     );
@@ -54,7 +54,7 @@ export function JobReqBoard({
 
   return (
     <>
-      {banner && <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>{banner}</div>}
+      {banner && <div className="admin-alert admin-alert--err u-mb-3">{banner}</div>}
       <KanbanBoard<AppCard>
         columns={columns}
         cards={cards}
@@ -69,7 +69,7 @@ export function JobReqBoard({
             <div className="admin-kanban-card-meta">
               {c.status && <Badge tone={statusTone(c.status)}>{humanize(c.status)}</Badge>}
               {c.rating != null && (
-                <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>{c.rating}★</span>
+                <span className="admin-kanban-card-sub u-ml-auto">{c.rating}★</span>
               )}
             </div>
           </>

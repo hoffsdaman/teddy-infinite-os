@@ -11,7 +11,7 @@ import type { SaveResult } from "../actions";
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" className="btn btn-secondary" disabled={pending} style={{ padding: "4px 10px", fontSize: 12 }}>
+    <button type="submit" className="btn btn-secondary u-p-1 u-sm" disabled={pending}>
       {pending ? "Saving…" : "Save"}
     </button>
   );
@@ -26,16 +26,16 @@ export function ContractStartForm({
 }) {
   const [state, formAction] = useFormState(action, null);
   return (
-    <form action={formAction} style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-      <input type="date" name="contract_start_date" defaultValue={defaultValue} style={{ fontSize: 13 }} />
+    <form action={formAction} className="u-row u-wrap">
+      <input type="date" name="contract_start_date" defaultValue={defaultValue} />
       <SubmitButton />
       {state?.ok && (
-        <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+        <span className="admin-cell-muted u-sm">
           Saved ✓
         </span>
       )}
       {state && !state.ok && (
-        <span style={{ color: "var(--admin-danger)", fontSize: 12 }}>{state.error}</span>
+        <span className="u-err u-sm">{state.error}</span>
       )}
     </form>
   );

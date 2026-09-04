@@ -107,7 +107,7 @@ function ConfigInputs({
   if (type === "rating") {
     return (
       <>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
+        <div className="u-grid-auto-sm">
           <div className="admin-field">
             <label className="admin-label">Min</label>
             <input
@@ -133,7 +133,7 @@ function ConfigInputs({
             />
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
+        <div className="u-grid-auto-sm">
           <div className="admin-field">
             <label className="admin-label">Min label (optional)</label>
             <input
@@ -300,18 +300,18 @@ export function SurveyBuilder({
   return (
     <>
       {banner && (
-        <div className={`admin-alert admin-alert--${banner.tone}`} style={{ marginBottom: 16 }}>
+        <div className={`admin-alert admin-alert--${banner.tone} u-mb-4`}>
           {banner.text}
         </div>
       )}
 
       <div className="admin-360">
         {/* Left rail: status, settings, danger zone */}
-        <div style={{ display: "grid", gap: 20 }}>
+        <div className="u-stack u-gap-5">
           <div className="admin-card admin-section-card">
             <h2 className="admin-card-title">Status</h2>
             <div
-              style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 14 }}
+              className="u-row u-wrap u-mb-4"
             >
               <Badge tone={surveyStatusTone(survey.status)}>{survey.status}</Badge>
               {survey.is_anonymous && <Badge tone="info">anonymous</Badge>}
@@ -320,7 +320,7 @@ export function SurveyBuilder({
               </span>
             </div>
 
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="u-row u-wrap">
               {survey.status === "draft" && (
                 <button
                   className="admin-btn admin-btn--primary"
@@ -351,15 +351,14 @@ export function SurveyBuilder({
             </div>
 
             {survey.status === "published" && (
-              <div style={{ marginTop: 14 }}>
-                <div className="admin-hint" style={{ marginBottom: 6 }}>Public link</div>
+              <div className="u-mt-4">
+                <div className="admin-hint u-mb-2">Public link</div>
                 <code
-                  className="admin-cell-mono"
-                  style={{ display: "block", wordBreak: "break-all", fontSize: 12, marginBottom: 8 }}
+                  className="admin-cell-mono u-block u-mb-2 u-sm u-break-all"
                 >
                   /surveys/{survey.slug}
                 </code>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <div className="u-row u-wrap">
                   <button className="admin-btn admin-btn--sm" onClick={copyLink}>
                     {copied ? "Copied ✓" : "Copy link"}
                   </button>
@@ -501,11 +500,11 @@ export function SurveyBuilder({
         {/* Main: questions */}
         <div className="admin-card admin-section-card">
           <h2 className="admin-card-title">
-            Questions <span className="admin-cell-muted" style={{ fontWeight: 400 }}>· {fields.length}</span>
+            Questions <span className="admin-cell-muted">· {fields.length}</span>
           </h2>
 
           {locked && (
-            <div className="admin-alert admin-alert--ok" style={{ marginBottom: 14 }}>
+            <div className="admin-alert admin-alert--ok u-mb-4">
               This survey has responses: wording can be edited and questions added, but types,
               options, and scales are frozen, and questions can&rsquo;t be deleted.
             </div>
@@ -519,8 +518,7 @@ export function SurveyBuilder({
                 editingId === f.id ? (
                   <div
                     key={f.id}
-                    className="admin-list-row"
-                    style={{ display: "block", paddingTop: 14, paddingBottom: 14 }}
+                    className="admin-list-row u-block u-py-4"
                   >
                     <QuestionForm
                       type={f.type as FieldType}
@@ -542,8 +540,7 @@ export function SurveyBuilder({
                     <div className="admin-list-main">
                       <div className="admin-list-title">
                         <span
-                          className="admin-cell-mono"
-                          style={{ color: "var(--admin-muted)", marginRight: 6 }}
+                          className="admin-cell-mono u-mr-2 u-muted"
                         >
                           {i + 1}
                         </span>
@@ -564,8 +561,7 @@ export function SurveyBuilder({
                       </div>
                     </div>
                     <div
-                      className="admin-list-aside"
-                      style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+                      className="admin-list-aside admin-list-aside--row"
                     >
                       <button
                         className="admin-btn admin-btn--sm"
@@ -611,9 +607,9 @@ export function SurveyBuilder({
             </div>
           )}
 
-          <div style={{ borderTop: "1px solid var(--admin-line)", marginTop: 18, paddingTop: 18 }}>
+          <div className="admin-divider-top">
             <h3 className="admin-card-title">Add a question</h3>
-            <div style={{ display: "grid", gap: 12, maxWidth: 480 }}>
+            <div className="u-stack u-gap-3 u-max-6">
               <div className="admin-field">
                 <label className="admin-label" htmlFor="sb-add-type">Type</label>
                 <select

@@ -109,13 +109,13 @@ export function CompensationSection({
       </dl>
 
       {banner && (
-        <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"}`} style={{ marginTop: 12 }}>
+        <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"} u-mt-3`}>
           {banner.text}
         </div>
       )}
 
       {open && (
-        <div className="admin-form" style={{ marginTop: 12 }}>
+        <div className="admin-form u-mt-3">
           <div className="admin-field">
             <label className="admin-label">Salary (VND / month)</label>
             <input
@@ -137,7 +137,7 @@ export function CompensationSection({
               onChange={(e) => onUsdChange(e.target.value)}
               placeholder="auto at 25,500"
             />
-            <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+            <span className="admin-cell-muted u-sm">
               Converted at a fixed {FIXED_VND_PER_USD.toLocaleString("en-US")} VND/USD. Either field can be overridden.
             </span>
           </div>
@@ -179,13 +179,13 @@ export function CompensationSection({
       )}
 
       {history.length > 0 && (
-        <div className="admin-table-wrap" style={{ marginTop: 16 }}>
+        <div className="admin-table-wrap u-mt-4">
           <table className="admin-table">
             <thead>
               <tr>
                 <th>Effective</th>
-                <th style={{ textAlign: "right" }}>VND</th>
-                <th style={{ textAlign: "right" }}>USD</th>
+                <th className="u-right">VND</th>
+                <th className="u-right">USD</th>
                 <th>Reason</th>
               </tr>
             </thead>
@@ -196,10 +196,10 @@ export function CompensationSection({
                     {h.effectiveFrom ? formatDate(h.effectiveFrom) : "—"}
                     {h.effectiveTo ? ` → ${formatDate(h.effectiveTo)}` : h.isCurrent ? " → now" : ""}
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {formatVndWhole(h.salaryVnd)}
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {formatCents(h.salaryUsdCents, "usd")}
                   </td>
                   <td>{h.changeReason ?? "—"}</td>

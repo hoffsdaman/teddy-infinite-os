@@ -61,8 +61,7 @@ export default async function TimeOffHistoryPage({ searchParams }: { searchParam
           href="/admin/operations/time-off/history"
           role="tab"
           aria-selected={view === "activated"}
-          className={`admin-tab${view === "activated" ? " is-active" : ""}`}
-          style={{ textDecoration: "none" }}
+          className={`admin-tab${view === "activated" ? " is-active" : ""} u-link-plain`}
         >
           Activated
         </Link>
@@ -70,15 +69,14 @@ export default async function TimeOffHistoryPage({ searchParams }: { searchParam
           href="/admin/operations/time-off/history?view=deactivated"
           role="tab"
           aria-selected={view === "deactivated"}
-          className={`admin-tab${view === "deactivated" ? " is-active" : ""}`}
-          style={{ textDecoration: "none" }}
+          className={`admin-tab${view === "deactivated" ? " is-active" : ""} u-link-plain`}
         >
           Deactivated
         </Link>
       </div>
 
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error.message}
         </div>
       )}

@@ -302,14 +302,14 @@ function EquipmentShelfBody({
       {item.notes && (
         <section>
           <div className="admin-shelf-heading">Notes</div>
-          <div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{item.notes}</div>
+          <div className="u-prewrap">{item.notes}</div>
         </section>
       )}
 
       {!item.archived_at && (
         <section>
           <div className="admin-shelf-heading">{out ? "Take it back" : "Hand it over"}</div>
-          {err && <div className="admin-alert admin-alert--err" style={{ marginBottom: 10 }}>{err}</div>}
+          {err && <div className="admin-alert admin-alert--err u-mb-3">{err}</div>}
 
           {!out && (
             <div className="admin-field">
@@ -323,7 +323,7 @@ function EquipmentShelfBody({
             </div>
           )}
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">{out ? "Return date" : "Handover date"}</label>
               <input type="date" className="admin-input" value={date} onChange={(e) => setDate(e.target.value)} />
@@ -360,7 +360,7 @@ function EquipmentShelfBody({
               {busy ? "Saving…" : "Assign"}
             </button>
           )}
-          <div className="admin-hint" style={{ marginTop: 8 }}>
+          <div className="admin-hint u-mt-2">
             {out
               ? "Returning closes the current period and puts the item back in stock."
               : "Assigning opens a new custody period. Handing it to someone else later closes this one automatically, so nothing is overwritten."}
@@ -375,16 +375,11 @@ function EquipmentShelfBody({
         ) : history.length === 0 ? (
           <div className="admin-cell-muted">Never assigned.</div>
         ) : (
-          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 10 }}>
+          <ul className="u-stack u-gap-3 u-m-0 u-p-0 u-list-plain">
             {history.map((h) => (
               <li
                 key={h.id}
-                style={{
-                  borderLeft: "2px solid var(--admin-border)",
-                  paddingLeft: 12,
-                  fontSize: 13,
-                  lineHeight: 1.5,
-                }}
+                className="admin-quote"
               >
                 <div className="admin-cell-strong">
                   {h.person?.full_name ?? "Unknown person"}{" "}
@@ -395,7 +390,7 @@ function EquipmentShelfBody({
                   {h.condition_out && ` · out ${h.condition_out}`}
                   {h.condition_in && ` · back ${h.condition_in}`}
                 </div>
-                {h.note && <div style={{ marginTop: 2 }}>{h.note}</div>}
+                {h.note && <div className="u-mt-1">{h.note}</div>}
               </li>
             ))}
           </ul>

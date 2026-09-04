@@ -29,7 +29,7 @@ export function NewSurveyButton() {
         {pending ? "Creating…" : "New survey"}
       </button>
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 8 }}>
+        <div className="admin-alert admin-alert--err u-mt-2">
           {error}
         </div>
       )}

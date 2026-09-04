@@ -153,7 +153,7 @@ export default async function TimeOffPage() {
         title="Time Off"
         sub="Edge8 policy auto-approves; On Target waits for a decision. Deny anything that doesn't work."
         action={
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="u-row">
             <Link href="/admin/operations/time-off/policies" className="admin-btn">
               Policies
             </Link>
@@ -166,7 +166,7 @@ export default async function TimeOffPage() {
 
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Pending approval" value={pending} />
         <MetricCard label="New this week" value={newThisWeek} />
         <MetricCard label="Days off in 2026" value={formatLeaveBalance(total2026)} />

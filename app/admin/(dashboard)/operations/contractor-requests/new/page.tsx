@@ -26,7 +26,7 @@ export default async function NewWorkRequestPage({ searchParams }: { searchParam
         title="New work request"
         sub="The contractor gets an email with a private link to estimate the work."
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <div className="admin-content--form">
         <NewRequestForm
           contractors={contractors}

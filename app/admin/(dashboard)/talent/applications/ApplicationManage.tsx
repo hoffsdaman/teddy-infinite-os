@@ -287,7 +287,7 @@ export function ApplicationManage({
       )}
 
       {isArchived && (
-        <div className="admin-alert" style={{ marginBottom: 14, border: "1px solid var(--admin-line-strong)" }}>
+        <div className="admin-alert admin-alert--outlined u-mb-4">
           This application is archived and hidden from the pipeline. Use the ⋯ menu to restore it.
         </div>
       )}
@@ -326,7 +326,7 @@ export function ApplicationManage({
             />
           ) : (
             <section className="admin-card admin-section-card">
-              <div className="admin-section-label" style={{ marginBottom: 8 }}>Contact</div>
+              <div className="admin-section-label u-mb-2">Contact</div>
               <div className="admin-hint">No linked person record.</div>
             </section>
           )}
@@ -415,7 +415,7 @@ function DecisionHeader(props: {
             {props.source ? ` · ${humanize(props.source)}` : ""}
           </div>
           {props.status === "rejected" && (
-            <div className="admin-record-head-meta" style={{ marginTop: 2 }}>
+            <div className="admin-record-head-meta u-mt-1">
               Reason:{" "}
               <EditableText
                 value={props.rejectionReason}
@@ -446,7 +446,7 @@ function DecisionHeader(props: {
         </div>
       </div>
       {props.error && (
-        <div className="admin-alert admin-alert--err" style={{ marginTop: 10 }}>
+        <div className="admin-alert admin-alert--err u-mt-3">
           {props.error}
         </div>
       )}
@@ -471,10 +471,9 @@ function RejectControl({ onReject, disabled }: { onReject: (reason: string) => P
     );
   }
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+    <span className="u-row">
       <input
-        className="admin-input"
-        style={{ width: 200 }}
+        className="admin-input u-w-200"
         autoFocus
         placeholder="Reason (optional)"
         value={reason}
@@ -539,7 +538,7 @@ function OverflowMenu({
         <>
           <div className="admin-record-menu-backdrop" onClick={() => setOpen(false)} />
           <div className="admin-record-menu" role="menu">
-            <div className="admin-section-label" style={{ padding: "4px 10px 2px" }}>
+            <div className="admin-section-label u-p-1">
               Set status
             </div>
             {APPLICATION_STATUS_OPTIONS.map(([v, l]) => (
@@ -557,7 +556,7 @@ function OverflowMenu({
                 {l}
               </button>
             ))}
-            <div style={{ borderTop: "1px solid var(--admin-line)", margin: "4px 0" }} />
+            <hr className="admin-hr" />
             <button
               type="button"
               className={`admin-record-menu-item${archived ? "" : " admin-record-menu-item--danger"}`}
@@ -579,7 +578,7 @@ function OverflowMenu({
 // Compact 1–5 stars for the header. Clicking the current rating clears it.
 function HeaderStars({ value, onChange }: { value: number | null; onChange: (v: number | null) => void }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 2 }} aria-label="Rating">
+    <span className="u-row u-gap-1" aria-label="Rating">
       {[1, 2, 3, 4, 5].map((n) => (
         <button
           key={n}
@@ -587,15 +586,7 @@ function HeaderStars({ value, onChange }: { value: number | null; onChange: (v: 
           aria-label={`${n} star${n === 1 ? "" : "s"}`}
           aria-pressed={value != null && n <= value}
           onClick={() => onChange(value === n ? null : n)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-            fontSize: 16,
-            lineHeight: 1,
-            color: value != null && n <= value ? "var(--admin-accent)" : "var(--admin-line-strong)",
-          }}
+          className="admin-btn-reset admin-star-btn--sm" style={{ color: value != null && n <= value ? "var(--admin-accent)" : "var(--admin-line-strong)" }} /* layout-ok: state colour is a token var chosen at runtime */
         >
           {value != null && n <= value ? "★" : "☆"}
         </button>
@@ -687,9 +678,9 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
   const s = extras.aiSummary;
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 10, display: "flex", justifyContent: "space-between", gap: 10 }}>
+      <div className="admin-section-label u-row u-gap-3 u-between u-mb-3">
         <span>AI screen</span>
-        <span style={{ display: "inline-flex", gap: 10, letterSpacing: 0, textTransform: "none", fontWeight: 500 }}>
+        <span className="u-row u-gap-3 u-label">
           {extras.aiScreenedAt && <span className="admin-cell-muted">{formatDate(extras.aiScreenedAt)}</span>}
           {resumeDocumentId && (
             <a href={`/admin/talent/resume/${resumeDocumentId}`} target="_blank" rel="noreferrer">
@@ -703,7 +694,7 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
       )}
       {extras.aiStatus === "pending" && <div className="admin-hint">Screen in progress…</div>}
       {s ? (
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div className="u-stack u-gap-3">
           {extras.aiRating != null && (
             <div className="admin-record-ai-score">
               {extras.aiRating}
@@ -711,8 +702,8 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
             </div>
           )}
           <Expandable collapsedHeight={AI_COLLAPSED_HEIGHT}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ whiteSpace: "pre-wrap", color: "var(--admin-ink-2)", maxWidth: "68ch" }}>{s.overview}</div>
+          <div className="u-stack u-gap-3">
+          <div className="u-ink-2 u-prewrap u-max-prose">{s.overview}</div>
           {s.skills.length > 0 && (
             <ul className="admin-record-ai-points">
               {s.skills.map((sk, j) => {
@@ -752,19 +743,19 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
 function CoverLetterCard({ extras }: { extras: ApplicationExtras }) {
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 8 }}>Application</div>
+      <div className="admin-section-label u-mb-2">Application</div>
       {extras.coverLetter && (
-        <details open style={{ marginBottom: extras.answers.length ? 12 : 0 }}>
-          <summary style={{ cursor: "pointer", fontWeight: 600, marginBottom: 8 }}>Cover letter</summary>
-          <div style={{ whiteSpace: "pre-wrap", borderLeft: "2px solid var(--admin-line-strong)", paddingLeft: 10, color: "var(--admin-ink-2)", maxWidth: "68ch" }}>
+        <details open className={extras.answers.length ? "u-mb-3" : "u-mb-0"}>
+          <summary className="u-mb-2 u-strong u-pointer">Cover letter</summary>
+          <div className="u-pl-3 admin-quote u-ink-2 u-prewrap u-max-prose">
             {extras.coverLetter}
           </div>
         </details>
       )}
       {extras.answers.map((x, i) => (
-        <div key={i} style={{ marginBottom: 12 }}>
-          <div className="admin-label" style={{ marginBottom: 6 }}>{x.q}</div>
-          <div style={{ whiteSpace: "pre-wrap", borderLeft: "2px solid var(--admin-line-strong)", paddingLeft: 10, color: "var(--admin-ink-2)", maxWidth: "68ch" }}>
+        <div key={i} className="u-mb-3">
+          <div className="admin-label u-mb-2">{x.q}</div>
+          <div className="u-pl-3 admin-quote u-ink-2 u-prewrap u-max-prose">
             {x.a || "—"}
           </div>
         </div>
@@ -788,7 +779,7 @@ function ContactCard(props: {
 }) {
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 8 }}>Contact</div>
+      <div className="admin-section-label u-mb-2">Contact</div>
       <dl className="admin-kv admin-kv--editable">
         <dt>Headline</dt>
         <dd>
@@ -849,7 +840,7 @@ function SourcingCard(props: {
   const [referrerId, setReferrerId] = useState(props.referrerId ?? "");
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 8 }}>Sourcing</div>
+      <div className="admin-section-label u-mb-2">Sourcing</div>
       <dl className="admin-kv admin-kv--editable">
         <dt>Source</dt>
         <dd>
@@ -863,7 +854,7 @@ function SourcingCard(props: {
             onSave={(v) => updateApplication(props.appId, { source_detail: v.trim() || null }).then((r) => (r.ok ? ok() : r))} />
         </dd>
         <dt>Referrer</dt>
-        <dd style={{ padding: "2px 0" }}>
+        <dd className="u-py-1">
           <PersonSelect
             value={referrerId}
             compact
@@ -887,7 +878,7 @@ function SourcingCard(props: {
             onSave={(v) => updateApplication(props.appId, { decided_at: v || null }).then((r) => (r.ok ? ok() : r))} />
         </dd>
         <dt>Resume</dt>
-        <dd style={{ padding: "2px 0" }}>
+        <dd className="u-py-1">
           <ResumeField applicationId={props.appId} resumeDocumentId={props.resumeDocumentId} />
         </dd>
       </dl>
@@ -923,8 +914,8 @@ function SignalsCard(props: {
   const notice = aiHint(props.aiNotice);
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 4 }}>Signals</div>
-      <div className="admin-hint" style={{ marginBottom: 8 }}>
+      <div className="admin-section-label u-mb-1">Signals</div>
+      <div className="admin-hint u-mb-2">
         Recruiter-verified. Overrides the AI screen; leave blank to keep showing the AI value.
       </div>
       <dl className="admin-kv admin-kv--editable">
@@ -936,7 +927,7 @@ function SignalsCard(props: {
         {props.canViewSalary && (
           <>
             <dt>Salary</dt>
-            <dd style={{ padding: "2px 0" }}>
+            <dd className="u-py-1">
               <SalaryField
                 personId={props.personId}
                 cents={props.salaryExpectationCents}
@@ -958,7 +949,7 @@ function SignalsCard(props: {
             onSave={(v) => updateApplicantProfile(props.personId, { pool_status: v || null })} />
         </dd>
       </dl>
-      <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", marginTop: 10, fontSize: 13 }}>
+      <label className="u-row u-mt-3 u-pointer">
         <input
           type="checkbox"
           checked={doNotHire}
@@ -981,13 +972,13 @@ function SignalsCard(props: {
 function AssessmentCard({ appId, hrAssessment }: { appId: string; hrAssessment: string | null }) {
   return (
     <section className="admin-card admin-section-card admin-record-assessment">
-      <div className="admin-section-label" style={{ marginBottom: 4, display: "flex", justifyContent: "space-between", gap: 10 }}>
+      <div className="admin-section-label u-row u-gap-3 u-between u-mb-1">
         <span>HR assessment</span>
-        <span className="admin-cell-muted" style={{ letterSpacing: 0, textTransform: "none", fontWeight: 500 }}>
+        <span className="admin-cell-muted u-label">
           your read
         </span>
       </div>
-      <div className="admin-hint" style={{ marginBottom: 10 }}>
+      <div className="admin-hint u-mb-3">
         Your own read on this candidate. Separate from the AI screen and interview scorecards.
       </div>
       <EditableTextarea
@@ -1027,7 +1018,7 @@ function ResumeField({ applicationId, resumeDocumentId }: { applicationId: strin
   }
 
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+    <span className="u-row u-wrap">
       {docId ? (
         <a href={`/admin/talent/resume/${docId}`} target="_blank" rel="noreferrer" className="admin-cell-strong">
           Open ↗
@@ -1042,10 +1033,10 @@ function ResumeField({ applicationId, resumeDocumentId }: { applicationId: strin
         ref={inputRef}
         type="file"
         accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        style={{ display: "none" }}
+        className="u-hidden-input"
         onChange={onFile}
       />
-      {err && <span style={{ color: "var(--admin-err-ink)" }}>{err}</span>}
+      {err && <span className="u-err">{err}</span>}
     </span>
   );
 }
@@ -1086,22 +1077,20 @@ function SalaryField({
   }
 
   return (
-    <span style={{ display: "inline-flex", flexDirection: "column", gap: 4, width: "100%" }}>
-      <span style={{ display: "flex", gap: 6 }}>
+    <span className="u-stack u-gap-1 u-w-full">
+      <span className="u-row">
         <input
-          className="admin-input"
+          className="admin-input u-grow"
           inputMode="numeric"
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           onBlur={(e) => save(e.target.value, cur)}
-          style={{ flex: 1 }}
         />
         <select
-          className="admin-select"
+          className="admin-select u-max-0"
           aria-label="Currency"
           value={cur}
-          style={{ maxWidth: 84 }}
           onChange={(e) => {
             setCur(e.target.value);
             if (amount.trim()) save(amount, e.target.value);
@@ -1115,7 +1104,7 @@ function SalaryField({
         </select>
       </span>
       {saving && <span className="admin-hint">Saving…</span>}
-      {err && <span style={{ color: "var(--admin-err-ink)", fontSize: 12 }}>{err}</span>}
+      {err && <span className="u-sm u-err">{err}</span>}
       {!amount.trim() && aiFallback && <span className="admin-hint">AI: {aiFallback}</span>}
     </span>
   );
@@ -1162,27 +1151,25 @@ function FeedbackThread({ applicationId }: { applicationId: string }) {
 
   return (
     <section className="admin-card admin-section-card">
-      <div className="admin-section-label" style={{ marginBottom: 8 }}>Feedback</div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+      <div className="admin-section-label u-mb-2">Feedback</div>
+      <div className="u-row u-mb-3">
         <textarea
-          className="admin-input"
+          className="admin-input u-grow"
           rows={2}
           placeholder="Add feedback for this candidate…"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          style={{ flex: 1 }}
         />
         <button
           type="button"
-          className="admin-btn admin-btn--primary admin-btn--sm"
+          className="admin-btn admin-btn--primary admin-btn--sm u-self-start"
           onClick={add}
           disabled={saving || !body.trim()}
-          style={{ alignSelf: "flex-start" }}
         >
           {saving ? "Adding…" : "Add"}
         </button>
       </div>
-      {saveErr && <div className="admin-alert admin-alert--err" style={{ marginBottom: 12 }}>{saveErr}</div>}
+      {saveErr && <div className="admin-alert admin-alert--err u-mb-3">{saveErr}</div>}
 
       {loading ? (
         <div className="admin-hint">Loading…</div>
@@ -1191,14 +1178,14 @@ function FeedbackThread({ applicationId }: { applicationId: string }) {
       ) : items.length === 0 ? (
         <div className="admin-empty">No feedback yet.</div>
       ) : (
-        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+        <ul className="u-stack u-gap-3 u-m-0 u-p-0 u-list-plain">
           {items.map((n) => (
-            <li key={n.id} style={{ borderLeft: "2px solid var(--admin-line-strong)", paddingLeft: 10 }}>
-              <div className="admin-cell-muted" style={{ marginBottom: 2, fontSize: 12 }}>
+            <li key={n.id} className="u-pl-3 admin-quote">
+              <div className="admin-cell-muted u-mb-1 u-sm">
                 {n.author ? `${n.author} · ` : ""}
                 {formatDate(n.occurredAt)}
               </div>
-              <div style={{ whiteSpace: "pre-wrap", color: "var(--admin-ink-2)" }}>{n.body || "—"}</div>
+              <div className="u-ink-2 u-prewrap">{n.body || "—"}</div>
             </li>
           ))}
         </ul>

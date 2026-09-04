@@ -37,13 +37,13 @@ export function SendReviewButton({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+    <div className="u-stack">
+      <div className="u-row u-wrap">
         <select
           value={type}
           onChange={(e) => setType(e.target.value as ReviewType)}
           disabled={pending}
-          style={{ fontSize: 13, padding: "6px 8px" }}
+          className="u-p-1"
           aria-label="Review type"
         >
           {TYPE_OPTIONS.map((o) => (
@@ -63,10 +63,7 @@ export function SendReviewButton({
       </div>
       {result && (
         <span
-          style={{
-            fontSize: 12,
-            color: result.ok ? "var(--admin-muted)" : "var(--admin-danger)",
-          }}
+          className={`u-sm ${result.ok ? "u-muted" : "u-err"}`}
         >
           {result.message}
         </span>

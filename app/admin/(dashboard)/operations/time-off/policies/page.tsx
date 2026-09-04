@@ -63,7 +63,7 @@ export default async function LeavePoliciesPage() {
       <PoliciesTable rows={rows} />
 
       {unassigned > 0 && (
-        <p className="admin-cell-muted" style={{ marginTop: 12 }}>
+        <p className="admin-cell-muted u-mt-3">
           {unassigned} active team member{unassigned === 1 ? "" : "s"} with no leave policy —
           their requests need manual approval. Assign policies on the team member profile.
         </p>

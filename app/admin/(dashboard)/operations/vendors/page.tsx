@@ -95,7 +95,7 @@ export default async function VendorsPage({ searchParams }: { searchParams: Sear
       header: "Rating",
       sortable: true,
       cell: (r) => (
-        <span style={{ display: "inline-flex", gap: 4 }}>
+        <span className="u-row">
           {r.archived_at && <Badge tone="neutral">Archived</Badge>}
           {r.rating ? <Badge tone={ratingTone(r.rating)}>{r.rating}</Badge> : !r.archived_at ? <span className="admin-cell-muted">—</span> : null}
         </span>
@@ -111,7 +111,7 @@ export default async function VendorsPage({ searchParams }: { searchParams: Sear
         title="Vendors"
         sub={`${total.toLocaleString()} ${total === 1 ? "vendor" : "vendors"}${showArchived ? " · showing archived" : ""}`}
         action={
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div className="u-row">
             <ArchivedToggle basePath="/admin/operations/vendors" searchParams={searchParams} showArchived={showArchived} />
             <Link href="/admin/operations/vendors/new" className="admin-btn admin-btn--primary">
               New vendor
@@ -119,7 +119,7 @@ export default async function VendorsPage({ searchParams }: { searchParams: Sear
           </div>
         }
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <VendorsShelfProvider>
         <DataTable
           columns={columns}

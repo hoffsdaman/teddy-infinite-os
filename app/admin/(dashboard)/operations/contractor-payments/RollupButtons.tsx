@@ -29,8 +29,8 @@ export function RollupButtons() {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-      {message && <span className="admin-cell-muted" style={{ fontSize: 12 }}>{message}</span>}
+    <div className="u-row u-wrap">
+      {message && <span className="admin-cell-muted u-sm">{message}</span>}
       <button type="button" className="admin-btn" onClick={() => run("previous")} disabled={pending}>
         {pending ? "Running…" : "Roll up last month"}
       </button>

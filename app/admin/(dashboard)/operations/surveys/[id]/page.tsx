@@ -33,7 +33,7 @@ export default async function SurveyBuilderPage({ params }: { params: { id: stri
     <>
       <PageHead
         eyebrow={
-          <Link href="/admin/operations/surveys" style={{ textDecoration: "none" }}>
+          <Link href="/admin/operations/surveys" className="u-link-plain">
             Operations · Surveys
           </Link>
         }

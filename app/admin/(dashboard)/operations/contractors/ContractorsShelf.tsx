@@ -127,27 +127,17 @@ function WorkRequestsSection({ personId }: { personId: string }) {
       ) : items.length === 0 ? (
         <div className="admin-cell-muted">No work requests yet.</div>
       ) : (
-        <div style={{ display: "grid", gap: 6 }}>
+        <div className="u-stack">
           {items.map((i) => (
             <Link
               key={i.id}
               href={`/admin/operations/contractor-requests?open=${i.id}`}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "8px 10px",
-                border: "1px solid var(--admin-line)",
-                borderRadius: 8,
-                textDecoration: "none",
-                color: "inherit",
-                fontSize: 13,
-              }}
+              className="u-row u-gap-3 u-p-2 u-link-plain admin-box"
             >
-              <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: 600 }}>
+              <span className="u-grow u-truncate u-strong">
                 {i.title}
               </span>
-              <span className="admin-cell-mono admin-cell-muted" style={{ flexShrink: 0, fontSize: 12 }}>
+              <span className="admin-cell-mono admin-cell-muted u-sm u-shrink-0">
                 {i.actual_hours !== null
                   ? formatHours(i.actual_hours)
                   : i.estimated_hours !== null
@@ -249,7 +239,7 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
           )}
         </div>
         {editing ? (
-          <div style={{ display: "grid", gap: 10 }}>
+          <div className="u-stack u-gap-3">
             <label className="admin-field">
               <span>Hourly rate ({currency.toUpperCase()})</span>
               <input
@@ -292,7 +282,7 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
               <input type="text" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. Annual review" />
             </label>
             {error && <div className="admin-alert admin-alert--err">{error}</div>}
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="u-row">
               <button type="button" className="admin-btn admin-btn--primary" onClick={save} disabled={pending}>
                 {pending ? "Saving…" : "Save rates"}
               </button>

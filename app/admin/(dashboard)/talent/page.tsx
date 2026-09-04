@@ -129,14 +129,14 @@ export default async function TalentCockpitPage() {
       />
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err.message}
         </div>
       )}
 
       {/* ── TEAM ── */}
       <Band label="Team" note={chips ? `goals: ${chips}` : undefined} />
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="Headcount" value={headcount} sub="active team members" href="/admin/talent/team" />
         <MetricCard label={`New hires · ${year}`} value={newHires} sub="joined this year" href="/admin/talent/team" />
         <MetricCard
@@ -151,7 +151,7 @@ export default async function TalentCockpitPage() {
         />
         <MetricCard label="Onboarding" value={onboarding} sub="in cycle now" href="/admin/talent/onboarding" />
       </div>
-      <div className="admin-cockpit-cols" style={{ marginBottom: 8 }}>
+      <div className="admin-cockpit-cols u-mb-2">
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Headcount by department</div>
           <DonutChart data={deptChart} centerLabel="people" ariaLabel="Active team members by department" />
@@ -161,7 +161,7 @@ export default async function TalentCockpitPage() {
 
       {/* ── HIRING ── */}
       <Band label="Hiring" note={`${openReqs.length} open ${openReqs.length === 1 ? "role" : "roles"} · ${activeApps} active applications`} />
-      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid u-mb-4">
         <MetricCard label="Open roles" value={openReqs.length} sub="hiring now" href="/admin/talent/jobs" />
         <MetricCard label="Applications · 30d" value={apps30} sub={vsPrior(apps30, appsPrev30)} href="/admin/talent/applications" />
         <MetricCard
@@ -195,7 +195,7 @@ export default async function TalentCockpitPage() {
                   </div>
                 </div>
               ))}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/talent/jobs" className="admin-auth-link">
                   Open job reqs →
                 </Link>

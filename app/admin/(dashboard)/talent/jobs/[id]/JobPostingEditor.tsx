@@ -59,13 +59,13 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
   }
 
   return (
-    <div style={{ marginTop: 26 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-        <div style={{ fontWeight: 700, fontSize: 15 }}>Public posting</div>
+    <div className="u-mt-5">
+      <div className="u-row u-gap-3 u-mb-3">
+        <div className="u-lg u-strong">Public posting</div>
         {live ? <Badge tone="ok">Live on /careers</Badge> : <Badge tone="neutral">Not published</Badge>}
       </div>
 
-      <div className="admin-card" style={{ padding: "16px 18px" }}>
+      <div className="admin-card u-p-4">
         <form
           className="admin-form"
           onSubmit={(e) => {
@@ -75,23 +75,23 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
         >
           {msg && <div className={`admin-alert ${msg.ok ? "admin-alert--ok" : "admin-alert--err"}`}>{msg.text}</div>}
 
-          <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <div className="u-row u-wrap">
+            <label className="u-row u-pointer">
               <input type="checkbox" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} />
               <span>Published{!posting.reqIsOpen && isPublic ? " (req not open, so still hidden)" : ""}</span>
             </label>
-            <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+            <label className="u-row u-pointer">
               <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
               <span>Featured</span>
             </label>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
               <label className="admin-label">Slug (public URL)</label>
               <input className="admin-input" value={slug} onChange={(e) => setSlug(e.target.value)} />
               {live && slug && (
-                <div className="admin-hint" style={{ marginTop: 4 }}>
+                <div className="admin-hint u-mt-1">
                   <a href={`https://teddy-infinite-os.vercel.app/careers/${slug}/apply`} target="_blank" rel="noreferrer">
                     edge8.ai/careers/{slug}/apply ↗
                   </a>
@@ -117,9 +117,8 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
           <div className="admin-field">
             <label className="admin-label">Job description (markdown, shown on /careers)</label>
             <textarea
-              className="admin-input"
+              className="admin-input admin-mono"
               rows={14}
-              style={{ fontFamily: "var(--admin-mono, monospace)", fontSize: 13 }}
               value={fullJd}
               onChange={(e) => setFullJd(e.target.value)}
             />
@@ -130,8 +129,7 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
             {questions.map((q, i) => (
               <input
                 key={i}
-                className="admin-input"
-                style={{ marginBottom: 6 }}
+                className="admin-input u-mb-2"
                 placeholder={`Question ${i + 1}${i === 0 ? " — e.g. Why Edge8?" : " (optional)"}`}
                 value={q}
                 onChange={(e) => setQuestions((cur) => cur.map((x, j) => (j === i ? e.target.value : x)))}

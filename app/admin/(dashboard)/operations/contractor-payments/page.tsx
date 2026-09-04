@@ -104,7 +104,7 @@ export default async function ContractorPaymentsPage({ searchParams }: { searchP
         sub={`${total.toLocaleString()} ${total === 1 ? "payment request" : "payment requests"} · auto-created on the 1st from accepted work`}
         action={<RollupButtons />}
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <PaymentsShelfProvider>
         <DataTable
           columns={columns}

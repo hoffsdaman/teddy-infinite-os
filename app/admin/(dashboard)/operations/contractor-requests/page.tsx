@@ -142,7 +142,7 @@ export default async function ContractorRequestsPage({ searchParams }: { searchP
           </Link>
         }
       />
-      {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
+      {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
       <RequestsShelfProvider initialRow={initialRow}>
         <DataTable
           columns={columns}

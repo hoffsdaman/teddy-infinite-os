@@ -96,25 +96,25 @@ export default async function FleetFitnessPage() {
         }
       />
 
-      <div className="admin-summary-grid" style={{ marginBottom: 18 }}>
+      <div className="admin-summary-grid u-mb-4">
         <MetricCard label="Macs below floor" value={fit.counts.macFail} sub="Engineer laptops that fail" />
         <MetricCard label="At the floor" value={fit.counts.macWatch} sub="Watch, plan ahead" />
         <MetricCard label="Meets the floor" value={fit.counts.macPass} sub="Pass" />
         <MetricCard label="Under-spec buys" value={fit.purchaseGuard.length} sub="Bought below floor, last 90 days" />
       </div>
 
-      <section className="admin-section-card" style={{ marginBottom: 18 }}>
+      <section className="admin-section-card u-mb-4">
         <div className="admin-section-label">Upgrade priority</div>
         {fit.upgradeList.length === 0 ? (
           <p className="admin-page-sub">No engineer Macs are below the floor.</p>
         ) : (
           <>
-            <p className="admin-page-sub" style={{ marginBottom: 12 }}>
+            <p className="admin-page-sub u-mb-3">
               Worst first. Current failures are RAM-bound; disks are adequate. AI Engineers are the priority group.
             </p>
-            <ol style={{ margin: 0, paddingLeft: 20 }}>
+            <ol className="u-m-0 u-pl-4">
               {fit.upgradeList.map((m) => (
-                <li key={m.id} style={{ marginBottom: 6 }}>
+                <li key={m.id} className="u-mb-2">
                   <strong>
                     {m.asset_tag} — {m.holderName ?? "Unassigned"}
                   </strong>{" "}
@@ -127,19 +127,19 @@ export default async function FleetFitnessPage() {
         )}
       </section>
 
-      <section className="admin-section-card" style={{ marginBottom: 18 }}>
+      <section className="admin-section-card u-mb-4">
         <div className="admin-section-label">Engineer Macs</div>
         <GradeTable machines={fit.macEngineers} />
       </section>
 
-      <section className="admin-section-card" style={{ marginBottom: 18 }}>
+      <section className="admin-section-card u-mb-4">
         <div className="admin-section-label">Redistribution</div>
         {fit.redistribution.length === 0 ? (
           <p className="admin-page-sub">No capable spare in stock.</p>
         ) : (
-          <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <ul className="u-m-0 u-pl-4">
             {fit.redistribution.map((m) => (
-              <li key={m.id} style={{ marginBottom: 6 }}>
+              <li key={m.id} className="u-mb-2">
                 <strong>{m.asset_tag}</strong> in stock: {m.brand ?? "Unknown"} {specText(m)}.{" "}
                 {m.isMac
                   ? "Mac, a direct swap for a failing engineer Mac."
@@ -151,14 +151,14 @@ export default async function FleetFitnessPage() {
       </section>
 
       {fit.purchaseGuard.length > 0 && (
-        <section className="admin-section-card" style={{ marginBottom: 18 }}>
+        <section className="admin-section-card u-mb-4">
           <div className="admin-section-label">Purchase guard</div>
-          <p className="admin-page-sub" style={{ marginBottom: 12 }}>
+          <p className="admin-page-sub u-mb-3">
             Bought below the floor in the last 90 days and assigned to an engineer.
           </p>
-          <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <ul className="u-m-0 u-pl-4">
             {fit.purchaseGuard.map((m) => (
-              <li key={m.id} style={{ marginBottom: 6 }}>
+              <li key={m.id} className="u-mb-2">
                 <strong>
                   {m.asset_tag} — {m.holderName ?? "Unassigned"}
                 </strong>
@@ -170,11 +170,11 @@ export default async function FleetFitnessPage() {
       )}
 
       {fit.dataGaps.length > 0 && (
-        <section className="admin-section-card" style={{ marginBottom: 18 }}>
+        <section className="admin-section-card u-mb-4">
           <div className="admin-section-label">Data gaps</div>
-          <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <ul className="u-m-0 u-pl-4">
             {fit.dataGaps.map((m) => (
-              <li key={m.id} style={{ marginBottom: 6 }}>
+              <li key={m.id} className="u-mb-2">
                 <strong>{m.asset_tag}</strong> ({m.holderName ?? "in stock"}): {m.reason}.{" "}
                 <Link href={`/admin/operations/equipment`}>Fix in register</Link>
               </li>
@@ -183,7 +183,7 @@ export default async function FleetFitnessPage() {
         </section>
       )}
 
-      <section className="admin-section-card" style={{ marginBottom: 18 }}>
+      <section className="admin-section-card u-mb-4">
         <div className="admin-section-label">Appendix · Other engineer laptops</div>
         {fit.otherEngineers.length === 0 ? (
           <p className="admin-page-sub">None.</p>
@@ -197,9 +197,9 @@ export default async function FleetFitnessPage() {
         {fit.outOfScope.length === 0 ? (
           <p className="admin-page-sub">None.</p>
         ) : (
-          <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <ul className="u-m-0 u-pl-4">
             {fit.outOfScope.map((m) => (
-              <li key={m.id} style={{ marginBottom: 4 }}>
+              <li key={m.id} className="u-mb-1">
                 {m.asset_tag}: {m.holderName ?? "Unassigned"} — {m.title ?? "no title"} ({m.brand ?? "?"}{" "}
                 {specText(m)})
               </li>

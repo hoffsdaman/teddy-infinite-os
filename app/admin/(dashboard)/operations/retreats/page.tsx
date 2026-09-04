@@ -87,10 +87,10 @@ export default async function RetreatsPage() {
               <th>Retreat</th>
               <th>Dates</th>
               <th>Status</th>
-              <th style={{ textAlign: "right" }}>Revenue</th>
-              <th style={{ textAlign: "right" }}>Expenses</th>
-              <th style={{ textAlign: "right" }}>Profit</th>
-              <th style={{ textAlign: "right" }}>Lines</th>
+              <th className="u-right">Revenue</th>
+              <th className="u-right">Expenses</th>
+              <th className="u-right">Profit</th>
+              <th className="u-right">Lines</th>
             </tr>
           </thead>
           <tbody>
@@ -106,12 +106,12 @@ export default async function RetreatsPage() {
                   <td>
                     <Link
                       href={`/admin/revenue/events/${ev.id}`}
-                      style={{ fontWeight: 600, color: "inherit", textDecoration: "none" }}
+                      className="u-strong u-link-plain"
                     >
                       {ev.title}
                     </Link>
                     {ev.visibility === "private" && (
-                      <span className="admin-cell-muted" style={{ fontSize: 12 }}>
+                      <span className="admin-cell-muted u-sm">
                         {" "}
                         · private
                       </span>
@@ -124,16 +124,16 @@ export default async function RetreatsPage() {
                   <td>
                     <Badge tone={statusTone(ev.status)}>{humanize(ev.status)}</Badge>
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {formatCents(revenue, "usd")}
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {formatCents(expense, "usd")}
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {formatCents(profit, "usd")}
                   </td>
-                  <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                  <td className="admin-cell-mono u-right">
                     {lineCount || "—"}
                   </td>
                 </tr>
@@ -146,13 +146,13 @@ export default async function RetreatsPage() {
                 <td colSpan={3}>
                   <strong>Total</strong>
                 </td>
-                <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                <td className="admin-cell-mono u-right">
                   <strong>{formatCents(totals.revenue, "usd")}</strong>
                 </td>
-                <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                <td className="admin-cell-mono u-right">
                   <strong>{formatCents(totals.expense, "usd")}</strong>
                 </td>
-                <td style={{ textAlign: "right" }} className="admin-cell-mono">
+                <td className="admin-cell-mono u-right">
                   <strong>{formatCents(totals.profit, "usd")}</strong>
                 </td>
                 <td />
