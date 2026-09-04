@@ -10,6 +10,7 @@ import { screenApplication } from '@/lib/resume-screen'
 import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 import { waitUntil } from '@vercel/functions'
+import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = 'nodejs'
 
@@ -161,7 +162,7 @@ export async function POST(req: NextRequest) {
           .filter((x) => x.a)
           .map(
             (x) =>
-              `<tr><td style="padding:6px 16px 6px 0;color:#666;vertical-align:top">Q: ${escapeHtml(x.q)}</td><td style="white-space:pre-wrap">${escapeHtml(x.a)}</td></tr>`,
+              `<tr><td style="padding:6px 16px 6px 0;color:${P.inkBody};vertical-align:top">Q: ${escapeHtml(x.q)}</td><td style="white-space:pre-wrap">${escapeHtml(x.a)}</td></tr>`,
           )
           .join('')
         const resend = new Resend(apiKey)
@@ -173,15 +174,15 @@ export async function POST(req: NextRequest) {
           html: `
             <h2>New job application</h2>
             <table style="border-collapse:collapse;font-family:sans-serif;font-size:15px">
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Role</td><td><strong>${escapeHtml(job_title)}</strong> (${escapeHtml(job_slug)})</td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Applicant</td><td>${escapeHtml(full_name)}</td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Email</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Phone</td><td>${phone ? escapeHtml(phone) : '—'}</td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">LinkedIn</td><td>${linkedin ? `<a href="${escapeHtml(linkedin)}">${escapeHtml(linkedin)}</a>` : '—'}</td></tr>
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Resume</td><td>${signed?.signedUrl ? `<a href="${signed.signedUrl}">Download (7-day link)</a>` : escapeHtml(storagePath)}</td></tr>
-              ${cover_letter ? `<tr><td style="padding:6px 16px 6px 0;color:#666;vertical-align:top">Cover letter</td><td style="white-space:pre-wrap">${escapeHtml(cover_letter)}</td></tr>` : ''}
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Role</td><td><strong>${escapeHtml(job_title)}</strong> (${escapeHtml(job_slug)})</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Applicant</td><td>${escapeHtml(full_name)}</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Email</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Phone</td><td>${phone ? escapeHtml(phone) : '—'}</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">LinkedIn</td><td>${linkedin ? `<a href="${escapeHtml(linkedin)}">${escapeHtml(linkedin)}</a>` : '—'}</td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Resume</td><td>${signed?.signedUrl ? `<a href="${signed.signedUrl}">Download (7-day link)</a>` : escapeHtml(storagePath)}</td></tr>
+              ${cover_letter ? `<tr><td style="padding:6px 16px 6px 0;color:${P.inkBody};vertical-align:top">Cover letter</td><td style="white-space:pre-wrap">${escapeHtml(cover_letter)}</td></tr>` : ''}
               ${answersHtml}
-              <tr><td style="padding:6px 16px 6px 0;color:#666">Application ID</td><td><code>${application.id}</code></td></tr>
+              <tr><td style="padding:6px 16px 6px 0;color:${P.inkBody}">Application ID</td><td><code>${application.id}</code></td></tr>
             </table>
           `,
         })

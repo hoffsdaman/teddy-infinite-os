@@ -14,6 +14,7 @@ import { isAdminEmail } from "@/lib/admin-auth";
 import { PORTAL_STATUSES } from "@/lib/team-auth";
 import { recordAudit } from "@/lib/admin/audit";
 import { sendTransactionalEmail } from "@/lib/email";
+import { PALETTE as P } from "@/lib/design/palette";
 
 export type PortalResult = { ok: true; message: string } | { ok: false; error: string };
 
@@ -187,8 +188,8 @@ export async function invitePortalMemberCore(
         html: `
           <p>Hi,</p>
           <p>You've been given access to the <strong>8 Edges Client Portal</strong>.</p>
-          <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Open the Client Portal</a></p>
-          <p style="font-size:13px;color:#64748b;">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, request a fresh one at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a> or reply to this email.</p>
+          <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Open the Client Portal</a></p>
+          <p style="font-size:13px;color:${P.inkBody};">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, request a fresh one at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a> or reply to this email.</p>
           <p>Dave and the Edge8 team</p>
         `.trim(),
         logMeta: { source: "portal_invite" },
@@ -250,8 +251,8 @@ export async function resendPortalLinkCore(
     subject: "Your 8 Edges Client Portal sign-in link",
     html: `
       <p>Here is your sign-in link for the 8 Edges Client Portal:</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the Client Portal</a></p>
-      <p style="font-size:13px;color:#64748b;">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a>.</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the Client Portal</a></p>
+      <p style="font-size:13px;color:${P.inkBody};">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a>.</p>
     `,
     logMeta: { source: "portal_resend" },
   });
@@ -350,10 +351,10 @@ export async function setTempPasswordCore(
         <li>Go to <a href="${loginUrl}">${loginUrl}</a></li>
         <li>Press <strong>Sign in with a password</strong></li>
         <li>Email: <strong>${t.email}</strong></li>
-        <li>Temporary password: <span style="font-family:monospace;font-size:15px;font-weight:600;background:#f1f5f9;padding:3px 10px;border-radius:6px;">${password}</span></li>
+        <li>Temporary password: <span style="font-family:monospace;font-size:15px;font-weight:600;background:${P.canvas};padding:3px 10px;border-radius:6px;">${password}</span></li>
       </ol>
       <p>You'll be asked to choose your own password right after you sign in.</p>
-      <p style="font-size:13px;color:#64748b;">If anything gets in the way, just reply to this email.</p>
+      <p style="font-size:13px;color:${P.inkBody};">If anything gets in the way, just reply to this email.</p>
     `.trim(),
     logMeta: { source: "portal_temp_password" },
     logBody:
@@ -488,8 +489,8 @@ export async function sendSelfServeSignInLink(rawEmail: string): Promise<void> {
     subject: "Your 8 Edges Client Portal sign-in link",
     html: `
       <p>Here is your sign-in link for the 8 Edges Client Portal:</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the Client Portal</a></p>
-      <p style="font-size:13px;color:#64748b;">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a>.</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Sign in to the Client Portal</a></p>
+      <p style="font-size:13px;color:${P.inkBody};">The button takes you to a sign-in page — press "Sign in" there and you're in. If the link expires, you can request a fresh one any time at <a href="${siteOrigin()}/portal/login">${siteOrigin()}/portal/login</a>.</p>
     `,
     logMeta: { source: "portal_self_serve_link" },
   });
@@ -527,8 +528,8 @@ export async function sendSelfServePasswordReset(rawEmail: string): Promise<void
     subject: "Reset your 8 Edges Client Portal password",
     html: `
       <p>We received a request to set a new password for your 8 Edges Client Portal account.</p>
-      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Set a new password</a></p>
-      <p style="font-size:13px;color:#64748b;">The button takes you to a confirmation page — press "Sign in" there, then choose your new password. If you didn't request this, you can ignore this email.</p>
+      <p style="margin:20px 0;"><a href="${verifyUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">Set a new password</a></p>
+      <p style="font-size:13px;color:${P.inkBody};">The button takes you to a confirmation page — press "Sign in" there, then choose your new password. If you didn't request this, you can ignore this email.</p>
     `,
     logMeta: { source: "portal_self_serve_reset" },
   });

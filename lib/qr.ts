@@ -1,4 +1,5 @@
 import QRCode from "qrcode";
+import { PALETTE as P } from "@/lib/design/palette";
 
 // Server-only QR helpers for event signup/feedback/ticket links. Renders an
 // inline SVG (for dangerouslySetInnerHTML) and a PNG data URL (for the
@@ -10,7 +11,7 @@ export async function qrSvg(data: string): Promise<string> {
     margin: 1,
     width: 240,
     errorCorrectionLevel: "M",
-    color: { dark: "#0C0C31", light: "#FFFFFF" },
+    color: { dark: P.dark, light: P.white },
   });
 }
 
@@ -19,6 +20,6 @@ export async function qrPngDataUrl(data: string): Promise<string> {
     margin: 1,
     width: 480,
     errorCorrectionLevel: "M",
-    color: { dark: "#0C0C31", light: "#FFFFFF" },
+    color: { dark: P.dark, light: P.white },
   });
 }

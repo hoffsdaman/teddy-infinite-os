@@ -1,0 +1,23 @@
+{
+  "dark": "#18404B",
+  "blue": "#18404B",
+  "blueHover": "#123138",
+  "blueBright": "#2E6373",
+  "mint": "#F6B327",
+  "mintBright": "#F6B327",
+  "booboo": "#D8A476",
+  "sand": "#EDDCC7",
+  "polar": "#F4EFE9",
+  "white": "#FFFFFF",
+  "canvas": "#F5F6F8",
+  "line": "#E7DFD2",
+  "inkBody": "#5C6A6E",
+  "muted": "#9CA3AF",
+  "greyMid": "#6B7280",
+  "errInk": "#B0332F",
+  "okBg": "#D8F3E8",
+  "okInk": "#157A5A",
+  "warnBg": "#FBF0CF",
+  "warnInk": "#8A6A0F",
+  "errBg": "#FDE4E4"
+}

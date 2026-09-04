@@ -4,6 +4,7 @@ import { getOrCreatePerson } from '@/lib/company-os'
 import { promotePersonToLead } from '@/lib/lifecycle'
 import { notifyOps } from '@/lib/lark'
 import { NextRequest, NextResponse } from 'next/server'
+import { PALETTE as P } from "@/lib/design/palette";
 
 const FROM = 'Edge8 <contact@edge8.ai>'
 
@@ -106,11 +107,11 @@ export async function POST(req: NextRequest) {
       html: `
         <h2>New AI Audit Request</h2>
         <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:15px">
-          <tr><td style="padding:8px 16px 8px 0;color:#666;width:140px">Name</td><td style="padding:8px 0"><strong>${name}</strong></td></tr>
-          <tr><td style="padding:8px 16px 8px 0;color:#666">Email</td><td style="padding:8px 0"><a href="mailto:${email}">${email}</a></td></tr>
-          <tr><td style="padding:8px 16px 8px 0;color:#666">Company</td><td style="padding:8px 0">${company}</td></tr>
-          <tr><td style="padding:8px 16px 8px 0;color:#666">Team size</td><td style="padding:8px 0">${teamSize || '—'}</td></tr>
-          <tr><td style="padding:8px 16px 8px 0;color:#666;vertical-align:top">Message</td><td style="padding:8px 0">${message ? message.replace(/\n/g, '<br>') : '—'}</td></tr>
+          <tr><td style="padding:8px 16px 8px 0;color:${P.inkBody};width:140px">Name</td><td style="padding:8px 0"><strong>${name}</strong></td></tr>
+          <tr><td style="padding:8px 16px 8px 0;color:${P.inkBody}">Email</td><td style="padding:8px 0"><a href="mailto:${email}">${email}</a></td></tr>
+          <tr><td style="padding:8px 16px 8px 0;color:${P.inkBody}">Company</td><td style="padding:8px 0">${company}</td></tr>
+          <tr><td style="padding:8px 16px 8px 0;color:${P.inkBody}">Team size</td><td style="padding:8px 0">${teamSize || '—'}</td></tr>
+          <tr><td style="padding:8px 16px 8px 0;color:${P.inkBody};vertical-align:top">Message</td><td style="padding:8px 0">${message ? message.replace(/\n/g, '<br>') : '—'}</td></tr>
         </table>
       `,
     })

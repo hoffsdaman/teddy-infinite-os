@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { Resend } from "resend";
 import { companyOs } from "@/lib/supabase";
+import { PALETTE as P } from "@/lib/design/palette";
 
 // The marketing send path, deliberately separate from lib/email.ts.
 //
@@ -115,7 +116,7 @@ function inline(text: string): string {
     .replace(
       /\[([^\]]+)\]\(([^)\s]+)\)/g,
       (_m, label: string, href: string) =>
-        `<a href="${href.replace(/"/g, "&quot;")}" style="color:#1f4fd8;">${label}</a>`,
+        `<a href="${href.replace(/"/g, "&quot;")}" style="color:${P.blueHover};">${label}</a>`,
     )
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
@@ -132,21 +133,21 @@ export function renderCampaignHtml(opts: {
     : "";
 
   const footerUnsub = opts.unsubscribeLink
-    ? `<a href="${opts.unsubscribeLink}" style="color:#6b7280;">Unsubscribe</a>`
+    ? `<a href="${opts.unsubscribeLink}" style="color:${P.greyMid};">Unsubscribe</a>`
     : "Reply to this email to unsubscribe";
 
   return `<!doctype html>
-<html><body style="margin:0;padding:0;background:#f5f6f8;">
+<html><body style="margin:0;padding:0;background:${P.canvas};">
 ${preheader}
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f6f8;padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${P.canvas};padding:24px 12px;">
   <tr><td align="center">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#111827;font-size:15px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:${P.white};border-radius:12px;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:${P.dark};font-size:15px;">
       <tr><td>
         <div style="font-weight:700;font-size:18px;letter-spacing:-0.01em;margin-bottom:24px;">Edge8</div>
         <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">${esc(opts.subject)}</h1>
         ${renderMarkdown(opts.bodyMd)}
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:32px 0 16px;" />
-        <p style="margin:0;font-size:12px;line-height:1.6;color:#6b7280;">
+        <hr style="border:none;border-top:1px solid ${P.line};margin:32px 0 16px;" />
+        <p style="margin:0;font-size:12px;line-height:1.6;color:${P.greyMid};">
           You are receiving this because you are a client or contact of Edge8.<br />
           ${esc(POSTAL_ADDRESS)}<br />
           ${footerUnsub}

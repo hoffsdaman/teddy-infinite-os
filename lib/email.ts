@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { companyOs } from "@/lib/supabase";
+import { PALETTE as P } from "@/lib/design/palette";
 
 // Resend wrapper. Silently no-ops if RESEND_API_KEY is absent. Preview
 // environments and local dev should never hard-fail on email send.
@@ -105,8 +106,8 @@ export async function sendEventTicketEmail(opts: {
     <p>Hi ${greetingName},</p>
     <p>You're registered for <strong>${opts.eventTitle}</strong>${where}, ${opts.dateLabel}.</p>
     <p>Your ticket is here — save the link or the QR on that page for the day:</p>
-    <p style="margin:20px 0;"><a href="${opts.ticketUrl}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">View my ticket</a></p>
-    <p style="font-size:13px;color:#64748b;">Or copy this link: ${opts.ticketUrl}</p>
+    <p style="margin:20px 0;"><a href="${opts.ticketUrl}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">View my ticket</a></p>
+    <p style="font-size:13px;color:${P.inkBody};">Or copy this link: ${opts.ticketUrl}</p>
     <p style="margin-top:24px;">Reply to this email any time if plans change.</p>
     <p>Dave and the Edge8 team</p>
   `.trim();
@@ -140,15 +141,15 @@ export async function sendOfflineReservedEmail(opts: {
     <p>Thanks for reserving your seat at the <strong>${opts.eventTitle}</strong> in ${opts.city}, ${opts.dateLabel}, 2026. You picked the <strong>${opts.tierName}</strong> tier (${opts.priceLabel} ${opts.priceSub}).</p>
     <p>Use the bank details below to make your transfer. Our accountant will be in touch to arrange the official red invoice (hóa đơn đỏ) once your transfer arrives.</p>
 
-    <table cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;width:100%;max-width:520px;">
-      <tr><td style="padding:14px 18px;border-bottom:1px solid #f1f5f9;"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#64748b;">Bank</div><div style="font-size:15px;font-weight:600;color:#04102D;margin-top:2px;">Techcombank</div></td></tr>
-      <tr><td style="padding:14px 18px;border-bottom:1px solid #f1f5f9;"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#64748b;">Account name</div><div style="font-size:15px;font-weight:600;color:#04102D;margin-top:2px;font-family:monospace;">VND-TGTT-CONG TY TNHH EDGE8 AI</div></td></tr>
-      <tr><td style="padding:14px 18px;border-bottom:1px solid #f1f5f9;"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#64748b;">Account number</div><div style="font-size:15px;font-weight:600;color:#04102D;margin-top:2px;font-family:monospace;">19039972294017</div></td></tr>
-      <tr><td style="padding:14px 18px;"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#64748b;">Transfer reference</div><div style="font-size:15px;font-weight:600;color:#04102D;margin-top:2px;">${transferRef}</div></td></tr>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;border:1px solid ${P.line};border-radius:12px;width:100%;max-width:520px;">
+      <tr><td style="padding:14px 18px;border-bottom:1px solid ${P.canvas};"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${P.inkBody};">Bank</div><div style="font-size:15px;font-weight:600;color:${P.dark};margin-top:2px;">Techcombank</div></td></tr>
+      <tr><td style="padding:14px 18px;border-bottom:1px solid ${P.canvas};"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${P.inkBody};">Account name</div><div style="font-size:15px;font-weight:600;color:${P.dark};margin-top:2px;font-family:monospace;">VND-TGTT-CONG TY TNHH EDGE8 AI</div></td></tr>
+      <tr><td style="padding:14px 18px;border-bottom:1px solid ${P.canvas};"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${P.inkBody};">Account number</div><div style="font-size:15px;font-weight:600;color:${P.dark};margin-top:2px;font-family:monospace;">19039972294017</div></td></tr>
+      <tr><td style="padding:14px 18px;"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${P.inkBody};">Transfer reference</div><div style="font-size:15px;font-weight:600;color:${P.dark};margin-top:2px;">${transferRef}</div></td></tr>
     </table>
 
     <p style="margin-top:20px;">If you use a Vietnamese banking app, scan this QR to pre-fill the transfer:</p>
-    <p><img src="https://img.vietqr.io/image/TCB-19039972294017-compact2.png?accountName=CONG+TY+TNHH+EDGE8+AI&addInfo=${encodeURIComponent(transferRef)}" alt="Techcombank VietQR" width="240" style="border-radius:8px;background:#f8fafc;padding:8px;"></p>
+    <p><img src="https://img.vietqr.io/image/TCB-19039972294017-compact2.png?accountName=CONG+TY+TNHH+EDGE8+AI&addInfo=${encodeURIComponent(transferRef)}" alt="Techcombank VietQR" width="240" style="border-radius:8px;background:${P.canvas};padding:8px;"></p>
 
     <p style="margin-top:20px;"><strong>Important:</strong> your seat is held for 7 days. If payment isn&rsquo;t received by then, we release it to other applicants.</p>
 
@@ -184,7 +185,7 @@ export async function sendBankChangeAlert(opts: {
   }).format(new Date());
   const html = `
     <p>Heads up — the bank details on ${opts.employeeName}'s Edge8 profile were just changed.</p>
-    <p style="color:#64748b;font-size:13px;">${when} (Saigon time)</p>
+    <p style="color:${P.inkBody};font-size:13px;">${when} (Saigon time)</p>
     <p>If this wasn't expected, review it in the admin People area and confirm with ${opts.employeeName} directly before the next payroll run.</p>
     <p>8 Edges</p>
   `.trim();

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { companyOs } from "@/lib/supabase";
 import { sendTransactionalEmail } from "@/lib/email";
 import { notifyOps } from "@/lib/lark";
+import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -74,7 +75,7 @@ export async function GET(req: Request) {
       .map(
         (r) =>
           `<li><strong>${esc(r.title)}</strong> — ${esc(submitter(r))}` +
-          `${r.takeaway ? `<br/><span style="color:#666">${esc(r.takeaway)}</span>` : ""}</li>`,
+          `${r.takeaway ? `<br/><span style="color:${P.inkBody}">${esc(r.takeaway)}</span>` : ""}</li>`,
       )
       .join("")}</ul>`;
 

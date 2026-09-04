@@ -1,5 +1,6 @@
 import { sendTransactionalEmail } from "@/lib/email";
 import { notifyOps } from "@/lib/lark";
+import { PALETTE as P } from "@/lib/design/palette";
 
 // All outbound messages for the contractor work-request workflow go through
 // this module so the transport can grow (Lark DM later) without touching the
@@ -8,12 +9,12 @@ import { notifyOps } from "@/lib/lark";
 // Plan: docs/plans/2026-07-16-contractor-work-requests.md
 
 const btn = (href: string, label: string) =>
-  `<p style="margin:20px 0;"><a href="${href}" style="display:inline-block;background:#04102D;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">${label}</a></p>
-   <p style="font-size:13px;color:#64748b;">Or copy this link: ${href}</p>`;
+  `<p style="margin:20px 0;"><a href="${href}" style="display:inline-block;background:${P.dark};color:${P.white};text-decoration:none;font-weight:600;padding:12px 28px;border-radius:10px;">${label}</a></p>
+   <p style="font-size:13px;color:${P.inkBody};">Or copy this link: ${href}</p>`;
 
 const noteBlock = (note: string | null | undefined) =>
   note && note.trim()
-    ? `<blockquote style="margin:16px 0;padding:12px 16px;border-left:3px solid #e2e8f0;color:#334155;">${note
+    ? `<blockquote style="margin:16px 0;padding:12px 16px;border-left:3px solid ${P.line};color:${P.inkBody};">${note
         .trim()
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
