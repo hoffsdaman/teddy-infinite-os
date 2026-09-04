@@ -152,7 +152,7 @@ export default async function ProgramDetailPage({
             <Empty text="No repo connected. Delivery tracking starts once this program is linked to a GitHub repo." />
           ) : (
             <>
-              <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+              <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
                 <MetricCard label="Delivered hrs (total)" value={fmtHours(detail.deliveredHours)} />
                 <MetricCard label="AI tokens (total)" value={detail.aiTokens.toLocaleString()} />
                 <MetricCard
@@ -254,7 +254,7 @@ export default async function ProgramDetailPage({
         }
       />
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard
           label="Delivered hrs"
           value={hasRepo ? fmtHours(detail.deliveredHours) : "Not tracked"}

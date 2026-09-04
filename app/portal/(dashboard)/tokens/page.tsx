@@ -56,7 +56,7 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Bought" value={fmtTokens(usage.boughtTokens)} sub={boughtSub} />
         <MetricCard
           label="Delivered"

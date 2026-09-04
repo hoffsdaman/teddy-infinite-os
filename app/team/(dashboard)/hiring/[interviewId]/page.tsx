@@ -53,7 +53,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
       />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <section className="admin-card coach-section">
+        <section className="admin-card admin-coach-section">
           <div className="admin-card-title">
             Resume screen{" "}
             {kit.aiRating != null && <span className="admin-badge admin-badge--info">AI screen {kit.aiRating}</span>}
@@ -87,14 +87,14 @@ export default async function InterviewKitPage({ params }: { params: { interview
         </section>
 
         {kit.carryForward && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-card-title">From earlier rounds</div>
             <div className="admin-hint">What the AI panelist flagged to verify or ask about this round.</div>
             <p style={{ marginTop: 8, lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{kit.carryForward}</p>
           </section>
         )}
 
-        <section className="admin-card coach-section">
+        <section className="admin-card admin-coach-section">
           <div className="admin-card-title">Your scorecard</div>
           <div className="admin-hint">
             {kit.mySubmitted
@@ -111,7 +111,7 @@ export default async function InterviewKitPage({ params }: { params: { interview
           </div>
         </section>
 
-        <section className="admin-card coach-section">
+        <section className="admin-card admin-coach-section">
           <div className="admin-card-title">The rest of the panel</div>
           {kit.otherSeats.length === 0 ? (
             <div className="admin-empty">You are the only seat on this round.</div>
@@ -153,13 +153,13 @@ function PanelSeatCard({
 }) {
   const rec = scorecard?.recommendation ? REC_LABEL.get(scorecard.recommendation) : null;
   return (
-    <div className={`hire-seat${isAi ? " hire-seat--ai" : ""}`}>
-      <div className="hire-seat-head">
-        <span className="hire-seat-name">
+    <div className={`admin-hire-seat${isAi ? " admin-hire-seat--ai" : ""}`}>
+      <div className="admin-hire-seat-head">
+        <span className="admin-hire-seat-name">
           {name}
           {isAi ? " (AI)" : ""}
         </span>
-        <span className="hire-seat-chips">
+        <span className="admin-hire-seat-chips">
           {rec && <span className="admin-badge admin-badge--info">{rec}</span>}
           {scorecard?.overallScore != null && (
             <span className="admin-badge">Overall {scorecard.overallScore}</span>

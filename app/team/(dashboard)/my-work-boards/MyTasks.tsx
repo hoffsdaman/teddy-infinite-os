@@ -66,7 +66,7 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
         {boards.length === 0 ? (
           <span className="admin-cell-muted">You are not on any boards yet.</span>
         ) : boardsView === "card" ? (
-          <div className="mp-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+          <div className="admin-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
             {boards.map((b) => {
               const total = b.openCount + b.doneCount;
               const pct = total > 0 ? Math.round((b.doneCount / total) * 100) : 0;
@@ -94,8 +94,8 @@ export function MyTasks({ work, boards }: { work: MyWork; boards: MyBoardSummary
                       </span>
                       {total > 0 && <span>{pct}% done</span>}
                     </div>
-                    <div className="board-progress">
-                      <div className="board-progress-fill" style={{ width: `${pct}%` }} />
+                    <div className="admin-progress">
+                      <div className="admin-progress-fill" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                   <div className="admin-cell-muted" style={{ marginTop: 12, fontSize: 12 }}>

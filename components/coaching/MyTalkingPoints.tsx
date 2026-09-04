@@ -31,7 +31,7 @@ export function MyTalkingPoints({
   };
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         Your talking points <span className="admin-cell-muted">your agenda for the next 1-1</span>
       </div>
@@ -45,8 +45,8 @@ export function MyTalkingPoints({
         <div className="admin-empty">Nothing yet. Add what&apos;s on your mind for next time.</div>
       )}
       {talkingPoints.map((t) => (
-        <div key={t.id} className="coach-carried-row">
-          <span className="coach-carried-title">{t.body}</span>
+        <div key={t.id} className="admin-coach-carried-row">
+          <span className="admin-coach-carried-title">{t.body}</span>
           {t.authorTeamMemberId === teamMemberId && (
             <button
               className="admin-btn admin-btn--sm admin-btn--danger"
@@ -59,7 +59,7 @@ export function MyTalkingPoints({
         </div>
       ))}
 
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <input
           className="admin-input"
           placeholder="Add a talking point for your next 1-1…"

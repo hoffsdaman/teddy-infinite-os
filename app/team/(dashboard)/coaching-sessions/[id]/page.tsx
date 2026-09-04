@@ -53,7 +53,7 @@ export default async function CoachingSessionDetailPage({ params }: { params: { 
       <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
         <h2 className="admin-card-title">Summary</h2>
         {summaryHtml ? (
-          <div className="idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
+          <div className="admin-idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
         ) : (
           <div className="admin-empty">Summary pending. It generates from the transcript.</div>
         )}

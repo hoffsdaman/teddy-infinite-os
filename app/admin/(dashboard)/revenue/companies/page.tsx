@@ -130,7 +130,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
           </div>
           <div className="admin-summary-grid">
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By industry</div>
+              <div className="admin-kpi-label">By industry</div>
               <DonutChart
                 data={summary.industries}
                 centerLabel="companies"
@@ -140,7 +140,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
               />
             </div>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By country</div>
+              <div className="admin-kpi-label">By country</div>
               <DonutChart
                 data={summary.countries}
                 centerLabel="companies"
@@ -150,7 +150,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
               />
             </div>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By size (employees)</div>
+              <div className="admin-kpi-label">By size (employees)</div>
               <BarChart
                 data={summary.sizeBands}
                 ariaLabel="Companies by employee-size band"

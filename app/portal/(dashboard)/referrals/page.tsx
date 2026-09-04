@@ -60,7 +60,7 @@ export default async function PortalReferralsPage() {
         </p>
       </div>
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Work credit" value={formatCents(data.workCreditTotalCents, "usd")} sub="chosen as credit" />
         <MetricCard label="Cash" value={formatCents(data.cashTotalCents, "usd")} sub="chosen as cash" />
         <MetricCard label="Awaiting payment" value={formatCents(data.unpaidCents, "usd")} sub="redeemed, not yet paid" />

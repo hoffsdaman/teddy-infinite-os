@@ -76,7 +76,7 @@ export default async function InnovationCockpitPage() {
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Ideas" value={buildIdeas} sub="open build ideas" href="/admin/innovation/ideas" />
         <MetricCard label="Learning · 30d" value={learnings30} sub="learnings logged" href="/admin/innovation/ideas" />
         <MetricCard label="Internal backlog" value={internalBacklog} sub="open cards, our boards" href="/admin/client-hubs" />
@@ -88,7 +88,7 @@ export default async function InnovationCockpitPage() {
       </div>
 
       {chips && (
-        <div className="mp-kpi-label" style={{ marginBottom: 16 }}>
+        <div className="admin-kpi-label" style={{ marginBottom: 16 }}>
           Innovation goals · {goals.quarter.label}: {chips}
           {innovation.openIssues > 0 ? ` · ${innovation.openIssues} open ${innovation.openIssues === 1 ? "issue" : "issues"}` : ""}
         </div>

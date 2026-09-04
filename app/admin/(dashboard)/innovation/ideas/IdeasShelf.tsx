@@ -203,7 +203,7 @@ function IdeaShelfBody({ row }: { row: IdeaRow }) {
           </button>
         </div>
         {row.planHtml ? (
-          <div className="idea-plan" dangerouslySetInnerHTML={{ __html: row.planHtml }} />
+          <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: row.planHtml }} />
         ) : (
           <div className="admin-cell-muted" style={{ fontSize: 13 }}>
             {row.ai_error ? `Generation failed: ${row.ai_error}` : "No plan generated yet."}

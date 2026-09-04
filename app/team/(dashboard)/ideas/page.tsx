@@ -40,7 +40,7 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
 
   if (compose) {
     return (
-      <div className="ideas-page">
+      <div className="admin-ideas-page">
         <PageHead
           eyebrow="Ideas"
           title={compose === "build" ? "What should we build?" : "What have I learned?"}
@@ -56,17 +56,17 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
           }
         />
 
-        <div className="ideas-tabs">
+        <div className="admin-ideas-tabs">
           <Link
             href="/team/ideas?compose=build"
-            className={`ideas-tab${compose === "build" ? " ideas-tab--active" : ""}`}
+            className={`admin-ideas-tab${compose === "build" ? " admin-ideas-tab--active" : ""}`}
             aria-current={compose === "build" ? "page" : undefined}
           >
             What should we build?
           </Link>
           <Link
             href="/team/ideas?compose=learning"
-            className={`ideas-tab${compose === "learning" ? " ideas-tab--active" : ""}`}
+            className={`admin-ideas-tab${compose === "learning" ? " admin-ideas-tab--active" : ""}`}
             aria-current={compose === "learning" ? "page" : undefined}
           >
             What have I learned?
@@ -100,7 +100,7 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
   ];
 
   return (
-    <div className="ideas-page">
+    <div className="admin-ideas-page">
       <PageHead
         eyebrow="Ideas"
         title="Ideas that Spark Solutions"
@@ -109,14 +109,14 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
 
       {/* Share: the primary action on this page — two equal-weight entry
           points, not one button hiding a second choice behind it. */}
-      <div className="ideas-share-grid">
-        <Link href="/team/ideas?compose=build" className="ideas-share-card">
-          <div className="ideas-share-icon" aria-hidden>◈</div>
+      <div className="admin-ideas-share-grid">
+        <Link href="/team/ideas?compose=build" className="admin-ideas-share-card">
+          <div className="admin-ideas-share-icon" aria-hidden>◈</div>
           <h2>What should we build?</h2>
           <p>A workflow AI should own. Walk the 5D framework and get a product plan back in seconds.</p>
         </Link>
-        <Link href="/team/ideas?compose=learning" className="ideas-share-card">
-          <div className="ideas-share-icon" aria-hidden>✎</div>
+        <Link href="/team/ideas?compose=learning" className="admin-ideas-share-card">
+          <div className="admin-ideas-share-icon" aria-hidden>✎</div>
           <h2>What have I learned?</h2>
           <p>A lesson worth sharing. Two minutes, no framework — it goes straight onto the team feed.</p>
         </Link>
@@ -124,15 +124,15 @@ export default async function IdeasPage({ searchParams }: { searchParams: Search
 
       {/* History: secondary — everything already shared, browsable below the
           share cards rather than competing with them for attention. */}
-      <div className="ideas-history">
-        <div className="ideas-history-head">
-          <h2 className="ideas-history-title">History</h2>
-          <div className="ideas-tabs">
+      <div className="admin-ideas-history">
+        <div className="admin-ideas-history-head">
+          <h2 className="admin-ideas-history-title">History</h2>
+          <div className="admin-ideas-tabs">
             {tabs.map((t) => (
               <Link
                 key={t.key}
                 href={t.href}
-                className={`ideas-tab${view === t.key ? " ideas-tab--active" : ""}`}
+                className={`admin-ideas-tab${view === t.key ? " admin-ideas-tab--active" : ""}`}
                 aria-current={view === t.key ? "page" : undefined}
               >
                 {t.label}
@@ -184,7 +184,7 @@ function LearningsFeed({
               {l.submitterName} · {formatDate(l.created_at)}
             </p>
             {html ? (
-              <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html }} />
             ) : (
               <>
                 <p style={{ whiteSpace: "pre-wrap", marginBottom: 8 }}>{l.story}</p>

@@ -114,9 +114,9 @@ export function ValuesEditor({ values }: { values: ValueRow[] }) {
 
       {values.length === 0 && !adding && <div className="admin-empty">No values yet. Add the first one.</div>}
 
-      <div className="team-values-grid">
+      <div className="admin-team-values-grid">
         {values.map((v, i) => (
-          <div key={v.id} className="team-value-card">
+          <div key={v.id} className="admin-team-value-card">
             {editingId === v.id ? (
               editForm((e) => {
                 e.preventDefault();
@@ -124,13 +124,13 @@ export function ValuesEditor({ values }: { values: ValueRow[] }) {
               }, "Save value")
             ) : (
               <>
-                <span className="team-value-head">
-                  <span className="team-value-num" aria-hidden>
+                <span className="admin-team-value-head">
+                  <span className="admin-team-value-num" aria-hidden>
                     {VALUE_ICONS[i % VALUE_ICONS.length]}
                   </span>
-                  <span className="team-value-title">{v.title}</span>
+                  <span className="admin-team-value-title">{v.title}</span>
                 </span>
-                <span className="team-value-body">{v.description}</span>
+                <span className="admin-team-value-body">{v.description}</span>
                 <div className="admin-form-actions" style={{ marginTop: 12 }}>
                   <button
                     className="admin-btn admin-btn--sm"

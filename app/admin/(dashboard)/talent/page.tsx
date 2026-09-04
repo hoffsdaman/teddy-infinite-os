@@ -136,7 +136,7 @@ export default async function TalentCockpitPage() {
 
       {/* ── TEAM ── */}
       <Band label="Team" note={chips ? `goals: ${chips}` : undefined} />
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="Headcount" value={headcount} sub="active team members" href="/admin/talent/team" />
         <MetricCard label={`New hires · ${year}`} value={newHires} sub="joined this year" href="/admin/talent/team" />
         <MetricCard
@@ -153,7 +153,7 @@ export default async function TalentCockpitPage() {
       </div>
       <div className="admin-cockpit-cols" style={{ marginBottom: 8 }}>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Headcount by department</div>
+          <div className="admin-kpi-label">Headcount by department</div>
           <DonutChart data={deptChart} centerLabel="people" ariaLabel="Active team members by department" />
         </div>
         <OfficeGoalsCard snapshot={talent} quarterLabel={goals.quarter.label} />
@@ -161,7 +161,7 @@ export default async function TalentCockpitPage() {
 
       {/* ── HIRING ── */}
       <Band label="Hiring" note={`${openReqs.length} open ${openReqs.length === 1 ? "role" : "roles"} · ${activeApps} active applications`} />
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="Open roles" value={openReqs.length} sub="hiring now" href="/admin/talent/jobs" />
         <MetricCard label="Applications · 30d" value={apps30} sub={vsPrior(apps30, appsPrev30)} href="/admin/talent/applications" />
         <MetricCard
@@ -174,7 +174,7 @@ export default async function TalentCockpitPage() {
       </div>
       <div className="admin-cockpit-cols">
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Applications by month · {year}</div>
+          <div className="admin-kpi-label">Applications by month · {year}</div>
           <BarChart data={appsByMonth} ariaLabel="Job applications received by month" emptyText="No applications this year." />
         </div>
         <div className="admin-card admin-section-card">

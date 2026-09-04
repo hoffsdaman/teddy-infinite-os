@@ -105,7 +105,7 @@ export default async function JobsPage() {
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Open" value={openCount} sub="accepting applications" />
         <MetricCard label="Filled" value={filledCount} sub="hired" />
       </div>

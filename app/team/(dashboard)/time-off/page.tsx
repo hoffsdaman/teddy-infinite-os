@@ -81,7 +81,7 @@ export default async function TeamTimeOffPage() {
       />
 
       {total !== null && (
-        <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+        <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
           <MetricCard label="Entitled" value={formatLeaveBalance(total)} sub="days this period" />
           <MetricCard label="Used" value={formatLeaveBalance(used)} sub="days taken" />
           <MetricCard

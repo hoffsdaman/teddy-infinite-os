@@ -14,26 +14,26 @@ export function GoalComments({ goalId, comments }: { goalId: string; comments: G
   const [busy, startTransition] = useTransition();
 
   return (
-    <div className="goal-comments">
-      <button className="goal-comments-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+    <div className="admin-goal-comments">
+      <button className="admin-goal-comments-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         {comments.length === 0
           ? "Comment"
           : `${comments.length} comment${comments.length === 1 ? "" : "s"}`}{" "}
         {open ? "▾" : "▸"}
       </button>
       {open && (
-        <div className="goal-comments-body">
+        <div className="admin-goal-comments-body">
           {comments.map((c) => (
-            <div key={c.id} className="goal-comment">
-              <span className="goal-comment-author">{c.authorName}</span>
-              <span className="admin-cell-muted goal-comment-date">
+            <div key={c.id} className="admin-goal-comment">
+              <span className="admin-goal-comment-author">{c.authorName}</span>
+              <span className="admin-cell-muted admin-goal-comment-date">
                 {new Date(c.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
               </span>
-              <div className="goal-comment-text">{c.body}</div>
+              <div className="admin-goal-comment-text">{c.body}</div>
             </div>
           ))}
           {error && <div className="admin-alert admin-alert--err">{error}</div>}
-          <div className="coach-add-row">
+          <div className="admin-coach-add-row">
             <input
               className="admin-input"
               placeholder="Add a comment…"

@@ -76,7 +76,7 @@ export function PublishEditorPanel({ assetId, onDone }: { assetId: string; onDon
       </div>
 
       {chips.length > 0 && (
-        <div className="mcr-chip-row" style={{ marginTop: 10 }}>
+        <div className="admin-campaign-chip-row" style={{ marginTop: 10 }}>
           {chips.map((c, i) => (
             <span key={i} className="admin-chip">{c.detail}</span>
           ))}

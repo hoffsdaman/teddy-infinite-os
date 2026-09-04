@@ -292,8 +292,8 @@ export function ApplicationManage({
         </div>
       )}
 
-      <div className="appdet-cols">
-        <div className="appdet-main">
+      <div className="admin-record-cols">
+        <div className="admin-record-main">
           {extras && <AiScreenCard extras={extras} resumeDocumentId={app.resumeDocumentId} />}
 
           {/* The human read sits right under the machine read — AI screen, then
@@ -311,7 +311,7 @@ export function ApplicationManage({
           )}
         </div>
 
-        <aside className="appdet-rail">
+        <aside className="admin-record-rail">
           {app.personId ? (
             <ContactCard
               personId={app.personId}
@@ -385,13 +385,13 @@ function DecisionHeader(props: {
   error: string | null;
 }) {
   return (
-    <div className="appdet-head">
-      <div className="appdet-head-crumb">
+    <div className="admin-record-head">
+      <div className="admin-record-head-crumb">
         <Link href="/admin/talent/applications">← Applications</Link>
       </div>
-      <div className="appdet-head-row">
-        <div className="appdet-head-id">
-          <h1 className="appdet-head-title">
+      <div className="admin-record-head-row">
+        <div className="admin-record-head-id">
+          <h1 className="admin-record-head-title">
             <span>{props.name}</span>
             {(() => {
               // Stage and status are different axes, but on a terminal stage they
@@ -410,12 +410,12 @@ function DecisionHeader(props: {
             })()}
             <HeaderStars value={props.rating} onChange={props.onRate} />
           </h1>
-          <div className="appdet-head-meta">
+          <div className="admin-record-head-meta">
             {props.jobReqTitle ? <strong>{props.jobReqTitle}</strong> : "No job req"}
             {props.source ? ` · ${humanize(props.source)}` : ""}
           </div>
           {props.status === "rejected" && (
-            <div className="appdet-head-meta" style={{ marginTop: 2 }}>
+            <div className="admin-record-head-meta" style={{ marginTop: 2 }}>
               Reason:{" "}
               <EditableText
                 value={props.rejectionReason}
@@ -426,7 +426,7 @@ function DecisionHeader(props: {
             </div>
           )}
         </div>
-        <div className="appdet-head-actions">
+        <div className="admin-record-head-actions">
           <button
             type="button"
             className="admin-btn admin-btn--primary admin-btn--sm"
@@ -524,10 +524,10 @@ function OverflowMenu({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="appdet-menu-wrap">
+    <div className="admin-record-menu-wrap">
       <button
         type="button"
-        className="appdet-iconbtn"
+        className="admin-record-iconbtn"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="More actions"
@@ -537,8 +537,8 @@ function OverflowMenu({
       </button>
       {open && (
         <>
-          <div className="appdet-menu-backdrop" onClick={() => setOpen(false)} />
-          <div className="appdet-menu" role="menu">
+          <div className="admin-record-menu-backdrop" onClick={() => setOpen(false)} />
+          <div className="admin-record-menu" role="menu">
             <div className="admin-section-label" style={{ padding: "4px 10px 2px" }}>
               Set status
             </div>
@@ -546,7 +546,7 @@ function OverflowMenu({
               <button
                 key={v}
                 type="button"
-                className="appdet-menu-item"
+                className="admin-record-menu-item"
                 role="menuitem"
                 onClick={() => {
                   setOpen(false);
@@ -560,7 +560,7 @@ function OverflowMenu({
             <div style={{ borderTop: "1px solid var(--admin-line)", margin: "4px 0" }} />
             <button
               type="button"
-              className={`appdet-menu-item${archived ? "" : " appdet-menu-item--danger"}`}
+              className={`admin-record-menu-item${archived ? "" : " admin-record-menu-item--danger"}`}
               role="menuitem"
               onClick={() => {
                 setOpen(false);
@@ -627,7 +627,7 @@ function PipelineStrip({
 
   if (loading) {
     return (
-      <div className="appdet-pipe">
+      <div className="admin-record-pipe">
         <span className="admin-cell-muted">Loading stages…</span>
       </div>
     );
@@ -651,26 +651,26 @@ function PipelineStrip({
   }
 
   return (
-    <div className="appdet-pipe" role="list" aria-label="Hiring stages">
+    <div className="admin-record-pipe" role="list" aria-label="Hiring stages">
       {shown.map((s, i) => {
         const state = i < currentIdx ? "done" : i === currentIdx ? "now" : "todo";
         const age = state === "now" ? ageLabel() : null;
         return (
-          <div key={s.id} className={`appdet-step appdet-step--${state}`} role="listitem">
+          <div key={s.id} className={`admin-record-step admin-record-step--${state}`} role="listitem">
             <button
               type="button"
-              className="appdet-step-hit"
+              className="admin-record-step-hit"
               onClick={() => onMove(s)}
               title={`Move to ${s.name}`}
             >
-              <span className="appdet-step-node">{state === "done" ? "✓" : i + 1}</span>
-              <span className="appdet-step-label">
+              <span className="admin-record-step-node">{state === "done" ? "✓" : i + 1}</span>
+              <span className="admin-record-step-label">
                 {s.name}
                 {s.isTerminal ? " (final)" : ""}
-                {age && <span className="appdet-step-sub">{age}</span>}
+                {age && <span className="admin-record-step-sub">{age}</span>}
               </span>
             </button>
-            {i < shown.length - 1 && <span className="appdet-step-bar" />}
+            {i < shown.length - 1 && <span className="admin-record-step-bar" />}
           </div>
         );
       })}
@@ -705,7 +705,7 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
       {s ? (
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {extras.aiRating != null && (
-            <div className="appdet-ai-score">
+            <div className="admin-record-ai-score">
               {extras.aiRating}
               <span>/5</span>
             </div>
@@ -714,7 +714,7 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div style={{ whiteSpace: "pre-wrap", color: "var(--admin-ink-2)", maxWidth: "68ch" }}>{s.overview}</div>
           {s.skills.length > 0 && (
-            <ul className="appdet-ai-points">
+            <ul className="admin-record-ai-points">
               {s.skills.map((sk, j) => {
                 // The model writes many points as "Label: detail" — bold the label.
                 // These are full sentences, not tags, so they wrap as a list. Tint
@@ -725,7 +725,7 @@ function AiScreenCard({ extras, resumeDocumentId }: { extras: ApplicationExtras;
                   label ?? sk,
                 );
                 return (
-                  <li key={j} className={`appdet-ai-point appdet-ai-point--${neg ? "neg" : "pos"}`}>
+                  <li key={j} className={`admin-record-ai-point admin-record-ai-point--${neg ? "neg" : "pos"}`}>
                     {label ? (
                       <>
                         <strong>{label}:</strong>
@@ -980,7 +980,7 @@ function SignalsCard(props: {
 
 function AssessmentCard({ appId, hrAssessment }: { appId: string; hrAssessment: string | null }) {
   return (
-    <section className="admin-card admin-section-card appdet-assessment">
+    <section className="admin-card admin-section-card admin-record-assessment">
       <div className="admin-section-label" style={{ marginBottom: 4, display: "flex", justifyContent: "space-between", gap: 10 }}>
         <span>HR assessment</span>
         <span className="admin-cell-muted" style={{ letterSpacing: 0, textTransform: "none", fontWeight: 500 }}>

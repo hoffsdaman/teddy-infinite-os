@@ -166,7 +166,7 @@ export default async function TimeOffPage() {
 
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Pending approval" value={pending} />
         <MetricCard label="New this week" value={newThisWeek} />
         <MetricCard label="Days off in 2026" value={formatLeaveBalance(total2026)} />

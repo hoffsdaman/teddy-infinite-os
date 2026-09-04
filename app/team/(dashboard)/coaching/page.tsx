@@ -39,14 +39,14 @@ export default async function CoachingDashboardPage() {
       />
 
       {roster.length > 0 && (
-        <div className="admin-card coach-attention">
+        <div className="admin-card admin-coach-attention">
           <div className="admin-card-title">The roster at a glance</div>
-          <p className="admin-hint coach-dash-hint">
+          <p className="admin-hint admin-coach-dash-hint">
             Private to you. Mode shows the last 1-1&apos;s Coach / Mentor / Direct split; the target
             is 80 / 15 / 5.
           </p>
           <div className="admin-table-wrap">
-            <table className="admin-table coach-dash-table">
+            <table className="admin-table admin-coach-dash-table">
               <thead>
                 <tr>
                   <th>Person</th>
@@ -84,7 +84,7 @@ export default async function CoachingDashboardPage() {
                         <span className="admin-badge admin-badge--ok">clear</span>
                       ) : (
                         r.attention.map((a, i) => (
-                          <span key={i} className="admin-badge admin-badge--warn coach-dash-flag">
+                          <span key={i} className="admin-badge admin-badge--warn admin-coach-dash-flag">
                             {attentionLabel(a)}
                           </span>
                         ))
@@ -98,7 +98,7 @@ export default async function CoachingDashboardPage() {
         </div>
       )}
 
-      <div className="coach-roster">
+      <div className="admin-coach-roster">
         {roster.map((r) => (
           <RosterCard key={r.profileId} row={r} />
         ))}
@@ -146,28 +146,28 @@ const ROOT_LABELS: Record<string, string> = {
 
 function RosterCard({ row }: { row: CoachRosterRow }) {
   return (
-    <Link href={`/team/coaching/${row.profileId}`} className="admin-card coach-card">
-      <div className="coach-card-head">
+    <Link href={`/team/coaching/${row.profileId}`} className="admin-card admin-coach-card">
+      <div className="admin-coach-card-head">
         {row.member.avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={row.member.avatarUrl} alt="" width={40} height={40} className="coach-avatar" />
+          <img src={row.member.avatarUrl} alt="" width={40} height={40} className="admin-coach-avatar" />
         ) : (
-          <span className="coach-avatar coach-avatar--empty" aria-hidden>
+          <span className="admin-coach-avatar admin-coach-avatar--empty" aria-hidden>
             {row.member.name.slice(0, 1)}
           </span>
         )}
         <div>
-          <div className="coach-card-name">{row.member.name}</div>
-          <div className="coach-card-role">{row.member.positionTitle ?? "-"}</div>
+          <div className="admin-coach-card-name">{row.member.name}</div>
+          <div className="admin-coach-card-role">{row.member.positionTitle ?? "-"}</div>
         </div>
         {row.attention.length > 0 && (
-          <span className="admin-badge admin-badge--warn coach-card-flag">
+          <span className="admin-badge admin-badge--warn admin-coach-card-flag">
             {row.attention.length} flag{row.attention.length === 1 ? "" : "s"}
           </span>
         )}
       </div>
 
-      <div className="coach-card-goal">
+      <div className="admin-coach-card-goal">
         {row.activeGoals.length > 0 ? (
           <span>{row.activeGoals.join(" · ")}</span>
         ) : (
@@ -176,7 +176,7 @@ function RosterCard({ row }: { row: CoachRosterRow }) {
         {row.activeGoals.length === 0 && <span className="admin-badge admin-badge--err">No goal</span>}
       </div>
 
-      <div className="coach-card-meta">
+      <div className="admin-coach-card-meta">
         <span>
           <strong>{row.heldCount}</strong> 1-1{row.heldCount === 1 ? "" : "s"}
         </span>

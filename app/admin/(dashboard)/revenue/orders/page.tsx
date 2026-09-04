@@ -111,7 +111,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
       <PageHead eyebrow="Revenue" title="Orders" sub={`${total.toLocaleString()} ${total === 1 ? "order" : "orders"}`} />
       {error && <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>{error}</div>}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="USD · paid orders" />
         <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="USD · paid orders" />
         <MetricCard label="Paid" value={paidCount} sub={`of ${total.toLocaleString()} orders`} />

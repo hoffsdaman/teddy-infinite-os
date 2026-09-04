@@ -119,14 +119,14 @@ export default async function OperationsCockpitPage() {
         label="Time off"
         note={pending > 0 ? `${pending} ${pending === 1 ? "request" : "requests"} pending` : "no pending requests"}
       />
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="Days off · 30d" value={daysOff30} sub="approved leave" href="/admin/operations/time-off/requests" />
         <MetricCard label="Out today" value={outToday} sub={outToday === 0 ? "everyone's in" : "on leave now"} href="/admin/operations/time-off/requests" />
         <MetricCard label="Pending requests" value={pending} sub="awaiting approval" href="/admin/operations/time-off/requests" />
       </div>
       <div className="admin-cockpit-cols" style={{ marginBottom: 8 }}>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Days off by month · {year}</div>
+          <div className="admin-kpi-label">Days off by month · {year}</div>
           <BarChart data={leaveByMonth} ariaLabel="Approved time off by month" emptyText="No time off this year." />
         </div>
         <div className="admin-card admin-section-card">
@@ -160,7 +160,7 @@ export default async function OperationsCockpitPage() {
 
       {/* ── WORKPLACE & SERVICE ── */}
       <Band label="Workplace & service" note={chips ? `goals: ${chips}` : undefined} />
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard
           label="Equipment value"
           value={`$${Math.round(equipUsd).toLocaleString("en-US")}`}

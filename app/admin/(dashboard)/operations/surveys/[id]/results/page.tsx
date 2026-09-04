@@ -100,11 +100,11 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
     return (
       <div style={{ display: "grid", gap: 8 }}>
         <div style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
-          <span className="mp-kpi-val">{avg === null ? "—" : avg.toFixed(1)}</span>
+          <span className="admin-kpi-val">{avg === null ? "—" : avg.toFixed(1)}</span>
           <span className="admin-cell-muted">average of {nums.length}</span>
           {nps !== null && (
             <>
-              <span className="mp-kpi-val">{nps > 0 ? `+${nps}` : nps}</span>
+              <span className="admin-kpi-val">{nps > 0 ? `+${nps}` : nps}</span>
               <span className="admin-cell-muted">NPS</span>
             </>
           )}
@@ -263,7 +263,7 @@ export default async function SurveyResultsPage({ params }: { params: { id: stri
         {survey.is_anonymous && <Badge tone="info">anonymous</Badge>}
       </div>
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Responses" value={responses.length} />
         <MetricCard label="Team" value={teamCount} />
         <MetricCard label="Client" value={clientCount} />

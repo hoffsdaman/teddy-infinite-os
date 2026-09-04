@@ -46,8 +46,8 @@ export function CoachHeaderActions({
   };
 
   return (
-    <div className="coach-hero__actions">
-      <div className="coach-hero__actionbtns">
+    <div className="admin-coach-hero__actions">
+      <div className="admin-coach-hero__actionbtns">
         {nextMeetingId && (
           <button
             className="admin-btn admin-btn--primary"
@@ -65,11 +65,11 @@ export function CoachHeaderActions({
         </button>
       </div>
 
-      {error && <div className="admin-alert admin-alert--err coach-hero__msg">{error}</div>}
-      {busy && <div className="admin-hint coach-hero__msg">Working… AI steps can take a minute.</div>}
+      {error && <div className="admin-alert admin-alert--err admin-coach-hero__msg">{error}</div>}
+      {busy && <div className="admin-hint admin-coach-hero__msg">Working… AI steps can take a minute.</div>}
 
       {panel === "schedule" && (
-        <div className="coach-hero__panel">
+        <div className="admin-coach-hero__panel">
           <div className="admin-field">
             <label className="admin-label" htmlFor="hero-schedule-date">
               Next 1-1 date
@@ -104,7 +104,7 @@ export function CoachHeaderActions({
       )}
 
       {panel === "log" && (
-        <div className="coach-hero__panel">
+        <div className="admin-coach-hero__panel">
           <div className="admin-field">
             <label className="admin-label" htmlFor="hero-log-date">
               Meeting date

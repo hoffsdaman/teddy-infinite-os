@@ -49,11 +49,11 @@ function Tile({
   attn?: boolean;
 }) {
   return (
-    <div className={`team-glance-cell${attn ? " coach-hero__cell--attn" : ""}`}>
-      <span className="team-glance-label">{label}</span>
-      <span className="team-glance-value">{value}</span>
+    <div className={`admin-glance-cell${attn ? " admin-coach-hero__cell--attn" : ""}`}>
+      <span className="admin-glance-label">{label}</span>
+      <span className="admin-glance-value">{value}</span>
       {(note || badge) && (
-        <span className="team-glance-note coach-hero__note">
+        <span className="admin-glance-note admin-coach-hero__note">
           {note}
           {badge && (
             <span
@@ -98,23 +98,23 @@ export function CoachProfileHeader({ detail }: { detail: CoachProfileDetail }) {
   const retentionLabel = detail.retentionRoot ? RETENTION_ROOT_LABELS[detail.retentionRoot] : "Not flagged";
 
   return (
-    <header className="coach-hero">
-      <Link className="admin-eyebrow coach-hero__back" href="/team/coaching">
+    <header className="admin-coach-hero">
+      <Link className="admin-eyebrow admin-coach-hero__back" href="/team/coaching">
         ← Coaching
       </Link>
 
-      <div className="coach-hero__id">
+      <div className="admin-coach-hero__id">
         {member.avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={member.avatarUrl} alt="" width={40} height={40} className="coach-avatar" />
+          <img src={member.avatarUrl} alt="" width={40} height={40} className="admin-coach-avatar" />
         ) : (
-          <span className="coach-avatar coach-avatar--empty" aria-hidden>
+          <span className="admin-coach-avatar admin-coach-avatar--empty" aria-hidden>
             {member.name.slice(0, 1)}
           </span>
         )}
-        <div className="coach-hero__id-text">
-          <div className="coach-hero__name">{member.name}</div>
-          <div className="coach-hero__role">
+        <div className="admin-coach-hero__id-text">
+          <div className="admin-coach-hero__name">{member.name}</div>
+          <div className="admin-coach-hero__role">
             {member.positionTitle ?? "—"} · 1-1 every {detail.cadenceDays} days
           </div>
         </div>
@@ -125,7 +125,7 @@ export function CoachProfileHeader({ detail }: { detail: CoachProfileDetail }) {
         />
       </div>
 
-      <div className="team-glance coach-hero__stats">
+      <div className="admin-glance admin-coach-hero__stats">
         <Tile
           label="Next 1-1"
           value={nextMeeting ? fmtDate(nextMeeting.heldOn) : "None scheduled"}

@@ -225,7 +225,7 @@ export default async function DashboardPage() {
       )}
 
       {/* ── Vitals ── */}
-      <div className="mp-kpi-grid">
+      <div className="admin-kpi-grid">
         <MetricCard
           label="Revenue · 30d"
           value={formatCents(cash30)}

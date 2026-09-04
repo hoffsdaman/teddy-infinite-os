@@ -185,7 +185,7 @@ export default async function TeamHiringPage() {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {myDay.length > 0 && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-card-title">
               Your interviews{" "}
               {dueCount > 0 && (
@@ -199,14 +199,14 @@ export default async function TeamHiringPage() {
               {myDay.map((iv) => {
                 const chip = INTERVIEW_STATE_CHIP[iv.state];
                 return (
-                  <div key={iv.interviewId} className={`hire-slot hire-slot--${SLOT_MODIFIER[iv.state]}`}>
-                    <span className="hire-slot-time">{fmtTime(iv.scheduledAt)}</span>
-                    <div className="hire-slot-body">
-                      <div className="hire-slot-head">
-                        <span className="hire-slot-name">{iv.candidateName}</span>
+                  <div key={iv.interviewId} className={`admin-hire-slot admin-hire-slot--${SLOT_MODIFIER[iv.state]}`}>
+                    <span className="admin-hire-slot-time">{fmtTime(iv.scheduledAt)}</span>
+                    <div className="admin-hire-slot-body">
+                      <div className="admin-hire-slot-head">
+                        <span className="admin-hire-slot-name">{iv.candidateName}</span>
                         <span className={chip.className}>{chip.label}</span>
                       </div>
-                      <div className="hire-slot-meta">
+                      <div className="admin-hire-slot-meta">
                         {[
                           iv.stepName,
                           iv.reqTitle,
@@ -218,7 +218,7 @@ export default async function TeamHiringPage() {
                           .join(" · ")}
                       </div>
                     </div>
-                    <Link href={`/team/hiring/${iv.interviewId}`} className="admin-btn admin-btn--sm hire-slot-cta">
+                    <Link href={`/team/hiring/${iv.interviewId}`} className="admin-btn admin-btn--sm admin-hire-slot-cta">
                       {iv.state === "scorecard_due" || iv.state === "in_progress" ? "Submit scorecard" : "Open kit"}
                     </Link>
                   </div>
@@ -229,16 +229,16 @@ export default async function TeamHiringPage() {
         )}
 
         {mySlots.length > 0 && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-card-title">Your loops</div>
             <div className="admin-hint">
               The loops you are named in. Times appear here once the interview is booked.
             </div>
             {mySlots.map((s) => (
-              <div key={`${s.reqId}-${s.stepName}-${s.position}`} className="loop-step loop-step--read">
-                <span className="loop-step-num">{s.position}</span>
-                <div className="loop-step-body">
-                  <div className="loop-step-head">
+              <div key={`${s.reqId}-${s.stepName}-${s.position}`} className="admin-loop-step admin-loop-step--read">
+                <span className="admin-loop-step-num">{s.position}</span>
+                <div className="admin-loop-step-body">
+                  <div className="admin-loop-step-head">
                     <strong>{s.stepName}</strong>
                     <span className="admin-cell-muted">
                       {s.reqTitle}
@@ -246,7 +246,7 @@ export default async function TeamHiringPage() {
                     </span>
                   </div>
                   {s.booked.length > 0 ? (
-                    <div className="loop-step-booked">
+                    <div className="admin-loop-step-booked">
                       {s.booked.map((b) => (
                         <div key={b.interviewId}>
                           <strong>{fmtWhen(b.scheduledAt)}</strong> with {b.candidateName}
@@ -269,7 +269,7 @@ export default async function TeamHiringPage() {
         )}
 
         {reqs.length === 0 && (
-          <section className="admin-card coach-section">
+          <section className="admin-card admin-coach-section">
             <div className="admin-empty">
               No open roles right now.
             </div>
@@ -281,7 +281,7 @@ export default async function TeamHiringPage() {
           // verbs. Everyone else sees the grid read-only.
           const canManage = req.hiringManagerIsMe || actor.isAdmin;
           return (
-          <section key={req.id} className="admin-card coach-section">
+          <section key={req.id} className="admin-card admin-coach-section">
             <div className="admin-card-title">
               {req.title}{" "}
               <span className="admin-cell-muted">
@@ -308,16 +308,16 @@ export default async function TeamHiringPage() {
                   Interview loop
                 </div>
                 {req.loop.map((step, i) => (
-                  <div key={step.id} className="loop-step loop-step--read">
-                    <span className="loop-step-num">{i + 1}</span>
-                    <div className="loop-step-body">
-                      <div className="loop-step-head">
+                  <div key={step.id} className="admin-loop-step admin-loop-step--read">
+                    <span className="admin-loop-step-num">{i + 1}</span>
+                    <div className="admin-loop-step-body">
+                      <div className="admin-loop-step-head">
                         <strong>{step.name}</strong>
                         {step.durationMinutes != null && (
                           <span className="admin-cell-muted">{step.durationMinutes} min</span>
                         )}
                       </div>
-                      <div className="loop-step-people">
+                      <div className="admin-loop-step-people">
                         {step.interviewers.length === 0 ? (
                           <span className="admin-cell-muted">No interviewer assigned</span>
                         ) : (
@@ -442,7 +442,7 @@ export default async function TeamHiringPage() {
         })}
 
         {closedReqs.length > 0 && (
-          <details className="admin-card coach-section">
+          <details className="admin-card admin-coach-section">
             <summary style={{ cursor: "pointer", listStyle: "revert" }}>
               <span className="admin-card-title" style={{ display: "inline" }}>
                 Closed roles

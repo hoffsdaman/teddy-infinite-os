@@ -154,13 +154,13 @@ export function CoachProfileView({
               onClick={() => selectTab(t.id)}
             >
               {t.label}
-              {typeof count === "number" && count > 0 && <span className="coach-tab-count">{count}</span>}
+              {typeof count === "number" && count > 0 && <span className="admin-coach-tab-count">{count}</span>}
             </button>
           );
         })}
       </nav>
 
-      <div className="coach-profile">
+      <div className="admin-coach-profile">
         {tab === "next" && (
           <>
             <CarriedOverCard detail={detail} todayIso={todayIso} />
@@ -234,7 +234,7 @@ function GoalsCard({
   const past = detail.goals.filter((g) => g.status === "achieved" || g.status === "dropped");
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         FAST goals{" "}
         <span className="admin-cell-muted">
@@ -247,7 +247,7 @@ function GoalsCard({
         <GoalRow key={g.id} g={g} detail={detail} run={run} busy={busy} />
       ))}
 
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <input
           className="admin-input"
           placeholder="New quarterly goal…"
@@ -269,10 +269,10 @@ function GoalsCard({
       </div>
 
       {past.length > 0 && (
-        <details className="coach-closed">
+        <details className="admin-coach-closed">
           <summary>{past.length} past goal{past.length === 1 ? "" : "s"}</summary>
           {past.map((g) => (
-            <div key={g.id} className="coach-commitment is-closed">
+            <div key={g.id} className="admin-coach-commitment is-closed">
               <span className="admin-badge">{GOAL_STATUS_LABELS[g.status]}</span>
               <span>{g.title}</span>
             </div>
@@ -296,15 +296,15 @@ function GoalRow({
 }) {
   const [ladder, setLadder] = useState(ladderValue(g.ladder));
   return (
-    <div className="coach-commitment">
-      <div className="coach-commitment-main">
+    <div className="admin-coach-commitment">
+      <div className="admin-coach-commitment-main">
         <span className={`admin-badge ${g.status === "active" ? "admin-badge--ok" : "admin-badge--warn"}`}>
           {GOAL_STATUS_LABELS[g.status]}
         </span>
-        <span className="coach-commitment-title">{g.title}</span>
+        <span className="admin-coach-commitment-title">{g.title}</span>
         <LadderBadge ladder={g.ladder} />
       </div>
-      <div className="coach-commitment-controls">
+      <div className="admin-coach-commitment-controls">
         <select
           className="admin-input"
           value={g.status}
@@ -362,7 +362,7 @@ function PrioritiesCard({
   const retired = detail.priorities.filter((p) => p.status === "retired");
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         Priorities{" "}
         <span className="admin-cell-muted">(personal growth: what matters most from your view, reviewed every 1-1)</span>
@@ -370,12 +370,12 @@ function PrioritiesCard({
 
       {active.length === 0 && <div className="admin-empty">No standing priorities.</div>}
       {active.map((p) => (
-        <div key={p.id} className="coach-commitment">
-          <div className="coach-commitment-main">
-            <span className="coach-commitment-title">{p.title}</span>
+        <div key={p.id} className="admin-coach-commitment">
+          <div className="admin-coach-commitment-main">
+            <span className="admin-coach-commitment-title">{p.title}</span>
           </div>
-          {p.detailMarkdown && <div className="admin-cell-muted coach-priority-detail">{p.detailMarkdown}</div>}
-          <div className="coach-commitment-controls">
+          {p.detailMarkdown && <div className="admin-cell-muted admin-coach-priority-detail">{p.detailMarkdown}</div>}
+          <div className="admin-coach-commitment-controls">
             <button
               className="admin-btn admin-btn--sm"
               disabled={busy}
@@ -387,7 +387,7 @@ function PrioritiesCard({
         </div>
       ))}
 
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <input
           className="admin-input"
           placeholder="New priority (e.g. P1: Own AI Labs)…"
@@ -414,10 +414,10 @@ function PrioritiesCard({
       </div>
 
       {retired.length > 0 && (
-        <details className="coach-closed">
+        <details className="admin-coach-closed">
           <summary>{retired.length} retired</summary>
           {retired.map((p) => (
-            <div key={p.id} className="coach-commitment is-closed">
+            <div key={p.id} className="admin-coach-commitment is-closed">
               <span>{p.title}</span>
             </div>
           ))}
@@ -442,9 +442,9 @@ function CadenceCard({
   const [nextOn, setNextOn] = useState(detail.nextOneOnOneOn ?? "");
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">Cadence &amp; retention read</div>
-      <div className="coach-field-row">
+      <div className="admin-coach-field-row">
         <div className="admin-field">
           <label className="admin-label" htmlFor="cadence-days">
             Cadence (days)
@@ -540,10 +540,10 @@ function OceanCard({
   const published = Boolean(o?.published);
 
   return (
-    <section className="admin-card coach-section">
-      <div className="coach-block-head">
+    <section className="admin-card admin-coach-section">
+      <div className="admin-coach-block-head">
         <div className="admin-card-title">OCEAN profile</div>
-        <div className="coach-block-actions">
+        <div className="admin-coach-block-actions">
           <span className={`admin-badge ${published ? "admin-badge--ok" : "admin-badge--warn"}`}>
             {published ? "Published: they can read it" : "Draft: only you"}
           </span>
@@ -569,8 +569,8 @@ function OceanCard({
       {editing ? (
         <div className="admin-form">
           {OCEAN_DIMENSIONS.map((k) => (
-            <div key={k} className="coach-field-row coach-ocean-row">
-              <div className="admin-field coach-ocean-rating">
+            <div key={k} className="admin-coach-field-row admin-coach-ocean-row">
+              <div className="admin-field admin-coach-ocean-rating">
                 <label className="admin-label">{OCEAN_LABELS[k]}</label>
                 <input
                   className="admin-input"
@@ -579,7 +579,7 @@ function OceanCard({
                   onChange={(e) => setDims({ ...dims, [k]: { ...dims[k], rating: e.target.value } })}
                 />
               </div>
-              <div className="admin-field coach-ocean-evidence">
+              <div className="admin-field admin-coach-ocean-evidence">
                 <label className="admin-label">Behavioral evidence</label>
                 <textarea
                   className="admin-input"
@@ -613,14 +613,14 @@ function OceanCard({
         </div>
       ) : o ? (
         <div className="coach-ocean">
-          <div className="coach-ocean-list">
+          <div className="admin-coach-ocean-list">
             {OCEAN_DIMENSIONS.map((k) => (
-              <div key={k} className="coach-ocean-line">
-                <div className="coach-ocean-line-head">
+              <div key={k} className="admin-coach-ocean-line">
+                <div className="admin-coach-ocean-line-head">
                   <strong>{OCEAN_LABELS[k]}</strong>
                   <span className="admin-badge admin-badge--info">{o[k].rating ?? "TBD"}</span>
                 </div>
-                {o[k].evidence && <div className="admin-cell-muted coach-ocean-line-evidence">{o[k].evidence}</div>}
+                {o[k].evidence && <div className="admin-cell-muted admin-coach-ocean-line-evidence">{o[k].evidence}</div>}
               </div>
             ))}
           </div>
@@ -633,7 +633,7 @@ function OceanCard({
           {o.guidanceMarkdown && (
             <div className="coach-block">
               <span className="admin-eyebrow">Growth guidance (they read this)</span>
-              <p className="coach-ocean-guidance">{o.guidanceMarkdown}</p>
+              <p className="admin-coach-ocean-guidance">{o.guidanceMarkdown}</p>
             </div>
           )}
         </div>
@@ -660,7 +660,7 @@ function TalkingPointsCard({
 }) {
   if (detail.talkingPoints.length === 0) {
     return (
-      <section className="admin-card coach-section">
+      <section className="admin-card admin-coach-section">
         <div className="admin-card-title">
           Their talking points <span className="admin-cell-muted">what {detail.member.name} wants to cover</span>
         </div>
@@ -672,7 +672,7 @@ function TalkingPointsCard({
     );
   }
   return (
-    <section className="admin-card coach-section coach-carried">
+    <section className="admin-card admin-coach-section admin-coach-carried">
       <div className="admin-card-title">
         Their talking points <span className="admin-cell-muted">what {detail.member.name} wants to cover</span>
       </div>
@@ -680,8 +680,8 @@ function TalkingPointsCard({
         Raised for this 1-1, and folded into the prep. Mark addressed once you have covered it.
       </div>
       {detail.talkingPoints.map((t) => (
-        <div key={t.id} className="coach-carried-row">
-          <span className="coach-carried-title">{t.body}</span>
+        <div key={t.id} className="admin-coach-carried-row">
+          <span className="admin-coach-carried-title">{t.body}</span>
           <button
             className="admin-btn admin-btn--sm"
             disabled={busy}
@@ -723,7 +723,7 @@ function CarriedOverCard({ detail, todayIso }: { detail: CoachProfileDetail; tod
   if (carried.length === 0) return null;
 
   return (
-    <section className="admin-card coach-section coach-carried">
+    <section className="admin-card admin-coach-section admin-coach-carried">
       <div className="admin-card-title">
         Carried over{" "}
         <span className="admin-cell-muted">still open from before your 1-1 on {fmt(lastHeldOn)}</span>
@@ -734,9 +734,9 @@ function CarriedOverCard({ detail, todayIso }: { detail: CoachProfileDetail; tod
       {carried.map((c) => {
         const overdue = Boolean(c.dueOn && c.dueOn < todayIso);
         return (
-          <div key={c.id} className="coach-carried-row">
+          <div key={c.id} className="admin-coach-carried-row">
             <span className="admin-badge">{c.owner === "coach" ? "me" : "them"}</span>
-            <span className="coach-carried-title">{c.title}</span>
+            <span className="admin-coach-carried-title">{c.title}</span>
             {c.dueOn && (
               <span className={`admin-badge ${overdue ? "admin-badge--warn" : ""}`}>
                 {overdue ? "overdue" : "due"} {fmt(c.dueOn)}
@@ -768,7 +768,7 @@ function CommitmentsCard({
   ).length;
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         Commitments <span className="admin-cell-muted">({openCount} open)</span>
       </div>
@@ -791,7 +791,7 @@ function CommitmentsCard({
         }}
       />
 
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <input
           className="admin-input"
           placeholder="New commitment…"
@@ -853,7 +853,7 @@ function MeetingsCard({
       : detail.meetings.filter((m) => m.status !== "scheduled");
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">{view === "next" ? "Next 1-1" : "1-1 log"}</div>
 
       {view === "next" && !nextMeetingId && (
@@ -898,15 +898,15 @@ function MeetingRow({
   const published = Boolean(m.sharedPublishedAt);
 
   const prepBlock = (
-    <div className={`coach-block${isNext ? " coach-block--prep" : ""}`}>
-      <div className="coach-block-head">
+    <div className={`coach-block${isNext ? " admin-coach-block--prep" : ""}`}>
+      <div className="admin-coach-block-head">
         <span className="admin-eyebrow">Prep</span>
         <button className="admin-btn admin-btn--sm" disabled={busy} onClick={() => run("Prep", () => generatePrepAction(m.id))}>
           {m.prepMarkdown ? "Regenerate" : "Generate prep"}
         </button>
       </div>
       {html?.prep ? (
-        <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html.prep }} />
+        <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html.prep }} />
       ) : (
         <div className="admin-cell-muted">No prep yet.</div>
       )}
@@ -914,10 +914,10 @@ function MeetingRow({
   );
 
   return (
-    <div className={`coach-meeting${isNext ? " coach-meeting--next" : ""}`}>
-      <button className="coach-meeting-head" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+    <div className={`admin-coach-meeting${isNext ? " admin-coach-meeting--next" : ""}`}>
+      <button className="admin-coach-meeting-head" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         <strong>{fmt(m.heldOn)}</strong>
-        {isNext && <span className="admin-badge admin-badge--info coach-meeting-next-tag">Next 1-1</span>}
+        {isNext && <span className="admin-badge admin-badge--info admin-coach-meeting-next-tag">Next 1-1</span>}
         <span className={`admin-badge ${m.status === "held" ? "admin-badge--ok" : "admin-badge--info"}`}>
           {m.status}
         </span>
@@ -933,13 +933,13 @@ function MeetingRow({
           </span>
         )}
         {m.aiError && <span className="admin-badge admin-badge--err">AI error</span>}
-        <span className="coach-meeting-caret">
+        <span className="admin-coach-meeting-caret">
           {m.prepMarkdown ? (open ? "Hide prep ▾" : "View prep ▸") : open ? "Close ▾" : "Open ▸"}
         </span>
       </button>
 
       {open && (
-        <div className="coach-meeting-body">
+        <div className="admin-coach-meeting-body">
           {m.aiError && <div className="admin-alert admin-alert--err">AI: {m.aiError}</div>}
 
           {isNext && prepBlock}
@@ -948,7 +948,7 @@ function MeetingRow({
               analyzed, never entered by hand. Shown only once it exists. */}
           {m.modeSplit && (
             <div className="coach-block">
-              <div className="coach-block-head">
+              <div className="admin-coach-block-head">
                 <span className="admin-eyebrow">Mode split, from the transcript (target 80/15/5)</span>
               </div>
               <div className="admin-cell-muted">
@@ -959,7 +959,7 @@ function MeetingRow({
 
           {/* Lark Minutes link */}
           <div className="coach-block">
-            <div className="coach-block-head">
+            <div className="admin-coach-block-head">
               <span className="admin-eyebrow">Lark Minutes</span>
             </div>
             {m.minutesToken ? (
@@ -972,7 +972,7 @@ function MeetingRow({
                 Recording linked ({m.transcriptSource === "minutes_auto" ? "auto-detected" : "linked"}): open in Lark ↗
               </a>
             ) : (
-              <div className="coach-add-row">
+              <div className="admin-coach-add-row">
                 <input
                   className="admin-input"
                   placeholder="Paste the Lark Minutes link…"
@@ -999,7 +999,7 @@ function MeetingRow({
 
           {/* Transcript */}
           <div className="coach-block">
-            <div className="coach-block-head">
+            <div className="admin-coach-block-head">
               <span className="admin-eyebrow">Transcript</span>
             </div>
             {m.transcript ? (
@@ -1007,7 +1007,7 @@ function MeetingRow({
                 <summary className="admin-cell-muted">
                   {m.transcript.length.toLocaleString()} characters: view
                 </summary>
-                <pre className="coach-transcript">{m.transcript}</pre>
+                <pre className="admin-coach-transcript">{m.transcript}</pre>
               </details>
             ) : (
               <>
@@ -1041,9 +1041,9 @@ function MeetingRow({
           {/* Summaries */}
           {(m.summaryMarkdown || m.sharedSummaryMarkdown) && (
             <div className="coach-block">
-              <div className="coach-block-head">
+              <div className="admin-coach-block-head">
                 <span className="admin-eyebrow">Summaries</span>
-                <div className="coach-block-actions">
+                <div className="admin-coach-block-actions">
                   <button className="admin-btn admin-btn--sm" onClick={() => setEditing((v) => !v)}>
                     {editing ? "Cancel edit" : "Edit"}
                   </button>
@@ -1091,21 +1091,21 @@ function MeetingRow({
                   </div>
                 </div>
               ) : (
-                <div className="coach-summaries">
+                <div className="admin-coach-summaries">
                   <div>
-                    <div className="coach-tier-label">Private: only you</div>
+                    <div className="admin-coach-tier-label">Private: only you</div>
                     {html?.summary ? (
-                      <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html.summary }} />
+                      <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html.summary }} />
                     ) : (
                       <div className="admin-cell-muted">No private summary.</div>
                     )}
                   </div>
                   <div>
-                    <div className="coach-tier-label">
+                    <div className="admin-coach-tier-label">
                       Shared recap: {published ? "published to them" : "draft, they can't see it yet"}
                     </div>
                     {html?.shared ? (
-                      <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html.shared }} />
+                      <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html.shared }} />
                     ) : (
                       <div className="admin-cell-muted">No shared recap.</div>
                     )}
@@ -1115,7 +1115,7 @@ function MeetingRow({
             </div>
           )}
 
-          <div className="coach-block coach-block--danger">
+          <div className="coach-block admin-coach-block--danger">
             <button
               className="admin-btn admin-btn--sm admin-btn--danger"
               disabled={busy}
@@ -1138,7 +1138,7 @@ function MeetingRow({
 
 function PerformanceCard({ memberName, reviews }: { memberName: string; reviews: MemberReviewCycle[] }) {
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         Performance reviews{" "}
         <span className="admin-cell-muted">system of record</span>
@@ -1177,7 +1177,7 @@ function TrendsCard({
   const canRun = summarized >= 2;
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">
         Trend report <span className="admin-cell-muted">across the last 3 1-1s</span>
       </div>
@@ -1202,13 +1202,13 @@ function TrendsCard({
         </div>
       )}
       {detail.trends.map((t) => (
-        <details key={t.id} className="coach-trend">
+        <details key={t.id} className="admin-coach-trend">
           <summary>
             <strong>Trend as of {fmt(t.createdAt)}</strong>
             {t.aiError && <span className="admin-badge admin-badge--err">failed</span>}
           </summary>
           {html.trends[t.id] ? (
-            <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html.trends[t.id]! }} />
+            <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html.trends[t.id]! }} />
           ) : (
             <div className="admin-cell-muted">{t.aiError ?? "Empty."}</div>
           )}
@@ -1224,19 +1224,19 @@ function TrendsCard({
 
 function CheckinsCard({ detail, html }: { detail: CoachProfileDetail; html: RenderedHtml }) {
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">Check-ins</div>
       {detail.checkins.length === 0 && (
         <div className="admin-empty">No check-ins yet. Mid-cycle pulses between 1-1s appear here.</div>
       )}
       {detail.checkins.map((c) => (
-        <details key={c.id} className="coach-trend">
+        <details key={c.id} className="admin-coach-trend">
           <summary>
             <strong>{fmt(c.sentAt)}</strong>
             {!c.respondedAt && <span className="admin-badge admin-badge--warn">awaiting their update</span>}
           </summary>
           {html.checkins[c.id] ? (
-            <div className="idea-plan" dangerouslySetInnerHTML={{ __html: html.checkins[c.id]! }} />
+            <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: html.checkins[c.id]! }} />
           ) : (
             <div className="admin-cell-muted">Empty.</div>
           )}
@@ -1259,22 +1259,22 @@ function CompanyGoalsCard({ detail }: { detail: CoachProfileDetail }) {
   );
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">Company goals</div>
       <div className="admin-hint">
         The 8 Edges tree their goals ladder into. Highlighted rows are where {detail.member.name} plugs in.
       </div>
-      <div className="coach-okr-tree">
+      <div className="admin-coach-okr-tree">
         {detail.edges.objectives.map((o, i) => (
-          <div key={o.id} className="coach-okr-objective">
-            <div className={`coach-okr-line${ladderedIds.has(o.id) ? " is-laddered" : ""}`}>
+          <div key={o.id} className="admin-coach-okr-objective">
+            <div className={`admin-coach-okr-line${ladderedIds.has(o.id) ? " is-laddered" : ""}`}>
               <strong>O{i + 1}</strong> {o.label}
             </div>
             <ul>
               {detail.edges.keyResults
                 .filter((k) => k.objectiveId === o.id)
                 .map((k, j) => (
-                  <li key={k.id} className={`coach-okr-line${ladderedIds.has(k.id) ? " is-laddered" : ""}`}>
+                  <li key={k.id} className={`admin-coach-okr-line${ladderedIds.has(k.id) ? " is-laddered" : ""}`}>
                     <span className="admin-cell-muted">KR{j + 1}</span> {k.label}
                     {ladderedIds.has(k.id) && <span className="admin-badge admin-badge--ok">their ladder</span>}
                   </li>
@@ -1308,8 +1308,8 @@ function NotesCard({
   const [md, setMd] = useState(initial);
 
   return (
-    <section className="admin-card coach-section">
-      <div className="coach-block-head">
+    <section className="admin-card admin-coach-section">
+      <div className="admin-coach-block-head">
         <div className="admin-card-title">{title}</div>
         <button className="admin-btn admin-btn--sm" onClick={() => setEditing((v) => !v)}>
           {editing ? "Cancel" : "Edit"}
@@ -1333,7 +1333,7 @@ function NotesCard({
           </div>
         </div>
       ) : rendered ? (
-        <div className="idea-plan" dangerouslySetInnerHTML={{ __html: rendered }} />
+        <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: rendered }} />
       ) : (
         <div className="admin-cell-muted">Nothing here yet.</div>
       )}

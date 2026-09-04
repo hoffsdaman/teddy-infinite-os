@@ -74,7 +74,7 @@ export function OnboardingWalkthrough({
 
   if (!open) {
     return (
-      <button className="team-tour-replay" onClick={() => { setI(0); setOpen(true); }}>
+      <button className="admin-team-tour-replay" onClick={() => { setI(0); setOpen(true); }}>
         ↺ Replay the welcome tour
       </button>
     );
@@ -84,26 +84,26 @@ export function OnboardingWalkthrough({
   const last = i === steps.length - 1;
 
   return (
-    <div className="team-tour-scrim" role="dialog" aria-modal="true" aria-label="Welcome tour">
-      <div className="team-tour-card">
-        <div className="team-tour-ico" aria-hidden>{step.ico}</div>
-        <h2 className="team-tour-title">{step.title}</h2>
-        <p className="team-tour-body">{step.body}</p>
+    <div className="admin-team-tour-scrim" role="dialog" aria-modal="true" aria-label="Welcome tour">
+      <div className="admin-team-tour-card">
+        <div className="admin-team-tour-ico" aria-hidden>{step.ico}</div>
+        <h2 className="admin-team-tour-title">{step.title}</h2>
+        <p className="admin-team-tour-body">{step.body}</p>
 
         {step.href && (
-          <Link href={step.href} className="admin-btn admin-btn--primary team-tour-cta">
+          <Link href={step.href} className="admin-btn admin-btn--primary admin-team-tour-cta">
             {step.cta}
           </Link>
         )}
 
-        <div className="team-tour-dots" aria-hidden>
+        <div className="admin-team-tour-dots" aria-hidden>
           {steps.map((_, n) => (
-            <span key={n} className={`team-tour-dot${n === i ? " is-on" : ""}`} />
+            <span key={n} className={`admin-team-tour-dot${n === i ? " is-on" : ""}`} />
           ))}
         </div>
 
-        <div className="team-tour-nav">
-          <button className="team-tour-skip" onClick={finish} disabled={pending}>
+        <div className="admin-team-tour-nav">
+          <button className="admin-team-tour-skip" onClick={finish} disabled={pending}>
             {last ? "" : "Skip"}
           </button>
           <div style={{ display: "flex", gap: 8 }}>

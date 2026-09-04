@@ -28,19 +28,19 @@ export function NewCampaignButton({ brands, pillars }: { brands: BrandOption[]; 
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="mcr-modal-overlay"
+            className="admin-campaign-modal-overlay"
             role="dialog"
             aria-modal="true"
             onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)}
           >
-            <div className="mcr-modal-card">
-              <div className="mcr-modal-head">
-                <span className="mcr-modal-title">New campaign</span>
+            <div className="admin-campaign-modal-card">
+              <div className="admin-campaign-modal-head">
+                <span className="admin-campaign-modal-title">New campaign</span>
                 <button type="button" className="admin-btn admin-btn--sm" onClick={() => setOpen(false)}>
                   Close
                 </button>
               </div>
-              <div className="mcr-modal-body">
+              <div className="admin-campaign-modal-body">
                 <NewCampaignForm brands={brands} pillars={pillars} />
               </div>
             </div>

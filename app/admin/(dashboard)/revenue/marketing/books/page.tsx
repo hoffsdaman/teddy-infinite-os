@@ -34,19 +34,19 @@ export default async function BooksPage() {
       {books.length === 0 ? (
         <div className="admin-empty">No books imported yet.</div>
       ) : (
-        <div className="mp-kpi-grid">
+        <div className="admin-kpi-grid">
           {books.map((b) => (
             <Link
               key={b.id}
               href={`/admin/revenue/marketing/books/${b.slug}`}
-              className="admin-card admin-section-card book-card-link"
+              className="admin-card admin-section-card admin-book-card-link"
             >
               <div className="admin-card-title">{b.title}</div>
               {b.subtitle ? (
                 <p className="admin-page-sub" style={{ marginTop: 4 }}>{b.subtitle}</p>
               ) : null}
               <p className="admin-page-sub" style={{ marginTop: 6 }}>{b.description}</p>
-              <div className="book-card-meta">
+              <div className="admin-book-card-meta">
                 <Badge tone={b.status === "draft" ? "info" : "ok"}>
                   {STATUS_LABEL[b.status] ?? b.status}
                 </Badge>

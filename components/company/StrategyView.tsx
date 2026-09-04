@@ -9,24 +9,24 @@ export function StrategyView({ parsed }: { parsed: ParsedStrategy }) {
 
   return (
     <>
-      <div className="team-strat-hero">
-        <div className="team-strat-hero-main">
+      <div className="admin-team-strat-hero">
+        <div className="admin-team-strat-hero-main">
           {currentTheme && (
-            <span className="ts-kicker">
+            <span className="admin-start-kicker">
               {currentTheme.year} · {currentTheme.title}
             </span>
           )}
-          <p className={`team-strat-north${overview ? " team-strat-north--overview" : ""}`}>
+          <p className={`admin-team-strat-north${overview ? " admin-team-strat-north--overview" : ""}`}>
             {overview ?? strategy.title}
           </p>
           {/* The current year's theme is the kicker above; older themes trail
               behind it as a quiet timeline. */}
           {themes.filter((t) => t !== currentTheme).length > 0 && (
-            <div className="team-strat-themes">
+            <div className="admin-team-strat-themes">
               {themes
                 .filter((t) => t !== currentTheme)
                 .map((t) => (
-                  <span key={t.year} className="team-strat-theme">
+                  <span key={t.year} className="admin-team-strat-theme">
                     {t.year} · {t.title}
                   </span>
                 ))}
@@ -34,7 +34,7 @@ export function StrategyView({ parsed }: { parsed: ParsedStrategy }) {
           )}
         </div>
         {slides && (
-          <div className="team-strat-hero-side">
+          <div className="admin-team-strat-hero-side">
             <a href={slides.url} target="_blank" rel="noopener noreferrer" className="admin-btn admin-btn--primary">
               {slides.label} →
             </a>
@@ -43,14 +43,14 @@ export function StrategyView({ parsed }: { parsed: ParsedStrategy }) {
       </div>
 
       {statements.length > 0 && (
-        <div className="team-strat-grid">
+        <div className="admin-team-strat-grid">
           {statements.map((s) => (
-            <div key={s.label} className="team-strat-card">
-              <span className="team-hub-ico" aria-hidden>
+            <div key={s.label} className="admin-team-strat-card">
+              <span className="admin-hub-ico" aria-hidden>
                 {s.ico}
               </span>
-              <span className="team-strat-card-label">{s.label}</span>
-              <span className="team-strat-card-body">{s.body}</span>
+              <span className="admin-team-strat-card-label">{s.label}</span>
+              <span className="admin-team-strat-card-body">{s.body}</span>
             </div>
           ))}
         </div>
@@ -59,17 +59,17 @@ export function StrategyView({ parsed }: { parsed: ParsedStrategy }) {
       {lines.length > 0 && (
         <>
           <h2 className="admin-section-label">How we win: three business lines</h2>
-          <div className="team-strat-grid">
+          <div className="admin-team-strat-grid">
             {lines.map((line, i) => (
-              <div key={line.heading} className="team-strat-card">
-                <span className="team-strat-card-head">
-                  <span className="team-hub-ico" aria-hidden>
+              <div key={line.heading} className="admin-team-strat-card">
+                <span className="admin-team-strat-card-head">
+                  <span className="admin-hub-ico" aria-hidden>
                     {LINE_ICONS[i % LINE_ICONS.length]}
                   </span>
-                  <span className="team-strat-line-num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="admin-team-strat-line-num">{String(i + 1).padStart(2, "0")}</span>
                 </span>
-                <span className="team-strat-card-label">{line.heading}</span>
-                <span className="team-strat-card-body">{line.body}</span>
+                <span className="admin-team-strat-card-label">{line.heading}</span>
+                <span className="admin-team-strat-card-body">{line.body}</span>
               </div>
             ))}
           </div>
@@ -80,7 +80,7 @@ export function StrategyView({ parsed }: { parsed: ParsedStrategy }) {
         <div key={s.heading}>
           <h2 className="admin-section-label">{s.heading}</h2>
           <div className="admin-card admin-section-card">
-            <div className="idea-plan" dangerouslySetInnerHTML={{ __html: s.html }} />
+            <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: s.html }} />
           </div>
         </div>
       ))}

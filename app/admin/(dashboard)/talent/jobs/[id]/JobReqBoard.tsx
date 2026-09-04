@@ -64,12 +64,12 @@ export function JobReqBoard({
         onCardClick={(c) => router.push(appPath(c.candidateName, c.id))}
         renderCard={(c) => (
           <>
-            <div className="sap-card-title">{c.candidateName || "(unknown)"}</div>
-            <div className="sap-card-sub">{c.headline || "—"}</div>
-            <div className="sap-card-meta">
+            <div className="admin-kanban-card-title">{c.candidateName || "(unknown)"}</div>
+            <div className="admin-kanban-card-sub">{c.headline || "—"}</div>
+            <div className="admin-kanban-card-meta">
               {c.status && <Badge tone={statusTone(c.status)}>{humanize(c.status)}</Badge>}
               {c.rating != null && (
-                <span className="sap-card-sub" style={{ marginLeft: "auto" }}>{c.rating}★</span>
+                <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>{c.rating}★</span>
               )}
             </div>
           </>

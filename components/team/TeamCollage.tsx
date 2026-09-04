@@ -21,17 +21,17 @@ export function TeamCollage({ photos, avatars }: { photos: GalleryPhoto[]; avata
     const p = photos[i];
     if (p) {
       tiles.push(
-        <Link key={`p${p.id}`} className="team-collage-photo" href="/team/gallery" title={p.caption || "Open the gallery"}>
+        <Link key={`p${p.id}`} className="admin-team-collage-photo" href="/team/gallery" title={p.caption || "Open the gallery"}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={p.image_url} alt={p.caption || "Team photo"} loading="lazy" decoding="async" />
-          {p.caption && <span className="team-collage-cap">{p.caption}</span>}
+          {p.caption && <span className="admin-team-collage-cap">{p.caption}</span>}
         </Link>,
       );
     }
     const a = avatars[i];
     if (a) {
       tiles.push(
-        <Link key={`a${a.id}`} className="team-collage-avatar" href={`/team/directory/${a.id}`} title={a.name}>
+        <Link key={`a${a.id}`} className="admin-team-collage-avatar" href={`/team/directory/${a.id}`} title={a.name}>
           {a.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={a.avatarUrl} alt={a.name} loading="lazy" decoding="async" />
@@ -43,5 +43,5 @@ export function TeamCollage({ photos, avatars }: { photos: GalleryPhoto[]; avata
     }
   }
 
-  return <div className="team-collage">{tiles}</div>;
+  return <div className="admin-team-collage">{tiles}</div>;
 }

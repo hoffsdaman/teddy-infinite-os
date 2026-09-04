@@ -103,12 +103,12 @@ export function ScorecardForm({
         <label className="admin-label" style={{ display: "block", marginBottom: 6 }}>
           Rubric
         </label>
-        <div className="hire-criteria">
+        <div className="admin-hire-criteria">
           {rows.map((row, i) => (
-            <div key={row.criterion} className="hire-criterion">
-              <span className="hire-criterion-label">{row.criterion}</span>
+            <div key={row.criterion} className="admin-hire-criterion">
+              <span className="admin-hire-criterion-label">{row.criterion}</span>
               <select
-                className="admin-select hire-criterion-score"
+                className="admin-select admin-hire-criterion-score"
                 value={row.score ?? ""}
                 onChange={(e) => setRow(i, { score: e.target.value === "" ? null : Number(e.target.value) })}
               >
@@ -120,7 +120,7 @@ export function ScorecardForm({
                 ))}
               </select>
               <input
-                className="admin-input hire-criterion-note"
+                className="admin-input admin-hire-criterion-note"
                 placeholder="Evidence from the interview"
                 value={row.comment}
                 onChange={(e) => setRow(i, { comment: e.target.value })}

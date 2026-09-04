@@ -36,7 +36,7 @@ export default async function AffiliatesPage() {
         sub={`${groups.length} ${groups.length === 1 ? "affiliate" : "affiliates"}`}
       />
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Pipeline" value={formatCents(pipeline, "usd")} sub="open referred deals" />
         <MetricCard label="Converted" value={formatCents(converted, "usd")} sub="referred revenue that paid" />
         <MetricCard label="Commissions awarded" value={formatCents(commissionsAwarded, "usd")} sub="earned by affiliates" />

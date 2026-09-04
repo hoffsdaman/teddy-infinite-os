@@ -628,7 +628,7 @@ export function BoardView({
         onMove={move}
         onCardClick={openCard}
         columnFooter={(col) => (
-          <button className="sap-add-card" onClick={() => openCreate(col.id)}>
+          <button className="admin-kanban-add" onClick={() => openCreate(col.id)}>
             + Add a card
           </button>
         )}
@@ -640,8 +640,8 @@ export function BoardView({
             c.due_date != null && c.status !== "done" && c.due_date < new Date().toISOString().slice(0, 10);
           return (
             <>
-              <div className="sap-card-title">{c.title}</div>
-              <div className="sap-card-meta">
+              <div className="admin-kanban-card-title">{c.title}</div>
+              <div className="admin-kanban-card-meta">
                 {isNewForViewer(c) && <Badge tone="info">New</Badge>}
                 <Badge tone={PRIORITY_TONE[c.priority]}>{PRIORITY_LABEL[c.priority]}</Badge>
                 {c.subject_type === SUBJECT_COMMITMENT && <Badge tone="ok">Commitment</Badge>}
@@ -652,18 +652,18 @@ export function BoardView({
                 )}
                 {c.internal && <Badge tone="neutral">Internal</Badge>}
               </div>
-              <div className="sap-card-meta">
+              <div className="admin-kanban-card-meta">
                 {c.assignee_name ? (
-                  <span className="sap-card-assignee">
-                    <span className="sap-avatar">{initials(c.assignee_name)}</span>
+                  <span className="admin-kanban-card-assignee">
+                    <span className="admin-kanban-avatar">{initials(c.assignee_name)}</span>
                     {c.assignee_name}
                   </span>
                 ) : (
-                  <span className="sap-card-sub">Unassigned</span>
+                  <span className="admin-kanban-card-sub">Unassigned</span>
                 )}
                 {c.due_date && (
                   <span
-                    className="sap-card-sub"
+                    className="admin-kanban-card-sub"
                     style={{ marginLeft: "auto", color: overdue ? "var(--admin-err-ink)" : undefined }}
                   >
                     {formatDate(c.due_date)}
@@ -671,7 +671,7 @@ export function BoardView({
                 )}
               </div>
               {(c.subtasks.length > 0 || c.comments.length > 0 || c.human_tokens != null) && (
-                <div className="sap-card-sub" style={{ marginTop: 4, display: "flex", gap: 12 }}>
+                <div className="admin-kanban-card-sub" style={{ marginTop: 4, display: "flex", gap: 12 }}>
                   {c.subtasks.length > 0 && (
                     <span>
                       ☑ {c.subtasks.filter((s) => s.done).length}/{c.subtasks.length}
@@ -682,7 +682,7 @@ export function BoardView({
                 </div>
               )}
               {aging && (
-                <div className="sap-card-sub" style={{ color: "var(--admin-warn-ink)", marginTop: 4 }}>
+                <div className="admin-kanban-card-sub" style={{ color: "var(--admin-warn-ink)", marginTop: 4 }}>
                   ◷ {days}d in column
                 </div>
               )}

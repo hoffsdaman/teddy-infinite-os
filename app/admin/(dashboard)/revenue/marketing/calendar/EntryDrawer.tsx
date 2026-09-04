@@ -458,12 +458,12 @@ export function EntryDrawer({
           )}
 
           {images.length > 1 && (
-            <div className="mcr-thumbs" style={{ padding: "12px 0 0" }}>
+            <div className="admin-campaign-thumbs" style={{ padding: "12px 0 0" }}>
               {images.map((img, i) => (
                 <button
                   key={img.id}
                   type="button"
-                  className={`mcr-thumb${img.isSelected ? " is-selected" : ""}`}
+                  className={`admin-campaign-thumb${img.isSelected ? " is-selected" : ""}`}
                   disabled={pending || img.isSelected}
                   onClick={() => selectImage(img.id)}
                   title={img.isSelected ? "Selected" : `Use version ${images.length - i}`}

@@ -81,7 +81,7 @@ export default async function InquiriesPage() {
           {error.message}
         </div>
       )}
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="New" value={kpis.fresh} sub="unworked" />
         <MetricCard label="Contacted" value={kpis.contacted} />
         <MetricCard label="Promoted to lead" value={kpis.promoted} sub="in the SDR queue" />

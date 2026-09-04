@@ -44,11 +44,11 @@ function Tile({
   attn?: boolean;
 }) {
   return (
-    <div className={`team-glance-cell${attn ? " coach-hero__cell--attn" : ""}`}>
-      <span className="team-glance-label">{label}</span>
-      <span className="team-glance-value">{value}</span>
+    <div className={`admin-glance-cell${attn ? " admin-coach-hero__cell--attn" : ""}`}>
+      <span className="admin-glance-label">{label}</span>
+      <span className="admin-glance-value">{value}</span>
       {(note || badge) && (
-        <span className="team-glance-note coach-hero__note">
+        <span className="admin-glance-note admin-coach-hero__note">
           {note}
           {badge && (
             <span className={`admin-badge${badgeTone === "muted" ? "" : ` admin-badge--${badgeTone}`}`}>{badge}</span>
@@ -68,13 +68,13 @@ export function MyCoachingHeader({ my }: { my: MyCoaching }) {
   const awaitingCheckins = my.checkins.filter((c) => !c.respondedAt).length;
 
   return (
-    <header className="coach-hero">
+    <header className="admin-coach-hero">
       <div className="admin-eyebrow">Coaching</div>
 
-      <div className="coach-hero__id">
-        <div className="coach-hero__id-text">
-          <div className="coach-hero__name">My coaching</div>
-          <div className="coach-hero__role">
+      <div className="admin-coach-hero__id">
+        <div className="admin-coach-hero__id-text">
+          <div className="admin-coach-hero__name">My coaching</div>
+          <div className="admin-coach-hero__role">
             {my.coachName
               ? `1-1s with ${my.coachName} every ${my.cadenceDays} days · your growth, your goals`
               : "No coach assigned yet. Your goals and commitments are still yours to run."}
@@ -82,7 +82,7 @@ export function MyCoachingHeader({ my }: { my: MyCoaching }) {
         </div>
       </div>
 
-      <div className="team-glance coach-hero__stats">
+      <div className="admin-glance admin-coach-hero__stats">
         <Tile
           label="Next 1-1"
           value={my.nextOneOnOneOn ? fmtDate(my.nextOneOnOneOn) : "Not scheduled"}

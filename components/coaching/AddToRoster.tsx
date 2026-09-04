@@ -16,14 +16,14 @@ export function AddToRoster({ candidates }: { candidates: RosterCandidate[] }) {
   if (candidates.length === 0) return null;
 
   return (
-    <section className="admin-card coach-section">
+    <section className="admin-card admin-coach-section">
       <div className="admin-card-title">Add to your roster</div>
       <div className="admin-hint">
         Pick a person and their first 1-1 date. Biweekly cadence starts from that date, so an
         alternating-week group is just a first date one week offset from the others.
       </div>
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
-      <div className="coach-add-row">
+      <div className="admin-coach-add-row">
         <select
           className="admin-input"
           value={teamMemberId}

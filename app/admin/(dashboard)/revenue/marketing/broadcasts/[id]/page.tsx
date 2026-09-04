@@ -60,7 +60,7 @@ export default async function BroadcastDetailPage({ params }: { params: { id: st
         action={<Badge tone={STATUS_TONE[campaign.status]}>{campaign.status}</Badge>}
       />
 
-      <div className="mp-kpi-grid">
+      <div className="admin-kpi-grid">
         <MetricCard label="Queued" value={stats.pending.toLocaleString()} sub="not yet sent" />
         <MetricCard label="Sent" value={stats.sent.toLocaleString()} sub={`of ${stats.total.toLocaleString()}`} />
         <MetricCard
@@ -74,7 +74,7 @@ export default async function BroadcastDetailPage({ params }: { params: { id: st
       {hasSent && (
         <section className="admin-card admin-section-card">
           <div className="admin-card-title">Results</div>
-          <div className="mp-kpi-grid" style={{ marginTop: 12, marginBottom: 0 }}>
+          <div className="admin-kpi-grid" style={{ marginTop: 12, marginBottom: 0 }}>
             <MetricCard label="Delivered" value={stats.delivered.toLocaleString()} />
             <MetricCard label="Bounced" value={stats.bounced.toLocaleString()} />
             <MetricCard label="Opened" value={stats.opened.toLocaleString()} />

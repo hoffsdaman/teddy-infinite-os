@@ -123,31 +123,31 @@ export default async function PortalHome() {
       />
 
       {hasGlance && (
-        <div className="team-glance" style={{ marginBottom: 16 }}>
-          <div className="team-glance-cell">
-            <span className="team-glance-label">Roadmap</span>
-            <span className="team-glance-value">
+        <div className="admin-glance" style={{ marginBottom: 16 }}>
+          <div className="admin-glance-cell">
+            <span className="admin-glance-label">Roadmap</span>
+            <span className="admin-glance-value">
               {roadmap.total > 0 ? `${roadmap.total} item${roadmap.total === 1 ? "" : "s"}` : "None yet"}
             </span>
-            <span className="team-glance-note">
+            <span className="admin-glance-note">
               {roadmap.total > 0 ? <Link href="/portal/hub">Open →</Link> : "Built with Edge8"}
             </span>
           </div>
-          <div className="team-glance-cell">
-            <span className="team-glance-label">Work Board</span>
-            <span className="team-glance-value">
+          <div className="admin-glance-cell">
+            <span className="admin-glance-label">Work Board</span>
+            <span className="admin-glance-value">
               {board ? `${openCards.length} open card${openCards.length === 1 ? "" : "s"}` : "No board yet"}
             </span>
-            <span className="team-glance-note">
+            <span className="admin-glance-note">
               {board ? <Link href="/portal/hub">Open →</Link> : "Set up by Edge8"}
             </span>
           </div>
-          <div className="team-glance-cell">
-            <span className="team-glance-label">Documents</span>
-            <span className="team-glance-value">
+          <div className="admin-glance-cell">
+            <span className="admin-glance-label">Documents</span>
+            <span className="admin-glance-value">
               {documents.length === 0 ? "None yet" : `${documents.length} file${documents.length === 1 ? "" : "s"}`}
             </span>
-            <span className="team-glance-note">
+            <span className="admin-glance-note">
               <Link href="/portal/hub">{documents.length > 0 ? "Open →" : "Upload →"}</Link>
             </span>
           </div>
@@ -254,7 +254,7 @@ export default async function PortalHome() {
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard
           label="Token balance"
           value={tokens.balanceTokens}

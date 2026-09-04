@@ -46,24 +46,24 @@ export default async function MyEquipmentPage() {
       />
 
       {items.length > 0 && (
-        <div className="team-eq-grid">
+        <div className="admin-team-eq-grid">
           {items.map((it) => {
             const specs = specSummary(it);
             return (
-              <article key={it.id} className="team-eq-card">
-                <div className="team-eq-media">
+              <article key={it.id} className="admin-team-eq-card">
+                <div className="admin-team-eq-media">
                   {it.image_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={it.image_url} alt="" className="team-eq-photo" />
+                    <img src={it.image_url} alt="" className="admin-team-eq-photo" />
                   ) : (
                     <DeviceArt type={it.type} />
                   )}
-                  <span className="team-eq-tag">{it.asset_tag}</span>
+                  <span className="admin-team-eq-tag">{it.asset_tag}</span>
                 </div>
-                <div className="team-eq-body">
-                  <h3 className="team-eq-name">{it.name}</h3>
-                  {specs && <p className="team-eq-specs">{specs}</p>}
-                  <dl className="team-eq-meta">
+                <div className="admin-team-eq-body">
+                  <h3 className="admin-team-eq-name">{it.name}</h3>
+                  {specs && <p className="admin-team-eq-specs">{specs}</p>}
+                  <dl className="admin-team-eq-meta">
                     {it.brand && (
                       <>
                         <dt>Brand</dt>
@@ -79,9 +79,9 @@ export default async function MyEquipmentPage() {
                       </>
                     )}
                   </dl>
-                  <div className="team-eq-foot">
+                  <div className="admin-team-eq-foot">
                     <Badge tone={it.status === "in_repair" ? "warn" : "ok"}>{statusLabel(it.status)}</Badge>
-                    <span className="team-eq-type">{humanize(it.type)}</span>
+                    <span className="admin-team-eq-type">{humanize(it.type)}</span>
                   </div>
                 </div>
               </article>
@@ -91,7 +91,7 @@ export default async function MyEquipmentPage() {
       )}
 
       {items.length === 0 && (
-        <div className="admin-card admin-section-card team-eq-empty">
+        <div className="admin-card admin-section-card admin-team-eq-empty">
           <DeviceArt type="other" />
           <p>
             Nothing is assigned to you yet. If you are holding something that isn&apos;t listed here,
@@ -100,10 +100,10 @@ export default async function MyEquipmentPage() {
         </div>
       )}
 
-      <div className="team-eq-columns">
+      <div className="admin-team-eq-columns">
         <section className="admin-card admin-section-card">
-          <h2 className="team-eq-heading">Need something?</h2>
-          <p className="team-eq-lede">
+          <h2 className="admin-team-eq-heading">Need something?</h2>
+          <p className="admin-team-eq-lede">
             Ask here rather than in a chat thread, so the request doesn&apos;t get lost and whoever
             orders it can see what is already on the shelf.
           </p>
@@ -111,23 +111,23 @@ export default async function MyEquipmentPage() {
         </section>
 
         <section className="admin-card admin-section-card">
-          <h2 className="team-eq-heading">Your requests</h2>
+          <h2 className="admin-team-eq-heading">Your requests</h2>
           {requests.length === 0 ? (
-            <p className="team-eq-lede">You haven&apos;t asked for anything yet.</p>
+            <p className="admin-team-eq-lede">You haven&apos;t asked for anything yet.</p>
           ) : (
-            <ul className="team-eq-requests">
+            <ul className="admin-team-eq-requests">
               {requests.map((r) => (
                 <li key={r.id}>
-                  <div className="team-eq-req-top">
-                    <span className="team-eq-req-type">{humanize(r.type)}</span>
+                  <div className="admin-team-eq-req-top">
+                    <span className="admin-team-eq-req-type">{humanize(r.type)}</span>
                     <Badge tone={requestTone(r.status)}>{humanize(r.status)}</Badge>
                   </div>
-                  {r.reason && <p className="team-eq-req-reason">{r.reason}</p>}
-                  <p className="team-eq-req-date">
+                  {r.reason && <p className="admin-team-eq-req-reason">{r.reason}</p>}
+                  <p className="admin-team-eq-req-date">
                     Asked {formatDate(r.created_at)}
                     {r.needed_by && ` · needed by ${formatDate(r.needed_by)}`}
                   </p>
-                  {r.decision_note && <p className="team-eq-req-note">{r.decision_note}</p>}
+                  {r.decision_note && <p className="admin-team-eq-req-note">{r.decision_note}</p>}
                 </li>
               ))}
             </ul>

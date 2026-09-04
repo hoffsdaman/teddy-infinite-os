@@ -63,24 +63,24 @@ export default async function TeamProfilePage() {
   };
 
   return (
-    <div className="team-profile">
-      <div className="team-profile-head">
+    <div className="admin-team-profile">
+      <div className="admin-team-profile-head">
         <AvatarUpload name={actor.displayName} avatarUrl={profile.avatarUrl} action={saveOwnAvatar} />
-        <div className="team-profile-head-text">
+        <div className="admin-team-profile-head-text">
           <h1 className="admin-page-title">{actor.displayName}</h1>
           <p className="admin-page-sub" style={{ marginTop: 2 }}>
             {[p?.full_name, profile.positionTitle, p?.email].filter(Boolean).join(" · ")}
           </p>
         </div>
-        <div className="team-profile-head-badges">
+        <div className="admin-team-profile-head-badges">
           {profile.status && <Badge tone={statusTone(profile.status)}>{humanize(profile.status)}</Badge>}
           {onProbation && (
-            <span className="team-probation-chip">Probation · ends {formatDate(profile.probationEndsOn!)}</span>
+            <span className="admin-team-probation-chip">Probation · ends {formatDate(profile.probationEndsOn!)}</span>
           )}
         </div>
       </div>
 
-      <div className="team-profile-stack">
+      <div className="admin-team-profile-stack">
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Employment</h2>
           <dl className="admin-kv">

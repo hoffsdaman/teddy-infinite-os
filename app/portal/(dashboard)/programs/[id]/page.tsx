@@ -123,7 +123,7 @@ export default async function AiProgramDetailPage({
               <Empty text="Delivery tracking starts when a repo is connected." />
             ) : (
               <>
-                <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+                <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
                   <MetricCard
                     label="Human Tokens"
                     value={fmtHours(delivery.deliveredHours)}

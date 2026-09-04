@@ -35,24 +35,24 @@ export function BlogPreview({
     : null;
 
   return (
-    <div className={`mcr-blogprev${family ? ` mcr-blogprev--${family}` : ""}`}>
+    <div className={`admin-campaign-blogprev${family ? ` admin-campaign-blogprev--${family}` : ""}`}>
       {coverUrl && (
-        <div className="mcr-blogprev-cover">
+        <div className="admin-campaign-blogprev-cover">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={coverUrl} alt={title} />
         </div>
       )}
-      <div className="mcr-blogprev-inner">
-        <div className="mcr-blogprev-meta">
-          {categoryLabel && <span className="mcr-blogprev-tag">{categoryLabel}</span>}
+      <div className="admin-campaign-blogprev-inner">
+        <div className="admin-campaign-blogprev-meta">
+          {categoryLabel && <span className="admin-campaign-blogprev-tag">{categoryLabel}</span>}
           {dateLabel && <span>{dateLabel}</span>}
           <span>{readTime}</span>
         </div>
         {blogStyle && (
-          <div className="mcr-blogprev-eyebrow">{blogTypeLabel(blogStyle)}</div>
+          <div className="admin-campaign-blogprev-eyebrow">{blogTypeLabel(blogStyle)}</div>
         )}
-        <h1 className="mcr-blogprev-title">{title}</h1>
-        <div className="mcr-blogprev-body" dangerouslySetInnerHTML={{ __html: html }} />
+        <h1 className="admin-campaign-blogprev-title">{title}</h1>
+        <div className="admin-campaign-blogprev-body" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>
   );

@@ -122,17 +122,17 @@ export function ApplicationsBoard({
             const color = (c.row.jobReqId && roleColor.get(c.row.jobReqId)) || ROLE_COLORS[0];
             return (
               <>
-                <div className="sap-card-title">{c.row.candidateName || "(unknown)"}</div>
-                <div className="sap-card-sub">{c.row.headline || c.row.currentTitle || "—"}</div>
-                <div className="sap-card-meta">
-                  <span className="sap-role-tag" style={{ color, background: `${color}1f` }}>
+                <div className="admin-kanban-card-title">{c.row.candidateName || "(unknown)"}</div>
+                <div className="admin-kanban-card-sub">{c.row.headline || c.row.currentTitle || "—"}</div>
+                <div className="admin-kanban-card-meta">
+                  <span className="admin-kanban-role-tag" style={{ color, background: `${color}1f` }}>
                     {c.row.jobReqTitle || "—"}
                   </span>
                 </div>
-                <div className="sap-card-meta">
+                <div className="admin-kanban-card-meta">
                   {c.row.status && <Badge tone={statusTone(c.row.status)}>{humanize(c.row.status)}</Badge>}
                   {c.row.aiRating != null && (
-                    <span className="sap-card-sub" style={{ marginLeft: "auto" }}>
+                    <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
                       AI {c.row.aiRating.toFixed(1)}
                     </span>
                   )}

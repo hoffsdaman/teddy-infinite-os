@@ -160,10 +160,10 @@ function StepRow({
   const [duration, setDuration] = useState(step.durationMinutes?.toString() ?? "");
 
   return (
-    <div className="loop-step">
-      <span className="loop-step-num">{index + 1}</span>
+    <div className="admin-loop-step">
+      <span className="admin-loop-step-num">{index + 1}</span>
 
-      <div className="loop-step-body">
+      <div className="admin-loop-step-body">
         {editing ? (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <input
@@ -212,13 +212,13 @@ function StepRow({
           </div>
         ) : (
           <>
-            <div className="loop-step-head">
+            <div className="admin-loop-step-head">
               <strong>{step.name}</strong>
               {step.durationMinutes != null && (
                 <span className="admin-cell-muted">{step.durationMinutes} min</span>
               )}
             </div>
-            <div className="loop-step-people">
+            <div className="admin-loop-step-people">
               {step.interviewers.length === 0 ? (
                 <span className="admin-cell-muted">No interviewer assigned</span>
               ) : (
@@ -241,7 +241,7 @@ function StepRow({
         />
       </div>
 
-      <div className="loop-step-actions">
+      <div className="admin-loop-step-actions">
         <button
           type="button"
           className="admin-btn"

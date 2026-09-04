@@ -130,7 +130,7 @@ export default async function LeadsPage() {
           {queueRes.error.message}
         </div>
       )}
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard
           label="Meetings booked this week"
           value={`${meetingsBooked} / ${WEEKLY_MEETINGS_GOAL}`}

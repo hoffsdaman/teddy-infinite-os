@@ -181,7 +181,7 @@ export default async function ApplicationsPage() {
         </div>
       )}
 
-      <div className="mp-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
         <MetricCard label="Active" value={activeRows.filter((r) => r.status === "active").length} sub="in pipeline" />
         <MetricCard label="On hold" value={activeRows.filter((r) => r.status === "on_hold").length} sub="parked" />
         <MetricCard label="Hired" value={activeRows.filter((r) => r.status === "hired").length} sub="closed won" />

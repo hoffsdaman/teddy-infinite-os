@@ -15,10 +15,10 @@ const MAX_RESULTS = 8;
 function Avatar({ name, url }: { name: string; url: string | null }) {
   if (url) {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={url} alt="" className="phototag-avatar" />;
+    return <img src={url} alt="" className="admin-phototag-avatar" />;
   }
   return (
-    <span className="phototag-avatar phototag-avatar--blank" aria-hidden>
+    <span className="admin-phototag-avatar admin-phototag-avatar--blank" aria-hidden>
       {name.charAt(0).toUpperCase()}
     </span>
   );
@@ -67,14 +67,14 @@ export function PhotoTagPicker({
 
   return (
     <div className="phototag">
-      <div className="phototag-chips">
+      <div className="admin-phototag-chips">
         {tags.map((t) => (
-          <span key={t.person_id} className="phototag-chip">
+          <span key={t.person_id} className="admin-phototag-chip">
             <Avatar name={t.name} url={t.avatar_url} />
-            <span className="phototag-name">{t.name}</span>
+            <span className="admin-phototag-name">{t.name}</span>
             <button
               type="button"
-              className="phototag-x"
+              className="admin-phototag-x"
               aria-label={`Remove ${t.name}`}
               onClick={() => run(() => onRemove(photoId, t.person_id))}
               disabled={pending}
@@ -85,7 +85,7 @@ export function PhotoTagPicker({
         ))}
         <button
           type="button"
-          className="phototag-add"
+          className="admin-phototag-add"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           disabled={pending}
@@ -95,24 +95,24 @@ export function PhotoTagPicker({
       </div>
 
       {open && (
-        <div className="phototag-picker">
+        <div className="admin-phototag-picker">
           <input
-            className="admin-input phototag-search"
+            className="admin-input admin-phototag-search"
             placeholder="Search people…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             autoFocus
             disabled={pending}
           />
-          <div className="phototag-results">
+          <div className="admin-phototag-results">
             {matches.length === 0 ? (
-              <div className="phototag-none">{taggable.length ? "No matches" : "No people to tag"}</div>
+              <div className="admin-phototag-none">{taggable.length ? "No matches" : "No people to tag"}</div>
             ) : (
               matches.map((p) => (
                 <button
                   type="button"
                   key={p.person_id}
-                  className="phototag-result"
+                  className="admin-phototag-result"
                   onClick={() => run(() => onAdd(photoId, p.person_id), () => setQ(""))}
                   disabled={pending}
                 >
@@ -125,7 +125,7 @@ export function PhotoTagPicker({
         </div>
       )}
 
-      {err && <div className="phototag-err">{err}</div>}
+      {err && <div className="admin-phototag-err">{err}</div>}
     </div>
   );
 }

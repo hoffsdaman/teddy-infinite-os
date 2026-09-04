@@ -62,7 +62,7 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
               Summary failed{meeting.aiError ? `: ${meeting.aiError}` : "."} Use “Retry summary” below.
             </div>
           ) : summaryHtml ? (
-            <div className="idea-plan" dangerouslySetInnerHTML={{ __html: summaryHtml }} />
+            <div className="admin-idea-plan" dangerouslySetInnerHTML={{ __html: summaryHtml }} />
           ) : (
             <div className="admin-cell-muted">No summary.</div>
           )}

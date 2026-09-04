@@ -49,7 +49,7 @@ async function MarketingSection({
 
   return (
     <>
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard
           label="Visitors · 30d"
           value={visitors != null ? visitors.toLocaleString("en-US") : "—"}
@@ -77,11 +77,11 @@ async function MarketingSection({
       </div>
       <div className="admin-summary-grid" style={{ marginBottom: 4 }}>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Traffic by channel · 30d</div>
+          <div className="admin-kpi-label">Traffic by channel · 30d</div>
           <DonutChart data={byChannel} centerLabel="visits" ariaLabel="Public site traffic by channel" emptyText="No traffic data." />
         </div>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Active campaigns</div>
+          <div className="admin-kpi-label">Active campaigns</div>
           {activeCampaigns.length === 0 ? (
             <div className="admin-empty">Nothing in flight.</div>
           ) : (
@@ -108,7 +108,7 @@ async function MarketingSection({
 }
 function MarketingSectionFallback() {
   return (
-    <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+    <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
       <MetricCard label="Visitors · 30d" value="…" sub="unique, public site" />
       <MetricCard label="Newsletter audience" value="…" sub="loading" />
       <MetricCard label="Emails opened · 30d" value="…" sub="loading" />
@@ -439,7 +439,7 @@ export default async function SalesCockpitPage() {
       )}
 
       {/* ── Shared money strip: the numbers every revenue function cares about ── */}
-      <div className="mp-kpi-grid" style={{ marginBottom: 4 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 4 }}>
         <MetricCard
           label="Revenue · 1yr"
           value={formatCents(revenue1yr)}
@@ -458,7 +458,7 @@ export default async function SalesCockpitPage() {
           slaOverdue > 0 ? `${slaOverdue} SLA overdue` : null,
         ].filter(Boolean).join(" · ")}
       />
-      <div className="mp-kpi-grid" style={{ marginBottom: 16 }}>
+      <div className="admin-kpi-grid" style={{ marginBottom: 16 }}>
         <MetricCard label="Open pipeline" value={formatCents(openPipeline)} sub={`${deals.length} open deals`} href="/admin/revenue/deals" />
         <MetricCard label="New leads · 30d" value={newLeads30} sub={vsPrior(newLeads30, newLeadsPrev30)} href="/admin/revenue/leads" />
         <MetricCard label="Meetings booked" value={`${meetingsBooked} / ${WEEKLY_MEETINGS_GOAL}`} sub="this week vs goal" href="/admin/revenue/leads" />
@@ -466,11 +466,11 @@ export default async function SalesCockpitPage() {
       </div>
       <div className="admin-summary-grid" style={{ marginBottom: 16 }}>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Revenue by month · {year}</div>
+          <div className="admin-kpi-label">Revenue by month · {year}</div>
           <BarChart data={revenueByMonth} ariaLabel="Revenue by month" formatValue={compactUsd} />
         </div>
         <div className="admin-card admin-chart-card">
-          <div className="mp-kpi-label">Pipeline flow · last 30 days</div>
+          <div className="admin-kpi-label">Pipeline flow · last 30 days</div>
           <BarChart data={funnel30} ariaLabel="Pipeline flow over the last 30 days" emptyText="No pipeline activity in the last 30 days." />
         </div>
       </div>
@@ -570,7 +570,7 @@ export default async function SalesCockpitPage() {
 
       {/* ── CUSTOMER SUCCESS (placeholder; retention + support tickets land here later) ── */}
       <Band label="Customer Success" note="coming later" muted />
-      <div className="mp-kpi-grid" style={{ opacity: 0.6 }}>
+      <div className="admin-kpi-grid" style={{ opacity: 0.6 }}>
         <MetricCard label="Active clients" value="—" sub="coming later" />
         <MetricCard label="Renewals due" value="—" sub="coming later" />
         <MetricCard

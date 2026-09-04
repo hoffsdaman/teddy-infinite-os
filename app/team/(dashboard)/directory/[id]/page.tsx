@@ -50,9 +50,9 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
   const personal = !!(profile.hometown || profile.education || profile.hobbies.length);
 
   return (
-    <div className="team-profile">
-      <div className="team-profile-head">
-        <div className="team-avatar" style={{ width: 88, height: 88, fontSize: 88 / 2.6 }}>
+    <div className="admin-team-profile">
+      <div className="admin-team-profile-head">
+        <div className="admin-team-avatar" style={{ width: 88, height: 88, fontSize: 88 / 2.6 }}>
           {profile.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={profile.avatarUrl} alt={profile.name} />
@@ -60,7 +60,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
             <span>{initials(profile.name)}</span>
           )}
         </div>
-        <div className="team-profile-head-text">
+        <div className="admin-team-profile-head-text">
           <h1 className="admin-page-title">{profile.name}</h1>
           {meta && (
             <p className="admin-page-sub" style={{ marginTop: 2 }}>
@@ -70,7 +70,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
         </div>
       </div>
 
-      <div className="team-profile-stack">
+      <div className="admin-team-profile-stack">
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Role</h2>
           <dl className="admin-kv">

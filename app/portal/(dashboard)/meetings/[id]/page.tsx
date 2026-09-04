@@ -36,7 +36,7 @@ export default async function PortalMeetingDetailPage({ params }: { params: { id
           <strong>Attendees:</strong> {meeting.attendees.length > 0 ? meeting.attendees.join(", ") : "—"}
         </div>
         {summaryHtml ? (
-          <div className="idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
+          <div className="admin-idea-plan" style={{ marginTop: 12 }} dangerouslySetInnerHTML={{ __html: summaryHtml }} />
         ) : (
           <div className="admin-cell-muted" style={{ marginTop: 12 }}>No summary yet.</div>
         )}

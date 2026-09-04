@@ -49,12 +49,12 @@ export function ProfileEditor({
 
   return (
     <form onSubmit={submit}>
-      <div className="team-profile-stack">
+      <div className="admin-team-profile-stack">
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Personal</h2>
           <p className="admin-page-sub" style={{ marginTop: 0 }}>Yours to keep up to date.</p>
-          <div className="tp-fields">
-            <div className="tp-row" style={{ ["--n" as string]: 3 }}>
+          <div className="admin-profile-fields">
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
               <Field label="Gender">
                 <select className="admin-input" value={v.gender} onChange={set("gender")}>
                   <option value="">—</option>
@@ -75,7 +75,7 @@ export function ProfileEditor({
                 </select>
               </Field>
             </div>
-            <div className="tp-row">
+            <div className="admin-profile-row">
               <Field label="Hometown">
                 <input className="admin-input" value={v.hometown} onChange={set("hometown")} placeholder="Where you're from" />
               </Field>
@@ -92,8 +92,8 @@ export function ProfileEditor({
 
         <section className="admin-card admin-section-card">
           <h2 className="admin-card-title">Contact</h2>
-          <div className="tp-fields">
-            <div className="tp-row" style={{ ["--n" as string]: 3 }}>
+          <div className="admin-profile-fields">
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
               <Field label="Preferred name">
                 <input className="admin-input" value={v.preferredName} onChange={set("preferredName")} placeholder="What you like to be called" />
               </Field>
@@ -104,7 +104,7 @@ export function ProfileEditor({
                 <input className="admin-input" type="email" value={v.personalEmail} onChange={set("personalEmail")} placeholder="name@gmail.com" />
               </Field>
             </div>
-            <div className="tp-row">
+            <div className="admin-profile-row">
               <Field label="Emergency contact">
                 <input className="admin-input" value={v.emergencyContactName} onChange={set("emergencyContactName")} placeholder="Name" />
               </Field>
@@ -116,15 +116,15 @@ export function ProfileEditor({
         </section>
 
         <section className="admin-card admin-section-card">
-          <h2 className="admin-card-title team-lock-title">
+          <h2 className="admin-card-title admin-team-lock-title">
             Private · payroll, ID and address
-            <span className="team-lock" aria-hidden>🔒</span>
+            <span className="admin-team-lock" aria-hidden>🔒</span>
           </h2>
           <p className="admin-page-sub" style={{ marginTop: 0 }}>
             Only you and HR see this. We email you if bank details change.
           </p>
-          <div className="tp-fields">
-            <div className="tp-row">
+          <div className="admin-profile-fields">
+            <div className="admin-profile-row">
               <Field label="Current address">
                 <input className="admin-input" value={v.currentAddress} onChange={set("currentAddress")} />
               </Field>
@@ -132,7 +132,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.permanentAddress} onChange={set("permanentAddress")} />
               </Field>
             </div>
-            <div className="tp-row" style={{ ["--n" as string]: 5 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 5 }}>
               <Field label="Bank" span={2}>
                 <input className="admin-input" value={v.bankName} onChange={set("bankName")} />
               </Field>
@@ -140,7 +140,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.bankAccountNumber} onChange={set("bankAccountNumber")} />
               </Field>
             </div>
-            <div className="tp-row" style={{ ["--n" as string]: 3 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 3 }}>
               <Field label="Branch">
                 <input className="admin-input" value={v.bankBranch} onChange={set("bankBranch")} />
               </Field>
@@ -151,7 +151,7 @@ export function ProfileEditor({
                 <input className="admin-input" value={v.socialInsuranceNumber} onChange={set("socialInsuranceNumber")} />
               </Field>
             </div>
-            <div className="tp-row" style={{ ["--n" as string]: 4 }}>
+            <div className="admin-profile-row" style={{ ["--n" as string]: 4 }}>
               <Field label="National ID / passport no." span={2}>
                 <input className="admin-input" value={v.nationalIdNumber} onChange={set("nationalIdNumber")} />
               </Field>
@@ -164,7 +164,7 @@ export function ProfileEditor({
             </div>
             <div className="admin-field">
               <span className="admin-label">ID card images</span>
-              <div className="team-id-slots">
+              <div className="admin-team-id-slots">
                 <IdUpload label="Front" side="front" hasImage={hasIdFront} action={idFrontAction} />
                 <IdUpload label="Back" side="back" hasImage={hasIdBack} action={idBackAction} />
               </div>
@@ -177,7 +177,7 @@ export function ProfileEditor({
             {banner.text}
           </div>
         )}
-        <div className="team-profile-save">
+        <div className="admin-team-profile-save">
           <button type="submit" className="admin-btn admin-btn--primary" disabled={pending}>
             {pending ? "Saving…" : "Save changes"}
           </button>
@@ -206,15 +206,15 @@ function ChipInput({ values, onChange }: { values: string[]; onChange: (v: strin
     setDraft("");
   }
   return (
-    <div className="team-chipinput">
+    <div className="admin-team-chipinput">
       {values.map((h) => (
-        <span className="team-chip is-editable" key={h}>
+        <span className="admin-team-chip is-editable" key={h}>
           {h}
-          <button type="button" className="team-chip-x" aria-label={`Remove ${h}`} onClick={() => onChange(values.filter((x) => x !== h))}>×</button>
+          <button type="button" className="admin-team-chip-x" aria-label={`Remove ${h}`} onClick={() => onChange(values.filter((x) => x !== h))}>×</button>
         </span>
       ))}
       <input
-        className="team-chipinput-field"
+        className="admin-team-chipinput-field"
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={(e) => {

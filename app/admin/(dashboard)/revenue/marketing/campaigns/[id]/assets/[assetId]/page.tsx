@@ -51,8 +51,8 @@ export default async function AssetDetailPage({
       {/* Campaign context: this piece sits within the campaign. Jump between its
           other assets without leaving. */}
       {siblings.length > 1 && (
-        <div className="mcr-sibling-nav">
-          <span className="mcr-sibling-label">In this campaign</span>
+        <div className="admin-campaign-sibling-nav">
+          <span className="admin-campaign-sibling-label">In this campaign</span>
           {siblings.map((s) => (
             <Link
               key={s.id}

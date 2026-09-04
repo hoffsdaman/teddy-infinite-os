@@ -132,7 +132,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
           </div>
           <div className="admin-summary-grid">
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By persona</div>
+              <div className="admin-kpi-label">By persona</div>
               <DonutChart
                 data={summary.personas}
                 centerLabel="contacts"
@@ -142,7 +142,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
               />
             </div>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By source</div>
+              <div className="admin-kpi-label">By source</div>
               <DonutChart
                 data={summary.sources}
                 centerLabel="contacts"
@@ -151,7 +151,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
               />
             </div>
             <div className="admin-card admin-chart-card">
-              <div className="mp-kpi-label">By country</div>
+              <div className="admin-kpi-label">By country</div>
               <DonutChart
                 data={summary.countries}
                 centerLabel="contacts"

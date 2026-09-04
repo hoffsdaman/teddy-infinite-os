@@ -152,7 +152,7 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
       <div style={{ marginTop: 18 }}>
         <label className="admin-label">Documents</label>
         <div
-          className={`gallery-drop${drag ? " is-drag" : ""}`}
+          className={`admin-gallery-drop${drag ? " is-drag" : ""}`}
           role="button"
           tabIndex={0}
           onClick={() => !busy && inputRef.current?.click()}
@@ -168,9 +168,9 @@ export function UploadProgramForm({ companies }: { companies: CompanyOption[] })
             if (!busy) addFiles(Array.from(e.dataTransfer.files));
           }}
         >
-          <span className="gallery-drop-ico" aria-hidden>⬆</span>
-          <span className="gallery-drop-title">Drag files here, or click to browse</span>
-          <span className="gallery-drop-sub">PDF, Word, slides, spreadsheets, text · up to 25 MB each</span>
+          <span className="admin-gallery-drop-ico" aria-hidden>⬆</span>
+          <span className="admin-gallery-drop-title">Drag files here, or click to browse</span>
+          <span className="admin-gallery-drop-sub">PDF, Word, slides, spreadsheets, text · up to 25 MB each</span>
           <input ref={inputRef} type="file" multiple hidden onChange={(e) => { addFiles(Array.from(e.target.files ?? [])); if (inputRef.current) inputRef.current.value = ""; }} />
         </div>
       </div>

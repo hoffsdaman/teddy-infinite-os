@@ -34,11 +34,11 @@ export function CalendarBoard({
       onCardClick={(c) => onCardClick(c.id)}
       renderCard={(c) => (
         <>
-          <div className="sap-card-title">{c.title}</div>
+          <div className="admin-kanban-card-title">{c.title}</div>
           {c.parentId && titleById.has(c.parentId) && (
-            <div className="sap-card-sub">↳ from {titleById.get(c.parentId)}</div>
+            <div className="admin-kanban-card-sub">↳ from {titleById.get(c.parentId)}</div>
           )}
-          <div className="sap-card-meta" style={{ marginTop: 6 }}>
+          <div className="admin-kanban-card-meta" style={{ marginTop: 6 }}>
             <span
               className="admin-cal-chip"
               style={{ background: CHANNEL_ACCENT[c.channel], color: "var(--color-bg-primary)" }}
@@ -48,7 +48,7 @@ export function CalendarBoard({
             {c.brandName && <Badge>{c.brandName}</Badge>}
             {c.pillarName && <Badge tone="info">{c.pillarName}</Badge>}
             {c.broadcastStatus && <Badge tone={statusTone(c.broadcastStatus)}>{c.broadcastStatus}</Badge>}
-            <span className="sap-card-sub" style={{ marginLeft: "auto" }}>
+            <span className="admin-kanban-card-sub" style={{ marginLeft: "auto" }}>
               {c.publishDate ? formatDate(c.publishDate) : "no date"}
             </span>
           </div>

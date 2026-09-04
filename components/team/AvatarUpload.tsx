@@ -56,9 +56,9 @@ export function AvatarUpload({
   }
 
   return (
-    <div className="team-avatar-wrap">
+    <div className="admin-team-avatar-wrap">
       <div
-        className={`team-avatar${editable ? " is-editable" : ""}`}
+        className={`admin-team-avatar${editable ? " is-editable" : ""}`}
         style={{ width: size, height: size, fontSize: size / 2.6 }}
         onClick={editable ? () => inputRef.current?.click() : undefined}
         role={editable ? "button" : undefined}
@@ -76,7 +76,7 @@ export function AvatarUpload({
         ) : (
           <span>{initials}</span>
         )}
-        {editable && <span className="team-avatar-edit" aria-hidden>{pending ? "…" : "✎"}</span>}
+        {editable && <span className="admin-team-avatar-edit" aria-hidden>{pending ? "…" : "✎"}</span>}
       </div>
       {editable && (
         <input
@@ -87,7 +87,7 @@ export function AvatarUpload({
           onChange={onPick}
         />
       )}
-      {error && <span className="team-avatar-err">{error}</span>}
+      {error && <span className="admin-team-avatar-err">{error}</span>}
     </div>
   );
 }

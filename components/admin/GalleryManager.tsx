@@ -125,7 +125,7 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
 
   return (
     <>
-      <div className="gallery-uploadbar">
+      <div className="admin-gallery-uploadbar">
         <span className="admin-label" style={{ margin: 0 }}>Tag new uploads as</span>
         <select className="admin-select" style={{ width: "auto" }} value={uploadCategory} onChange={(e) => setUploadCategory(e.target.value)}>
           <option value="">Untagged</option>
@@ -136,7 +136,7 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
       </div>
 
       <div
-        className={`gallery-drop${drag ? " is-drag" : ""}`}
+        className={`admin-gallery-drop${drag ? " is-drag" : ""}`}
         role="button"
         tabIndex={0}
         onClick={() => inputRef.current?.click()}
@@ -148,32 +148,32 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
         onDragLeave={() => setDrag(false)}
         onDrop={onDrop}
       >
-        <span className="gallery-drop-ico" aria-hidden>⬆</span>
-        <span className="gallery-drop-title">Drag photos here, or click to browse</span>
-        <span className="gallery-drop-sub">JPG, PNG, or WebP · any size</span>
+        <span className="admin-gallery-drop-ico" aria-hidden>⬆</span>
+        <span className="admin-gallery-drop-title">Drag photos here, or click to browse</span>
+        <span className="admin-gallery-drop-sub">JPG, PNG, or WebP · any size</span>
         <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={onPick} />
       </div>
 
       {queue.length > 0 && (
-        <div className="gallery-queue">
+        <div className="admin-gallery-queue">
           {queue.map((it) => (
-            <div className="gallery-queue-item" key={it.id}>
+            <div className="admin-gallery-queue-item" key={it.id}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="gallery-queue-thumb" src={it.previewUrl} alt="" />
-              <div className="gallery-queue-body">
-                <div className="gallery-queue-name">{it.name}</div>
+              <img className="admin-gallery-queue-thumb" src={it.previewUrl} alt="" />
+              <div className="admin-gallery-queue-body">
+                <div className="admin-gallery-queue-name">{it.name}</div>
                 {it.status === "error" ? (
-                  <div className="gallery-queue-err">{it.error}</div>
+                  <div className="admin-gallery-queue-err">{it.error}</div>
                 ) : (
-                  <div className="gallery-bar">
+                  <div className="admin-gallery-bar">
                     <div
-                      className={`gallery-bar-fill${it.status === "done" ? " is-done" : ""}`}
+                      className={`admin-gallery-bar-fill${it.status === "done" ? " is-done" : ""}`}
                       style={{ width: `${Math.round(it.progress * 100)}%` }}
                     />
                   </div>
                 )}
               </div>
-              <span className={`gallery-queue-status is-${it.status}`}>
+              <span className={`admin-gallery-queue-status is-${it.status}`}>
                 {it.status === "done" ? "✓" : it.status === "error" ? "✕" : `${Math.round(it.progress * 100)}%`}
               </span>
             </div>
@@ -203,7 +203,7 @@ export function GalleryManager({ photos, taggable }: { photos: GalleryPhoto[]; t
       {shown.length === 0 ? (
         <div className="admin-empty">{photos.length === 0 ? "No photos yet. Drop the first one above." : "No photos in this category yet."}</div>
       ) : (
-        <div className="gallery-admin-grid">
+        <div className="admin-gallery-admin-grid">
           {shown.map((p) => (
             <PhotoCard key={p.id} photo={p} taggable={taggable} onChanged={() => router.refresh()} />
           ))}
@@ -249,18 +249,18 @@ function PhotoCard({
   }
 
   return (
-    <div className="gallery-admin-card">
+    <div className="admin-gallery-admin-card">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={photo.image_url} alt={caption || "Team photo"} className="gallery-admin-img" loading="lazy" decoding="async" />
+      <img src={photo.image_url} alt={caption || "Team photo"} className="admin-gallery-admin-img" loading="lazy" decoding="async" />
       <input
-        className="admin-input gallery-admin-cap"
+        className="admin-input admin-gallery-admin-cap"
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
         onBlur={() => save()}
         placeholder="Add a caption"
         disabled={pending}
       />
-      <div className="gallery-admin-row">
+      <div className="admin-gallery-admin-row">
         <select
           className="admin-select"
           value={category}
@@ -276,11 +276,11 @@ function PhotoCard({
           ))}
         </select>
       </div>
-      <div className="gallery-admin-row">
+      <div className="admin-gallery-admin-row">
         <input className="admin-input" type="date" value={takenOn} onChange={(e) => setTakenOn(e.target.value)} onBlur={() => save()} disabled={pending} />
         <button className="admin-btn admin-btn--sm admin-btn--danger" onClick={del} disabled={pending}>Delete</button>
       </div>
-      <div className="gallery-admin-tags">
+      <div className="admin-gallery-admin-tags">
         <PhotoTagPicker
           photoId={photo.id}
           tags={photo.people ?? []}

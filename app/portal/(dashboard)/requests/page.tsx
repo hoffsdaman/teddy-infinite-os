@@ -48,7 +48,7 @@ export default async function PortalRequestsPage() {
 
       {canCreate && (<>
       <h2 className="admin-section-label" style={{ marginTop: 0 }}>Start a request</h2>
-      <div className="mp-kpi-grid mp-kpi-grid--2up" style={{ marginBottom: 20, gridAutoRows: "1fr" }}>
+      <div className="admin-kpi-grid admin-kpi-grid--2up" style={{ marginBottom: 20, gridAutoRows: "1fr" }}>
         <div className="admin-card admin-section-card" style={{ display: "flex", flexDirection: "column" }}>
           <h2 className="admin-card-title" style={{ marginBottom: 8 }}>General request</h2>
           <p className="admin-page-sub" style={{ margin: 0, minHeight: 40 }}>

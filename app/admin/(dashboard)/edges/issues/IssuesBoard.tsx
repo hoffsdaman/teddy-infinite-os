@@ -144,14 +144,14 @@ export function IssuesBoard({
                     {(i.status === "open" || i.status === "solving") ? (
                       <span style={{ display: "inline-flex", gap: 6 }}>
                         {i.status === "open" && (
-                          <button className="edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "solving")}>
+                          <button className="admin-edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "solving")}>
                             Start solving
                           </button>
                         )}
-                        <button className="edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "solved")}>
+                        <button className="admin-edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "solved")}>
                           Solved
                         </button>
-                        <button className="edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "dropped")}>
+                        <button className="admin-edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "dropped")}>
                           Drop
                         </button>
                       </span>
