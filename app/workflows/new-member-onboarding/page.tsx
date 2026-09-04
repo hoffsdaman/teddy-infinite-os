@@ -316,9 +316,9 @@ export default function NewMemberOnboardingWorkflowPage() {
       </section>
 
       {/* The nurture drip */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The nurture drip
           </span>
           <h2 className="section-title section-title--sm">
@@ -403,9 +403,9 @@ export default function NewMemberOnboardingWorkflowPage() {
       </section>
 
       {/* Status lifecycle */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The status lifecycle
           </span>
           <h2 className="section-title section-title--sm">
@@ -473,7 +473,7 @@ export default function NewMemberOnboardingWorkflowPage() {
       </section>
 
       {/* Anatomy + rules */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
           <SevenElements elements={ELEMENTS} />
           <div className="wf-info-grid">

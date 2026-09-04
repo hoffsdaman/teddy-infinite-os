@@ -192,9 +192,9 @@ export default function OneOnOneCoachingWorkflowPage() {
       </section>
 
       {/* The shape */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The shape
           </span>
           <h2 className="section-title section-title--sm">
@@ -315,9 +315,9 @@ export default function OneOnOneCoachingWorkflowPage() {
       </section>
 
       {/* The scoreboard */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The scoreboard
           </span>
           <h2 className="section-title section-title--sm">
@@ -438,9 +438,9 @@ export default function OneOnOneCoachingWorkflowPage() {
       </section>
 
       {/* Privacy */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             Two tiers, never mixed
           </span>
           <h2 className="section-title section-title--sm">
@@ -579,12 +579,12 @@ export default function OneOnOneCoachingWorkflowPage() {
       </section>
 
       {/* The guardrail */}
-      <section className="section" style={{ background: 'var(--dark)', padding: '72px 0' }}>
+      <section className="section section--dark">
         <div className="container">
           <span className="section-label section-label--on-dark">
             The guardrail
           </span>
-          <h2 className="section-title" style={{ fontSize: 32, color: 'var(--white)' }}>
+          <h2 className="section-title section-title--sm section-title--on-dark">
             The AI preps and drafts. The human decides.
           </h2>
           <p className="wf-hero-sub" style={{ marginTop: 12 }}>

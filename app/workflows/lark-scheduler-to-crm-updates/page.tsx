@@ -77,9 +77,9 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
       </section>
 
       {/* Agent 1, real flow */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The reality &middot; agent 1
           </span>
           <h2 className="section-title section-title--sm">Booking to lead, every branch</h2>
@@ -132,9 +132,9 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
       </section>
 
       {/* State machine */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The state machine
           </span>
           <h2 className="section-title section-title--sm">What the agents may do to a lead</h2>
@@ -189,9 +189,9 @@ export default function LarkSchedulerToCrmUpdatesWorkflowPage() {
       </section>
 
       {/* Contract + timing + instrumentation */}
-      <section className="section" style={{ background: 'var(--tint)', padding: '72px 0' }}>
+      <section className="section section--tint">
         <div className="container">
-          <span className="section-label" style={{ background: 'var(--white)' }}>
+          <span className="section-label section-label--white">
             The contract
           </span>
           <h2 className="section-title section-title--sm">Data, timing, and how we know it works</h2>

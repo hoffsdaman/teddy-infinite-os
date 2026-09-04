@@ -148,6 +148,15 @@ body {
    48px marketing heading is too heavy. This existed as 106 identical inline
    `fontSize: 34` overrides; 32px is the nearest step on the type scale. */
 .section-title--sm { font-size: 32px; }
+/* Section variants that used to be inline: tinted / dark bands, the label on a
+   light card, the title on a dark band. Public pages only (globals.css). */
+.section--tint { background: var(--tint); padding: 72px 0; }
+.section--tint-bg { background: var(--tint); }
+.section--dark { background: var(--dark); padding: 72px 0; }
+.section--tight { padding: 64px 0; }
+.section-label--white { background: var(--white); }
+.section-title--on-dark { color: var(--white); }
+.section-sub--note { margin-top: 32px; font-size: 15px; color: var(--body-text); }
 .section-sub {
   font-size: 17px;
   color: var(--body-text);
