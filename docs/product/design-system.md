@@ -53,16 +53,61 @@ definitions themselves.
   genuinely new component is needed, add it to `admin.css` under the
   Components section and to `/admin/patterns` in the same PR.
 
-## Migration — in progress
+## Migration status — complete (4 Sep 2026)
 
-Sequence, one PR each, merged to `main` in order: measure → foundation
-(tokens, utilities, guardrail; no visible change) → rename every per-feature
-class prefix into `.admin-<component>-*` by exact class name → per surface,
-run `scripts/design/inline-to-classes.pl` then `scripts/design/smart-inline.pl`,
-hand-finish the colour / border / font leftovers as component classes →
-after each surface refresh the inline-layout baseline, lower the styled
-ceiling, build, eyeball, merge → close out when `admin.css` carries only
-`.admin-*` and `.u-*`.
+Every surface now runs on the one system. `app/admin/admin.css` carries two
+namespaces only: `.admin-*` (1,363 rules) and `.u-*` (128 rules). The 32
+per-feature prefixes are gone — 614 class names were renamed by exact name
+into `.admin-<component>-*` and every consumer updated. No file outside
+`app/styles/tokens.css` (and its mirror `lib/design/palette.ts`) contains a
+raw colour; `check:tokens` runs as `prebuild` and holds the line.
+
+| PR | Step |
+|---|---|
+| #9 | Vercel functions pinned to `syd1` (Supabase is ap-southeast-2) |
+| #10 | Measure — the baseline below |
+| #11 | Foundation — tokens, utilities, guardrail; no visible change |
+| #12 | Rename every per-feature prefix to `admin-*` by exact class name |
+| #13 | Core record pages — boards, sprints, client hubs, company / contact records |
+| #14 | Admin core — dashboard, settings, support, edges, contacts, shared components |
+| #15 | Revenue — deals, leads, marketing, events, invoices, affiliates |
+| #16 | Talent and Operations |
+| #17 | Team intranet and client portal |
+| #18 | Public workflow pages — section bands and labels as classes |
+
+| Measure | Before (#10) | After (#18) |
+|---|---|---|
+| `style={{` in `app/` + `components/` `.tsx` | 2,381 | 293 |
+| …of which set colour / border / font / radius (the guardrail ceiling) | 301 | 63 |
+| …layout-only | 2,061 | 209 |
+| Class prefixes in `admin.css` | 33 | 2 (`.admin-*`, `.u-*`) |
+| Raw colours outside `tokens.css` (guardrail lines) | 564 | 0 |
+| Raw hex in the four stylesheets | 199 (+225 rgba) | 0 |
+
+What remains inline, and why it stays:
+
+- **Data-driven values** (46 lines, each with a `/* layout-ok: reason */`
+  comment): progress-bar widths, runtime series / stage / channel colours
+  that are already token variables, avatar sizes from props, caller-supplied
+  style props (`PasswordInput`, `PlaceholderImage`), hidden file inputs.
+- **The pattern library itself** (`/admin/patterns`, 10 lines): swatch,
+  radius and shadow chips render `var(--token)` values on purpose.
+- **Public marketing pages** (`app/workflows`, `app/support`,
+  `app/my-retreat`, `careers`, `Nav`, `Footer`; ~40 lines): they load
+  `globals.css`, not `admin.css`, so the `.u-*` utilities are not available
+  there. `RetreatAgenda` renders on the public my-retreat pages and keeps its
+  inline styles for the same reason. Each of these is a candidate for a
+  `globals.css` class when the page is next touched.
+
+The guardrail ceiling is set to today's count (63), so it can only go down.
+`npm run check:design` still reports two pre-existing findings unrelated to
+this migration: a handful of page-level `maxWidth` values outside the three
+sanctioned widths, and one inline layout style in `components/Nav.tsx`.
+
+**Adding a new screen:** compose from the classes above. If a pattern truly
+needs a new class, add it to the end of `admin.css` under the relevant
+component section and to `/admin/patterns` in the same PR. Never a new
+prefix, never a raw colour, never an inline colour / border / font.
 
 ### Baseline (main, 4 Sep 2026, before the foundation PR)
 
