@@ -43,10 +43,10 @@ export function MeetingControls({
   }
 
   return (
-    <div style={{ marginTop: 12 }}>
-      {err && <div className="admin-alert admin-alert--err" style={{ marginBottom: 8 }}>{err}</div>}
+    <div className="u-mt-3">
+      {err && <div className="admin-alert admin-alert--err u-mb-2">{err}</div>}
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+      <div className="u-row u-wrap u-gap-2">
         <button
           type="button"
           className={`admin-btn ${published ? "" : "admin-btn--primary"}`}
@@ -83,9 +83,9 @@ export function MeetingControls({
       </div>
 
       {editing && (
-        <div className="admin-form" style={{ marginTop: 12 }}>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <div className="admin-field" style={{ flex: "2 1 220px" }}>
+        <div className="admin-form u-mt-3">
+          <div className="u-row u-wrap">
+            <div className="admin-field u-flex-2">
               <label className="admin-label">Title</label>
               <input
                 className="admin-input"
@@ -93,7 +93,7 @@ export function MeetingControls({
                 onChange={(e) => setFields({ ...fields, title: e.target.value })}
               />
             </div>
-            <div className="admin-field" style={{ flex: "1 1 160px" }}>
+            <div className="admin-field u-flex-1">
               <label className="admin-label">Meeting date</label>
               <input
                 type="date"
@@ -115,11 +115,10 @@ export function MeetingControls({
           <div className="admin-field">
             <label className="admin-label">Summary (Markdown)</label>
             <textarea
-              className="admin-input"
+              className="admin-input admin-textarea--grow"
               rows={8}
               value={fields.summary}
               onChange={(e) => setFields({ ...fields, summary: e.target.value })}
-              style={{ resize: "vertical", fontFamily: "inherit" }}
             />
           </div>
           <div className="admin-form-actions">

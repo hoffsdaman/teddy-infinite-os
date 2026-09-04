@@ -71,12 +71,12 @@ export default async function InnovationCockpitPage() {
       />
 
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err.message}
         </div>
       )}
 
-      <div className="admin-kpi-grid" style={{ marginBottom: 20 }}>
+      <div className="admin-kpi-grid u-mb-5">
         <MetricCard label="Ideas" value={buildIdeas} sub="open build ideas" href="/admin/innovation/ideas" />
         <MetricCard label="Learning · 30d" value={learnings30} sub="learnings logged" href="/admin/innovation/ideas" />
         <MetricCard label="Internal backlog" value={internalBacklog} sub="open cards, our boards" href="/admin/client-hubs" />
@@ -88,13 +88,13 @@ export default async function InnovationCockpitPage() {
       </div>
 
       {chips && (
-        <div className="admin-kpi-label" style={{ marginBottom: 16 }}>
+        <div className="admin-kpi-label u-mb-4">
           Innovation goals · {goals.quarter.label}: {chips}
           {innovation.openIssues > 0 ? ` · ${innovation.openIssues} open ${innovation.openIssues === 1 ? "issue" : "issues"}` : ""}
         </div>
       )}
 
-      <div className="admin-cockpit-cols" style={{ marginBottom: 20 }}>
+      <div className="admin-cockpit-cols u-mb-5">
         <div className="admin-card admin-section-card">
           <h2 className="admin-card-title">Trends across ideas</h2>
           {themes.length === 0 ? (
@@ -106,12 +106,12 @@ export default async function InnovationCockpitPage() {
               {themes.map((t, i) => (
                 <div key={i} className="admin-list-row">
                   <div className="admin-list-main">
-                    <div className="admin-list-title" style={{ fontWeight: 400 }}>{t}</div>
+                    <div className="admin-list-title">{t}</div>
                   </div>
                 </div>
               ))}
               {trend?.generated_at && (
-                <div className="admin-list-sub" style={{ paddingTop: 10 }}>
+                <div className="admin-list-sub u-pt-3">
                   Updated {formatDate(trend.generated_at)}
                 </div>
               )}
@@ -159,7 +159,7 @@ export default async function InnovationCockpitPage() {
                   </div>
                 </div>
               ))}
-              <div style={{ paddingTop: 10 }}>
+              <div className="u-pt-3">
                 <Link href="/admin/innovation/ideas" className="admin-auth-link">
                   Open idea backlog →
                 </Link>

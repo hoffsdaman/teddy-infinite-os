@@ -97,7 +97,7 @@ export function ValuesEditor({ values }: { values: ValueRow[] }) {
       {banner && <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"}`}>{banner.text}</div>}
 
       {adding ? (
-        <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+        <div className="admin-card admin-section-card u-mb-5">
           <h2 className="admin-card-title">Add a value</h2>
           {editForm((e) => {
             e.preventDefault();
@@ -105,7 +105,7 @@ export function ValuesEditor({ values }: { values: ValueRow[] }) {
           }, "Add value")}
         </div>
       ) : (
-        <div className="admin-form-actions" style={{ marginBottom: 20 }}>
+        <div className="admin-form-actions u-mb-5">
           <button className="admin-btn admin-btn--primary" onClick={openAdd} disabled={pending}>
             Add a value
           </button>
@@ -131,7 +131,7 @@ export function ValuesEditor({ values }: { values: ValueRow[] }) {
                   <span className="admin-team-value-title">{v.title}</span>
                 </span>
                 <span className="admin-team-value-body">{v.description}</span>
-                <div className="admin-form-actions" style={{ marginTop: 12 }}>
+                <div className="admin-form-actions u-mt-3">
                   <button
                     className="admin-btn admin-btn--sm"
                     onClick={() => run(() => moveValue(v.id, "up"), "Reordered.")}

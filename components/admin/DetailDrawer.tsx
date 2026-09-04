@@ -48,7 +48,7 @@ export function DetailDrawer({
             {eyebrow && <div className="admin-drawer-eyebrow">{eyebrow}</div>}
             <div className="admin-drawer-title">{title}</div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div className="u-row">
             {action}
             <button className="admin-drawer-close" onClick={onClose} aria-label="Close">
               ×

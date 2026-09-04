@@ -17,9 +17,9 @@ function PacketBody({ body }: { body: string }) {
   const flush = (key: string) => {
     if (!list.length) return;
     blocks.push(
-      <ul key={key} style={{ margin: "6px 0 14px", paddingLeft: 18 }}>
+      <ul key={key} className="u-list u-mt-2 u-mb-4">
         {list.map((item, i) => (
-          <li key={i} style={{ marginBottom: 5, fontSize: 13 }}>
+          <li key={i} className="u-mb-1">
             {item}
           </li>
         ))}
@@ -31,7 +31,7 @@ function PacketBody({ body }: { body: string }) {
     if (line.startsWith("## ")) {
       flush(`l${i}`);
       blocks.push(
-        <h3 key={i} style={{ fontSize: 13, fontWeight: 750, margin: "14px 0 4px", color: "var(--admin-ink)" }}>
+        <h3 key={i} className="admin-h-sm">
           {line.slice(3)}
         </h3>,
       );
@@ -40,7 +40,7 @@ function PacketBody({ body }: { body: string }) {
     } else if (line.trim()) {
       flush(`l${i}`);
       blocks.push(
-        <p key={i} style={{ fontSize: 13, margin: "0 0 8px" }}>
+        <p key={i} className="u-m-0 u-mb-2">
           {line}
         </p>,
       );
@@ -68,7 +68,7 @@ export default async function SyncPage() {
         sub="The weekly heartbeat. The packet is prepared every Sunday 18:00 from the live numbers, goals, and issues; the meeting starts at the decision."
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error.message}
         </div>
       )}
@@ -81,11 +81,11 @@ export default async function SyncPage() {
       )}
 
       {latest && (
-        <div className="admin-card" style={{ padding: "16px 20px", marginBottom: 16 }}>
-          <div style={{ display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap", marginBottom: 6 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 750, margin: 0 }}>Sync of {latest.week_start}</h2>
+        <div className="admin-card u-mb-4 u-p-4">
+          <div className="u-row u-gap-3 u-wrap u-mb-2">
+            <h2 className="u-m-0 u-lg u-strong">Sync of {latest.week_start}</h2>
             <span className="admin-badge admin-badge--ok">AGENT</span>
-            <span className="admin-cell-muted" style={{ fontSize: 11 }}>
+            <span className="admin-cell-muted u-xs">
               prepared by {latest.created_by} · {new Date(latest.created_at).toLocaleString()}
             </span>
           </div>
@@ -94,13 +94,13 @@ export default async function SyncPage() {
       )}
 
       {past.length > 0 && (
-        <div className="admin-card" style={{ padding: "12px 20px" }}>
-          <h3 style={{ fontSize: 12, fontWeight: 750, margin: "4px 0 8px", color: "var(--admin-muted)" }}>
+        <div className="admin-card u-p-4">
+          <h3 className="u-label u-m-0 u-mt-1 u-mb-2">
             Past syncs (the streak: {packets.length} packet{packets.length === 1 ? "" : "s"})
           </h3>
           {past.map((p) => (
-            <details key={p.id} style={{ borderTop: "1px solid var(--admin-line)", padding: "8px 0" }}>
-              <summary style={{ cursor: "pointer", fontSize: 13, fontWeight: 650 }}>Sync of {p.week_start}</summary>
+            <details key={p.id} className="admin-divider-row">
+              <summary className="u-strong u-pointer">Sync of {p.week_start}</summary>
               <PacketBody body={p.body_md} />
             </details>
           ))}

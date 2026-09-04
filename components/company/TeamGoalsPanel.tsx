@@ -45,9 +45,9 @@ export function TeamGoalsPanel({
   const [view, setView] = useState<View>("person");
 
   return (
-    <section className="admin-card admin-section-card" style={{ marginBottom: 14 }}>
+    <section className="admin-card admin-section-card u-mb-4">
       <div className="admin-cg-panel-head">
-        <div className="admin-card-title" style={{ margin: 0 }}>
+        <div className="admin-card-title">
           Team member FAST goals{" "}
           <span className="admin-cell-muted">
             ({withGoal}/{byPerson.length} set · transparent to the whole team)

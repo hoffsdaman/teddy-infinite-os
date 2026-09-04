@@ -29,12 +29,11 @@ export function FilterBar({
   for (const f of filters) clearOverrides[f.key] = null;
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+    <div className="u-row u-wrap">
       {filters.map((f) => (
         <select
           key={f.key}
-          className="admin-select"
-          style={{ width: "auto" }}
+          className="admin-select u-w-auto"
           aria-label={f.label}
           value={firstParam(searchParams[f.key]) ?? ""}
           onChange={(e) => go(f.key, e.target.value)}
@@ -48,7 +47,7 @@ export function FilterBar({
         </select>
       ))}
       {active && (
-        <Link href={basePath + mergeQuery(searchParams, clearOverrides)} className="admin-cell-muted" style={{ fontSize: 12 }}>
+        <Link href={basePath + mergeQuery(searchParams, clearOverrides)} className="admin-cell-muted u-sm">
           Clear all
         </Link>
       )}

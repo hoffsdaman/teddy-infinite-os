@@ -67,7 +67,7 @@ export function IssuesBoard({
 
   function table(rows: IssueRow[], label: string) {
     return (
-      <div className="admin-table-wrap" style={{ marginBottom: 16 }}>
+      <div className="admin-table-wrap u-mb-4">
         <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
@@ -93,7 +93,7 @@ export function IssuesBoard({
                 <tr key={i.id}>
                   <td className="admin-cell-strong">
                     {i.title}
-                    {i.notes_md && <div className="admin-cell-muted" style={{ fontWeight: 400 }}>{i.notes_md}</div>}
+                    {i.notes_md && <div className="admin-cell-muted">{i.notes_md}</div>}
                   </td>
                   <td>
                     <span className={`admin-badge ${DIAG_BADGE[i.diagnosis]}`}>{i.diagnosis.toUpperCase()}</span>
@@ -106,7 +106,7 @@ export function IssuesBoard({
                       <PersonSelect
                         compact
                         ariaLabel={`Assignee for ${i.title}`}
-                        style={{ minWidth: 150 }}
+                        className="u-min-2"
                         value={i.assignee_person_id ?? ""}
                         disabled={busyId === i.id}
                         onChange={(personId) => assign(i.id, personId)}
@@ -134,7 +134,7 @@ export function IssuesBoard({
                   <td className="admin-cell-muted">
                     {i.filed_by}
                     {i.filed_by.endsWith(":auto") && (
-                      <span className="admin-badge admin-badge--ok" style={{ marginLeft: 6 }}>
+                      <span className="admin-badge admin-badge--ok u-ml-2">
                         AGENT
                       </span>
                     )}
@@ -142,7 +142,7 @@ export function IssuesBoard({
                   <td className="admin-cell-mono">{age(i.created_at)}</td>
                   <td>
                     {(i.status === "open" || i.status === "solving") ? (
-                      <span style={{ display: "inline-flex", gap: 6 }}>
+                      <span className="u-row">
                         {i.status === "open" && (
                           <button className="admin-edges-minibtn" disabled={busyId === i.id} onClick={() => move(i.id, "solving")}>
                             Start solving
@@ -171,11 +171,11 @@ export function IssuesBoard({
   return (
     <>
       {err && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {err}
         </div>
       )}
-      <div className="admin-toolbar" style={{ justifyContent: "flex-end" }}>
+      <div className="admin-toolbar u-end">
         <button className="admin-btn admin-btn--primary admin-btn--sm" onClick={() => setDrawerOpen(true)}>
           + File issue
         </button>
@@ -224,7 +224,7 @@ function IssueForm({
         <label className="admin-label">What's blocking?</label>
         <input className="admin-input" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="u-grid-2 u-gap-3">
         <div className="admin-field">
           <label className="admin-label">Diagnosis</label>
           <select className="admin-select" value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)}>

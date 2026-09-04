@@ -5069,3 +5069,16 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-sprint-num { width: 52px; text-align: right; font-size: var(--admin-text-sm); }
 .admin-sprint-num--wide { width: 110px; }
 .admin-text-block { font-size: var(--admin-text-md); line-height: 1.65; white-space: pre-wrap; }
+/* ─── Admin core + shared components (dashboard, settings, support, sidebar) ── */
+.u-not-allowed { cursor: not-allowed; }
+.u-min-3 { min-width: 220px; }
+.u-grid-auto-stat { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--admin-space-3); }
+.admin-th--xl { min-width: 260px; }
+.admin-stat-value { font-size: 24px; line-height: 1.1; }
+.admin-avatar-xs { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: var(--admin-text-sm); font-weight: 700; background: var(--admin-info-bg); color: var(--admin-info-ink); }
+.admin-seg-btn { border: none; border-radius: 0; font-weight: 400; background: transparent; }
+.admin-seg-btn.is-on { font-weight: 700; background: var(--admin-accent-soft); }
+.admin-board-scroll { display: flex; gap: var(--admin-space-4); overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
+.admin-board-col { flex: 0 0 320px; max-width: 320px; display: grid; gap: 10px; align-content: start; }
+.admin-input-wrap { position: relative; display: block; }
+.admin-input-eye { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; padding: 0; border: 0; background: transparent; color: var(--admin-ink-2); cursor: pointer; }

@@ -37,22 +37,11 @@ function ThumbLink({ href, label }: { href: string; label: string }) {
       target="_blank"
       rel="noreferrer"
       title={`Open ${label}`}
-      style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 4, textDecoration: "none" }}
+      className="u-stack u-gap-1 u-items-center u-link-plain"
     >
       {broken ? (
         <span
-          style={{
-            width: 88,
-            height: 56,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 6,
-            border: "1px solid var(--admin-line)",
-            background: "var(--admin-line-soft)",
-            fontSize: 11,
-          }}
-          className="admin-cell-muted"
+          className="admin-thumb admin-cell-muted"
         >
           Open
         </span>
@@ -62,17 +51,10 @@ function ThumbLink({ href, label }: { href: string; label: string }) {
           src={href}
           alt={label}
           onError={() => setBroken(true)}
-          style={{
-            width: 88,
-            height: 56,
-            objectFit: "cover",
-            borderRadius: 6,
-            border: "1px solid var(--admin-line)",
-            background: "var(--admin-line-soft)",
-          }}
+          className="admin-thumb-img"
         />
       )}
-      <span className="admin-cell-muted" style={{ fontSize: 11 }}>{label}</span>
+      <span className="admin-cell-muted u-xs">{label}</span>
     </a>
   );
 }
@@ -129,7 +111,7 @@ export function SensitiveDetails({
     return (
       <div className="admin-card admin-section-card">
         <h2 className="admin-card-title">Sensitive details</h2>
-        <p className="admin-page-sub" style={{ marginTop: 0 }}>
+        <p className="admin-page-sub u-mt-0">
           Legal and payroll PII — national ID, bank, tax. Access is logged.
         </p>
         <button className="admin-btn" onClick={() => setRevealed(true)}>Reveal</button>
@@ -139,9 +121,9 @@ export function SensitiveDetails({
 
   return (
     <div className="admin-card admin-section-card">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-        <h2 className="admin-card-title" style={{ margin: 0 }}>Sensitive details</h2>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="u-row u-between u-gap-3">
+        <h2 className="admin-card-title">Sensitive details</h2>
+        <div className="u-row">
           {!editing && <button className="admin-btn admin-btn--sm" onClick={() => setRevealed(false)}>Hide</button>}
           {editing ? (
             <>
@@ -157,13 +139,13 @@ export function SensitiveDetails({
       </div>
 
       {banner && (
-        <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"}`} style={{ marginTop: 12 }}>
+        <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"} u-mt-3`}>
           {banner.text}
         </div>
       )}
 
       {editing ? (
-        <div style={{ display: "grid", gap: 12, marginTop: 14 }}>
+        <div className="u-stack u-gap-3 u-mt-4">
           {FIELDS.map((f) => (
             <div className="admin-field" key={f.key}>
               <label className="admin-label" htmlFor={`sd-${f.key}`}>{f.label}</label>
@@ -178,9 +160,9 @@ export function SensitiveDetails({
           ))}
         </div>
       ) : (
-        <dl className="admin-kv" style={{ marginTop: 14 }}>
+        <dl className="admin-kv u-mt-4">
           {FIELDS.map((f) => (
-            <div style={{ display: "contents" }} key={f.key}>
+            <div className="u-contents" key={f.key}>
               <dt>{f.label}</dt>
               <dd>{(row?.[f.key] as string | null) || "—"}</dd>
             </div>
@@ -188,7 +170,7 @@ export function SensitiveDetails({
           <dt>Identity images</dt>
           <dd>
             {hasIdFront || hasIdBack || selfieUrl ? (
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <div className="u-row u-wrap">
                 {hasIdFront && <ThumbLink href={`${idImageBaseHref}/front`} label="ID front" />}
                 {hasIdBack && <ThumbLink href={`${idImageBaseHref}/back`} label="ID back" />}
                 {selfieUrl && <ThumbLink href={selfieUrl} label="Selfie" />}

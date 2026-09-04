@@ -40,7 +40,7 @@ export function ApplicantStatusSelect({
   }
 
   return (
-    <span className="admin-field" style={{ display: "inline-flex", flexDirection: "column", gap: 4, margin: 0 }}>
+    <span className="admin-field u-inline-stack u-m-0">
       {label && (
         <label className="admin-label">
           {label}

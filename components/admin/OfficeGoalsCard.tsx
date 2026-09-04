@@ -33,7 +33,7 @@ export function OfficeGoalsCard({ snapshot, quarterLabel }: { snapshot: OfficeSn
               </div>
             </div>
           ))}
-          <div style={{ paddingTop: 10 }}>
+          <div className="u-mt-3">
             <Link href="/admin/company/goals" className="admin-auth-link">
               Open goals →
             </Link>

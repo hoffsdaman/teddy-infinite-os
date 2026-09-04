@@ -95,7 +95,7 @@ function IdeaColumn({
                     <td>
                       <span className="admin-cell-strong">{r.title}</span>
                       {variant === "learning" && r.takeaway && (
-                        <div className="admin-cell-muted" style={{ marginTop: 2, fontSize: 12 }}>
+                        <div className="admin-cell-muted u-mt-1 u-sm">
                           {truncate(r.takeaway)}
                         </div>
                       )}
@@ -197,12 +197,12 @@ export default async function IdeasBacklogPage({ searchParams }: { searchParams:
         sub={`${total.toLocaleString()} ${total === 1 ? "entry" : "entries"} — build ideas planned by Claude via the 5D framework, plus learnings shared by the team`}
       />
       {error && (
-        <div className="admin-alert admin-alert--err" style={{ marginBottom: 14 }}>
+        <div className="admin-alert admin-alert--err u-mb-4">
           {error}
         </div>
       )}
       <IdeasShelfProvider>
-        <div className="admin-toolbar" style={{ marginBottom: 16 }}>
+        <div className="admin-toolbar u-mb-4">
           <TableSearch
             basePath="/admin/innovation/ideas"
             searchParams={searchParams}

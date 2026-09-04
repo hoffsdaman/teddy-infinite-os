@@ -95,8 +95,7 @@ export function ConfirmButton({
             {typeToConfirm && (
               <input
                 ref={inputRef}
-                className="admin-input"
-                style={{ marginTop: 12 }}
+                className="admin-input u-mt-3"
                 placeholder={`Type "${typeToConfirm}" to confirm`}
                 value={typed}
                 onChange={(e) => setTyped(e.target.value)}
@@ -108,7 +107,7 @@ export function ConfirmButton({
             )}
 
             {error && (
-              <div className="admin-alert admin-alert--err" style={{ marginTop: 12 }}>
+              <div className="admin-alert admin-alert--err u-mt-3">
                 {error}
               </div>
             )}

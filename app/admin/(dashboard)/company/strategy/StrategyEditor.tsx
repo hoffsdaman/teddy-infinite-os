@@ -53,7 +53,7 @@ export function StrategyEditor({
     <>
       {banner && <div className={`admin-alert admin-alert--${banner.tone === "ok" ? "ok" : "err"}`}>{banner.text}</div>}
 
-      <div className="admin-form-actions" style={{ marginBottom: 16 }}>
+      <div className="admin-form-actions u-mb-4">
         {editing ? (
           <button className="admin-btn" onClick={cancel} disabled={pending}>
             Cancel
@@ -86,11 +86,10 @@ export function StrategyEditor({
             </label>
             <textarea
               id="strat-body"
-              className="admin-textarea"
               rows={22}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              style={{ fontFamily: "var(--admin-mono, monospace)", fontSize: 13, lineHeight: 1.6 }}
+              className="admin-textarea admin-mono"
             />
           </div>
           <div className="admin-form-actions">

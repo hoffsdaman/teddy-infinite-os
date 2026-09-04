@@ -89,11 +89,11 @@ export function AdminsManager({
         <div className={`admin-alert admin-alert--${banner.tone}`}>{banner.text}</div>
       )}
 
-      <div className="admin-card admin-section-card" style={{ marginBottom: 20 }}>
+      <div className="admin-card admin-section-card u-mb-5">
         <h2 className="admin-card-title">Add an admin</h2>
         <form className="admin-form" onSubmit={submitAdd}>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-end" }}>
-            <div className="admin-field" style={{ flex: "1 1 260px", marginBottom: 0 }}>
+          <div className="u-row u-wrap u-items-end u-gap-3">
+            <div className="admin-field u-flex-2 u-mb-0">
               <label className="admin-label" htmlFor="adm-person">Employee</label>
               <PersonSelect
                 id="adm-person"
@@ -105,7 +105,7 @@ export function AdminsManager({
                 disabled={pending || employeeOptions.length === 0}
               />
             </div>
-            <div className="admin-field" style={{ flex: "0 1 200px", marginBottom: 0 }}>
+            <div className="admin-field u-flex-fixed u-mb-0">
               <label className="admin-label" htmlFor="adm-level">Level</label>
               <select
                 id="adm-level"
@@ -127,7 +127,7 @@ export function AdminsManager({
             </button>
           </div>
         </form>
-        <p className="admin-cell-muted" style={{ marginTop: 10, marginBottom: 0, fontSize: 13 }}>
+        <p className="admin-cell-muted u-mt-3 u-mb-0">
           {employeeOptions.length === 0 ? (
             "Every active employee already has admin access."
           ) : selectedEmployee ? (
@@ -172,7 +172,7 @@ export function AdminsManager({
                       <td>
                         <div className="admin-cell-strong">{r.displayName || r.email}</div>
                         {r.displayName && <div className="admin-cell-muted">{r.email}</div>}
-                        <div style={{ display: "flex", gap: 6, marginTop: 4 }}>
+                        <div className="u-row u-gap-2 u-mt-1">
                           {isSelf && <Badge tone="info">You</Badge>}
                           {r.id && !r.personId && (
                             <span title="This admin isn't linked to an employee record. New admins are added from the employee list.">
@@ -197,7 +197,7 @@ export function AdminsManager({
                       </td>
                       <td>
                         {r.id ? (
-                          <div style={{ display: "flex", gap: 6, justifyContent: "flex-end", flexWrap: "wrap" }}>
+                          <div className="u-row u-wrap u-end u-gap-2">
                             <button
                               className="admin-btn admin-btn--sm"
                               disabled={pending}
@@ -248,7 +248,7 @@ export function AdminsManager({
                             )}
                           </div>
                         ) : (
-                          <div style={{ textAlign: "right" }}>
+                          <div className="u-right">
                             <span
                               className="admin-cell-muted"
                               title="Managed via the ADMIN_ALLOWLIST env var on Vercel — add them here to manage them from this page."
@@ -299,7 +299,7 @@ export function AdminsManager({
                   <option value="admin">Admin</option>
                   <option value="super">Super Admin</option>
                 </select>
-                <p className="admin-cell-muted" style={{ margin: "6px 0 0", fontSize: 12 }}>
+                <p className="admin-cell-muted u-m-0 u-mt-2 u-sm">
                   Super Admins can view and edit wages and PII. Plain Admins cannot.
                 </p>
               </div>

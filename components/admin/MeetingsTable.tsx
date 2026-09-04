@@ -7,7 +7,7 @@ import type { AdminMeetingRow } from "@/lib/admin/meetings";
 // the Details page so one meeting never reads differently in two places.
 export function MeetingStatusBadges({ meeting }: { meeting: AdminMeetingRow }) {
   return (
-    <span style={{ display: "inline-flex", gap: 6, flexWrap: "wrap" }}>
+    <span className="u-row u-wrap">
       {meeting.publishedAt ? <Badge tone="ok">Published</Badge> : <Badge tone="neutral">Draft</Badge>}
       {meeting.aiStatus === "pending" && <Badge tone="warn">Summarizing…</Badge>}
       {meeting.aiStatus === "failed" && <Badge tone="warn">AI failed</Badge>}

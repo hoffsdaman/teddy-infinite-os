@@ -24,12 +24,11 @@ export function CompanyPicker({
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+    <div className="u-row">
       <select
-        className="admin-input"
+        className="admin-input u-min-3"
         value={selectedId}
         onChange={(e) => go(e.target.value, showArchived)}
-        style={{ minWidth: 220 }}
         aria-label="Client"
       >
         <option value="">Select client…</option>
@@ -40,7 +39,7 @@ export function CompanyPicker({
         ))}
       </select>
       {selectedId && (
-        <label style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, whiteSpace: "nowrap" }}>
+        <label className="u-row u-nowrap">
           <input
             type="checkbox"
             checked={showArchived}

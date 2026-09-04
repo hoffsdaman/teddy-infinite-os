@@ -13,7 +13,7 @@ export function PageHead({
 }) {
   return (
     <div className="admin-page-head">
-      <div style={{ minWidth: 0 }}>
+      <div className="u-min-0">
         {eyebrow && <div className="admin-eyebrow">{eyebrow}</div>}
         <h1 className="admin-page-title">{title}</h1>
         {sub && <p className="admin-page-sub">{sub}</p>}

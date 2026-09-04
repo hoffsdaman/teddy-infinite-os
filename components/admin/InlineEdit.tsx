@@ -283,7 +283,7 @@ export function EditableTextarea({
           }}
         >
           {current ? (
-            <span style={{ whiteSpace: "pre-wrap" }}>{current}</span>
+            <span className="u-prewrap">{current}</span>
           ) : (
             <span className="admin-editable-empty">{placeholder}</span>
           )}

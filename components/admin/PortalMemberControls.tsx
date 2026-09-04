@@ -67,11 +67,10 @@ export function PortalMemberControls({
 
   if (active) {
     return (
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <span className="u-row u-wrap">
         <span className="admin-badge admin-badge--ok">Portal ✓</span>
         <select
-          className="admin-select"
-          style={{ padding: "4px 8px", fontSize: 12.5 }}
+          className="admin-select admin-select--sm"
           value={role ?? "admin"}
           disabled={pending}
           aria-label="Portal role"
@@ -123,11 +122,10 @@ export function PortalMemberControls({
         {msg && <span className="admin-cell-muted">{msg}</span>}
         {tempPw && (
           <span
-            className="admin-alert admin-alert--ok"
-            style={{ flexBasis: "100%", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}
+            className="admin-alert admin-alert--ok u-w-full u-row u-wrap"
           >
             <span>Temporary password:</span>
-            <code style={{ fontSize: 14, fontWeight: 600, padding: "2px 8px", borderRadius: 6, background: "var(--admin-tint)" }}>
+            <code className="admin-code">
               {tempPw}
             </code>
             <button
@@ -145,7 +143,7 @@ export function PortalMemberControls({
             <button type="button" className="admin-btn admin-btn--sm" onClick={() => setTempPw(null)}>
               Done
             </button>
-            <span className="admin-cell-muted" style={{ flexBasis: "100%" }}>
+            <span className="admin-cell-muted u-w-full">
               Shown once. The client must change it on first sign-in.
             </span>
           </span>
@@ -155,7 +153,7 @@ export function PortalMemberControls({
   }
 
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+    <span className="u-row">
       <button
         className="admin-btn admin-btn--sm"
         disabled={pending}
