@@ -512,9 +512,9 @@ a.admin-pill:hover .admin-pill-val { color: var(--admin-accent); }
    The display-font 600/16px value reads as a fat headline for prose, so text
    pills drop to body font at a normal weight and let the value wrap. */
 .admin-pill--text { align-items: baseline; }
-.admin-pill--text .admin-pill-val { font-family: var(--font-body, inherit); font-weight: 500; font-size: 14px; line-height: 1.45; white-space: normal; }
+.admin-pill--text .admin-pill-val { font-family: var(--font-body); font-weight: 500; font-size: 14px; line-height: 1.45; white-space: normal; }
 .admin-chart-card .admin-kpi-label { margin-bottom: 12px; }
-.admin-chart text { font-family: var(--font-body, inherit); }
+.admin-chart text { font-family: var(--font-body); }
 .admin-donut { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
 .admin-chart-legend {
   list-style: none;
@@ -1167,7 +1167,7 @@ a.admin-dir-name:hover { color: var(--admin-accent); }
 /* Field grids inside the editor: N-up on desktop (via --n), single on mobile. */
 .admin-team-profile .admin-card-title { margin-bottom: 4px; }
 .admin-profile-fields { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
-.admin-profile-row { display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr)); gap: 12px; }
+.admin-profile-row { display: grid; grid-template-columns: repeat(var(--n, 2) /* --n is a column count set inline per instance; the 2 is the sensible default, not a hidden token */, minmax(0, 1fr)); gap: 12px; }
 .admin-profile-row > .admin-field { margin: 0; min-width: 0; }
 .admin-profile-fields > .admin-field { margin: 0; }
 @media (max-width: 640px) {
@@ -4948,3 +4948,130 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 /* Chips */
 .admin-chip--lg { padding: 6px 12px; font-size: inherit; color: inherit; align-items: baseline; }
 .admin-tag-xs--soft { font-weight: 400; letter-spacing: 0; background: var(--admin-tint); color: inherit; padding: 2px 8px; gap: 6px; }
+
+
+/* ═══ Client-roadmap surfaces: former private <style> blocks (design-debt #9) ═══ */
+
+/* Client roadmap backlog editor (was .cbe in a <style> block) */
+.admin-backlog-group { margin-bottom:16px; border:1px solid color-mix(in srgb, var(--admin-accent) 22%, transparent); border-radius:14px; background:var(--admin-surface); overflow:hidden; }
+.admin-backlog-group.archived { opacity:.55; }
+.admin-backlog-group.neutral { border-color:var(--admin-line); }
+.admin-backlog-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0; padding:10px 16px; background:color-mix(in srgb, var(--admin-accent) 7%, transparent); cursor:pointer; }
+.admin-backlog-group.neutral .admin-backlog-group-head { background:var(--admin-surface-2); cursor:default; }
+.admin-backlog-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:99px; background:var(--color-primary-blue); color:var(--color-bg-primary); }
+.admin-backlog-group-title { font-weight:700; font-size:15px; }
+.admin-backlog-count { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:99px; padding:2px 8px; }
+.admin-backlog-caret { border:none; background:none; cursor:pointer; padding:0 2px; font-size:12px; color:var(--color-primary-blue); font-family:inherit; transition:transform .15s ease; }
+.admin-backlog-caret.closed { transform:rotate(-90deg); }
+.admin-backlog-group-tools { display:flex; gap:8px; align-items:center; margin-left:auto; }
+.admin-backlog-group-body { padding:12px 16px 14px; }
+.admin-backlog-group-intro { color:var(--admin-ink-2); font-size:13px; margin:0 0 12px; }
+.admin-backlog-item { border:1px solid var(--admin-line); border-radius:12px; padding:12px 14px; margin-bottom:9px; background:var(--admin-surface); }
+.admin-backlog-item.archived { opacity:.55; }
+.admin-backlog-item-top { display:flex; gap:8px; align-items:flex-start; flex-wrap:wrap; }
+.admin-backlog-ref { flex:none; font-size:12px; font-weight:700; color:var(--color-primary-blue); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:6px; padding:2px 6px; }
+.admin-backlog-title { font-weight:650; font-size:14px; flex:1 1 220px; }
+.admin-backlog-pills { display:flex; gap:4px; flex-wrap:wrap; }
+.admin-backlog-pill { font-size:12px; font-weight:600; padding:4px 10px; border-radius:99px; border:1px solid var(--admin-line); background:var(--admin-surface); color:var(--admin-ink-2); cursor:pointer; font-family:inherit; }
+.admin-backlog-pill:hover { border-color:var(--color-primary-blue); color:var(--color-primary-blue); }
+.admin-backlog-pill.on-now { background:var(--color-primary-blue); border-color:var(--color-primary-blue); color:var(--color-bg-primary); }
+.admin-backlog-pill.on-next { background:color-mix(in srgb, var(--admin-ok-strong) 15%, transparent); border-color:var(--admin-ok-strong); color:var(--admin-ok-strong); }
+.admin-backlog-pill.on-later { background:var(--admin-surface-2); border-color:var(--admin-faint); color:var(--admin-muted-ink); }
+.admin-backlog-pill.on-park { background:var(--admin-amber-bg); border-color:var(--admin-warn-strong); color:var(--admin-amber-ink); }
+.admin-backlog-body { font-size:13px; margin-top:8px; color:var(--admin-ink); }
+.admin-backlog-body .k { color:var(--admin-ink-2); font-weight:600; }
+.admin-backlog-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+.admin-backlog-chip { font-size:11px; font-weight:600; color:var(--admin-ink-2); border:1px solid var(--admin-line-soft); border-radius:99px; padding:2px 8px; }
+.admin-backlog-chip.tok { color:var(--color-primary-blue); border-color:color-mix(in srgb, var(--admin-accent) 15%, transparent); background:color-mix(in srgb, var(--admin-accent) 8%, transparent); }
+.admin-backlog-chip.client { color:var(--admin-ok-strong); border-color:color-mix(in srgb, var(--admin-ok-strong) 25%, transparent); background:color-mix(in srgb, var(--admin-ok-strong) 10%, transparent); }
+.admin-backlog-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.admin-backlog-link { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:none; border:none; cursor:pointer; padding:0; font-family:inherit; }
+.admin-backlog-link.danger { color:var(--admin-err-strong); }
+.admin-backlog-link.muted { color:var(--admin-ink-2); }
+.admin-backlog-form { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+.admin-backlog-form .full { grid-column:1 / -1; }
+.admin-backlog-form label { font-size:12px; font-weight:600; color:var(--admin-ink-2); display:block; margin-bottom:3px; }
+.admin-backlog-form input, .admin-backlog-form textarea, .admin-backlog-form select { width:100%; font-family:inherit; font-size:13px; padding:6px 8px; border:1px solid var(--admin-line); border-radius:8px; box-sizing:border-box; }
+.admin-backlog-form textarea { min-height:52px; resize:vertical; }
+.admin-backlog-proposed { border:1px solid var(--admin-warn-strong); background:var(--admin-amber-bg); border-radius:12px; padding:14px 16px; margin-bottom:18px; }
+.admin-backlog-proposed h3 { margin:0 0 8px; font-size:14px; color:var(--admin-amber-ink); }
+.admin-backlog-add { margin-top:6px; }
+.admin-backlog-err { color:var(--admin-err-strong); font-size:12px; margin-top:6px; }
+.admin-backlog-empty { border:1px dashed var(--admin-line-strong); border-radius:12px; padding:20px 24px; }
+.admin-backlog-empty p { margin:0 0 12px; color:var(--admin-ink-2); font-size:14px; }
+.admin-backlog-empty .row { display:flex; gap:10px; flex-wrap:wrap; }
+.admin-backlog-btn { font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:99px; padding:8px 16px; border:1px solid var(--color-primary-blue); background:var(--color-primary-blue); color:var(--color-bg-primary); }
+.admin-backlog-btn.ghost { background:var(--admin-surface); color:var(--color-primary-blue); }
+.admin-backlog-newgroup { border:1px dashed var(--admin-line-strong); border-radius:12px; padding:14px 16px; margin-bottom:20px; }
+@media (max-width:640px){ .admin-backlog-form { grid-template-columns:1fr; } }
+
+/* Client portal roadmap backlog (was .cbp) */
+.admin-pbacklog-intro { background:color-mix(in srgb, var(--admin-accent) 8%, transparent); border-radius:10px; padding:14px 16px; font-size:14px; margin:0 0 16px; }
+.admin-pbacklog-counts { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 18px; }
+.admin-pbacklog-count { font-size:12px; font-weight:600; color:var(--admin-ink-2); padding:4px 10px; border-radius:99px; background:var(--admin-surface-2); }
+.admin-pbacklog-group { margin-bottom:22px; }
+.admin-pbacklog-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 4px; }
+.admin-pbacklog-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:99px; background:color-mix(in srgb, var(--admin-accent) 10%, transparent); color:var(--color-primary-blue); }
+.admin-pbacklog-group-title { font-weight:700; font-size:15px; }
+.admin-pbacklog-group-intro { color:var(--admin-ink-2); font-size:13px; margin:2px 0 12px; }
+.admin-pbacklog-item { border:1px solid var(--admin-line); border-radius:12px; padding:12px 14px 12px 12px; margin-bottom:9px; background:var(--admin-surface); display:flex; gap:10px; align-items:flex-start; }
+.admin-pbacklog-item.dragging { box-shadow:0 8px 24px color-mix(in srgb, var(--admin-ink) 14%, transparent); border-color:var(--color-primary-blue); }
+.admin-pbacklog-handle { flex:none; cursor:grab; color:var(--admin-faint); font-size:16px; line-height:1.2; padding:2px 2px 0; user-select:none; touch-action:none; }
+.admin-pbacklog-handle:hover { color:var(--color-primary-blue); }
+.admin-pbacklog-main { flex:1; min-width:0; }
+.admin-pbacklog-item-top { display:flex; gap:8px; align-items:flex-start; flex-wrap:wrap; }
+.admin-pbacklog-ref { flex:none; font-size:12px; font-weight:700; color:var(--color-primary-blue); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:6px; padding:2px 6px; }
+.admin-pbacklog-title { font-weight:650; font-size:14px; flex:1 1 220px; }
+.admin-pbacklog-pills { display:flex; gap:4px; flex-wrap:wrap; }
+.admin-pbacklog-pill { font-size:12px; font-weight:600; padding:4px 10px; border-radius:99px; border:1px solid var(--admin-line); background:var(--admin-surface); color:var(--admin-ink-2); cursor:pointer; font-family:inherit; }
+.admin-pbacklog-pill:hover { border-color:var(--color-primary-blue); color:var(--color-primary-blue); }
+.admin-pbacklog-pill.on-now { background:var(--color-primary-blue); border-color:var(--color-primary-blue); color:var(--color-bg-primary); }
+.admin-pbacklog-pill.on-next { background:color-mix(in srgb, var(--admin-ok-strong) 15%, transparent); border-color:var(--admin-ok-strong); color:var(--admin-ok-strong); }
+.admin-pbacklog-pill.on-later { background:var(--admin-surface-2); border-color:var(--admin-faint); color:var(--admin-muted-ink); }
+.admin-pbacklog-pill.on-park { background:var(--admin-amber-bg); border-color:var(--admin-warn-strong); color:var(--admin-amber-ink); }
+.admin-pbacklog-body { font-size:13px; margin-top:8px; color:var(--admin-ink); }
+.admin-pbacklog-body .k { color:var(--admin-ink-2); font-weight:600; }
+.admin-pbacklog-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+.admin-pbacklog-chip { font-size:11px; font-weight:600; color:var(--admin-ink-2); border:1px solid var(--admin-line-soft); border-radius:99px; padding:2px 8px; }
+.admin-pbacklog-chip.tok { color:var(--color-primary-blue); border-color:color-mix(in srgb, var(--admin-accent) 15%, transparent); background:color-mix(in srgb, var(--admin-accent) 8%, transparent); }
+.admin-pbacklog-chip.mine { color:var(--admin-ok-strong); border-color:color-mix(in srgb, var(--admin-ok-strong) 25%, transparent); background:color-mix(in srgb, var(--admin-ok-strong) 10%, transparent); }
+.admin-pbacklog-chip.proposed { color:var(--admin-amber-ink); border-color:var(--admin-warn-strong); background:var(--admin-amber-bg); }
+.admin-pbacklog-hint { font-size:11px; color:var(--admin-muted); margin-top:6px; }
+.admin-pbacklog-propose { margin-top:8px; border:1px dashed var(--admin-line-strong); border-radius:12px; padding:12px 14px; }
+.admin-pbacklog-propose input, .admin-pbacklog-propose textarea, .admin-pbacklog-propose select { width:100%; font-family:inherit; font-size:13px; padding:6px 8px; border:1px solid var(--admin-line); border-radius:8px; box-sizing:border-box; margin-bottom:8px; }
+.admin-pbacklog-btn { font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:99px; padding:8px 16px; border:1px solid var(--color-primary-blue); background:var(--color-primary-blue); color:var(--color-bg-primary); }
+.admin-pbacklog-btn.ghost { background:var(--admin-surface); color:var(--color-primary-blue); }
+.admin-pbacklog-link { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:none; border:none; cursor:pointer; padding:0; font-family:inherit; }
+.admin-pbacklog-err { color:var(--admin-err-strong); font-size:12px; margin-top:6px; }
+/* Touch: the reorder handle and the four priority pills are the whole point of
+   this page for account admins, and both were ~20-25px targets. Grow them, and
+   lift the propose-form fields to 16px so iOS does not zoom on focus. Desktop
+   keeps its denser sizing. */
+@media (pointer: coarse) {
+  .admin-pbacklog-handle { padding:10px 12px; font-size:20px; }
+  .admin-pbacklog-pills { gap:8px; }
+  .admin-pbacklog-pill { padding:8px 14px; }
+  .admin-pbacklog-propose input, .admin-pbacklog-propose textarea, .admin-pbacklog-propose select { font-size:16px; }
+}
+
+/* Team client roadmap tab (was .tcr, shared styles.ts) */
+.admin-roadmap-group { margin-bottom: 22px; }
+.admin-roadmap-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 4px; }
+.admin-roadmap-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 8px; border-radius:99px; background:color-mix(in srgb, var(--admin-accent) 10%, transparent); color:var(--admin-accent); }
+.admin-roadmap-group-title { font-weight:700; font-size:15px; }
+.admin-roadmap-group-intro { color:var(--admin-ink-2); font-size:13px; margin:2px 0 12px; }
+.admin-roadmap-item { border:1px solid var(--admin-line); border-radius:12px; padding:12px 14px; margin-bottom:9px; background:var(--admin-surface); }
+.admin-roadmap-item-top { display:flex; gap:8px; align-items:flex-start; flex-wrap:wrap; }
+.admin-roadmap-ref { flex:none; font-size:12px; font-weight:700; color:var(--admin-accent); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:6px; padding:2px 6px; }
+.admin-roadmap-title { font-weight:650; font-size:14px; flex:1 1 220px; }
+.admin-roadmap-pri { flex:none; font-size:12px; font-weight:700; padding:4px 10px; border-radius:99px; }
+.admin-roadmap-pri.now { background:var(--admin-accent); color:var(--color-bg-primary); }
+.admin-roadmap-pri.next { background:color-mix(in srgb, var(--admin-ok-strong) 15%, transparent); color:var(--admin-ok-strong); }
+.admin-roadmap-pri.later { background:var(--admin-surface-2); color:var(--admin-muted-ink); }
+.admin-roadmap-pri.park { background:var(--admin-amber-bg); color:var(--admin-amber-ink); }
+.admin-roadmap-body { font-size:13px; margin-top:8px; color:var(--admin-ink); }
+.admin-roadmap-body .k { color:var(--admin-ink-2); font-weight:600; }
+.admin-roadmap-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+.admin-roadmap-chip { font-size:11px; font-weight:600; color:var(--admin-ink-2); border:1px solid var(--admin-line-soft); border-radius:99px; padding:2px 8px; }
+.admin-roadmap-chip.tok { color:var(--admin-accent); border-color:color-mix(in srgb, var(--admin-accent) 15%, transparent); background:color-mix(in srgb, var(--admin-accent) 8%, transparent); }
+.admin-roadmap-chip.client { color:var(--admin-ok-strong); border-color:color-mix(in srgb, var(--admin-ok-strong) 25%, transparent); background:color-mix(in srgb, var(--admin-ok-strong) 10%, transparent); }

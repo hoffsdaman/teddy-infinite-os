@@ -28,60 +28,6 @@ import {
   type RoadmapGroupInput,
 } from "./actions";
 
-const STYLES = `
-.cbe { --pri-now:var(--color-primary-blue); --pri-next:var(--admin-ok-strong); --pri-later:var(--admin-muted-ink); --pri-park:var(--admin-amber-ink); }
-.cbe .cbe-group { margin-bottom:16px; border:1px solid color-mix(in srgb, var(--admin-accent) 22%, transparent); border-radius:14px; background:var(--admin-surface); overflow:hidden; }
-.cbe .cbe-group.archived { opacity:.55; }
-.cbe .cbe-group.neutral { border-color:var(--admin-line); }
-.cbe .cbe-group-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0; padding:11px 16px; background:color-mix(in srgb, var(--admin-accent) 7%, transparent); cursor:pointer; }
-.cbe .cbe-group.neutral .cbe-group-head { background:var(--admin-surface-2); cursor:default; }
-.cbe .cbe-step { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:99px; background:var(--color-primary-blue); color:var(--color-bg-primary); }
-.cbe .cbe-group-title { font-weight:700; font-size:15px; }
-.cbe .cbe-count { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:99px; padding:2px 9px; }
-.cbe .cbe-caret { border:none; background:none; cursor:pointer; padding:0 2px; font-size:12px; color:var(--color-primary-blue); font-family:inherit; transition:transform .15s ease; }
-.cbe .cbe-caret.closed { transform:rotate(-90deg); }
-.cbe .cbe-group-tools { display:flex; gap:8px; align-items:center; margin-left:auto; }
-.cbe .cbe-group-body { padding:12px 16px 14px; }
-.cbe .cbe-group-intro { color:var(--admin-ink-2); font-size:13px; margin:0 0 12px; }
-.cbe .cbe-item { border:1px solid var(--admin-line); border-radius:12px; padding:13px 15px; margin-bottom:9px; background:var(--admin-surface); }
-.cbe .cbe-item.archived { opacity:.55; }
-.cbe .cbe-item-top { display:flex; gap:9px; align-items:flex-start; flex-wrap:wrap; }
-.cbe .cbe-ref { flex:none; font-size:12px; font-weight:700; color:var(--color-primary-blue); background:color-mix(in srgb, var(--admin-accent) 10%, transparent); border-radius:6px; padding:3px 7px; }
-.cbe .cbe-title { font-weight:650; font-size:14px; flex:1 1 220px; }
-.cbe .cbe-pills { display:flex; gap:4px; flex-wrap:wrap; }
-.cbe .cbe-pill { font-size:12px; font-weight:600; padding:4px 11px; border-radius:99px; border:1px solid var(--admin-line); background:var(--admin-surface); color:var(--admin-ink-2); cursor:pointer; font-family:inherit; }
-.cbe .cbe-pill:hover { border-color:var(--color-primary-blue); color:var(--color-primary-blue); }
-.cbe .cbe-pill.on-now { background:var(--pri-now); border-color:var(--pri-now); color:var(--color-bg-primary); }
-.cbe .cbe-pill.on-next { background:color-mix(in srgb, var(--admin-ok-strong) 15%, transparent); border-color:var(--pri-next); color:var(--pri-next); }
-.cbe .cbe-pill.on-later { background:var(--admin-surface-2); border-color:var(--admin-faint); color:var(--pri-later); }
-.cbe .cbe-pill.on-park { background:var(--admin-amber-bg); border-color:var(--admin-warn-strong); color:var(--pri-park); }
-.cbe .cbe-body { font-size:13px; margin-top:8px; color:var(--admin-ink); }
-.cbe .cbe-body .k { color:var(--admin-ink-2); font-weight:600; }
-.cbe .cbe-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; align-items:center; }
-.cbe .cbe-chip { font-size:11px; font-weight:600; color:var(--admin-ink-2); border:1px solid var(--admin-line-soft); border-radius:99px; padding:2px 9px; }
-.cbe .cbe-chip.tok { color:var(--color-primary-blue); border-color:color-mix(in srgb, var(--admin-accent) 15%, transparent); background:color-mix(in srgb, var(--admin-accent) 8%, transparent); }
-.cbe .cbe-chip.client { color:var(--admin-ok-strong); border-color:color-mix(in srgb, var(--admin-ok-strong) 25%, transparent); background:color-mix(in srgb, var(--admin-ok-strong) 10%, transparent); }
-.cbe .cbe-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-.cbe .cbe-link { font-size:12px; font-weight:600; color:var(--color-primary-blue); background:none; border:none; cursor:pointer; padding:0; font-family:inherit; }
-.cbe .cbe-link.danger { color:var(--admin-err-strong); }
-.cbe .cbe-link.muted { color:var(--admin-ink-2); }
-.cbe .cbe-form { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
-.cbe .cbe-form .full { grid-column:1 / -1; }
-.cbe .cbe-form label { font-size:12px; font-weight:600; color:var(--admin-ink-2); display:block; margin-bottom:3px; }
-.cbe .cbe-form input, .cbe .cbe-form textarea, .cbe .cbe-form select { width:100%; font-family:inherit; font-size:13px; padding:7px 9px; border:1px solid var(--admin-line); border-radius:8px; box-sizing:border-box; }
-.cbe .cbe-form textarea { min-height:52px; resize:vertical; }
-.cbe .cbe-proposed { border:1px solid var(--admin-warn-strong); background:var(--admin-amber-bg); border-radius:12px; padding:14px 16px; margin-bottom:18px; }
-.cbe .cbe-proposed h3 { margin:0 0 8px; font-size:14px; color:var(--admin-amber-ink); }
-.cbe .cbe-add { margin-top:6px; }
-.cbe .cbe-err { color:var(--admin-err-strong); font-size:12px; margin-top:6px; }
-.cbe .cbe-empty { border:1px dashed var(--admin-line-strong); border-radius:12px; padding:22px 24px; }
-.cbe .cbe-empty p { margin:0 0 12px; color:var(--admin-ink-2); font-size:14px; }
-.cbe .cbe-empty .row { display:flex; gap:10px; flex-wrap:wrap; }
-.cbe .cbe-btn { font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; border-radius:99px; padding:8px 16px; border:1px solid var(--color-primary-blue); background:var(--color-primary-blue); color:var(--color-bg-primary); }
-.cbe .cbe-btn.ghost { background:var(--admin-surface); color:var(--color-primary-blue); }
-.cbe .cbe-newgroup { border:1px dashed var(--admin-line-strong); border-radius:12px; padding:14px 16px; margin-bottom:20px; }
-@media (max-width:640px){ .cbe .cbe-form { grid-template-columns:1fr; } }
-`;
 
 type Draft = Partial<BacklogItemInput> & { needsCsv?: string };
 
@@ -184,16 +130,16 @@ export function BacklogAdminEditor({
     const tok = tokenLabel(it.token_low, it.token_high);
 
     return (
-      <div key={it.id} className={`cbe-item${it.archived_at ? " archived" : ""}`}>
-        <div className="cbe-item-top">
-          {it.ref && <span className="cbe-ref">{it.ref}</span>}
-          <span className="cbe-title">{it.title}</span>
-          <span className="cbe-pills">
+      <div key={it.id} className={`admin-backlog-item${it.archived_at ? " archived" : ""}`}>
+        <div className="admin-backlog-item-top">
+          {it.ref && <span className="admin-backlog-ref">{it.ref}</span>}
+          <span className="admin-backlog-title">{it.title}</span>
+          <span className="admin-backlog-pills">
             {BACKLOG_PRIORITIES.map((p) => (
               <button
                 key={p}
                 type="button"
-                className={`cbe-pill${it.edge8_priority === p ? ` on-${p}` : ""}`}
+                className={`admin-backlog-pill${it.edge8_priority === p ? ` on-${p}` : ""}`}
                 disabled={pending}
                 onClick={() => run(() => setEdge8Priority(it.id, p))}
                 title="Edge8 proposed priority"
@@ -204,28 +150,28 @@ export function BacklogAdminEditor({
           </span>
         </div>
 
-        <div className="cbe-body">
+        <div className="admin-backlog-body">
           {it.who && <div><span className="k">Who: </span>{it.who}</div>}
           {it.today_state && <div><span className="k">Today: </span>{it.today_state}</div>}
           {it.build_desc && <div><span className="k">Build: </span>{it.build_desc}</div>}
-          <div className="cbe-chips">
-            {(it.needs ?? []).map((n) => <span key={n} className="cbe-chip">{n}</span>)}
+          <div className="admin-backlog-chips">
+            {(it.needs ?? []).map((n) => <span key={n} className="admin-backlog-chip">{n}</span>)}
             {it.ai_program_id && programName.has(it.ai_program_id) && (
-              <span className="cbe-chip tok">{programName.get(it.ai_program_id)}</span>
+              <span className="admin-backlog-chip tok">{programName.get(it.ai_program_id)}</span>
             )}
-            {liveCardItemIds?.has(it.id) && <span className="cbe-chip tok">on a board</span>}
-            {tok && <span className="cbe-chip tok">est. {tok} Human Tokens</span>}
-            {it.source === "client" && <span className="cbe-chip client">client proposed</span>}
-            {it.status !== "accepted" && it.source === "edge8" && <span className="cbe-chip">{it.status}</span>}
+            {liveCardItemIds?.has(it.id) && <span className="admin-backlog-chip tok">on a board</span>}
+            {tok && <span className="admin-backlog-chip tok">est. {tok} Human Tokens</span>}
+            {it.source === "client" && <span className="admin-backlog-chip client">client proposed</span>}
+            {it.status !== "accepted" && it.source === "edge8" && <span className="admin-backlog-chip">{it.status}</span>}
             {it.client_priority && (
-              <span className="cbe-chip client">client set: {PRIORITY_LABEL[it.client_priority]}</span>
+              <span className="admin-backlog-chip client">client set: {PRIORITY_LABEL[it.client_priority]}</span>
             )}
-            {it.client_note && <span className="cbe-chip client">note: {it.client_note}</span>}
+            {it.client_note && <span className="admin-backlog-chip client">note: {it.client_note}</span>}
           </div>
         </div>
 
         {isEditing && (
-          <div className="cbe-form">
+          <div className="admin-backlog-form">
             <div className="full">
               <label>Title</label>
               <input value={d.title ?? ""} onChange={(e) => setD({ title: e.target.value })} />
@@ -281,28 +227,28 @@ export function BacklogAdminEditor({
           </div>
         )}
 
-        <div className="cbe-actions">
+        <div className="admin-backlog-actions">
           {it.status === "proposed" && (
-            <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => acceptProposedItem(it.id))}>
+            <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => acceptProposedItem(it.id))}>
               Accept into plan
             </button>
           )}
           {isEditing ? (
             <>
-              <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => updateBacklogItem(it.id, draftToInput(d)), () => setEditing(null))}>
+              <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => updateBacklogItem(it.id, draftToInput(d)), () => setEditing(null))}>
                 Save
               </button>
-              <button type="button" className="cbe-link" onClick={() => setEditing(null)}>Cancel</button>
+              <button type="button" className="admin-backlog-link" onClick={() => setEditing(null)}>Cancel</button>
             </>
           ) : (
-            <button type="button" className="cbe-link" onClick={() => { setDrafts((p) => ({ ...p, [it.id]: itemToDraft(it) })); setEditing(it.id); }}>
+            <button type="button" className="admin-backlog-link" onClick={() => { setDrafts((p) => ({ ...p, [it.id]: itemToDraft(it) })); setEditing(it.id); }}>
               Edit
             </button>
           )}
           {it.archived_at ? (
-            <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => restoreBacklogItem(it.id))}>Restore</button>
+            <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => restoreBacklogItem(it.id))}>Restore</button>
           ) : (
-            <button type="button" className="cbe-link danger" disabled={pending} onClick={() => run(() => archiveBacklogItem(it.id))}>Archive</button>
+            <button type="button" className="admin-backlog-link danger" disabled={pending} onClick={() => run(() => archiveBacklogItem(it.id))}>Archive</button>
           )}
         </div>
       </div>
@@ -311,7 +257,7 @@ export function BacklogAdminEditor({
 
   function renderGroupForm(d: GroupDraft, setG: (patch: Partial<GroupDraft>) => void) {
     return (
-      <div className="cbe-form">
+      <div className="admin-backlog-form">
         <div className="full">
           <label>Title</label>
           <input autoFocus value={d.title} onChange={(e) => setG({ title: e.target.value })} placeholder="e.g. Chatbot on payrolliq" />
@@ -339,43 +285,43 @@ export function BacklogAdminEditor({
     const toggle = () => setCollapsedGroups((p) => ({ ...p, [g.id]: !p[g.id] }));
 
     return (
-      <div key={g.id} className={`cbe-group${g.archived_at ? " archived" : ""}`}>
-        <div className="cbe-group-head" onClick={toggle}>
-          <button type="button" className={`cbe-caret${isCollapsed ? " closed" : ""}`} aria-expanded={!isCollapsed} title={isCollapsed ? "Expand milestone" : "Collapse milestone"}>
+      <div key={g.id} className={`admin-backlog-group${g.archived_at ? " archived" : ""}`}>
+        <div className="admin-backlog-group-head" onClick={toggle}>
+          <button type="button" className={`admin-backlog-caret${isCollapsed ? " closed" : ""}`} aria-expanded={!isCollapsed} title={isCollapsed ? "Expand milestone" : "Collapse milestone"}>
             ▼
           </button>
-          {g.step_label && <span className="cbe-step">{g.step_label}</span>}
-          <span className="cbe-group-title">{g.title}</span>
-          <span className="cbe-count">{openCount} item{openCount === 1 ? "" : "s"}</span>
+          {g.step_label && <span className="admin-backlog-step">{g.step_label}</span>}
+          <span className="admin-backlog-group-title">{g.title}</span>
+          <span className="admin-backlog-count">{openCount} item{openCount === 1 ? "" : "s"}</span>
           {!g.archived_at ? (
-            <span className="cbe-group-tools" onClick={(e) => e.stopPropagation()}>
-              <button type="button" className="cbe-link muted" disabled={pending || index === 0} onClick={() => run(() => moveRoadmapGroup(g.id, "up"))} title="Move group up">↑</button>
-              <button type="button" className="cbe-link muted" disabled={pending || index === activeGroups.length - 1} onClick={() => run(() => moveRoadmapGroup(g.id, "down"))} title="Move group down">↓</button>
-              <button type="button" className="cbe-link muted" onClick={() => { setGroupDrafts((p) => ({ ...p, [g.id]: { step_label: g.step_label ?? "", title: g.title, intro: g.intro ?? "" } })); setEditingGroup(isEditingGroup ? null : g.id); }}>
+            <span className="admin-backlog-group-tools" onClick={(e) => e.stopPropagation()}>
+              <button type="button" className="admin-backlog-link muted" disabled={pending || index === 0} onClick={() => run(() => moveRoadmapGroup(g.id, "up"))} title="Move group up">↑</button>
+              <button type="button" className="admin-backlog-link muted" disabled={pending || index === activeGroups.length - 1} onClick={() => run(() => moveRoadmapGroup(g.id, "down"))} title="Move group down">↓</button>
+              <button type="button" className="admin-backlog-link muted" onClick={() => { setGroupDrafts((p) => ({ ...p, [g.id]: { step_label: g.step_label ?? "", title: g.title, intro: g.intro ?? "" } })); setEditingGroup(isEditingGroup ? null : g.id); }}>
                 {isEditingGroup ? "Close" : "Edit group"}
               </button>
               {groupItems.filter((i) => !i.archived_at).length === 0 && (
-                <button type="button" className="cbe-link danger" disabled={pending} onClick={() => run(() => archiveRoadmapGroup(g.id))}>Archive group</button>
+                <button type="button" className="admin-backlog-link danger" disabled={pending} onClick={() => run(() => archiveRoadmapGroup(g.id))}>Archive group</button>
               )}
             </span>
           ) : (
-            <span className="cbe-group-tools" onClick={(e) => e.stopPropagation()}>
-              <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => restoreRoadmapGroup(g.id))}>Restore group</button>
+            <span className="admin-backlog-group-tools" onClick={(e) => e.stopPropagation()}>
+              <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => restoreRoadmapGroup(g.id))}>Restore group</button>
             </span>
           )}
         </div>
         {!isCollapsed && (
-        <div className="cbe-group-body">
-        {g.intro && <div className="cbe-group-intro">{g.intro}</div>}
+        <div className="admin-backlog-group-body">
+        {g.intro && <div className="admin-backlog-group-intro">{g.intro}</div>}
 
         {isEditingGroup && (
-          <div className="cbe-item">
+          <div className="admin-backlog-item">
             {renderGroupForm(gd, setG)}
-            <div className="cbe-actions">
-              <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => updateRoadmapGroup(g.id, groupInput(gd)), () => setEditingGroup(null))}>
+            <div className="admin-backlog-actions">
+              <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => updateRoadmapGroup(g.id, groupInput(gd)), () => setEditingGroup(null))}>
                 Save group
               </button>
-              <button type="button" className="cbe-link" onClick={() => setEditingGroup(null)}>Cancel</button>
+              <button type="button" className="admin-backlog-link" onClick={() => setEditingGroup(null)}>Cancel</button>
             </div>
           </div>
         )}
@@ -383,8 +329,8 @@ export function BacklogAdminEditor({
         {groupItems.map(renderItem)}
 
         {!g.archived_at && (addGroup === g.key ? (
-          <div className="cbe-item">
-            <div className="cbe-form">
+          <div className="admin-backlog-item">
+            <div className="admin-backlog-form">
               <div className="full">
                 <label>Title</label>
                 <input autoFocus value={addDraft.title ?? ""} onChange={(e) => setAddDraft({ ...addDraft, title: e.target.value })} />
@@ -404,15 +350,15 @@ export function BacklogAdminEditor({
                 <textarea value={addDraft.build_desc ?? ""} onChange={(e) => setAddDraft({ ...addDraft, build_desc: e.target.value })} />
               </div>
             </div>
-            <div className="cbe-actions">
-              <button type="button" className="cbe-link" disabled={pending} onClick={() => run(() => createBacklogItem(companyId, { ...draftToInput({ ...addDraft, group_key: g.key }) }), () => { setAddGroup(null); setAddDraft({}); })}>
+            <div className="admin-backlog-actions">
+              <button type="button" className="admin-backlog-link" disabled={pending} onClick={() => run(() => createBacklogItem(companyId, { ...draftToInput({ ...addDraft, group_key: g.key }) }), () => { setAddGroup(null); setAddDraft({}); })}>
                 Add item
               </button>
-              <button type="button" className="cbe-link" onClick={() => { setAddGroup(null); setAddDraft({}); }}>Cancel</button>
+              <button type="button" className="admin-backlog-link" onClick={() => { setAddGroup(null); setAddDraft({}); }}>Cancel</button>
             </div>
           </div>
         ) : (
-          <button type="button" className="cbe-link cbe-add" onClick={() => { setAddGroup(g.key); setAddDraft({ edge8_priority: "next", ai_program_id: defaultProgramId ?? null }); }}>
+          <button type="button" className="admin-backlog-link admin-backlog-add" onClick={() => { setAddGroup(g.key); setAddDraft({ edge8_priority: "next", ai_program_id: defaultProgramId ?? null }); }}>
             + Add item to {g.step_label || g.title}
           </button>
         ))}
@@ -423,29 +369,28 @@ export function BacklogAdminEditor({
   }
 
   const newGroupForm = (
-    <div className="cbe-newgroup">
+    <div className="admin-backlog-newgroup">
       {renderGroupForm(newGroup, (patch) => setNewGroup((p) => ({ ...p, ...patch })))}
-      <div className="cbe-actions">
+      <div className="admin-backlog-actions">
         <button
           type="button"
-          className="cbe-link"
+          className="admin-backlog-link"
           disabled={pending || !newGroup.title.trim()}
           onClick={() => run(() => createRoadmapGroup(companyId, groupInput(newGroup)), () => { setNewGroupOpen(false); setNewGroup({ step_label: "", title: "", intro: "" }); })}
         >
           Create group
         </button>
-        <button type="button" className="cbe-link" onClick={() => setNewGroupOpen(false)}>Cancel</button>
+        <button type="button" className="admin-backlog-link" onClick={() => setNewGroupOpen(false)}>Cancel</button>
       </div>
     </div>
   );
 
   return (
-    <div className="cbe">
-      <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+    <div className="admin-backlog">
       {err && <div className="admin-alert admin-alert--err u-mb-3">{err}</div>}
 
       {proposed.length > 0 && (
-        <div className="cbe-proposed">
+        <div className="admin-backlog-proposed">
           <h3>Client proposed {proposed.length} item{proposed.length === 1 ? "" : "s"}: review below</h3>
           <div className="u-warn">
             {proposed.map((p) => p.title).join(" · ")}
@@ -454,7 +399,7 @@ export function BacklogAdminEditor({
       )}
 
       {groups.length === 0 ? (
-        <div className="cbe-empty">
+        <div className="admin-backlog-empty">
           <p>
             No roadmap yet. A roadmap is a set of milestones you define for this client:
             start from a blank one, or seed the standard Edge8 5-milestone layout and
@@ -464,8 +409,8 @@ export function BacklogAdminEditor({
             newGroupForm
           ) : (
             <div className="row">
-              <button type="button" className="cbe-btn" onClick={() => setNewGroupOpen(true)}>Create a group</button>
-              <button type="button" className="cbe-btn ghost" disabled={pending} onClick={() => run(() => seedTemplateGroups(companyId))}>
+              <button type="button" className="admin-backlog-btn" onClick={() => setNewGroupOpen(true)}>Create a group</button>
+              <button type="button" className="admin-backlog-btn ghost" disabled={pending} onClick={() => run(() => seedTemplateGroups(companyId))}>
                 Start from the Edge8 template
               </button>
             </div>
@@ -477,12 +422,12 @@ export function BacklogAdminEditor({
           {showArchived && groups.filter((g) => g.archived_at).map((g) => renderGroup(g, -1))}
 
           {orphans.length > 0 && (
-            <div className="cbe-group neutral">
-              <div className="cbe-group-head">
-                <span className="cbe-group-title">Ungrouped</span>
+            <div className="admin-backlog-group neutral">
+              <div className="admin-backlog-group-head">
+                <span className="admin-backlog-group-title">Ungrouped</span>
               </div>
-              <div className="cbe-group-body">
-                <div className="cbe-group-intro">
+              <div className="admin-backlog-group-body">
+                <div className="admin-backlog-group-intro">
                   These items point at a group that no longer exists here. Edit each one to move it into a current group.
                 </div>
                 {orphans.map(renderItem)}
@@ -493,7 +438,7 @@ export function BacklogAdminEditor({
           {newGroupOpen ? (
             newGroupForm
           ) : (
-            <button type="button" className="cbe-link" onClick={() => setNewGroupOpen(true)}>+ Add a group</button>
+            <button type="button" className="admin-backlog-link" onClick={() => setNewGroupOpen(true)}>+ Add a group</button>
           )}
         </>
       )}

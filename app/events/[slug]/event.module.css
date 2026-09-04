@@ -265,7 +265,7 @@
 }
 
 .ticketCode {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-body);
   color: var(--grey-mid);
   font-size: 14px;
   letter-spacing: 0.08em;
