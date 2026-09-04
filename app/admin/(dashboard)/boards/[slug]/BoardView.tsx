@@ -941,7 +941,7 @@ export function BoardView({
                   Comments{activeCard && activeCard.comments.length > 0 ? ` (${activeCard.comments.length})` : ""}
                 </label>
                 {activeCard?.comments.map((c) => (
-                  <div key={c.id} className="admin-divider-row">
+                  <div key={c.id} className="admin-row-divided admin-row-divided--block">
                     <div className="u-row">
                       <span className="admin-cell-strong u-sm">
                         {c.author}

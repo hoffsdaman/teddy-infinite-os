@@ -207,7 +207,7 @@ function CommentRow({ c, currentUserLabel }: { c: SupportComment; currentUserLab
       <div className="admin-list-main u-row u-gap-3">
         <span
           aria-hidden
-          className="admin-avatar-xs"
+          className="admin-avatar admin-avatar--xs admin-avatar--info"
         >
           {initial}
         </span>

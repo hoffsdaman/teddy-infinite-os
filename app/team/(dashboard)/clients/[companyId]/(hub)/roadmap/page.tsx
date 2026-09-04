@@ -42,7 +42,7 @@ export default async function TeamClientRoadmapTab({ params }: { params: { compa
       {overview && (
         <section className="admin-card admin-section-card u-mb-4">
           <h2 className="admin-card-title u-mb-2">Overview</h2>
-          <div className="admin-text-md">
+          <div className="admin-text">
             <BotText text={overview} />
           </div>
         </section>

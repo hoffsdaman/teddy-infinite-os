@@ -138,7 +138,7 @@ export default async function CallDetailPage({ params }: { params: { id: string 
 
       <div className="admin-card admin-section-card">
         <div className="admin-shelf-heading u-mb-2">Transcript</div>
-        <div className="admin-scroll-lg">
+        <div className="admin-scroll admin-scroll--lg">
           {stats.segments.map((seg, i) => (
             <div key={i} className="u-mb-3">
               <div className="u-sm">

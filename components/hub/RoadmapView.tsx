@@ -20,7 +20,7 @@ export function RoadmapView({ roadmap }: { roadmap: CompanyRoadmap }) {
       {overview && (
         <section className="admin-card admin-section-card u-mb-4">
           <h2 className="admin-card-title u-mb-2">Overview</h2>
-          <div className="admin-text-block">{overview}</div>
+          <div className="admin-text admin-text--prewrap">{overview}</div>
         </section>
       )}
 

@@ -87,25 +87,6 @@
 }
 .admin-iconbtn:hover { background: var(--admin-on-dark-active); }
 .admin-iconbtn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
-.admin-avatarbtn {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--admin-accent);
-  color: var(--color-bg-primary);
-  border: 0;
-  font-family: var(--font-display);
-  font-weight: 700; font-size: 11px; letter-spacing: 0.3px;
-  display: grid; place-items: center;
-  cursor: pointer;
-}
-.admin-avatarbtn:hover { filter: brightness(1.1); }
-.admin-avatarbtn--lg { width: 34px; height: 34px; font-size: 13px; }
-.admin-avatarbtn img {
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
 .admin-brandbtn {
   margin: 0 12px 10px;
   padding: 8px 10px;
@@ -1155,16 +1136,6 @@ a.admin-start-btn.ghost:hover { color: var(--admin-sidebar-strong); }
 /* Name links to the member's profile, ink at rest, accent on hover. */
 a.admin-dir-name { color: var(--admin-ink); }
 a.admin-dir-name:hover { color: var(--admin-accent); }
-.admin-dir-avatar {
-  width: 28px; height: 28px; flex: 0 0 auto;
-  border-radius: 50%;
-  background: var(--admin-accent);
-  color: var(--color-bg-primary);
-  display: grid; place-items: center;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
-  overflow: hidden;
-}
-.admin-dir-avatar img { width: 100%; height: 100%; object-fit: cover; }
 /* Directory: sort caret (faint until the column is active) + result count. */
 .admin-team-dir-caret { font-size: 11px; opacity: 0.7; }
 .admin-th-sort:hover .admin-team-dir-caret { opacity: 1; }
@@ -2090,10 +2061,6 @@ a.admin-campaign-asset-title:hover { color: var(--admin-accent); }
 .admin-campaign-toolbar-right { display: flex; justify-content: flex-end; margin-bottom: 14px; }
 .admin-campaign-section-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
 .admin-campaign-chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
-.admin-campaign-progress { display: flex; align-items: center; gap: 8px; }
-.admin-campaign-progress-track { flex: 1; height: 8px; border-radius: 20px; background: var(--admin-line-soft); overflow: hidden; }
-.admin-campaign-progress-fill { height: 100%; }
-.admin-campaign-progress-num { font-size: 12px; min-width: 62px; text-align: right; }
 /* List view: a small square thumbnail in the image column. */
 .admin-campaign-asset-thumb {
   width: 44px;
@@ -2700,17 +2667,6 @@ a.admin-chip:hover { border-color: var(--admin-accent); color: var(--admin-accen
   color: var(--admin-muted);
 }
 /* Thin done-vs-open progress track on a board card. */
-.admin-progress {
-  height: 4px;
-  border-radius: 2px;
-  background: var(--admin-line-soft);
-  overflow: hidden;
-}
-.admin-progress-fill {
-  height: 100%;
-  border-radius: 2px;
-  background: var(--admin-accent);
-}
 /* Role tag on cross-req boards, color + tint arrive inline per req. */
 .admin-kanban-role-tag {
   font-size: 11px;
@@ -2929,13 +2885,13 @@ a.admin-chip:hover { border-color: var(--admin-accent); color: var(--admin-accen
      transparent centered ::after. .admin-input-eye is already position:absolute
      (it contains its own ::after), the rest need a positioning context. */
   .admin-search-clear,
-  .admin-avatarbtn,
+  .admin-avatar,
   .admin-lead-pin-btn,
   .admin-team-chip-x,
   .admin-phototag-x { position: relative; }
   .admin-search-clear::after,
   .admin-input-eye::after,
-  .admin-avatarbtn::after,
+  .admin-avatar::after,
   .admin-lead-pin-btn::after,
   .admin-team-chip-x::after,
   .admin-phototag-x::after {
@@ -4686,7 +4642,6 @@ a.admin-ideas-share-card:hover {
 .admin-cal-month { font-size: 15px; font-weight: 700; color: var(--admin-ink); }
 .admin-cal-nav { display: flex; gap: 6px; }
 /* 7 columns don't fit a phone; scroll the grid inside its own container. */
-.admin-cal-scroll { overflow-x: auto; }
 .admin-cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -4844,7 +4799,6 @@ a.admin-hub-program-card:hover {
 .admin-cell-stack { display: flex; flex-direction: column; gap: 2px; }
 .admin-chip.is-active { border-color: var(--admin-accent); color: var(--admin-accent); font-weight: 600; }
 a.admin-list-row { text-decoration: none; color: inherit; }
-.admin-progress-fill.is-done { background: var(--admin-ok-ink); }
 .admin-input--w-xs { width: 70px; }
 .admin-input--w-sm { max-width: 220px; }
 .admin-kpi-of { font-size: var(--admin-text-lg); font-weight: 500; color: var(--admin-muted); }
@@ -4875,11 +4829,7 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-chart-bars--stacked { max-width: 840px; }
 .admin-input--icon-right { padding-right: 42px; }
 .admin-thumb { width: 88px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: var(--admin-radius-xs); border: 1px solid var(--admin-line); background: var(--admin-line-soft); color: var(--admin-muted); font-size: var(--admin-text-xs); flex: 0 0 auto; }
-.admin-thumb-img { width: 88px; height: 56px; object-fit: cover; border-radius: var(--admin-radius-xs); border: 1px solid var(--admin-line); background: var(--admin-line-soft); }
 .admin-box { border: 1px solid var(--admin-line); border-radius: var(--admin-radius-sm); }
-.admin-scroll-sm { max-height: 220px; overflow-y: auto; }
-.admin-scroll-md { max-height: 500px; overflow: auto; }
-.admin-scroll-lg { max-height: 600px; overflow: auto; }
 /* ─── Revenue components ────────────────────────────────────────────────── */
 .admin-meter { height: 8px; border-radius: 20px; background: var(--admin-line-soft); overflow: hidden; margin-top: 6px; }
 .admin-meter--thick { height: 10px; }
@@ -4887,32 +4837,21 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-meter-fill { height: 100%; border-radius: inherit; background: var(--admin-accent); }
 .admin-meter-fill.is-done { background: var(--admin-ok-ink); }
 .admin-meter-fill.is-muted { background: var(--admin-muted); }
-.admin-box-pad { border: 1px solid var(--admin-line); border-radius: 10px; padding: 14px; }
-.admin-tag-pill { font-size: var(--admin-text-xs); padding: 2px 8px; border-radius: var(--admin-radius-pill); background: var(--admin-tint); display: inline-flex; gap: 6px; align-items: center; }
-.admin-chip-outline { display: inline-flex; gap: 6px; align-items: baseline; padding: 6px 12px; border-radius: var(--admin-radius-pill); border: 1px solid var(--admin-line); }
 .admin-btn-reset { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; line-height: 1; }
 .admin-sort-arrow { font-size: 0.9em; opacity: 0.35; }
 .admin-sort-arrow.is-active { opacity: 0.9; }
-.admin-money-lg { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.05; }
-.admin-num-lg { font-size: var(--admin-text-xl); font-weight: 600; }
 .admin-mono-sm { font-family: var(--admin-font-mono); font-size: var(--admin-text-sm); }
-.admin-img-thumb { border-radius: var(--admin-radius-sm); object-fit: cover; border: 1px solid var(--admin-line); max-width: 100%; }
-.admin-img-thumb--sm { border-radius: var(--admin-radius-xs); flex-shrink: 0; border: 0; }
 .admin-alert--outlined { border: 1px solid var(--admin-line-strong); }
 .admin-card--warn { border-color: var(--admin-warn-strong); }
 .admin-quote { border-left: 2px solid var(--admin-line-strong); padding-left: 10px; }
 .admin-code-lg { font-size: 20px; font-weight: 700; }
-.admin-campaign-progress-fill.is-done { background: var(--admin-ok-ink); }
 .admin-meter--thin { height: 6px; margin-top: 0; }
 .admin-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--admin-ink); flex-shrink: 0; display: inline-block; }
 /* ─── Talent / Operations / Boards components ──────────────────────────── */
-.admin-avatar-img { border-radius: 50%; object-fit: cover; }
-.admin-avatar-initials { border-radius: 50%; background: var(--admin-tint); display: inline-flex; align-items: center; justify-content: center; font-size: var(--admin-text-sm); font-weight: 600; flex-shrink: 0; }
 .admin-kr-index { color: var(--admin-faint); font-weight: 700; font-size: 11px; margin-right: 7px; }
 .admin-h-sm { font-size: var(--admin-text-base); font-weight: 700; margin: 14px 0 4px; color: var(--admin-ink); }
 .admin-h-md { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
 .admin-agenda-row { display: grid; grid-template-columns: 180px 1fr; gap: var(--admin-space-4); padding: 12px 0; border-top: 1px solid var(--admin-line); }
-.admin-divider-row { border-top: 1px solid var(--admin-line); padding: 8px 0; }
 .admin-hr { border: 0; border-top: 1px solid var(--admin-line); margin: 4px 0; }
 .admin-star-btn { font-size: 22px; }
 .admin-star-btn--sm { font-size: 16px; }
@@ -4922,19 +4861,13 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-tag-xs--warn { background: var(--admin-warn-bg); color: var(--admin-warn-ink); }
 .admin-score-btn { width: 28px; height: 28px; border-radius: var(--admin-radius-xs); border: 1px solid var(--admin-line-strong); background: transparent; color: var(--admin-ink); cursor: pointer; font-size: var(--admin-text-base); font-weight: 600; }
 .admin-score-btn.is-on { background: var(--admin-accent); color: var(--color-bg-primary); }
-.admin-scroll-xs { max-height: 160px; overflow: auto; }
 .admin-callout { background: var(--admin-accent-soft); border-radius: 10px; padding: 12px 14px; }
-.admin-num-xl { font-size: 22px; font-weight: 700; }
 .admin-td-inset { background: var(--admin-bg); }
 .admin-mono { font-family: var(--admin-font-mono); font-size: var(--admin-text-base); line-height: 1.6; }
-.admin-panel-soft { background: var(--admin-muted-bg); border-radius: var(--admin-radius-sm); padding: 8px 10px; }
 /* ─── Team intranet / portal components ─────────────────────────────────── */
 .admin-skeleton-bar--title { width: 280px; height: 26px; margin: 12px 0 28px; }
 .admin-skeleton-bar--sub { width: 160px; height: 22px; margin-top: 12px; }
-.admin-avatar-lg { width: 88px; height: 88px; font-size: 32px; }
-.admin-avatar-initials--accent { background: var(--admin-accent-soft); color: var(--admin-accent-strong); font-size: var(--admin-text-md); display: flex; }
 .admin-frame { width: 100%; height: 70vh; border: 1px solid var(--admin-line); border-radius: var(--admin-radius-sm); background: var(--color-bg-primary); }
-.admin-scroll-vh { max-height: 58vh; overflow-y: auto; }
 .admin-card--ok { border-color: var(--admin-ok-ink); }
 .admin-fullheight { display: flex; flex-direction: column; min-height: 100vh; }
 .admin-summary { cursor: pointer; list-style: revert; }
@@ -4946,11 +4879,8 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-input--w-xxs { width: 64px; flex: 0 0 auto; }
 .admin-sprint-num { width: 52px; text-align: right; font-size: var(--admin-text-sm); }
 .admin-sprint-num--wide { width: 110px; }
-.admin-text-block { font-size: var(--admin-text-md); line-height: 1.65; white-space: pre-wrap; }
 /* ─── Admin core + shared components (dashboard, settings, support, sidebar) ── */
 .admin-th--xl { min-width: 260px; }
-.admin-stat-value { font-size: 24px; line-height: 1.1; }
-.admin-avatar-xs { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: var(--admin-text-sm); font-weight: 700; background: var(--admin-info-bg); color: var(--admin-info-ink); }
 .admin-seg-btn { border: none; border-radius: 0; font-weight: 400; background: transparent; }
 .admin-seg-btn.is-on { font-weight: 700; background: var(--admin-accent-soft); }
 .admin-board-scroll { display: flex; gap: var(--admin-space-4); overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
@@ -4958,10 +4888,8 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-input-wrap { position: relative; display: block; }
 .admin-input-eye { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; padding: 0; border: 0; background: transparent; color: var(--admin-ink-2); cursor: pointer; }
 /* ─── Team intranet / client portal (roadmap, requests, program plan chat) ── */
-.admin-text-md { font-size: var(--admin-text-md); line-height: 1.65; }
 .admin-list-md { margin: 0; padding-left: 18px; font-size: var(--admin-text-md); line-height: 1.7; }
 .admin-card--inset { background: var(--admin-bg); }
-.admin-assist-box { border: 1px solid var(--admin-line); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: var(--admin-surface-2); }
 .admin-assist-msg { font-size: var(--admin-text-sm); line-height: 1.5; padding: 6px 8px; border-radius: var(--admin-radius-sm); background: var(--admin-surface); border: 1px solid var(--admin-line-soft); justify-self: start; max-width: 90%; }
 .admin-assist-msg--me { background: var(--admin-accent-soft); border: none; justify-self: end; }
 /* ─── Pattern library demos (design-debt #5) ─────────────────────────────── */
@@ -4975,3 +4903,48 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-pat-shadow-chip--raised { box-shadow: var(--admin-shadow-md); }
 .admin-pat-shadow-chip--modal { box-shadow: var(--admin-shadow-modal); }
 .admin-kanban-col-dot--accent { background: var(--admin-accent); }
+/* ─── Consolidated families (design-debt #7): one class + modifiers each ──── */
+/* Progress: admin-meter is the one bar. --hairline was admin-progress, --grow the campaign track. */
+.admin-meter--hairline { height: 4px; border-radius: 2px; margin-top: 0; }
+.admin-meter--grow { flex: 1; margin-top: 0; }
+.admin-meter-num { font-size: var(--admin-text-sm); min-width: 62px; text-align: right; }
+/* Boxes: admin-box + padding utilities; --soft is the muted inset. */
+.admin-box--soft { background: var(--admin-surface-2); border-radius: 10px; }
+.admin-callout--muted { background: var(--admin-muted-bg); border-radius: var(--admin-radius-sm); padding: 8px 10px; }
+/* Dividers: admin-row-divided, --block for non-flex rows. */
+.admin-row-divided--block { display: block; }
+/* Scroll areas */
+.admin-scroll { overflow: auto; }
+.admin-scroll--xs { max-height: 160px; }
+.admin-scroll--sm { max-height: 220px; }
+.admin-scroll--md { max-height: 500px; }
+.admin-scroll--lg { max-height: 600px; }
+.admin-scroll--vh { max-height: 58vh; }
+/* Big numbers */
+.admin-num { font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.admin-num--lg { font-size: var(--admin-text-xl); font-weight: 600; }
+.admin-num--xl { font-size: var(--admin-text-title); }
+.admin-num--stat { font-size: 24px; }
+.admin-num--money { font-size: var(--admin-text-page); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+/* Text blocks */
+.admin-text { font-size: var(--admin-text-md); line-height: 1.65; }
+.admin-text--prewrap { white-space: pre-wrap; }
+/* Thumbnails: admin-thumb is the box; --img for an <img> at that size, --fluid for a free-size image, --bare strips the frame. */
+.admin-thumb--img { object-fit: cover; display: block; }
+.admin-thumb--fluid { width: auto; height: auto; max-width: 100%; border-radius: var(--admin-radius-sm); object-fit: cover; display: inline-block; }
+.admin-thumb--bare { border: 0; border-radius: var(--admin-radius-xs); flex-shrink: 0; }
+/* Avatars: one admin-avatar with size and tone modifiers. Kanban, coach and team avatars stay as their components' own parts. */
+.admin-avatar { border-radius: 50%; background: var(--admin-tint); display: inline-flex; align-items: center; justify-content: center; font-size: var(--admin-text-sm); font-weight: 600; flex-shrink: 0; overflow: hidden; }
+.admin-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.admin-avatar--img { object-fit: cover; }
+.admin-avatar--xs { width: 26px; height: 26px; }
+.admin-avatar--lg { width: 88px; height: 88px; font-size: 32px; }
+.admin-avatar--accent { background: var(--admin-accent-soft); color: var(--admin-accent-strong); font-size: var(--admin-text-md); display: flex; }
+.admin-avatar--info { background: var(--admin-info-bg); color: var(--admin-info-ink); font-weight: 700; }
+.admin-avatar--solid { width: 28px; height: 28px; background: var(--admin-accent); color: var(--color-bg-primary); font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.3px; }
+.admin-avatar--btn { border: 0; cursor: pointer; }
+.admin-avatar--btn:hover { filter: brightness(1.1); }
+.admin-avatar--btn-lg { width: 40px; height: 40px; font-size: var(--admin-text-md); }
+/* Chips */
+.admin-chip--lg { padding: 6px 12px; font-size: inherit; color: inherit; align-items: baseline; }
+.admin-tag-xs--soft { font-weight: 400; letter-spacing: 0; background: var(--admin-tint); color: inherit; padding: 2px 8px; gap: 6px; }

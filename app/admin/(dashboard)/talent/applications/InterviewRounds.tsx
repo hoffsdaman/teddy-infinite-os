@@ -224,7 +224,7 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
   }
 
   return (
-    <div className="admin-panel-soft">
+    <div className="admin-callout admin-callout--muted">
       <div className="u-row u-wrap">
         <span className="admin-label u-m-0">
           Transcript
@@ -299,7 +299,7 @@ function TranscriptPanel({ round, onChange }: { round: InterviewRound; onChange:
 
       {open && (
         <div
-          className="u-mt-2 u-pl-3 admin-quote u-prewrap admin-scroll-sm"
+          className="u-mt-2 u-pl-3 admin-quote u-prewrap admin-scroll admin-scroll--sm"
         >
           {text === null ? <span className="admin-hint">Loading transcript…</span> : text || "—"}
         </div>
@@ -762,7 +762,7 @@ function AddRoundForm({
         {team.length === 0 ? (
           <div className="admin-hint">Loading team…</div>
         ) : (
-          <div className="u-row u-wrap u-gap-2 admin-scroll-xs">
+          <div className="u-row u-wrap u-gap-2 admin-scroll admin-scroll--xs">
             {team.map((t) => {
               const on = panelists.includes(t.id);
               return (

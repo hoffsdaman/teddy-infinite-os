@@ -143,7 +143,7 @@ export function DirectoryTable({ entries }: { entries: DirectoryEntry[] }) {
                   <tr key={e.id}>
                     <td className="admin-cell-strong">
                       <Link href={`/team/directory/${e.id}`} className="admin-dir-name">
-                        <span className="admin-dir-avatar" aria-hidden>
+                        <span className="admin-avatar admin-avatar--solid" aria-hidden>
                           {e.avatarUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={e.avatarUrl} alt="" loading="lazy" decoding="async" />

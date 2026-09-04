@@ -99,7 +99,7 @@ export default async function SyncPage() {
             Past syncs (the streak: {packets.length} packet{packets.length === 1 ? "" : "s"})
           </h3>
           {past.map((p) => (
-            <details key={p.id} className="admin-divider-row">
+            <details key={p.id} className="admin-row-divided admin-row-divided--block">
               <summary className="u-strong u-pointer">Sync of {p.week_start}</summary>
               <PacketBody body={p.body_md} />
             </details>

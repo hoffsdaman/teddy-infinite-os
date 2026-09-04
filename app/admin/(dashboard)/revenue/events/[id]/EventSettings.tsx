@@ -704,7 +704,7 @@ function MediaSection({
             alt="Cover"
             width={96}
             height={64}
-            className="admin-img-thumb"
+            className="admin-thumb admin-thumb--fluid"
           />
         ) : (
           <span className="admin-cell-muted">None. The signup page renders without a hero.</span>
@@ -749,7 +749,7 @@ function MediaSection({
               <div className="admin-list-main u-row u-gap-3 u-min-0">
                 {m.kind === "image" ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={m.url} alt={m.caption ?? ""} width={56} height={40} className="admin-img-thumb admin-img-thumb--sm" />
+                  <img src={m.url} alt={m.caption ?? ""} width={56} height={40} className="admin-thumb admin-thumb--fluid admin-thumb--bare" />
                 ) : (
                   <span className="u-shrink-0">🎬</span>
                 )}

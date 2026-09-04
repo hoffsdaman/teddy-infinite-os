@@ -107,12 +107,12 @@ function Avatar({ card, size = 28 }: { card: BoardCard; size?: number }) {
       alt=""
       width={size}
       height={size}
-      className="admin-avatar-img"
+      className="admin-avatar admin-avatar--img"
     />
   ) : (
     <span
       aria-hidden
-      className="admin-avatar-initials" style={{ width: size, height: size }} /* layout-ok: size from props */
+      className="admin-avatar" style={{ width: size, height: size }} /* layout-ok: size from props */
     >
       {card.name.slice(0, 1)}
     </span>

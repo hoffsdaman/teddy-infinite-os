@@ -143,7 +143,7 @@ function FieldAggregate({ field, values }: { field: SurveyFieldRow; values: NonN
   return texts.length === 0 ? (
     <div className="admin-empty">No answers yet.</div>
   ) : (
-    <div className="u-stack admin-scroll-sm">
+    <div className="u-stack admin-scroll admin-scroll--sm">
       {texts.slice(0, 50).map((t, i) => (
         <div key={i} className="admin-quote">
           {t}

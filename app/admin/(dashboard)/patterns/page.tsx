@@ -476,18 +476,18 @@ export default function PatternsPage() {
             <div className="admin-meter admin-meter--thin"><div className="admin-meter-fill" style={{ width: "62%" }} /* layout-ok: demo value */ /></div>
             <div className="admin-callout--ok">Sprint closed — 14 of 16 cards delivered. <span className="u-strong">admin-callout--ok</span></div>
             <div className="admin-row-divided u-wrap"><span className="admin-cell-strong">Divided row</span><span className="admin-cell-muted u-ml-auto u-sm u-help" title="Hover for help">admin-row-divided · u-help</span></div>
-            <div className="admin-divider-row"><span className="u-done">A done subtask (u-done)</span> <span className="admin-cell-muted admin-sprint-num">12 HT</span></div>
-            <div className="admin-num-xl">42 <span className="admin-cell-muted u-md u-strong">/ 60 delivered</span></div>
-            <div className="admin-text-block">admin-text-block keeps multi-line notes readable:{"\n"}second line preserved.</div>
+            <div className="admin-row-divided admin-row-divided--block"><span className="u-done">A done subtask (u-done)</span> <span className="admin-cell-muted admin-sprint-num">12 HT</span></div>
+            <div className="admin-num admin-num--xl">42 <span className="admin-cell-muted u-md u-strong">/ 60 delivered</span></div>
+            <div className="admin-text admin-text--prewrap">admin-text admin-text--prewrap keeps multi-line notes readable:{"\n"}second line preserved.</div>
           </div>
         </Section>
 
         {/* ─── Admin core components ─────────────── */}
         <Section title="Admin core components" sub="Added while moving the dashboard, settings, support board and sidebar off inline styles.">
           <div className="u-stack u-gap-3">
-            <div className="u-row u-gap-3"><span className="admin-avatar-xs" aria-hidden>T</span><span className="admin-cell-strong">admin-avatar-xs</span><span className="admin-cell-muted u-not-allowed" title="Disabled">u-not-allowed</span></div>
+            <div className="u-row u-gap-3"><span className="admin-avatar admin-avatar--xs admin-avatar--info" aria-hidden>T</span><span className="admin-cell-strong">admin-avatar admin-avatar--xs admin-avatar--info</span><span className="admin-cell-muted u-not-allowed" title="Disabled">u-not-allowed</span></div>
             <div className="u-row admin-box u-clip u-self-start"><button type="button" className="admin-btn admin-seg-btn is-on">▦ Board</button><button type="button" className="admin-btn admin-seg-btn">☰ List</button></div>
-            <div className="u-grid-auto-stat"><div className="admin-card admin-section-card"><span className="admin-label u-m-0">Open</span><br /><strong className="admin-stat-value">12</strong></div><div className="admin-card admin-section-card"><span className="admin-label u-m-0">Waiting</span><br /><strong className="admin-stat-value">3</strong></div></div>
+            <div className="u-grid-auto-stat"><div className="admin-card admin-section-card"><span className="admin-label u-m-0">Open</span><br /><strong className="admin-num admin-num--stat">12</strong></div><div className="admin-card admin-section-card"><span className="admin-label u-m-0">Waiting</span><br /><strong className="admin-num admin-num--stat">3</strong></div></div>
             <span className="admin-input-wrap u-max-4"><input className="admin-input admin-input--icon-right u-w-full" placeholder="admin-input-wrap + admin-input-eye" readOnly /><button type="button" className="admin-input-eye" aria-label="Show">👁</button></span>
           </div>
         </Section>
@@ -495,15 +495,15 @@ export default function PatternsPage() {
         {/* ─── Team & portal components ─────────────── */}
         <Section title="Team & portal components" sub="Added while moving the team intranet and client portal off inline styles: roadmap assist, request cards, program plan chat.">
           <div className="u-stack u-gap-3">
-            <div className="admin-assist-box u-max-6">
+            <div className="admin-box admin-box--soft u-p-3 u-mb-3 u-max-6">
               <div className="u-stack u-gap-2 u-mb-2">
                 <div className="admin-assist-msg">What problem should this roadmap item solve?</div>
                 <div className="admin-assist-msg admin-assist-msg--me">Our returns process is chaos.</div>
               </div>
-              <div className="u-row"><input className="admin-input u-grow" placeholder="admin-assist-box · admin-assist-msg" readOnly /><button type="button" className="admin-btn">Send</button></div>
+              <div className="u-row"><input className="admin-input u-grow" placeholder="admin-box admin-box--soft u-p-3 u-mb-3 · admin-assist-msg" readOnly /><button type="button" className="admin-btn">Send</button></div>
             </div>
             <div className="admin-card admin-section-card admin-card--inset u-max-6"><span className="admin-cell-strong">admin-card--inset</span> <span className="admin-cell-muted">sits on the page canvas colour</span></div>
-            <ul className="admin-list-md u-max-6"><li>admin-list-md keeps bullet lists readable</li><li>admin-text-md is the paragraph equivalent</li></ul>
+            <ul className="admin-list-md u-max-6"><li>admin-list-md keeps bullet lists readable</li><li>admin-text is the paragraph equivalent</li></ul>
           </div>
         </Section>
 

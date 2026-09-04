@@ -137,7 +137,7 @@ export function ReferrerField({
           />
           {term.trim().length >= 2 && (
             <div
-              className="admin-scroll-sm admin-box"
+              className="admin-scroll admin-scroll--sm admin-box"
             >
               {searching ? (
                 <div className="admin-hint u-p-2">
@@ -315,7 +315,7 @@ export function ReferrerCompanyField({
           />
           {term.trim().length >= 2 && (
             <div
-              className="admin-scroll-sm admin-box"
+              className="admin-scroll admin-scroll--sm admin-box"
             >
               {searching ? (
                 <div className="admin-hint u-p-2">

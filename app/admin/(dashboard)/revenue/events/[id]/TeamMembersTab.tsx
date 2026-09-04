@@ -27,7 +27,7 @@ export function TeamMembersTab({ blocks }: { blocks: AgendaBlock[] }) {
           {people.map((p) => (
             <span
               key={p.name}
-              className="admin-chip-outline"
+              className="admin-chip admin-chip--lg"
             >
               <strong>{p.name}</strong>
               <span className="admin-cell-muted u-sm">

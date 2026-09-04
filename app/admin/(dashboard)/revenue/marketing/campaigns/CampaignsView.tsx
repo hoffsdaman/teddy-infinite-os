@@ -176,14 +176,14 @@ export function CampaignsView({
                         </div>
                       </td>
                       <td className="u-min-2">
-                        <div className="admin-campaign-progress">
-                          <div className="admin-campaign-progress-track">
+                        <div className="u-row">
+                          <div className="admin-meter admin-meter--grow">
                             <div
-                              className={`admin-campaign-progress-fill${pct === 100 ? " is-done" : ""}`}
+                              className={`admin-meter-fill${pct === 100 ? " is-done" : ""}`}
                               style={{ width: `${pct}%` }} /* layout-ok: data-driven width */
                             />
                           </div>
-                          <span className="admin-cell-mono admin-campaign-progress-num">
+                          <span className="admin-cell-mono admin-meter-num">
                             {c.builtCount}/{c.assetCount} built
                           </span>
                         </div>

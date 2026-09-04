@@ -604,7 +604,7 @@ export function EntryDrawer({
 function PerfStat({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <div className="admin-num-lg">{value.toLocaleString()}</div>
+      <div className="admin-num admin-num--lg">{value.toLocaleString()}</div>
       <div className="admin-hint">{label}</div>
     </div>
   );

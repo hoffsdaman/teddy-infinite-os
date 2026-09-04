@@ -135,8 +135,8 @@ export function BoardsIndex({
                     </span>
                     {total > 0 && <span>{pct}% done</span>}
                   </div>
-                  <div className="admin-progress">
-                    <div className="admin-progress-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
+                  <div className="admin-meter admin-meter--hairline">
+                    <div className="admin-meter-fill" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                   </div>
                 </div>
                 <div className="u-row u-between u-mt-3">
@@ -226,8 +226,8 @@ export function BoardsIndex({
                           <span className="admin-cell-muted">—</span>
                         ) : (
                           <span className="u-row">
-                            <span className="admin-progress u-inline-block u-w-90">
-                              <span className="admin-progress-fill u-block" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
+                            <span className="admin-meter admin-meter--hairline u-inline-block u-w-90">
+                              <span className="admin-meter-fill u-block" style={{ width: `${pct}%` }} /* layout-ok: data-driven width */ />
                             </span>
                             <span className="admin-cell-mono">{pct}%</span>
                           </span>

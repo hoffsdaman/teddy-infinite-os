@@ -73,7 +73,7 @@ export default async function MeetingDetailPage({ params }: { params: { id: stri
             Full transcript{meeting.sourceFileName ? ` · ${meeting.sourceFileName}` : ""}
           </summary>
           <pre
-            className="u-mt-2 u-prewrap u-break-all admin-scroll-md"
+            className="u-mt-2 u-prewrap u-break-all admin-scroll admin-scroll--md"
           >
             {meeting.transcript}
           </pre>
