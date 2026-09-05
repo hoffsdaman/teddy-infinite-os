@@ -5078,3 +5078,10 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-roadmap-chip { font-size:11px; font-weight:600; color:var(--admin-ink-2); border:1px solid var(--admin-line-soft); border-radius:99px; padding:2px 8px; }
 .admin-roadmap-chip.tok { color:var(--admin-accent); border-color:color-mix(in srgb, var(--admin-accent) 15%, transparent); background:color-mix(in srgb, var(--admin-accent) 8%, transparent); }
 .admin-roadmap-chip.client { color:var(--admin-ok-strong); border-color:color-mix(in srgb, var(--admin-ok-strong) 25%, transparent); background:color-mix(in srgb, var(--admin-ok-strong) 10%, transparent); }
+/* ─── Support board (design-debt follow-up): aging rail + list rows ────────── */
+/* An open ticket nobody has touched for AGING_HOURS gets the amber rail, the same
+   idea as the work boards' amber clock but measured in hours. */
+.admin-kanban-card.is-aging { box-shadow: inset 3px 0 0 var(--admin-warn-strong), var(--admin-shadow); }
+.admin-kanban-card.is-aging:hover { box-shadow: inset 3px 0 0 var(--admin-warn-strong), var(--admin-shadow-md); }
+/* List view reuses the card face as a full-width button row. */
+.admin-support-row { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }

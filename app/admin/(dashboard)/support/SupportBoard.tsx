@@ -1,33 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Badge, type BadgeTone } from "@/components/admin/Badge";
+import { DetailDrawer } from "@/components/admin/DetailDrawer";
+import { KanbanBoard, type KanbanColumn } from "@/components/admin/KanbanBoard";
 import { timeAgo } from "@/lib/admin/format";
 import type { SupportColumn, SupportComment, SupportTicket } from "@/lib/support";
 import { moveTicket, commentOnTicket, replyToCustomer } from "./actions";
 import { cleanEmailBody, emailExcerpt } from "@/lib/support/excerpt";
 
-// Human duration for the resolve-time metric: "3d 4h", "2h 10m", "just now".
-
-// The card shows the sender's own words, three lines max; the raw email (quoted
-// thread, signature, disclaimer and all) stays one click away so nothing is lost.
-function TicketBody({ description }: { description: string }) {
-  const excerpt = emailExcerpt(description);
-  const trimmed = cleanEmailBody(description) !== description.trim();
-  return (
-    <div className="u-stack u-gap-1">
-      <p className="admin-list-sub u-m-0 u-clamp-3">{excerpt || description}</p>
-      {(trimmed || excerpt.endsWith("…")) && (
-        <details>
-          <summary className="admin-summary admin-cell-muted u-sm">Show full email</summary>
-          <p className="admin-list-sub u-m-0 u-mt-2 u-prewrap">{description}</p>
-        </details>
-      )}
-    </div>
-  );
-}
+// A ticket with no activity for this long, still open, gets the amber rail. Support
+// is measured in hours, not the 7-day AGING_DAYS the work boards use.
+const AGING_HOURS = 24;
+// Resolved tickets fall off the board after this many days; the metric still counts them.
+const RESOLVED_DAYS_ON_BOARD = 7;
 
 function humanDuration(ms: number): string {
   const s = Math.max(0, Math.floor(ms / 1000));
@@ -50,49 +38,92 @@ function columnTone(col: SupportColumn | undefined): BadgeTone {
   return "neutral";
 }
 
+// Last thing that happened on the ticket: the newest comment, else its arrival.
+function lastActivityAt(t: SupportTicket): string {
+  const last = t.comments[t.comments.length - 1];
+  return last?.createdAt ?? t.createdAt;
+}
+function isAging(t: SupportTicket): boolean {
+  if (t.isResolved) return false;
+  return Date.now() - new Date(lastActivityAt(t)).getTime() > AGING_HOURS * 3600_000;
+}
+
 type View = "board" | "list";
 type MoveFn = (ticketId: string, toColumnId: string) => Promise<{ ok: boolean; error?: string }>;
 type CommentFn = (ticketId: string, body: string, asEmail: boolean) => Promise<{ ok: boolean; error?: string }>;
+type Card = SupportTicket & { columnId: string };
 
-// ── One ticket ───────────────────────────────────────────────────────────────
-function TicketCard({
+// ── Card face (board + list) ─────────────────────────────────────────────────
+// Glanceable only: who, what, how long, and whether anyone has touched it. The
+// email, the thread and the reply box live in the drawer.
+function CardFace({ t }: { t: SupportTicket }) {
+  const aging = isAging(t);
+  const excerpt = t.description ? emailExcerpt(t.description, 160) : "";
+  return (
+    <>
+      <div className="admin-kanban-card-meta">
+        {t.ticketNo && <span className="admin-cell-mono">{t.ticketNo}</span>}
+        {t.channel && <Badge>{CHANNEL_LABEL[t.channel] ?? t.channel}</Badge>}
+        {t.orderNumber && <Badge tone="info">Order {t.orderNumber}</Badge>}
+        {aging && <Badge tone="warn">no reply {humanDuration(Date.now() - new Date(lastActivityAt(t)).getTime())}</Badge>}
+      </div>
+      <div className="admin-kanban-card-title">{t.subject}</div>
+      <div className="admin-kanban-card-sub u-truncate">{t.customerName || t.customerEmail || "Customer"}</div>
+      {excerpt && <div className="admin-kanban-card-sub u-clamp-2">{excerpt}</div>}
+      <div className="admin-kanban-card-meta">
+        <span className="admin-kanban-card-sub" title={t.createdAt}>
+          {t.isResolved && t.completedAt
+            ? `Resolved in ${humanDuration(new Date(t.completedAt).getTime() - new Date(t.createdAt).getTime())}`
+            : `Open ${humanDuration(Date.now() - new Date(t.createdAt).getTime())}`}
+        </span>
+        {t.comments.length > 0 && <span className="admin-kanban-card-sub u-ml-auto">💬 {t.comments.length}</span>}
+      </div>
+    </>
+  );
+}
+
+// ── Drawer: the whole ticket ─────────────────────────────────────────────────
+function TicketDrawer({
   ticket,
   columns,
   currentUserLabel,
   onMove,
   onComment,
-  compact,
+  onClose,
 }: {
-  ticket: SupportTicket;
+  ticket: SupportTicket | null;
   columns: SupportColumn[];
   currentUserLabel: string;
   onMove: MoveFn;
   onComment: CommentFn;
-  compact: boolean;
+  onClose: () => void;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reply, setReply] = useState("");
   const [emailCustomer, setEmailCustomer] = useState(false);
-  const [expanded, setExpanded] = useState(!compact);
+  useEffect(() => {
+    setReply("");
+    setError(null);
+    setEmailCustomer(false);
+  }, [ticket?.id]);
 
+  if (!ticket) return null;
   const col = columns.find((c) => c.id === ticket.columnId);
-  const resolveMs =
-    ticket.isResolved && ticket.completedAt
-      ? new Date(ticket.completedAt).getTime() - new Date(ticket.createdAt).getTime()
-      : null;
+  const body = ticket.description ?? "";
+  const cleaned = cleanEmailBody(body);
 
   async function move(toColumnId: string) {
+    if (!ticket) return;
     setBusy(true);
     setError(null);
-    const res = await onMove(ticket.id, toColumnId); // optimistic in parent
+    const res = await onMove(ticket.id, toColumnId);
     setBusy(false);
     if (!res.ok) setError(res.error ?? "Could not update status.");
   }
-
   async function send(e: React.FormEvent) {
     e.preventDefault();
-    if (!reply.trim()) return;
+    if (!ticket || !reply.trim()) return;
     setBusy(true);
     setError(null);
     const res = await onComment(ticket.id, reply, emailCustomer);
@@ -105,71 +136,68 @@ function TicketCard({
   }
 
   return (
-    <div className="admin-card admin-section-card u-stack u-gap-3">
-      <div className="u-row-top u-gap-3 u-between">
-        <div className="u-min-0">
-          <div className="u-row u-wrap">
-            {ticket.ticketNo && <span className="admin-cell-mono">{ticket.ticketNo}</span>}
-            <Badge tone={columnTone(col)}>{col?.name ?? "—"}</Badge>
-            {ticket.channel && <Badge>{CHANNEL_LABEL[ticket.channel] ?? ticket.channel}</Badge>}
-            {ticket.orderNumber && <Badge tone="info">Order {ticket.orderNumber}</Badge>}
-          </div>
-          <div className="admin-list-title u-mt-1">
-            {ticket.subject}
-          </div>
-          <div className="admin-list-sub">
-            {ticket.personId ? (
-              <Link href={`/admin/contacts/${ticket.personId}`}>
-                {ticket.customerName || ticket.customerEmail || "Customer"}
-              </Link>
-            ) : (
-              ticket.customerName || ticket.customerEmail || "Customer"
+    <DetailDrawer
+      open
+      onClose={onClose}
+      eyebrow={
+        <span className="u-row u-wrap">
+          {ticket.ticketNo && <span className="admin-cell-mono">{ticket.ticketNo}</span>}
+          <Badge tone={columnTone(col)}>{col?.name ?? "—"}</Badge>
+          {ticket.channel && <Badge>{CHANNEL_LABEL[ticket.channel] ?? ticket.channel}</Badge>}
+          {ticket.orderNumber && <Badge tone="info">Order {ticket.orderNumber}</Badge>}
+        </span>
+      }
+      title={ticket.subject}
+      action={
+        ticket.personId ? (
+          <Link className="admin-btn admin-btn--sm" href={`/admin/contacts/${ticket.personId}`}>
+            Open contact →
+          </Link>
+        ) : undefined
+      }
+    >
+      <div className="u-stack u-gap-4">
+        <div className="admin-list-sub">
+          {ticket.customerName || "Customer"}
+          {ticket.customerEmail ? ` · ${ticket.customerEmail}` : ""}
+          {" · "}
+          <span title={ticket.createdAt}>arrived {timeAgo(ticket.createdAt)}</span>
+        </div>
+
+        <div className="u-row u-wrap">
+          <label className="admin-label u-m-0" htmlFor="drawer-status">
+            Status
+          </label>
+          <select
+            id="drawer-status"
+            className="admin-select"
+            value={ticket.columnId ?? ""}
+            disabled={busy}
+            onChange={(e) => move(e.target.value)}
+          >
+            {columns.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {body && (
+          <div className="admin-card admin-section-card u-stack u-gap-2">
+            <div className="admin-label u-m-0">Message</div>
+            <p className="admin-list-sub u-m-0 u-prewrap">{cleaned || body}</p>
+            {cleaned !== body.trim() && (
+              <details>
+                <summary className="admin-summary admin-cell-muted u-sm">Show full email</summary>
+                <p className="admin-list-sub u-m-0 u-mt-2 u-prewrap">{body}</p>
+              </details>
             )}
-            {ticket.customerEmail ? ` · ${ticket.customerEmail}` : ""}
           </div>
-        </div>
-        <div className="u-right u-nowrap">
-          <div className="admin-cell-muted" title={ticket.createdAt}>
-            Arrived {timeAgo(ticket.createdAt)}
-          </div>
-          {ticket.isResolved && resolveMs != null ? (
-            <div className="admin-cell-muted">Resolved in {humanDuration(resolveMs)}</div>
-          ) : (
-            <div className="admin-cell-muted">Open {humanDuration(Date.now() - new Date(ticket.createdAt).getTime())}</div>
-          )}
-        </div>
-      </div>
+        )}
 
-      {ticket.description && (
-        <TicketBody description={ticket.description} />
-      )}
-
-      <div className="u-row u-wrap">
-        <label className="admin-label u-m-0" htmlFor={`status-${ticket.id}`}>
-          Status
-        </label>
-        <select
-          id={`status-${ticket.id}`}
-          className="admin-select"
-          value={ticket.columnId ?? ""}
-          disabled={busy}
-          onChange={(e) => move(e.target.value)}
-        >
-          {columns.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" className="admin-btn" onClick={() => setExpanded((v) => !v)}>
-          💬 {expanded ? "Hide" : `Notes & reply${ticket.comments.length ? ` (${ticket.comments.length})` : ""}`}
-        </button>
-      </div>
-
-      {error && <div className="admin-alert admin-alert--err">{error}</div>}
-
-      {expanded && (
-        <div className="u-stack">
+        <div className="u-stack u-gap-2">
+          <div className="admin-label u-m-0">Notes &amp; replies{ticket.comments.length ? ` (${ticket.comments.length})` : ""}</div>
           {ticket.comments.length === 0 ? (
             <div className="admin-empty">No notes yet. Add the first below.</div>
           ) : (
@@ -179,54 +207,51 @@ function TicketCard({
               ))}
             </div>
           )}
-          <form onSubmit={send} className="u-stack">
-            <textarea
-              className="admin-input"
-              rows={3}
-              value={reply}
-              placeholder={emailCustomer ? "Write the email to the customer…" : "Add an internal note…"}
-              onChange={(e) => setReply(e.target.value)}
-            />
-            <div className="u-row u-wrap">
-              <button type="submit" className="admin-btn admin-btn--primary" disabled={busy || !reply.trim()}>
-                {busy ? "Saving…" : emailCustomer ? "Send email" : "Add note"}
-              </button>
-              <label
-                className={`admin-cell-muted u-row u-gap-1 ${ticket.customerEmail ? "u-pointer" : "u-not-allowed"}`}
-                title={ticket.customerEmail ? `Email ${ticket.customerEmail}` : "No customer email on this ticket"}
-              >
-                <input
-                  type="checkbox"
-                  checked={emailCustomer}
-                  disabled={!ticket.customerEmail}
-                  onChange={(e) => setEmailCustomer(e.target.checked)}
-                />
-                Email the customer
-              </label>
-              <span className="admin-cell-muted u-ml-auto">
-                Commenting as {currentUserLabel}
-              </span>
-            </div>
-          </form>
         </div>
-      )}
-    </div>
+
+        {error && <div className="admin-alert admin-alert--err">{error}</div>}
+
+        <form onSubmit={send} className="u-stack">
+          <textarea
+            className="admin-input"
+            rows={4}
+            value={reply}
+            placeholder={emailCustomer ? "Write the email to the customer…" : "Add an internal note…"}
+            onChange={(e) => setReply(e.target.value)}
+          />
+          <div className="u-row u-wrap">
+            <button type="submit" className="admin-btn admin-btn--primary" disabled={busy || !reply.trim()}>
+              {busy ? "Saving…" : emailCustomer ? "Send email" : "Add note"}
+            </button>
+            <label
+              className={`admin-cell-muted u-row u-gap-1 ${ticket.customerEmail ? "u-pointer" : "u-not-allowed"}`}
+              title={ticket.customerEmail ? `Email ${ticket.customerEmail}` : "No customer email on this ticket"}
+            >
+              <input
+                type="checkbox"
+                checked={emailCustomer}
+                disabled={!ticket.customerEmail}
+                onChange={(e) => setEmailCustomer(e.target.checked)}
+              />
+              Email the customer
+            </label>
+            <span className="admin-cell-muted u-ml-auto">Commenting as {currentUserLabel}</span>
+          </div>
+        </form>
+      </div>
+    </DetailDrawer>
   );
 }
 
 // One comment, attributed to its author (an admin email, an outbound "→ customer"
-// label, or an inbound "customer via email" label). A comment written by the
-// signed-in admin is tagged "you".
+// label, or an inbound "customer via email" label). The signed-in admin is "you".
 function CommentRow({ c, currentUserLabel }: { c: SupportComment; currentUserLabel: string }) {
   const mine = c.author === currentUserLabel || c.author.startsWith(`${currentUserLabel} `);
   const initial = (c.author.trim()[0] || "?").toUpperCase();
   return (
     <div className="admin-list-row">
       <div className="admin-list-main u-row u-gap-3">
-        <span
-          aria-hidden
-          className="admin-avatar admin-avatar--xs admin-avatar--info"
-        >
+        <span aria-hidden className="admin-avatar admin-avatar--xs admin-avatar--info">
           {initial}
         </span>
         <div className="u-min-0">
@@ -235,9 +260,7 @@ function CommentRow({ c, currentUserLabel }: { c: SupportComment; currentUserLab
             {mine && <Badge tone="info">you</Badge>}
             <span className="admin-cell-muted">· {timeAgo(c.createdAt)}</span>
           </div>
-          <div className="admin-list-sub u-prewrap">
-            {c.body}
-          </div>
+          <div className="admin-list-sub u-prewrap">{c.body}</div>
         </div>
       </div>
     </div>
@@ -257,13 +280,14 @@ export function SupportBoard({
   const router = useRouter();
   const [tickets, setTickets] = useState<SupportTicket[]>(initial);
   const [view, setView] = useState<View>("board");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [channel, setChannel] = useState<string>("");
+  const [banner, setBanner] = useState<string | null>(null);
 
-  // Re-sync when the server sends fresh data (after a background refresh).
   useEffect(() => {
     setTickets(initial);
   }, [initial]);
-
-  // Remember the chosen view per browser.
   useEffect(() => {
     try {
       const v = localStorage.getItem("support-view");
@@ -277,11 +301,11 @@ export function SupportBoard({
     } catch {}
   }
 
-  // Optimistic status change (#1): update local state immediately so the card
-  // moves at once, persist in the background, and revert if the save fails.
+  // Optimistic move: the card lands at once, persists in the background, reverts on failure.
   const onMove: MoveFn = async (ticketId, toColumnId) => {
     const col = columns.find((c) => c.id === toColumnId);
     const prev = tickets;
+    setBanner(null);
     setTickets((ts) =>
       ts.map((t) =>
         t.id === ticketId
@@ -297,14 +321,13 @@ export function SupportBoard({
     const res = await moveTicket(ticketId, toColumnId);
     if (!res.ok) {
       setTickets(prev);
+      setBanner(`Couldn't move ticket: ${res.error}`);
       return { ok: false, error: res.error };
     }
-    router.refresh(); // refresh metrics in the background; the card already moved
+    router.refresh();
     return { ok: true };
   };
 
-  // Optimistic comment/reply (#2, #3): append the note attributed to the current
-  // admin right away, persist in the background.
   const onComment: CommentFn = async (ticketId, body, asEmail) => {
     const author = asEmail ? `${currentUserLabel} → customer` : currentUserLabel;
     const optimistic: SupportComment = { id: `temp-${Date.now()}`, author, body, createdAt: new Date().toISOString() };
@@ -319,9 +342,62 @@ export function SupportBoard({
     return { ok: true };
   };
 
+  // Search + channel filter, then: open columns oldest-first (longest wait on top),
+  // Resolved newest-first and only the last RESOLVED_DAYS_ON_BOARD days.
+  const visible = useMemo<Card[]>(() => {
+    const q = query.trim().toLowerCase();
+    const cutoff = Date.now() - RESOLVED_DAYS_ON_BOARD * 86400_000;
+    return tickets
+      .filter((t): t is Card => !!t.columnId)
+      .filter((t) => !channel || t.channel === channel)
+      .filter(
+        (t) =>
+          !q ||
+          [t.subject, t.customerName, t.customerEmail, t.orderNumber, t.ticketNo]
+            .filter(Boolean)
+            .some((s) => String(s).toLowerCase().includes(q)),
+      )
+      .filter((t) => !t.isResolved || !t.completedAt || new Date(t.completedAt).getTime() >= cutoff)
+      .sort((a, b) => {
+        if (a.isResolved !== b.isResolved) return a.isResolved ? 1 : -1;
+        const ta = new Date(a.createdAt).getTime();
+        const tb = new Date(b.createdAt).getTime();
+        return a.isResolved ? tb - ta : ta - tb;
+      });
+  }, [tickets, query, channel]);
+
+  const boardColumns: KanbanColumn[] = columns.map((c) => ({ id: c.id, label: c.name }));
+  const openTicket = tickets.find((t) => t.id === openId) ?? null;
+  const channels = Array.from(new Set(tickets.map((t) => t.channel).filter(Boolean))) as string[];
+
   const toolbar = (
-    <div className="u-row u-end u-mb-3">
-      <div className="u-row u-clip admin-box">
+    <div className="u-row u-wrap u-mb-3">
+      <input
+        className="admin-input u-max-4"
+        type="search"
+        placeholder="Search subject, customer, order…"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search tickets"
+      />
+      {channels.length > 1 && (
+        <div className="admin-chiplist">
+          <button type="button" className={`admin-chip${channel === "" ? " is-active" : ""}`} onClick={() => setChannel("")}>
+            All
+          </button>
+          {channels.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`admin-chip${channel === c ? " is-active" : ""}`}
+              onClick={() => setChannel(channel === c ? "" : c)}
+            >
+              {CHANNEL_LABEL[c] ?? c}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="u-row u-clip admin-box u-ml-auto">
         {(["board", "list"] as View[]).map((v) => (
           <button
             key={v}
@@ -349,54 +425,39 @@ export function SupportBoard({
   return (
     <>
       {toolbar}
+      {banner && <div className="admin-alert admin-alert--err u-mb-3">{banner}</div>}
       {view === "board" ? (
-        // Board (kanban): a column per stage, scrolling horizontally if narrow.
-        <div className="admin-board-scroll">
-          {columns.map((col) => {
-            const inCol = tickets.filter((t) => t.columnId === col.id);
-            return (
-              <section key={col.id} className="admin-board-col">
-                <h2 className="admin-card-title u-row u-m-0">
-                  {col.name}
-                  <span className="admin-cell-muted">{inCol.length}</span>
-                </h2>
-                {inCol.length === 0 ? (
-                  <div className="admin-empty u-sm">
-                    —
-                  </div>
-                ) : (
-                  inCol.map((t) => (
-                    <TicketCard
-                      key={t.id}
-                      ticket={t}
-                      columns={columns}
-                      currentUserLabel={currentUserLabel}
-                      onMove={onMove}
-                      onComment={onComment}
-                      compact
-                    />
-                  ))
-                )}
-              </section>
-            );
-          })}
-        </div>
+        <KanbanBoard<Card>
+          columns={boardColumns}
+          cards={visible}
+          onMove={(cardId, toColumnId) => void onMove(cardId, toColumnId)}
+          onCardClick={(c) => setOpenId(c.id)}
+          cardClassName={(c) => (isAging(c) ? "is-aging" : undefined)}
+          renderCard={(c) => <CardFace t={c} />}
+        />
       ) : (
-        // List: every ticket, newest first (server order), full width.
-        <div className="u-stack u-gap-3">
-          {tickets.map((t) => (
-            <TicketCard
+        <div className="u-stack u-gap-2">
+          {visible.length === 0 && <div className="admin-empty">Nothing matches.</div>}
+          {visible.map((t) => (
+            <button
               key={t.id}
-              ticket={t}
-              columns={columns}
-              currentUserLabel={currentUserLabel}
-              onMove={onMove}
-              onComment={onComment}
-              compact
-            />
+              type="button"
+              className={`admin-kanban-card admin-kanban-card--static admin-support-row${isAging(t) ? " is-aging" : ""}`}
+              onClick={() => setOpenId(t.id)}
+            >
+              <CardFace t={t} />
+            </button>
           ))}
         </div>
       )}
+      <TicketDrawer
+        ticket={openTicket}
+        columns={columns}
+        currentUserLabel={currentUserLabel}
+        onMove={onMove}
+        onComment={onComment}
+        onClose={() => setOpenId(null)}
+      />
     </>
   );
 }
