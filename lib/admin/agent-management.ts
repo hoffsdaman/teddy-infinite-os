@@ -61,6 +61,12 @@ export const LOCAL_CAPTURE = {
 type CronMeta = { name: string; description: string; content: string[]; apps: string[] };
 
 const CRON_META: Record<string, CronMeta> = {
+  "/api/cron/shopify-sync/": {
+    name: "Shopify Sync",
+    description: "Pulls new and changed customers, products and orders from Shopify into the Company OS once a day; idempotent upserts keyed on the Shopify id.",
+    content: ["Shopify customers", "Shopify products", "Shopify orders"],
+    apps: ["Shopify", "Supabase"],
+  },
   "/api/trip-passport-cleanup/": {
     name: "Trip passport cleanup",
     description: "Deletes trip passport images 30 days after the trip, fulfilling the form's deletion promise. No-op until the cutoff passes.",
@@ -166,128 +172,7 @@ const CRON_META: Record<string, CronMeta> = {
 // mini and re-capture with host: "mac-mini".
 const LAPTOP = LOCAL_CAPTURE.from;
 
-export const LOCAL_ROUTINES: Routine[] = [
-  {
-    id: "1-1-friday-prep",
-    name: "1-1 Friday prep",
-    description: "Biweekly AI prep for 1-1s with Trac and Mai. Runs the Friday before a 1-1 week (even ISO weeks); skips odd weeks.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Biweekly, Friday (even ISO weeks)",
-    content: ["1-1 history", "Coaching notes (Trac, Mai)"],
-    skill: "1-1-coach",
-    apps: ["Lark", "Supabase"],
-    status: "active",
-  },
-  {
-    id: "1-1-midcycle-checkin",
-    name: "1-1 mid-cycle check-in",
-    description: "Biweekly off-week Wednesday mid-cycle check-in for Trac and Mai. Skips 1-1 weeks.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Biweekly, Wednesday (even ISO weeks)",
-    content: ["Coaching cadence (Trac, Mai)"],
-    skill: "1-1-coach",
-    apps: ["Lark"],
-    status: "active",
-  },
-  {
-    id: "1-1-monthly-trends",
-    name: "1-1 monthly trends",
-    description: "Monthly trend analysis for Trac and Mai. Runs on the 1st of every month.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Monthly, 1st",
-    content: ["1-1 history", "Trend data (Trac, Mai)"],
-    skill: "1-1-coach",
-    apps: ["Lark", "Supabase"],
-    status: "active",
-  },
-  {
-    id: "1-1-post-meeting",
-    name: "1-1 post-meeting",
-    description: "Manual trigger: processes 1-1 meeting notes after a meeting ends.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Manual trigger",
-    content: ["1-1 meeting notes"],
-    skill: "1-1-coach",
-    apps: ["Lark", "Supabase"],
-    status: "manual",
-  },
-  {
-    id: "daily-email-check",
-    name: "Daily email check",
-    description: "Every day at 08:00, reviews the last 24h of Gmail, picks the 3 most important messages, drafts a plain-language summary, and pings Lark.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Daily, 08:00",
-    content: ["Gmail (last 24h)"],
-    skill: "daily-email-check",
-    apps: ["Gmail", "Lark"],
-    status: "active",
-  },
-  {
-    id: "fast-goal-dm-blast",
-    name: "FAST goal DM blast",
-    description: "One-time: DM the approved FAST-goal message to 20 TeddyBed OS team members via Lark.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "One-time, 2026-08-27 09:00 +07",
-    content: ["FAST goal message", "Team roster (20)"],
-    skill: "fast-goal-dm-blast",
-    apps: ["Lark"],
-    status: "one-time",
-  },
-  {
-    id: "pm-pr-watch",
-    name: "PM PR watch",
-    description: "Every 30 min on weekdays 09:00-18:00, notifies the Labs Lark group when new GitHub PRs are opened.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Weekdays, every 30 min, 09:00-18:00 +07",
-    content: ["GitHub PRs (mahjong-tarot)"],
-    skill: "product-manager",
-    apps: ["GitHub", "Lark"],
-    status: "active",
-  },
-  {
-    id: "pm-standup-compile",
-    name: "PM standup compile",
-    description: "Weekdays at 09:00, compiles the daily standup briefing from check-ins and GitHub activity.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Weekdays, 09:00 +07",
-    content: ["Daily check-ins", "GitHub activity"],
-    skill: "product-manager",
-    apps: ["GitHub", "Lark"],
-    status: "active",
-  },
-  {
-    id: "pm-standup-morning",
-    name: "PM standup morning",
-    description: "Weekdays at 07:00, runs the PM standup morning trigger (agent activity check + Lark reminder).",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Weekdays, 07:00 +07",
-    content: ["Agent activity"],
-    skill: "product-manager",
-    apps: ["Lark"],
-    status: "active",
-  },
-  {
-    id: "pm-weekly-rag",
-    name: "PM weekly RAG",
-    description: "Fridays at 16:00, compiles the weekly Red/Amber/Green status report.",
-    host: "laptop",
-    hostLabel: LAPTOP,
-    schedule: "Fridays, 16:00 +07",
-    content: ["Project status", "Weekly progress"],
-    skill: "product-manager",
-    apps: ["Lark"],
-    status: "active",
-  },
-];
+export const LOCAL_ROUTINES: Routine[] = [];
 
 // ── Cron → human schedule ─────────────────────────────────────────────────
 const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -355,6 +240,22 @@ export function loadAgentManagement(): AgentManagementView {
       apps: meta?.apps ?? [],
       status: "active",
     };
+  });
+
+  // Not a cron: fires on every inbound support email (Google Workspace forwarding
+  // rule → Resend inbound → this webhook), so it never appears in vercel.json.
+  vercel.push({
+    id: "/api/webhooks/support-email/",
+    name: "Support Email Sync",
+    description:
+      "Turns each email to the support inbox into a ticket on the Support board, or threads a reply onto the matching open ticket ([TD-1042] token or same customer).",
+    host: "vercel",
+    hostLabel: "Vercel",
+    schedule: "On every inbound support email",
+    content: ["Support inbox"],
+    skill: "app/api/webhooks/support-email/route.ts",
+    apps: ["Google Workspace", "Resend", "Supabase"],
+    status: "active",
   });
 
   const local = LOCAL_ROUTINES;
