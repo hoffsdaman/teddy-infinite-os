@@ -4,12 +4,9 @@ import { loadAgentManagement, type Routine } from "@/lib/admin/agent-management"
 
 export const dynamic = "force-dynamic";
 
-// Settings → Agents. One pane over every managed routine, unified across hosts:
-// the Vercel crons (schedules read live from vercel.json) and the local Claude
-// Desktop scheduled-tasks (a dated snapshot). Each row shows the four things
-// worth seeing: content read, skill/route followed, schedule, apps connected.
-// The page's sharpest job is the policy line: routines belong on the Mac mini,
-// never on a laptop. Anything on a laptop shows red.
+// Settings → Agents. One pane over every managed routine: the Vercel cron(s),
+// schedules read live from vercel.json, plus the event-driven support-email
+// sync. Each row shows content read, skill/route followed, schedule, apps.
 
 function ChipList({ items, empty = "—" }: { items: string[]; empty?: string }) {
   if (!items.length) return <span className="admin-cell-muted">{empty}</span>;
@@ -88,73 +85,22 @@ function RoutineTable({ rows }: { rows: Routine[] }) {
 
 export default async function AgentsPage() {
   await requireSuperAdmin();
-  const { vercel, local, counts, violations, capture } = loadAgentManagement();
+  const { vercel } = loadAgentManagement();
 
   return (
     <>
       <PageHead
         eyebrow="Settings"
         title="Agents"
-        sub={`${counts.total} managed routines across Vercel and local machines.`}
+        sub={`${vercel.length} managed routines. Schedules are read live from vercel.json; the email sync runs on demand.`}
       />
-
-      {violations.length > 0 && (
-        <div className="admin-alert admin-alert--err u-mb-4">
-          <strong>
-            {violations.length} {violations.length === 1 ? "routine is" : "routines are"} running on a
-            laptop.
-          </strong>{" "}
-          Policy is zero routines on laptops: they belong on the Mac mini. These were captured from{" "}
-          {capture.from} on {capture.at}. Move them to the Mac mini and re-capture.
-        </div>
-      )}
-
-      <div className="admin-kpi-grid admin-kpi-grid--2up u-mb-5">
-        <div className="admin-kpi">
-          <div className="admin-kpi-label">Total routines</div>
-          <div className="admin-kpi-val">{counts.total}</div>
-        </div>
-        <div className="admin-kpi">
-          <div className="admin-kpi-label">On Vercel</div>
-          <div className="admin-kpi-val">{counts.vercel}</div>
-          <div className="admin-kpi-note">Cloud crons</div>
-        </div>
-        <div className="admin-kpi">
-          <div className="admin-kpi-label">On Mac mini</div>
-          <div className="admin-kpi-val">{counts.macMini}</div>
-          <div className="admin-kpi-note">The one machine routines belong on</div>
-        </div>
-        <div className="admin-kpi">
-          <div className="admin-kpi-label">On laptops</div>
-          <div
-            className={`admin-kpi-val ${counts.laptop > 0 ? "u-err" : "u-ok"}`}
-          >
-            {counts.laptop}
-          </div>
-          <div className="admin-kpi-note">{counts.laptop > 0 ? "Policy violation" : "Policy holding"}</div>
-        </div>
-      </div>
-
-      <section className="u-mb-6">
-        <div className="admin-card-head u-mb-3">
-          <h2 className="admin-card-title">
-            Vercel <HostBadge host="vercel" label="Vercel" />
-          </h2>
-          <span className="admin-cell-muted">Schedules read live from vercel.json</span>
-        </div>
-        <RoutineTable rows={vercel} />
-      </section>
-
       <section>
         <div className="admin-card-head u-mb-3">
           <h2 className="admin-card-title">
-            Local <HostBadge host="laptop" label="Laptop" />
+            Routines <HostBadge host="vercel" label="Vercel" />
           </h2>
-          <span className="admin-cell-muted">
-            Snapshot from {capture.path} on {capture.from}, {capture.at}
-          </span>
         </div>
-        <RoutineTable rows={local} />
+        <RoutineTable rows={vercel} />
       </section>
     </>
   );
