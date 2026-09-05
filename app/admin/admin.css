@@ -2385,6 +2385,9 @@ a.admin-chip:hover { border-color: var(--admin-accent); color: var(--admin-accen
    leaks in and shifts every card after the first down and shorter. Grid gap
    handles spacing there, so zero it out. */
 .admin-kpi-grid .admin-section-card + .admin-section-card { margin-top: 0; }
+/* The stacking margin above is for cards laid out in a column; inside any .u-grid-* the
+   grid gap already spaces them, and the margin only shoves the second cell down. */
+[class*="u-grid"] > .admin-section-card + .admin-section-card { margin-top: 0; }
 .admin-list { display: flex; flex-direction: column; }
 .admin-list-row {
   display: flex;
