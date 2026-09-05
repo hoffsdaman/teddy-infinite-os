@@ -10,10 +10,8 @@ import { timeAgo } from "@/lib/admin/format";
 import type { SupportColumn, SupportComment, SupportTicket } from "@/lib/support";
 import { moveTicket, commentOnTicket, replyToCustomer } from "./actions";
 import { cleanEmailBody, emailExcerpt } from "@/lib/support/excerpt";
+import { isAging, lastActivityAt } from "@/lib/support/aging";
 
-// A ticket with no activity for this long, still open, gets the amber rail. Support
-// is measured in hours, not the 7-day AGING_DAYS the work boards use.
-const AGING_HOURS = 24;
 // Resolved tickets fall off the board after this many days; the metric still counts them.
 const RESOLVED_DAYS_ON_BOARD = 7;
 
@@ -38,15 +36,6 @@ function columnTone(col: SupportColumn | undefined): BadgeTone {
   return "neutral";
 }
 
-// Last thing that happened on the ticket: the newest comment, else its arrival.
-function lastActivityAt(t: SupportTicket): string {
-  const last = t.comments[t.comments.length - 1];
-  return last?.createdAt ?? t.createdAt;
-}
-function isAging(t: SupportTicket): boolean {
-  if (t.isResolved) return false;
-  return Date.now() - new Date(lastActivityAt(t)).getTime() > AGING_HOURS * 3600_000;
-}
 
 type View = "board" | "list";
 type MoveFn = (ticketId: string, toColumnId: string) => Promise<{ ok: boolean; error?: string }>;
