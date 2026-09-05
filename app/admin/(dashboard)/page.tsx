@@ -3,296 +3,250 @@ import { companyOs } from "@/lib/supabase";
 import { PageHead } from "@/components/admin/PageHead";
 import { MetricCard } from "@/components/admin/MetricCard";
 import { Badge } from "@/components/admin/Badge";
-import { formatCents } from "@/lib/admin/format";
-import {
-  getOfficeGoals,
-  krStatusTone,
-  type OfficeKey,
-  type OfficeSnapshot,
-} from "@/lib/admin/office-goals";
-import { KR_STATUSES, type KrStatus } from "@/app/admin/(dashboard)/edges/edges-shared";
-import { compactUsd, vsPrior, MS_DAY } from "@/lib/admin/dashboard-helpers";
+import { formatCents, timeAgo } from "@/lib/admin/format";
+import { MS_DAY, one } from "@/lib/admin/dashboard-helpers";
+import { getSupportBoardData, type SupportTicket } from "@/lib/support";
+import { AGING_HOURS, isAging, lastActivityAt } from "@/lib/support/aging";
 
 // Live operational data, read fresh on every request.
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Company Dashboard",
-  description: "The company at a glance, one panel per office. Each office's full picture lives on its cockpit.",
+  title: "Dashboard",
+  description: "Support and orders at a glance: what needs a reply, what needs shipping, and whether the Shopify sync is healthy.",
 };
 
-// Work-request statuses that are finished; anything else is still in flight.
-const WR_TERMINAL = "(completed,rejected,cancelled,draft)";
+// The daily Shopify cron runs at 16:00 UTC; a run older than this is a problem, not lag.
+const SYNC_STALE_MS = 36 * 3600_000;
+const QUEUE_SIZE = 5;
+// Orders that count: anything Shopify has taken money (or is taking it) for.
+const COUNTED_STATUSES = ["paid", "partial_refund", "pending"];
+const REVENUE_STATUSES = ["paid", "partial_refund"];
 
-const STATUS_LABEL: Record<KrStatus, string> = {
-  on_track: "on track",
-  at_risk: "at risk",
-  off_track: "off track",
-  done: "done",
+type P = { full_name: string | null; email: string | null };
+type OrderRow = {
+  id: string;
+  order_number: string | null;
+  amount_cents: number | null;
+  refunded_cents: number | null;
+  currency: string | null;
+  status: string | null;
+  fulfillment_status: string | null;
+  created_at: string;
+  person_id: string | null;
+  people: P | P[] | null;
 };
+type SyncRow = { entity: string; last_sync: string | null; last_run_at: string | null; last_status: string | null };
 
-type InvoiceRow = { txn_date: string | null; amount_cents: number | null; status: string | null; entity: string };
-type OrderRow = { created_at: string; amount_usd_cents: number | null; status: string | null };
-type DealRow = { status: string | null; amount_usd_cents: number | null; created_at: string; closed_at: string | null };
-
-type Stat = { label: string; value: React.ReactNode; sub: string; href?: string };
-
-function OfficeStat({ label, value, sub, href }: Stat) {
-  const inner = (
-    <>
-      <div className="admin-office-stat-label">{label}</div>
-      <div className="admin-office-stat-val">{value}</div>
-      <div className="admin-office-stat-sub">{sub}</div>
-    </>
-  );
-  return href ? (
-    <Link href={href} className="admin-office-stat">
-      {inner}
-    </Link>
-  ) : (
-    <div className="admin-office-stat">{inner}</div>
-  );
+function humanDuration(ms: number): string {
+  const h = Math.floor(ms / 3600_000);
+  const d = Math.floor(h / 24);
+  if (d > 0) return `${d}d ${h % 24}h`;
+  if (h > 0) return `${h}h`;
+  return `${Math.max(1, Math.floor(ms / 60_000))}m`;
 }
-
-// One office card: header (accent dot + name + cockpit link), three KPI tiles,
-// and that office's goal-health chips pinned to the bottom.
-function OfficePanel({
-  office,
-  label,
-  snapshot,
-  quarterLabel,
-  stats,
-}: {
-  office: OfficeKey;
-  label: string;
-  snapshot: OfficeSnapshot;
-  quarterLabel: string;
-  stats: Stat[];
-}) {
-  const chips = KR_STATUSES.filter((s) => snapshot.health[s] > 0);
-  const noGoals = snapshot.health.total === 0;
-  return (
-    <section className={`admin-office-panel admin-office-panel--${office}`}>
-      <div className="admin-office-head">
-        <div className="admin-office-title">
-          <span className="admin-office-dot" aria-hidden />
-          <span className="admin-office-name">{label}</span>
-        </div>
-        <Link href={`/admin/${office}`} className="admin-auth-link">
-          Cockpit →
-        </Link>
-      </div>
-      <div className="admin-office-kpis">
-        {stats.map((s) => (
-          <OfficeStat key={s.label} {...s} />
-        ))}
-      </div>
-      <div className="admin-office-goals">
-        <span className="admin-office-goals-label">{quarterLabel} goals</span>
-        {noGoals ? (
-          <span className="admin-office-stat-sub">none set</span>
-        ) : (
-          chips.map((s) => (
-            <Badge key={s} tone={krStatusTone(s)} dot>
-              {snapshot.health[s]} {STATUS_LABEL[s]}
-            </Badge>
-          ))
-        )}
-        {snapshot.openIssues > 0 && (
-          <Badge tone="err">
-            {snapshot.openIssues} open {snapshot.openIssues === 1 ? "issue" : "issues"}
-          </Badge>
-        )}
-      </div>
-    </section>
-  );
-}
+const aud = (cents: number) => formatCents(cents, "aud");
 
 export default async function DashboardPage() {
-  const now = new Date();
-  const year = now.getUTCFullYear();
-  const yearStart = `${year}-01-01`;
-  const tomorrow = new Date(now.getTime() + MS_DAY).toISOString().slice(0, 10);
-  const date30 = new Date(now.getTime() - 30 * MS_DAY).toISOString().slice(0, 10);
-  const iso30 = new Date(now.getTime() - 30 * MS_DAY).toISOString();
-  const iso60 = new Date(now.getTime() - 60 * MS_DAY).toISOString();
-  const iso90 = new Date(now.getTime() - 90 * MS_DAY).toISOString();
+  const now = Date.now();
+  const since30 = new Date(now - 30 * MS_DAY).toISOString();
+  const since7 = new Date(now - 7 * MS_DAY).toISOString();
 
-  const [
-    invoicesRes,
-    ordersRes,
-    dealsRes,
-    leadsRes,
-    teamRes,
-    openReqsRes,
-    appsRes,
-    daysOffRes,
-    reqRes,
-    botRes,
-    ideasRes,
-    krRes,
-    goals,
-  ] = await Promise.all([
-    companyOs.from("invoices").select("txn_date, amount_cents, status, entity").neq("status", "voided").limit(2000),
-    companyOs.from("orders").select("created_at, amount_usd_cents, status").limit(2000),
-    companyOs.from("deals").select("status, amount_usd_cents, created_at, closed_at").is("archived_at", null).limit(2000),
-    companyOs.from("lead").select("created_at").gte("created_at", iso90).limit(1000),
-    companyOs.from("team_members").select("status, start_date").limit(1000),
-    companyOs.from("job_requisitions").select("id", { count: "exact", head: true }).eq("status", "open"),
-    companyOs.from("applications").select("applied_at").gte("applied_at", iso60).limit(2000),
-    companyOs.from("time_off").select("id", { count: "exact", head: true }).eq("status", "approved").gte("start_date", date30),
-    companyOs.from("contractor_work_requests").select("id", { count: "exact", head: true }).not("status", "in", WR_TERMINAL),
-    companyOs.from("assistant_conversations").select("id", { count: "exact", head: true }).is("archived_at", null).gte("last_message_at", iso30),
-    companyOs.from("ideas").select("kind, created_at").neq("status", "archived").limit(1000),
-    companyOs.from("key_results").select("delivery_mix"),
-    getOfficeGoals(),
+  const [support, orders30Res, unfulfilledRes, syncRes] = await Promise.all([
+    getSupportBoardData(30),
+    companyOs
+      .from("orders")
+      .select("id, order_number, amount_cents, refunded_cents, currency, status, fulfillment_status, created_at, person_id")
+      .not("shopify_order_id", "is", null)
+      .in("status", COUNTED_STATUSES)
+      .gte("created_at", since30),
+    companyOs
+      .from("orders")
+      .select("id, order_number, amount_cents, refunded_cents, currency, status, fulfillment_status, created_at, person_id, people(full_name, email)", { count: "exact" })
+      .not("shopify_order_id", "is", null)
+      .in("status", COUNTED_STATUSES)
+      .in("fulfillment_status", ["unfulfilled", "partially_fulfilled"])
+      .order("created_at", { ascending: true })
+      .limit(QUEUE_SIZE), // exact count for the tile; only the oldest few rows for the queue
+    companyOs.from("shopify_sync_state").select("entity, last_sync, last_run_at, last_status"),
   ]);
 
-  const err =
-    invoicesRes.error || ordersRes.error || dealsRes.error || leadsRes.error || teamRes.error ||
-    appsRes.error || ideasRes.error || krRes.error;
+  // ── Support ─────────────────────────────────────────────────────────────
+  const tickets = support.tickets;
+  const open = tickets.filter((t) => !t.isResolved);
+  const needsReply = open.filter((t) => isAging(t, now)).sort((a, b) => lastActivityAt(a).localeCompare(lastActivityAt(b)));
+  const lastEmail = tickets.filter((t) => t.channel === "email").map((t) => t.createdAt).sort().at(-1) ?? null;
+  const { metrics } = support;
 
-  // ── Revenue ──
-  const invoices = ((invoicesRes.data as InvoiceRow[] | null) ?? []).filter((i) => i.txn_date);
-  const paidOrders = ((ordersRes.data as OrderRow[] | null) ?? []).filter((o) => o.status === "paid");
-  const invoiceCash = (from: string, to: string, entity?: "edge8" | "aio") =>
-    invoices.reduce(
-      (s, i) => (i.txn_date! >= from && i.txn_date! < to && (!entity || i.entity === entity) ? s + (i.amount_cents ?? 0) : s),
-      0,
-    );
-  const stripeCash = (from: string, to: string) =>
-    paidOrders.reduce((s, o) => {
-      const d = o.created_at.slice(0, 10);
-      return d >= from && d < to ? s + (o.amount_usd_cents ?? 0) : s;
-    }, 0);
-  const cashBetween = (from: string, to: string) => invoiceCash(from, to) + stripeCash(from, to);
+  // ── Orders ──────────────────────────────────────────────────────────────
+  const orders30 = (orders30Res.data ?? []) as OrderRow[];
+  const orders7 = orders30.filter((o) => o.created_at >= since7);
+  const net = (o: OrderRow) => (o.amount_cents ?? 0) - (o.refunded_cents ?? 0);
+  const revenue = (rows: OrderRow[]) => rows.filter((o) => REVENUE_STATUSES.includes(o.status ?? "")).reduce((s, o) => s + net(o), 0);
+  const rev30 = revenue(orders30);
+  const rev7 = revenue(orders7);
+  const paid30 = orders30.filter((o) => REVENUE_STATUSES.includes(o.status ?? ""));
+  const aov = paid30.length ? Math.round(rev30 / paid30.length) : 0;
+  const refunds30 = orders30.filter((o) => (o.refunded_cents ?? 0) > 0);
+  const refunded30 = refunds30.reduce((s, o) => s + (o.refunded_cents ?? 0), 0);
+  const unfulfilled = (unfulfilledRes.data ?? []) as OrderRow[];
+  const unfulfilledCount = unfulfilledRes.count ?? unfulfilled.length;
 
-  const cash30 = cashBetween(date30, tomorrow);
-  const cashYtd = cashBetween(yearStart, tomorrow);
-  const rev30Edge8 = invoiceCash(date30, tomorrow, "edge8") + stripeCash(date30, tomorrow);
-  const rev30Aio = invoiceCash(date30, tomorrow, "aio");
-
-  const deals = (dealsRes.data as DealRow[] | null) ?? [];
-  const openDeals = deals.filter((d) => d.status === "open");
-  const openPipeline = openDeals.reduce((s, d) => s + (d.amount_usd_cents ?? 0), 0);
-  const dealsAdded30 = deals.filter((d) => d.created_at >= iso30).length;
-
-  const leadDates = ((leadsRes.data as { created_at: string }[] | null) ?? []).map((l) => l.created_at);
-  const newLeads30 = leadDates.filter((d) => d >= iso30).length;
-  const newLeadsPrev30 = leadDates.filter((d) => d >= iso60 && d < iso30).length;
-  const leads90 = leadDates.filter((d) => d >= iso90).length;
-  const won90 = deals.filter((d) => d.status === "won" && d.closed_at && d.closed_at >= iso90).length;
-  const conversion90 = leads90 ? Math.round((won90 / leads90) * 1000) / 10 : 0;
-
-  // ── Talent ──
-  const team = (teamRes.data as { status: string | null; start_date: string | null }[] | null) ?? [];
-  const headcount = team.filter((t) => t.status === "active").length;
-  const newHires = team.filter((t) => t.start_date && t.start_date >= yearStart).length;
-  const apps = (appsRes.data as { applied_at: string | null }[] | null) ?? [];
-  const apps30 = apps.filter((a) => a.applied_at && a.applied_at >= iso30).length;
-  const appsPrev30 = apps.filter((a) => a.applied_at && a.applied_at >= iso60 && a.applied_at < iso30).length;
-  const openRoles = openReqsRes.count ?? 0;
-
-  // ── Operations ──
-  const daysOff30 = daysOffRes.count ?? 0;
-  const openRequests = reqRes.count ?? 0;
-  const botCount = botRes.count ?? 0;
-
-  // ── Innovation ──
-  const ideas = (ideasRes.data as { kind: string | null; created_at: string }[] | null) ?? [];
-  const buildIdeas = ideas.filter((i) => i.kind === "build").length;
-  const learnings30 = ideas.filter((i) => i.kind === "learning" && i.created_at >= iso30).length;
-  const krs = (krRes.data as { delivery_mix: string | null }[] | null) ?? [];
-  const mixTotal = krs.length;
-  const agentShare = mixTotal
-    ? Math.round((krs.filter((k) => k.delivery_mix === "ai" || k.delivery_mix === "blended").length / mixTotal) * 100)
-    : 0;
-
-  const q = goals.quarter.label;
+  // ── Health ──────────────────────────────────────────────────────────────
+  const sync = (syncRes.data ?? []) as SyncRow[];
+  const lastRun = sync.map((r) => r.last_run_at).filter(Boolean).sort().at(-1) ?? null;
+  const syncStale = !lastRun || now - new Date(lastRun).getTime() > SYNC_STALE_MS;
+  const syncErrors = sync.filter((r) => r.last_status?.startsWith("error"));
 
   return (
     <>
       <PageHead
-        eyebrow="Company OS"
-        title="Company Dashboard"
-        sub="The company at a glance, one panel per office. Open a cockpit for the full picture."
+        title="Dashboard"
+        sub="What needs a reply, what needs shipping, and whether the Shopify sync is healthy."
       />
 
-      {err && (
-        <div className="admin-alert admin-alert--err u-mb-4">
-          {err.message}
+      {/* 1. Support today */}
+      <section className="u-mb-6">
+        <div className="admin-card-head u-mb-3">
+          <h2 className="admin-card-title">Support</h2>
+          <Link href="/admin/support" className="admin-btn admin-btn--sm">Open the board →</Link>
         </div>
-      )}
+        <div className="admin-kpi-grid">
+          <MetricCard label="Open tickets" value={open.length} sub="on the board" href="/admin/support" />
+          <MetricCard
+            label="Needs a reply"
+            value={needsReply.length}
+            sub={`open, no activity for ${AGING_HOURS}h+`}
+            href="/admin/support"
+          />
+          <MetricCard
+            label="Median time to resolve"
+            value={metrics.medianResolveMs == null ? "—" : humanDuration(metrics.medianResolveMs)}
+            sub={`last ${metrics.windowDays} days`}
+          />
+          <MetricCard label="Resolved" value={metrics.resolvedInWindow} sub={`last ${metrics.windowDays} days`} />
+        </div>
+      </section>
 
-      {/* ── Vitals ── */}
-      <div className="admin-kpi-grid">
-        <MetricCard
-          label="Revenue · 30d"
-          value={formatCents(cash30)}
-          sub={
-            <>
-              <div>TeddyBed OS {compactUsd(rev30Edge8)}</div>
-              <div>AIO {compactUsd(rev30Aio)}</div>
-            </>
-          }
-        />
-        <MetricCard label="Pipeline · 30d" value={formatCents(openPipeline)} sub={`${openDeals.length} open · ${dealsAdded30} added`} href="/admin/revenue/deals" />
-        <MetricCard label="Headcount" value={headcount} sub="active team members" href="/admin/talent" />
-        <MetricCard
-          label="Open issues"
-          value={goals.openIssuesTotal}
-          sub={goals.openIssuesTotal === 0 ? "nothing on the board" : "across the offices"}
-          href="/admin/edges/issues"
-        />
-      </div>
+      {/* 2. Orders (Shopify) */}
+      <section className="u-mb-6">
+        <div className="admin-card-head u-mb-3">
+          <h2 className="admin-card-title">Orders</h2>
+          <Link href="/admin/revenue/orders" className="admin-btn admin-btn--sm">All orders →</Link>
+        </div>
+        <div className="admin-kpi-grid">
+          <MetricCard label="Orders, 7 days" value={orders7.length} sub={`${aud(rev7)} net`} href="/admin/revenue/orders" />
+          <MetricCard label="Orders, 30 days" value={orders30.length} sub={`${aud(rev30)} net`} href="/admin/revenue/orders" />
+          <MetricCard
+            label="Unfulfilled"
+            value={unfulfilledCount}
+            sub={unfulfilledCount ? `oldest ${timeAgo(unfulfilled[0].created_at)}` : "nothing waiting"}
+            href="/admin/revenue/orders"
+          />
+          <MetricCard label="Average order" value={aud(aov)} sub="paid orders, 30 days" />
+          <MetricCard
+            label="Refunds, 30 days"
+            value={refunds30.length}
+            sub={refunds30.length ? `${aud(refunded30)} refunded` : "none"}
+            href="/admin/revenue/orders?status=refunded"
+          />
+        </div>
+      </section>
 
-      {/* ── Four offices ── */}
-      <div className="admin-office-grid">
-        <OfficePanel
-          office="revenue"
-          label="Revenue"
-          snapshot={goals.byOffice.revenue}
-          quarterLabel={q}
-          stats={[
-            { label: "Revenue · YTD", value: formatCents(cashYtd), sub: `${year} to date`, href: "/admin/revenue" },
-            { label: "New leads · 30d", value: newLeads30, sub: vsPrior(newLeads30, newLeadsPrev30), href: "/admin/revenue/leads" },
-            { label: "Conversion · 90d", value: `${conversion90}%`, sub: "lead → won", href: "/admin/revenue" },
-          ]}
-        />
-        <OfficePanel
-          office="talent"
-          label="Talent"
-          snapshot={goals.byOffice.talent}
-          quarterLabel={q}
-          stats={[
-            { label: "Open roles", value: openRoles, sub: "hiring now", href: "/admin/talent/jobs" },
-            { label: "Applications · 30d", value: apps30, sub: vsPrior(apps30, appsPrev30), href: "/admin/talent/applications" },
-            { label: `New hires · ${year}`, value: newHires, sub: "joined this year", href: "/admin/talent" },
-          ]}
-        />
-        <OfficePanel
-          office="operations"
-          label="Operations"
-          snapshot={goals.byOffice.operations}
-          quarterLabel={q}
-          stats={[
-            { label: "Days off · 30d", value: daysOff30, sub: "approved leave", href: "/admin/operations/time-off/requests" },
-            { label: "Open requests", value: openRequests, sub: "contractor + client", href: "/admin/operations/contractor-requests" },
-            { label: "Chat bot · 30d", value: botCount, sub: "assistant chats", href: "/admin/operations" },
-          ]}
-        />
-        <OfficePanel
-          office="innovation"
-          label="Innovation"
-          snapshot={goals.byOffice.innovation}
-          quarterLabel={q}
-          stats={[
-            { label: "Ideas", value: buildIdeas, sub: "open build ideas", href: "/admin/innovation" },
-            { label: "Learning · 30d", value: learnings30, sub: "learnings logged", href: "/admin/innovation" },
-            { label: "AI delivery mix", value: `${agentShare}%`, sub: mixTotal ? "agent-run KRs" : "no KRs yet", href: "/admin/innovation" },
-          ]}
-        />
-      </div>
+      {/* 3. Queues: which, not just how many */}
+      <section className="u-grid-2 u-mb-6">
+        <div className="admin-card admin-section-card">
+          <div className="admin-card-head">
+            <h2 className="admin-card-title">Needs a reply</h2>
+            <span className="admin-cell-muted">oldest first</span>
+          </div>
+          {needsReply.length === 0 ? (
+            <div className="admin-empty">Every open ticket has been touched in the last {AGING_HOURS}h.</div>
+          ) : (
+            <div className="admin-list">
+              {needsReply.slice(0, QUEUE_SIZE).map((t: SupportTicket) => (
+                <Link key={t.id} href="/admin/support" className="admin-list-row u-link-plain">
+                  <div className="admin-list-main u-min-0">
+                    <div className="admin-list-title u-truncate">{t.subject}</div>
+                    <div className="admin-list-sub u-truncate">
+                      {t.ticketNo ? `${t.ticketNo} · ` : ""}
+                      {t.customerName || t.customerEmail || "Customer"}
+                    </div>
+                  </div>
+                  <div className="admin-list-aside">
+                    <Badge tone="warn">quiet {humanDuration(now - new Date(lastActivityAt(t)).getTime())}</Badge>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="admin-card admin-section-card">
+          <div className="admin-card-head">
+            <h2 className="admin-card-title">Waiting to ship</h2>
+            <span className="admin-cell-muted">oldest first</span>
+          </div>
+          {unfulfilled.length === 0 ? (
+            <div className="admin-empty">Nothing unfulfilled.</div>
+          ) : (
+            <div className="admin-list">
+              {unfulfilled.slice(0, QUEUE_SIZE).map((o) => {
+                const who = one(o.people);
+                return (
+                  <Link
+                    key={o.id}
+                    href={o.order_number ? `/admin/revenue/orders?q=${encodeURIComponent(o.order_number)}` : "/admin/revenue/orders"}
+                    className="admin-list-row u-link-plain"
+                  >
+                    <div className="admin-list-main u-min-0">
+                      <div className="admin-list-title u-truncate">
+                        {o.order_number ?? "Order"} · {aud(net(o))}
+                      </div>
+                      <div className="admin-list-sub u-truncate">{who?.full_name || who?.email || "Customer"}</div>
+                    </div>
+                    <div className="admin-list-aside">
+                      <Badge tone={o.fulfillment_status === "partially_fulfilled" ? "info" : "warn"}>
+                        {o.fulfillment_status === "partially_fulfilled" ? "partial" : "unfulfilled"} · {timeAgo(o.created_at)}
+                      </Badge>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 4. Health */}
+      <section>
+        <div className="admin-card-head u-mb-3">
+          <h2 className="admin-card-title">Health</h2>
+          <Link href="/admin/settings/agents" className="admin-btn admin-btn--sm">Agents →</Link>
+        </div>
+        <div className="admin-kpi-grid admin-kpi-grid--2up">
+          <MetricCard
+            label="Shopify sync"
+            value={
+              <span className={syncStale || syncErrors.length ? "u-err" : "u-ok"}>
+                {syncStale ? "Stale" : syncErrors.length ? "Error" : "Healthy"}
+              </span>
+            }
+            sub={
+              lastRun
+                ? `last run ${timeAgo(lastRun)}${syncErrors.length ? ` · ${syncErrors[0].last_status}` : ""}`
+                : "never run"
+            }
+            href="/admin/settings/agents"
+          />
+          <MetricCard
+            label="Support inbox"
+            value={lastEmail ? timeAgo(lastEmail) : "—"}
+            sub={lastEmail ? "last email received" : "no email tickets yet"}
+            href="/admin/support"
+          />
+        </div>
+      </section>
     </>
   );
 }

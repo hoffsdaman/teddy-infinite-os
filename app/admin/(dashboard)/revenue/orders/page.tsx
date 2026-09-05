@@ -72,7 +72,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
     listEntity<Order>(
       "orders",
       "id, amount_cents, amount_usd_cents, currency, status, payment_method, refunded_cents, stripe_session_id, order_number, created_at, person_id, people(full_name, email), products(title)",
-      { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["stripe_session_id"], sort, dir, filters },
+      { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["order_number", "stripe_session_id"], sort, dir, filters },
     ),
     companyOs.from("orders").select("amount_usd_cents").eq("status", "paid"),
     companyOs
