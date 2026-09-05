@@ -58,6 +58,7 @@
 .u-err { color: var(--admin-err-ink); }
 .u-items-end { align-items: flex-end; }
 .u-items-start { align-items: flex-start; }
+.u-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .u-clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .u-items-center { align-items: center; }
 .u-mt-0 { margin-top: 0; }

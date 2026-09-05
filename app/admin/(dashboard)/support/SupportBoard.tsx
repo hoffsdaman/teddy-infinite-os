@@ -7,8 +7,28 @@ import { Badge, type BadgeTone } from "@/components/admin/Badge";
 import { timeAgo } from "@/lib/admin/format";
 import type { SupportColumn, SupportComment, SupportTicket } from "@/lib/support";
 import { moveTicket, commentOnTicket, replyToCustomer } from "./actions";
+import { cleanEmailBody, emailExcerpt } from "@/lib/support/excerpt";
 
 // Human duration for the resolve-time metric: "3d 4h", "2h 10m", "just now".
+
+// The card shows the sender's own words, three lines max; the raw email (quoted
+// thread, signature, disclaimer and all) stays one click away so nothing is lost.
+function TicketBody({ description }: { description: string }) {
+  const excerpt = emailExcerpt(description);
+  const trimmed = cleanEmailBody(description) !== description.trim();
+  return (
+    <div className="u-stack u-gap-1">
+      <p className="admin-list-sub u-m-0 u-clamp-3">{excerpt || description}</p>
+      {(trimmed || excerpt.endsWith("…")) && (
+        <details>
+          <summary className="admin-summary admin-cell-muted u-sm">Show full email</summary>
+          <p className="admin-list-sub u-m-0 u-mt-2 u-prewrap">{description}</p>
+        </details>
+      )}
+    </div>
+  );
+}
+
 function humanDuration(ms: number): string {
   const s = Math.max(0, Math.floor(ms / 1000));
   const d = Math.floor(s / 86400);
@@ -121,9 +141,7 @@ function TicketCard({
       </div>
 
       {ticket.description && (
-        <p className="admin-list-sub u-m-0 u-prewrap">
-          {ticket.description}
-        </p>
+        <TicketBody description={ticket.description} />
       )}
 
       <div className="u-row u-wrap">
