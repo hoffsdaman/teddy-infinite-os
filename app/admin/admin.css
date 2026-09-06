@@ -5085,3 +5085,6 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 .admin-kanban-card.is-aging:hover { box-shadow: inset 3px 0 0 var(--admin-warn-strong), var(--admin-shadow-md); }
 /* List view reuses the card face as a full-width button row. */
 .admin-support-row { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+
+/* A block of code or log output (a run result, a captured log): wraps long lines so the page never scrolls sideways. */
+.admin-code--block { display: block; font-weight: 500; padding: 12px; white-space: pre-wrap; word-break: break-word; overflow-x: auto; max-height: 480px; overflow-y: auto; }

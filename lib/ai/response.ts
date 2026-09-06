@@ -1,4 +1,5 @@
 import type Anthropic from "@anthropic-ai/sdk";
+import { recordAiUsage, type AiUsage } from "@/lib/audit/routine-runs";
 
 /**
  * One place where every Anthropic response is turned into text, and the only
@@ -14,13 +15,6 @@ import type Anthropic from "@anthropic-ai/sdk";
  *    and prompt-cache hits could not be confirmed. Every call logs one line.
  */
 
-/** The usage shape both `messages.create` and a stream's final message carry. */
-export interface AiUsage {
-  input_tokens: number;
-  output_tokens: number;
-  cache_read_input_tokens?: number | null;
-  cache_creation_input_tokens?: number | null;
-}
 
 /**
  * Emit one greppable line per model call.
@@ -33,6 +27,8 @@ export interface AiUsage {
  */
 export function logAiUsage(site: string, model: string, usage: AiUsage | null | undefined): void {
   if (!usage) return;
+  // Attribute the call to the scheduled routine that is running, if any.
+  recordAiUsage(usage);
   const parts = [
     `site=${site}`,
     `model=${model}`,

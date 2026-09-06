@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { withRoutineRun } from "@/lib/audit/routine-runs";
 import { shopifyConfigured } from "@/lib/shopify";
 import { runShopifySync } from "@/lib/shopify-sync";
 
@@ -19,12 +20,6 @@ export const maxDuration = 300;
  * Plan: docs/plans/shopify-native-sync.md
  */
 
-function isAuthorized(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  return req.headers.get("authorization") === `Bearer ${secret}`;
-}
-
 type Entity = "customers" | "products" | "orders";
 
 function parseEntities(url: URL): Entity[] | undefined {
@@ -38,9 +33,6 @@ function parseEntities(url: URL): Entity[] | undefined {
 }
 
 async function handle(req: Request) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
   if (!shopifyConfigured()) {
     // Pre-cutover no-op: scheduled, but SHOPIFY_SHOP / SHOPIFY_ADMIN_TOKEN are
     // not set yet (create a custom app and add them — see the plan's runbook).
@@ -56,12 +48,13 @@ async function handle(req: Request) {
   return NextResponse.json({ ok, full, results }, { status: ok ? 200 : 500 });
 }
 
-// Vercel Cron invokes with GET + Authorization: Bearer $CRON_SECRET.
+// Vercel Cron invokes with GET + Authorization: Bearer $CRON_SECRET. The
+// bearer gate and the routine_runs record both live in withRoutineRun.
 export async function GET(req: Request) {
-  return handle(req);
+  return withRoutineRun("/api/cron/shopify-sync/", req, handle);
 }
 
 // POST alias for manual triggering (e.g. the backfill: POST ?full=1).
 export async function POST(req: Request) {
-  return handle(req);
+  return withRoutineRun("/api/cron/shopify-sync/", req, handle);
 }
