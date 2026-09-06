@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { recordRoutineRun } from "@/lib/audit/routine-runs";
 import { companyOs } from "@/lib/supabase";
 import { readSvixHeaders, verifySvixSignature } from "@/lib/svix";
 import {
@@ -73,7 +74,7 @@ async function personIdForEmail(email: string): Promise<string | null> {
   return (data as { id: string } | null)?.id ?? null;
 }
 
-export async function POST(request: Request) {
+async function handle(request: Request) {
   const secret = process.env.SUPPORT_EMAIL_WEBHOOK_SECRET;
   if (!secret) {
     console.error(`${LOG} SUPPORT_EMAIL_WEBHOOK_SECRET not set — event rejected.`);
@@ -153,4 +154,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: created.error }, { status: 500 });
   }
   return NextResponse.json({ received: true, ticketNo: created.ticketNo });
+}
+
+// Every inbound email is one run of the "Support Email Sync" routine on the
+// Agents page; a request that fails signature verification (401) is not a run.
+export async function POST(request: Request) {
+  return recordRoutineRun("/api/webhooks/support-email/", request, handle);
 }

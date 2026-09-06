@@ -6,23 +6,21 @@ import vercelConfig from "@/vercel.json";
 // route) it follows, the ROUTINE (schedule) it runs on, and the APPS it talks
 // to.
 //
-// Two hosts feed this page:
+// Two hosts feed this page, and both are things Edge8 itself runs:
 //   - Vercel: the crons in vercel.json. Their schedules are read LIVE from that
 //     file (the source of truth), so a schedule change there shows here with no
 //     edit; the human-facing metadata (what each reads, which apps it touches)
 //     is enriched below by cron path. A cron with no enrichment still renders,
 //     flagged, rather than being silently dropped.
-//   - Local: Claude Desktop scheduled-tasks captured from ~/.claude/scheduled-
-//     tasks. These are a snapshot (see CAPTURE below), not a live read: a page
-//     deployed on Vercel cannot read a personal machine's filesystem at request
-//     time.
-//
-// Policy: routines belong on the Mac mini, never on a laptop. Any routine whose
-// observed host is a laptop is a violation and is surfaced as such.
+//   - Mac mini: the launchd jobs installed on the office Mac mini, listed in
+//     MAC_MINI_ROUTINES next to the script each one runs.
+// Whether a routine actually ran, and what it did, comes from
+// company_os.routine_runs (lib/audit/routine-runs.ts), which every routine
+// on both hosts writes. The page joins the two: definition here, evidence there.
+// Personal Claude Desktop tasks on laptops are deliberately not listed: the
+// page cannot observe them, and policy is that routines do not live on laptops.
 
-export type RoutineHost = "vercel" | "mac-mini" | "laptop";
-
-export type RoutineStatus = "active" | "paused" | "one-time" | "manual";
+export type RoutineHost = "vercel" | "mac-mini";
 
 export type Routine = {
   id: string;
@@ -43,16 +41,7 @@ export type Routine = {
   skill: string;
   // Connected apps / services.
   apps: string[];
-  status: RoutineStatus;
 };
-
-// When and from where the local snapshot below was captured. Shown on the page
-// so its staleness is never a mystery.
-export const LOCAL_CAPTURE = {
-  at: "2026-08-27",
-  from: "David's MacBook Pro (Mac15,3, Apple M3)",
-  path: "~/.claude/scheduled-tasks",
-} as const;
 
 // ── Vercel cron enrichment ────────────────────────────────────────────────
 // Keyed by the cron `path` in vercel.json. Schedules are NOT stored here (they
@@ -165,14 +154,10 @@ const CRON_META: Record<string, CronMeta> = {
   },
 };
 
-// ── Local routines (snapshot) ─────────────────────────────────────────────
-// Captured from ~/.claude/scheduled-tasks on David's MacBook Pro. host is set
-// to what was OBSERVED, not what is intended: these are on a laptop today, which
-// is a policy violation the page is meant to make loud. Move them to the Mac
-// mini and re-capture with host: "mac-mini".
-const LAPTOP = LOCAL_CAPTURE.from;
-
-export const LOCAL_ROUTINES: Routine[] = [];
+// ── Mac mini routines ─────────────────────────────────────────────────────
+// None yet. When Teddy gets a launchd job on the office Mac mini, list it here
+// and have it record each run through scripts/routine-run-record.mjs.
+export const MAC_MINI_ROUTINES: Routine[] = [];
 
 // ── Cron → human schedule ─────────────────────────────────────────────────
 const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -213,11 +198,7 @@ export function cronToHuman(expr: string): string {
 export type AgentManagementView = {
   routines: Routine[];
   vercel: Routine[];
-  local: Routine[];
-  counts: { total: number; vercel: number; macMini: number; laptop: number };
-  // Routines that break the "no routines on laptops" policy.
-  violations: Routine[];
-  capture: typeof LOCAL_CAPTURE;
+  macMini: Routine[];
 };
 
 export function loadAgentManagement(): AgentManagementView {
@@ -238,12 +219,12 @@ export function loadAgentManagement(): AgentManagementView {
       content: meta?.content ?? [],
       skill: `app${c.path}route.ts`,
       apps: meta?.apps ?? [],
-      status: "active",
     };
   });
 
   // Not a cron: fires on every inbound support email (Google Workspace forwarding
   // rule → Resend inbound → this webhook), so it never appears in vercel.json.
+  // It records each run through recordRoutineRun, so it shows beside the crons.
   vercel.push({
     id: "/api/webhooks/support-email/",
     name: "Support Email Sync",
@@ -255,25 +236,12 @@ export function loadAgentManagement(): AgentManagementView {
     content: ["Support inbox"],
     skill: "app/api/webhooks/support-email/route.ts",
     apps: ["Google Workspace", "Resend", "Supabase"],
-    status: "active",
   });
 
-  const local = LOCAL_ROUTINES;
-  const routines = [...vercel, ...local];
-  const laptop = routines.filter((r) => r.host === "laptop");
-  const macMini = routines.filter((r) => r.host === "mac-mini");
+  const macMini = MAC_MINI_ROUTINES;
+  return { routines: [...vercel, ...macMini], vercel, macMini };
+}
 
-  return {
-    routines,
-    vercel,
-    local,
-    counts: {
-      total: routines.length,
-      vercel: vercel.length,
-      macMini: macMini.length,
-      laptop: laptop.length,
-    },
-    violations: laptop,
-    capture: LOCAL_CAPTURE,
-  };
+export function findRoutine(id: string): Routine | null {
+  return loadAgentManagement().routines.find((r) => r.id === id) ?? null;
 }
