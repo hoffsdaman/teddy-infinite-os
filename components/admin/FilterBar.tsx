@@ -29,11 +29,11 @@ export function FilterBar({
   for (const f of filters) clearOverrides[f.key] = null;
 
   return (
-    <div className="u-row u-wrap">
+    <div className="admin-filterbar">
       {filters.map((f) => (
         <select
           key={f.key}
-          className="admin-select u-w-auto"
+          className="admin-select"
           aria-label={f.label}
           value={firstParam(searchParams[f.key]) ?? ""}
           onChange={(e) => go(f.key, e.target.value)}

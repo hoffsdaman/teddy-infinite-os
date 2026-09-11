@@ -39,6 +39,8 @@ export type ContactRow = {
   created_at: string;
   deal_value_aud_cents: number | null;
   deal_count: number | null;
+  order_total_aud_cents: number | null;
+  order_count: number | null;
 };
 
 const ShelfContext = createContext<{ open: (row: ContactRow) => void } | null>(null);
