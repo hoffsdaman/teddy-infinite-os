@@ -35,12 +35,29 @@ export type ContactsSummary = {
   total: number;
   customers: number;
   subscribers: number;
+  potentialSpam: number;
   personas: Array<{ label: string; value: number }>;
   sources: Array<{ label: string; value: number }>;
   countries: Array<{ label: string; value: number }>;
 };
 
 export async function getContactsSummary(): Promise<ContactsSummary | null> {
+  // Section counts come from the view's contact_bucket (customer / subscriber /
+  // potential_spam), so the pills always agree with the filtered list.
+  const bucketCount = async (bucket: string) => {
+    const { count } = await companyOs
+      .from("people_with_deals")
+      .select("id", { count: "exact", head: true })
+      .is("archived_at", null)
+      .eq("contact_bucket", bucket);
+    return count ?? 0;
+  };
+  const [customers, subscribers, potentialSpam] = await Promise.all([
+    bucketCount("customer"),
+    bucketCount("subscriber"),
+    bucketCount("potential_spam"),
+  ]);
+
   const rows: Array<{ persona: string | null; source: string | null; country: string | null }> = [];
   for (let from = 0; ; from += PAGE) {
     const res = await companyOs
@@ -86,8 +103,9 @@ export async function getContactsSummary(): Promise<ContactsSummary | null> {
 
   return {
     total: rows.length,
-    customers: personaCounts.get("customer") ?? 0,
-    subscribers: personaCounts.get("subscriber") ?? 0,
+    customers,
+    subscribers,
+    potentialSpam,
     personas,
     sources,
     countries,

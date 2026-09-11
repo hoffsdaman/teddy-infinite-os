@@ -48,7 +48,7 @@ const NAV: NavSection[] = [
         label: null,
         items: [
           { label: "Dashboard", href: "/admin", ico: "◈", enabled: true },
-          { label: "Customers", href: "/admin/contacts", ico: "⚇", enabled: true },
+          { label: "Contacts", href: "/admin/contacts", ico: "⚇", enabled: true },
           { label: "Support", href: "/admin/support", ico: "☎", enabled: true },
           { label: "Orders", href: "/admin/revenue/orders", ico: "⛁", enabled: true },
         ],

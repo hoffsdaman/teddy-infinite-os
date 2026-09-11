@@ -54,3 +54,11 @@ grant select on company_os.people_with_deals to chatbot_reader;
 grant select, insert, update on company_os.people_with_deals to chatbot_writer;
 
 commit;
+
+-- ── Follow-up, same day: potential-spam bucket ──────────────────────────────
+-- Applied via Supabase MCP migration `contacts_spam_bucket`.
+-- people.shopify_created_at (from Shopify customers.createdAt) and a
+-- contact_bucket column on the view: customer / subscriber / potential_spam.
+-- potential_spam = no orders, no name, and either a bot-pattern email
+-- (name+name+digits) or created on a day with 100+ nameless signups.
+-- See supabase/01-schema.sql for the full view definition.
