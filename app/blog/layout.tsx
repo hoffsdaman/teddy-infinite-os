@@ -1,8 +1,8 @@
 import './blog.css'
 import type { Metadata } from 'next'
 
-const title = 'Blog | AI Strategy, Agents & Leadership Insights | TeddyBed OS'
-const description = 'Practical writing on AI Programs, fractional CAIO work, agent design, and how founders use AI to be Tech-Forward.'
+const title = 'Blog | TeddyBed'
+const description = 'Sleep advice, product news and stories from TeddyBed, Australia\'s premium kids bed and mattress brand.'
 
 export const metadata: Metadata = {
   title,
