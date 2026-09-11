@@ -207,6 +207,7 @@ must match exactly; the app reads them directly.
 | Variable | Enables |
 |---|---|
 | `RESEND_API_KEY` | transactional email; without it, sends are skipped and logged |
+| `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN` | support inbox → tickets. An OAuth client for the support mailbox (scope `https://mail.google.com/`); the `/api/cron/support-gmail/` routine polls it every 10 minutes. Without them the routine is a no-op |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | checkout. The webhook returns 503 without the secret, deliberately |
 | `IMAGE_MODEL`, `GOOGLE_AI_API_KEY` | marketing image generation |
 | `ADMIN_ALLOWLIST` | comma-separated emails granted admin without an `admins` row |

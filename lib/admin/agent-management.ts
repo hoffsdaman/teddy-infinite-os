@@ -50,6 +50,12 @@ export type Routine = {
 type CronMeta = { name: string; description: string; content: string[]; apps: string[] };
 
 const CRON_META: Record<string, CronMeta> = {
+  "/api/cron/support-gmail/": {
+    name: "Support Inbox Sync",
+    description: "Every 10 minutes, reads new customer emails from the support Gmail inbox and files each as a ticket, or as a reply on the customer's open ticket. Read-only against Gmail; deduped on message id.",
+    content: ["Support emails", "Support tickets"],
+    apps: ["Gmail", "Supabase"],
+  },
   "/api/cron/shopify-sync/": {
     name: "Shopify Sync",
     description: "Pulls new and changed customers, products and orders from Shopify into the Company OS once a day; idempotent upserts keyed on the Shopify id.",
