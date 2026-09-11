@@ -7,8 +7,8 @@ import { PALETTE as P } from "@/lib/design/palette";
 
 export const runtime = 'nodejs'
 
-const FROM = 'TeddyBed OS Adventures <contact@edge8.ai>'
-const DEFAULT_NOTIFY = 'accounting@edge8.ai'
+const FROM = 'TeddyBed OS Adventures <hello@teddybed.com.au>'
+const DEFAULT_NOTIFY = 'hello@teddybed.com.au'
 const MAX_PASSPORT_BYTES = 10 * 1024 * 1024
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']

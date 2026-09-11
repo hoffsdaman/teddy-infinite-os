@@ -77,8 +77,8 @@ type RegDbRow = {
   people: { full_name: string | null; email: string } | { full_name: string | null; email: string }[] | null;
   products: { title: string | null; tier: string | null } | { title: string | null; tier: string | null }[] | null;
   orders:
-    | { id: string; amount_usd_cents: number | null; currency: string | null; status: string | null; created_at: string; stripe_session_id: string | null }
-    | { id: string; amount_usd_cents: number | null; currency: string | null; status: string | null; created_at: string; stripe_session_id: string | null }[]
+    | { id: string; amount_aud_cents: number | null; currency: string | null; status: string | null; created_at: string; stripe_session_id: string | null }
+    | { id: string; amount_aud_cents: number | null; currency: string | null; status: string | null; created_at: string; stripe_session_id: string | null }[]
     | null;
 };
 
@@ -103,7 +103,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
     companyOs
       .from("event_registrations")
       .select(
-        "id, product_id, person_id, attendee_name, attendee_email, status, guest_count, waitlist_position, ticket_code, checked_in_at, created_at, people(full_name, email), products(title, tier), orders(id, amount_usd_cents, currency, status, created_at, stripe_session_id)"
+        "id, product_id, person_id, attendee_name, attendee_email, status, guest_count, waitlist_position, ticket_code, checked_in_at, created_at, people(full_name, email), products(title, tier), orders(id, amount_aud_cents, currency, status, created_at, stripe_session_id)"
       )
       .eq("event_id", params.id)
       .order("created_at", { ascending: true }),
@@ -170,7 +170,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
       order: order
         ? {
             id: order.id,
-            amountUsdCents: order.amount_usd_cents,
+            amountAudCents: order.amount_aud_cents,
             currency: order.currency,
             status: order.status,
             createdAt: order.created_at,
@@ -185,7 +185,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
     title: t.title ?? "(untitled tier)",
     tier: t.tier,
     amountCents: t.amount_cents ?? 0,
-    currency: t.currency ?? "usd",
+    currency: t.currency ?? "aud",
   }));
 
   const registeredSeats = registrations
@@ -198,12 +198,12 @@ export default async function EventDetailPage({ params }: { params: { id: string
   const pendingCount = registrations.filter((r) => r.status === "pending_payment").length;
   const waitlistedCount = registrations.filter((r) => r.status === "waitlisted").length;
   const checkedInCount = registrations.filter((r) => !!r.checkedInAt).length;
-  const collectedUsdCents = registrations
+  const collectedAudCents = registrations
     .filter((r) => COUNTED_STATUSES.has(r.status))
-    .reduce((s, r) => s + (r.order?.amountUsdCents ?? 0), 0);
-  const pendingUsdCents = registrations
+    .reduce((s, r) => s + (r.order?.amountAudCents ?? 0), 0);
+  const pendingAudCents = registrations
     .filter((r) => r.status === "pending_payment")
-    .reduce((s, r) => s + (r.order?.amountUsdCents ?? 0), 0);
+    .reduce((s, r) => s + (r.order?.amountAudCents ?? 0), 0);
 
   const origin = getSiteOrigin();
   const signupUrl = `${origin}${eventPath(event.slug)}`;
@@ -248,9 +248,9 @@ export default async function EventDetailPage({ params }: { params: { id: string
           value={event.capacity ? `${effectiveRegistered} / ${event.capacity}` : String(effectiveRegistered)}
           sub={usingManualCount ? "manual count" : waitlistedCount ? `${waitlistedCount} waitlisted` : "seats incl. guests"}
         />
-        <MetricCard label="Paid / Pending" value={formatCents(collectedUsdCents, "usd")} sub={pendingCount ? `${formatCents(pendingUsdCents, "usd")} pending (${pendingCount})` : "no pending orders"} />
+        <MetricCard label="Paid / Pending" value={formatCents(collectedAudCents, "aud")} sub={pendingCount ? `${formatCents(pendingAudCents, "aud")} pending (${pendingCount})` : "no pending orders"} />
         <MetricCard label="Checked in" value={checkedInCount} sub={`of ${effectiveRegistered || 0} registered`} />
-        <MetricCard label="Revenue" value={formatCents(collectedUsdCents, "usd")} sub="USD · registered+" />
+        <MetricCard label="Revenue" value={formatCents(collectedAudCents, "aud")} sub="AUD · registered+" />
       </div>
 
       {(accessCode || feedback.length > 0) && (
@@ -336,7 +336,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
                       <Badge tone={statusTone(r.order!.status)}>{humanize(r.order!.status)}</Badge>
                     </td>
                     <td className="admin-cell-mono u-right">
-                      {formatCents(r.order!.amountUsdCents, r.order!.currency ?? "usd")}
+                      {formatCents(r.order!.amountAudCents, r.order!.currency ?? "aud")}
                     </td>
                     <td>{formatDate(r.order!.createdAt)}</td>
                   </tr>
@@ -358,7 +358,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
     title: t.title ?? "(untitled tier)",
     description: t.description,
     amountCents: t.amount_cents ?? 0,
-    currency: t.currency ?? "usd",
+    currency: t.currency ?? "aud",
     capacity: t.capacity,
     active: t.active,
   }));
@@ -414,7 +414,7 @@ export default async function EventDetailPage({ params }: { params: { id: string
               <PnlTab
                 eventId={event.id}
                 lines={pnlLines}
-                autoRevenueUsdCents={collectedUsdCents}
+                autoRevenueAudCents={collectedAudCents}
                 people={pnlPeople}
               />
             ),

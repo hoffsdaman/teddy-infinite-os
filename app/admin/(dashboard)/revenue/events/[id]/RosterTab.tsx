@@ -25,7 +25,7 @@ export type RosterRegistration = {
   ticketCode: string | null;
   checkedInAt: string | null;
   createdAt: string;
-  order: { id: string; amountUsdCents: number | null; currency: string | null; status: string | null; createdAt: string; stripeSessionId: string | null } | null;
+  order: { id: string; amountAudCents: number | null; currency: string | null; status: string | null; createdAt: string; stripeSessionId: string | null } | null;
 };
 
 const REG_STATUS_TONE: Record<RegistrationStatus, BadgeTone> = {
@@ -272,7 +272,7 @@ function RowActions({ eventId, reg, onDone }: { eventId: string; reg: RosterRegi
 // Inline manual-payment editor for one roster row. Shows the current amount (or
 // "Set amount"); editing records a paid order via setRegistrationPayment.
 function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterRegistration; onDone: () => void }) {
-  const current = reg.order?.amountUsdCents ?? null;
+  const current = reg.order?.amountAudCents ?? null;
   const [editing, setEditing] = useState(false);
   const [amount, setAmount] = useState(current != null ? String(current / 100) : "");
   const [pending, setPending] = useState(false);
@@ -281,7 +281,7 @@ function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterReg
   async function save(clear = false) {
     setPending(true);
     setErr(null);
-    const res = await setRegistrationPayment(eventId, reg.id, { amountUsd: clear ? 0 : Number(amount) });
+    const res = await setRegistrationPayment(eventId, reg.id, { amountAud: clear ? 0 : Number(amount) });
     setPending(false);
     if (!res.ok) {
       setErr(res.error);
@@ -294,7 +294,7 @@ function PaymentCell({ eventId, reg, onDone }: { eventId: string; reg: RosterReg
   if (!editing) {
     return (
       <button type="button" className="admin-btn admin-btn--sm" onClick={() => setEditing(true)}>
-        {current != null ? formatCents(current, "usd") : <span className="admin-cell-muted">Set amount</span>}
+        {current != null ? formatCents(current, "aud") : <span className="admin-cell-muted">Set amount</span>}
       </button>
     );
   }

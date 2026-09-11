@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 // force-dynamic; opt the whole handler out so each run sees fresh rows.
 export const fetchCache = "force-no-store";
 
-// Vercel cron (see vercel.json): daily 01:15 UTC (08:15 Asia/Ho_Chi_Minh).
+// Vercel cron (see vercel.json): daily 01:15 UTC (08:15 Australia/Sydney).
 // Emails each active team member a summary of their open board cards, grouped by
 // board, oldest-due first, overdue flagged. Skips anyone with nothing assigned.
 type BoardEmbed = { name: string | null; slug: string | null; status: string | null; archived_at: string | null };

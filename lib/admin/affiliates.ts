@@ -91,11 +91,11 @@ export type Affiliate360 = Totals & {
 type Embedded<T> = T | T[] | null;
 const one = <T,>(e: Embedded<T>): T | null => (Array.isArray(e) ? e[0] ?? null : e);
 
-// Normalize a deal's amount to the USD-preferred figure the rest of the admin
-// UI shows (amount_usd_cents when present, else the native amount).
-function dealAmount(d: { amount_usd_cents: number | null; amount_cents: number | null; currency: string | null }) {
-  const cents = d.amount_usd_cents ?? d.amount_cents;
-  const currency = d.amount_usd_cents != null ? "usd" : d.currency ?? "usd";
+// Normalize a deal's amount to the AUD-preferred figure the rest of the admin
+// UI shows (amount_aud_cents when present, else the native amount).
+function dealAmount(d: { amount_aud_cents: number | null; amount_cents: number | null; currency: string | null }) {
+  const cents = d.amount_aud_cents ?? d.amount_cents;
+  const currency = d.amount_aud_cents != null ? "aud" : d.currency ?? "aud";
   return { cents, currency };
 }
 
@@ -179,7 +179,7 @@ export async function getAffiliateGroups(): Promise<AffiliateGroup[]> {
     companyOs.from("affiliate_commissions").select("affiliate_id, gross_cents, commission_cents, redemption_choice, payout_id"),
     companyOs
       .from("deals")
-      .select("id, status, amount_cents, amount_usd_cents, currency, referrer_id, referrer_company_id, affiliate_id")
+      .select("id, status, amount_cents, amount_aud_cents, currency, referrer_id, referrer_company_id, affiliate_id")
       .or("referrer_id.not.is.null,referrer_company_id.not.is.null,affiliate_id.not.is.null"),
   ]);
 
@@ -230,7 +230,7 @@ export async function getAffiliateGroups(): Promise<AffiliateGroup[]> {
     if (g) applyCommission(g, c);
   }
 
-  for (const d of (dealRows ?? []) as Array<{ id: string; status: string | null; amount_cents: number | null; amount_usd_cents: number | null; currency: string | null; referrer_id: string | null; referrer_company_id: string | null; affiliate_id: string | null }>) {
+  for (const d of (dealRows ?? []) as Array<{ id: string; status: string | null; amount_cents: number | null; amount_aud_cents: number | null; currency: string | null; referrer_id: string | null; referrer_company_id: string | null; affiliate_id: string | null }>) {
     // Attribution precedence: code tag, then direct company referral, then
     // direct person referral. Each deal counts once, toward a single group.
     const key =
@@ -302,7 +302,7 @@ export async function getAffiliate360(identity: AffiliateIdentity): Promise<Affi
     dealOrParts.length
       ? companyOs
           .from("deals")
-          .select("id, title, status, amount_cents, amount_usd_cents, currency, referrer_id, affiliate_id, proposal_url, companies!company_id(name)")
+          .select("id, title, status, amount_cents, amount_aud_cents, currency, referrer_id, affiliate_id, proposal_url, companies!company_id(name)")
           .or(dealOrParts.join(","))
           .order("created_at", { ascending: false })
       : Promise.resolve({ data: [] }),
@@ -327,7 +327,7 @@ export async function getAffiliate360(identity: AffiliateIdentity): Promise<Affi
     };
   });
 
-  const referredDeals: ReferredDeal[] = ((dealRows ?? []) as Array<{ id: string; title: string | null; status: string | null; amount_cents: number | null; amount_usd_cents: number | null; currency: string | null; referrer_id: string | null; affiliate_id: string | null; proposal_url: string | null; companies: Embedded<{ name: string | null }> }>).map((d) => {
+  const referredDeals: ReferredDeal[] = ((dealRows ?? []) as Array<{ id: string; title: string | null; status: string | null; amount_cents: number | null; amount_aud_cents: number | null; currency: string | null; referrer_id: string | null; affiliate_id: string | null; proposal_url: string | null; companies: Embedded<{ name: string | null }> }>).map((d) => {
     const { cents, currency } = dealAmount(d);
     return {
       id: d.id,

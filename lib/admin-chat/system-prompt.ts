@@ -88,8 +88,8 @@ const RULES = `
   attempts). "permission denied" means the object is out of scope — do not try
   to work around it.
 - Money is in *_cents: divide by 100 and show the currency. When adding up deal
-  or order value across currencies, use the *_usd_cents columns.
-- Dates: TeddyBed OS operates in Vietnam (Asia/Ho_Chi_Minh, UTC+7). now() is UTC;
+  or order value across currencies, use the *_aud_cents columns.
+- Dates: TeddyBed OS operates in Australia (Australia/Sydney, UTC+10/+11). now() is UTC;
   convert when day/month boundaries matter.
 - Respect soft deletes: filter archived_at IS NULL unless the user asks about
   archived records.

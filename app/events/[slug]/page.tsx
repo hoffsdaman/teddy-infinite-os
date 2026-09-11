@@ -72,7 +72,7 @@ export default async function PublicEventPage({ params }: { params: { slug: stri
             "@type": "Offer",
             price:
               tiers.length === 0 ? 0 : Math.min(...tiers.map((t) => t.amount_cents)) / 100,
-            priceCurrency: (tiers[0]?.currency ?? "usd").toUpperCase(),
+            priceCurrency: (tiers[0]?.currency ?? "aud").toUpperCase(),
             availability:
               event.status === "open"
                 ? "https://schema.org/InStock"

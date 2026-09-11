@@ -13,7 +13,7 @@ import type { ObjectiveWithKrs } from "@/lib/company/goals";
 export function fmtValue(kr: KrRow): string {
   const t = kr.target_value == null ? null : Number(kr.target_value);
   const c = Number(kr.current_value);
-  if (kr.unit === "usd") return `$${(c / 1000).toFixed(c >= 100000 ? 0 : 1)}k`;
+  if (kr.unit === "aud") return `A$${(c / 1000).toFixed(c >= 100000 ? 0 : 1)}k`;
   if (kr.unit === "%") return `${c}%`;
   if (kr.unit === "min") return `${c}m`;
   if (kr.unit === "days") return `${c}d`;

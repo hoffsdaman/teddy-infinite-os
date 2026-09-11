@@ -6,7 +6,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { bumpCompanyLifecycle, bumpPersonCompanies, getLead, recordTransition } from "@/lib/lifecycle";
 import { recordAudit, recordAuditMany } from "@/lib/admin/audit";
 import { archiveRecord, guardedDelete, restoreRecord } from "@/lib/admin/mutations";
-import { convertToUsdCents } from "@/lib/admin/fx";
+import { convertToAudCents } from "@/lib/admin/fx";
 
 type Result = { ok: true } | { ok: false; error: string };
 type BulkResult = { ok: true; message?: string } | { ok: false; error: string };
@@ -133,7 +133,7 @@ export async function moveDealStage(
   if (stage.is_won && wonAmount != null) {
     const cents = Math.round(wonAmount * 100);
     updates.amount_cents = cents;
-    // Same best-effort USD normalization as updateDeal — a flaky FX lookup
+    // Same best-effort AUD normalization as updateDeal — a flaky FX lookup
     // shouldn't block closing the deal.
     const { data: existing } = await companyOs
       .from("deals")
@@ -141,8 +141,8 @@ export async function moveDealStage(
       .eq("id", dealId)
       .maybeSingle();
     try {
-      const fx = await convertToUsdCents(cents, existing?.currency ?? "usd");
-      updates.amount_usd_cents = fx.amountUsdCents;
+      const fx = await convertToAudCents(cents, existing?.currency ?? "aud");
+      updates.amount_aud_cents = fx.amountAudCents;
       updates.fx_rate = fx.rate;
       updates.fx_rate_fetched_at = new Date().toISOString();
     } catch (err) {
@@ -386,7 +386,7 @@ export async function updateDeal(dealId: string, patch: DealPatch): Promise<Resu
   if (patch.proposal_url !== undefined) updates.proposal_url = normalizeUrl(patch.proposal_url);
   if (patch.contract_url !== undefined) updates.contract_url = normalizeUrl(patch.contract_url);
 
-  // Reporting/list views always show USD (amount_cents/currency stay the
+  // Reporting/list views always show AUD (amount_cents/currency stay the
   // original transaction). Re-fetch the rate whenever amount or currency
   // changes; a flaky FX lookup shouldn't block the deal save.
   if (updates.amount_cents !== undefined || updates.currency !== undefined) {
@@ -399,20 +399,20 @@ export async function updateDeal(dealId: string, patch: DealPatch): Promise<Resu
         .eq("id", dealId)
         .maybeSingle();
       amountCents ??= existing?.amount_cents ?? 0;
-      currency ??= existing?.currency ?? "usd";
+      currency ??= existing?.currency ?? "aud";
     }
     try {
-      const fx = await convertToUsdCents(amountCents ?? 0, currency ?? "usd");
-      updates.amount_usd_cents = fx.amountUsdCents;
+      const fx = await convertToAudCents(amountCents ?? 0, currency ?? "aud");
+      updates.amount_aud_cents = fx.amountAudCents;
       updates.fx_rate = fx.rate;
       updates.fx_rate_fetched_at = new Date().toISOString();
       // Keep the shared fx_rates table fresh from real usage, so the trigger that
-      // normalizes orders/products/bookings (company_os.set_amount_usd_cents) uses a
+      // normalizes orders/products/bookings (company_os.set_amount_aud_cents) uses a
       // current rate too. Best-effort — never block the deal save.
       await companyOs
         .from("fx_rates")
         .upsert(
-          { currency: (currency ?? "usd").toLowerCase(), rate_to_usd: fx.rate, updated_at: new Date().toISOString() },
+          { currency: (currency ?? "aud").toLowerCase(), rate_to_aud: fx.rate, updated_at: new Date().toISOString() },
           { onConflict: "currency" },
         );
     } catch (err) {

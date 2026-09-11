@@ -37,9 +37,9 @@ export default async function AffiliatesPage() {
       />
 
       <div className="admin-kpi-grid u-mb-5">
-        <MetricCard label="Pipeline" value={formatCents(pipeline, "usd")} sub="open referred deals" />
-        <MetricCard label="Converted" value={formatCents(converted, "usd")} sub="referred revenue that paid" />
-        <MetricCard label="Commissions awarded" value={formatCents(commissionsAwarded, "usd")} sub="earned by affiliates" />
+        <MetricCard label="Pipeline" value={formatCents(pipeline, "aud")} sub="open referred deals" />
+        <MetricCard label="Converted" value={formatCents(converted, "aud")} sub="referred revenue that paid" />
+        <MetricCard label="Commissions awarded" value={formatCents(commissionsAwarded, "aud")} sub="earned by affiliates" />
         <MetricCard
           label="Active affiliates"
           value={activeCount}
@@ -82,10 +82,10 @@ export default async function AffiliatesPage() {
                     </td>
                     <td className="u-right">{g.referredDealCount || <span className="admin-cell-muted">0</span>}</td>
                     <td className="admin-cell-mono u-right">
-                      {g.referredOpenPipelineCents ? formatCents(g.referredOpenPipelineCents, "usd") : <span className="admin-cell-muted">—</span>}
+                      {g.referredOpenPipelineCents ? formatCents(g.referredOpenPipelineCents, "aud") : <span className="admin-cell-muted">—</span>}
                     </td>
                     <td className="admin-cell-mono u-right">
-                      {g.unpaidCents ? formatCents(g.unpaidCents, "usd") : <span className="admin-cell-muted">—</span>}
+                      {g.unpaidCents ? formatCents(g.unpaidCents, "aud") : <span className="admin-cell-muted">—</span>}
                     </td>
                     <td>
                       <span className="u-row u-wrap">

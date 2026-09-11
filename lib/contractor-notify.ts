@@ -45,7 +45,7 @@ export async function sendWorkRequestEmail(opts: {
     to: opts.to,
     subject: `New work request: ${opts.title}`,
     html,
-    replyTo: "dave@edge8.co",
+    replyTo: "hello@teddybed.com.au",
   });
 }
 
@@ -103,7 +103,7 @@ export async function sendDecisionEmail(opts: {
     <p style="margin-top:24px;">Reply to this email with any questions.</p>
     <p>Dave and the TeddyBed OS team</p>
   `.trim();
-  return sendTransactionalEmail({ to: opts.to, subject: t.subject, html, replyTo: "dave@edge8.co" });
+  return sendTransactionalEmail({ to: opts.to, subject: t.subject, html, replyTo: "hello@teddybed.com.au" });
 }
 
 export async function sendPaymentEmail(opts: {
@@ -132,7 +132,7 @@ export async function sendPaymentEmail(opts: {
         ? `Payment sent: ${opts.monthLabel}`
         : `Payment on hold: ${opts.monthLabel}`,
     html,
-    replyTo: "dave@edge8.co",
+    replyTo: "hello@teddybed.com.au",
   });
 }
 
@@ -160,7 +160,7 @@ export async function sendClientEstimateReadyEmail(opts: {
     to: opts.to,
     subject: `Estimate ready: ${opts.title}`,
     html,
-    replyTo: "dave@edge8.co",
+    replyTo: "hello@teddybed.com.au",
   });
 }
 
@@ -184,7 +184,7 @@ export async function sendClientWorkReadyEmail(opts: {
     to: opts.to,
     subject: `Work ready for review: ${opts.title}`,
     html,
-    replyTo: "dave@edge8.co",
+    replyTo: "hello@teddybed.com.au",
   });
 }
 

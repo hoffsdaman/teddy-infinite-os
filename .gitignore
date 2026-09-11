@@ -20,3 +20,4 @@ out/
 .env.local
 .env.*.local
 *.tsbuildinfo
+.env copy.local

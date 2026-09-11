@@ -52,9 +52,9 @@ export type Person360 = {
   lead: PersonLead | null;
   candidateProfile: CandidateProfile | null;
   inquiries: Array<{ id: string; type: string | null; subject: string | null; status: string | null; source: string | null; created_at: string; deal_id: string | null }>;
-  deals: Array<{ id: string; title: string | null; amount_cents: number | null; amount_usd_cents: number | null; currency: string | null; status: string | null; stage_id: string | null; created_at: string }>;
-  orders: Array<{ id: string; amount_cents: number | null; amount_usd_cents: number | null; currency: string | null; status: string | null; payment_method: string | null; created_at: string }>;
-  bookings: Array<{ id: string; kind: string | null; start_date: string | null; end_date: string | null; party_size: number | null; amount_cents: number | null; amount_usd_cents: number | null; currency: string | null; status: string | null; created_at: string }>;
+  deals: Array<{ id: string; title: string | null; amount_cents: number | null; amount_aud_cents: number | null; currency: string | null; status: string | null; stage_id: string | null; created_at: string }>;
+  orders: Array<{ id: string; amount_cents: number | null; amount_aud_cents: number | null; currency: string | null; status: string | null; payment_method: string | null; created_at: string }>;
+  bookings: Array<{ id: string; kind: string | null; start_date: string | null; end_date: string | null; party_size: number | null; amount_cents: number | null; amount_aud_cents: number | null; currency: string | null; status: string | null; created_at: string }>;
   applications: Array<{ id: string; job_requisition_id: string | null; job_title: string | null; status: string | null; rating: number | null; applied_at: string | null; created_at: string; resume_document_id: string | null }>;
   documents: Array<{ id: string; title: string | null; mime_type: string | null; byte_size: number | null; created_at: string }>;
   surveyResponses: Array<{ id: string; survey_id: string | null; submitted_at: string | null; created_at: string | null }>;
@@ -79,9 +79,9 @@ export async function getPerson360(id: string): Promise<Person360 | null> {
       safe(companyOs.from("lead").select("status, sla_due_at, attempt_count, disqualified_reason").eq("person_id", id)),
       safe(companyOs.from("candidate_profile").select("headline, current_title, portfolio_url, do_not_hire, pool_status").eq("person_id", id)),
       safe(companyOs.from("inquiries").select("id, type, subject, status, source, created_at, deal_id").eq("person_id", id).order("created_at", { ascending: false })),
-      safe(companyOs.from("deals").select("id, title, amount_cents, amount_usd_cents, currency, status, stage_id, created_at").eq("person_id", id).order("created_at", { ascending: false })),
-      safe(companyOs.from("orders").select("id, amount_cents, amount_usd_cents, currency, status, payment_method, created_at").eq("person_id", id).order("created_at", { ascending: false })),
-      safe(companyOs.from("bookings").select("id, kind, start_date, end_date, party_size, amount_cents, amount_usd_cents, currency, status, created_at").eq("person_id", id).order("created_at", { ascending: false })),
+      safe(companyOs.from("deals").select("id, title, amount_cents, amount_aud_cents, currency, status, stage_id, created_at").eq("person_id", id).order("created_at", { ascending: false })),
+      safe(companyOs.from("orders").select("id, amount_cents, amount_aud_cents, currency, status, payment_method, created_at").eq("person_id", id).order("created_at", { ascending: false })),
+      safe(companyOs.from("bookings").select("id, kind, start_date, end_date, party_size, amount_cents, amount_aud_cents, currency, status, created_at").eq("person_id", id).order("created_at", { ascending: false })),
       safe(companyOs.from("applications").select("id, job_requisition_id, status, rating, applied_at, created_at, resume_document_id, job_requisitions(title)").eq("person_id", id).order("created_at", { ascending: false })),
       safe(companyOs.from("documents").select("id, title, mime_type, byte_size, created_at").eq("entity_type", "person").eq("entity_id", id).order("created_at", { ascending: false })),
       safe(companyOs.from("survey_responses").select("id, survey_id, submitted_at, created_at").eq("person_id", id).order("created_at", { ascending: false })),

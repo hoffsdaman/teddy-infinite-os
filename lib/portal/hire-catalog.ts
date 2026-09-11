@@ -7,8 +7,8 @@ export type HireBracketId = "1-3" | "3-5" | "5+";
 export type HireBracket = {
   id: HireBracketId;
   label: string;
-  minUsd: number;
-  maxUsd: number;
+  minAud: number;
+  maxAud: number;
 };
 
 export type HirePosition = {
@@ -22,27 +22,27 @@ export const HIRE_POSITIONS: HirePosition[] = [
     id: "ai_engineer",
     label: "AI Engineer",
     brackets: [
-      { id: "1-3", label: "1-3 years", minUsd: 3000, maxUsd: 4000 },
-      { id: "3-5", label: "3-5 years", minUsd: 4000, maxUsd: 6000 },
-      { id: "5+", label: "5+ years", minUsd: 6000, maxUsd: 8000 },
+      { id: "1-3", label: "1-3 years", minAud: 3000, maxAud: 4000 },
+      { id: "3-5", label: "3-5 years", minAud: 4000, maxAud: 6000 },
+      { id: "5+", label: "5+ years", minAud: 6000, maxAud: 8000 },
     ],
   },
   {
     id: "ai_officer",
     label: "AI Officer",
     brackets: [
-      { id: "1-3", label: "1-3 years", minUsd: 2500, maxUsd: 4000 },
-      { id: "3-5", label: "3-5 years", minUsd: 4000, maxUsd: 5000 },
-      { id: "5+", label: "5+ years", minUsd: 5000, maxUsd: 8000 },
+      { id: "1-3", label: "1-3 years", minAud: 2500, maxAud: 4000 },
+      { id: "3-5", label: "3-5 years", minAud: 4000, maxAud: 5000 },
+      { id: "5+", label: "5+ years", minAud: 5000, maxAud: 8000 },
     ],
   },
   {
     id: "data_engineer",
     label: "Data Engineer",
     brackets: [
-      { id: "1-3", label: "1-3 years", minUsd: 3000, maxUsd: 4000 },
-      { id: "3-5", label: "3-5 years", minUsd: 4000, maxUsd: 5000 },
-      { id: "5+", label: "5+ years", minUsd: 5000, maxUsd: 8000 },
+      { id: "1-3", label: "1-3 years", minAud: 3000, maxAud: 4000 },
+      { id: "3-5", label: "3-5 years", minAud: 4000, maxAud: 5000 },
+      { id: "5+", label: "5+ years", minAud: 5000, maxAud: 8000 },
     ],
   },
 ];

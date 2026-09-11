@@ -8,7 +8,6 @@ import { OfficeGoalsCard } from "@/components/admin/OfficeGoalsCard";
 import { getOfficeGoals, healthSummary } from "@/lib/admin/office-goals";
 import { one, monthsThisYear, MS_DAY } from "@/lib/admin/dashboard-helpers";
 import { getSurveyScore } from "@/lib/admin/survey-scores";
-import { FIXED_VND_PER_USD } from "@/lib/admin/compensation-shared";
 import { formatDate, timeAgo } from "@/lib/admin/format";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +46,7 @@ export default async function OperationsCockpitPage() {
       .gte("end_date", yearStart)
       .order("start_date"),
     companyOs.from("time_off").select("id", { count: "exact", head: true }).eq("status", "requested"),
-    companyOs.from("equipment").select("cost_vnd"),
+    companyOs.from("equipment").select("cost_aud"),
     companyOs
       .from("assistant_conversations")
       .select("id", { count: "exact", head: true })
@@ -89,10 +88,10 @@ export default async function OperationsCockpitPage() {
     });
 
   // ── Workplace & service ──
-  const equipUsd = ((equipRes.data as { cost_vnd: number | null }[] | null) ?? []).reduce(
-    (s, e) => s + (e.cost_vnd ?? 0),
+  const equipAud = ((equipRes.data as { cost_aud: number | null }[] | null) ?? []).reduce(
+    (s, e) => s + Number(e.cost_aud ?? 0),
     0,
-  ) / FIXED_VND_PER_USD;
+  );
 
   const botCount = botRes.count ?? 0;
   const requests = (reqRes.data as RequestRow[] | null) ?? [];
@@ -163,7 +162,7 @@ export default async function OperationsCockpitPage() {
       <div className="admin-kpi-grid u-mb-4">
         <MetricCard
           label="Equipment value"
-          value={`$${Math.round(equipUsd).toLocaleString("en-US")}`}
+          value={`A$${Math.round(equipAud).toLocaleString("en-US")}`}
           sub="on the register"
           href="/admin/operations/equipment"
         />

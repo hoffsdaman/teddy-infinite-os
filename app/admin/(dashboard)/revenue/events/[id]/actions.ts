@@ -7,7 +7,7 @@ import { recordAudit } from "@/lib/admin/audit";
 import { getOrCreatePerson } from "@/lib/company-os";
 import { newTicketCode } from "@/lib/events-server";
 import { SEAT_HOLDING_STATUSES } from "@/lib/events";
-import { convertToUsdCents } from "@/lib/admin/fx";
+import { convertToAudCents } from "@/lib/admin/fx";
 
 type Result = { ok: true; warning?: string } | { ok: false; error: string };
 
@@ -190,7 +190,7 @@ export async function promoteFromWaitlist(eventId: string, registrationId: strin
 // so the amount flows into the roster and the event revenue like any other.
 // Clearing the amount (0 or blank) removes the manual order again.
 
-export type RegistrationPaymentInput = { amountUsd: number | null; currency?: string };
+export type RegistrationPaymentInput = { amountAud: number | null; currency?: string };
 
 export async function setRegistrationPayment(
   eventId: string,
@@ -210,7 +210,7 @@ export async function setRegistrationPayment(
   if (!reg.person_id) return { ok: false, error: "This attendee has no linked person to bill." };
 
   // Clear: blank or zero removes any manual order and unlinks it.
-  if (input.amountUsd == null || input.amountUsd === 0) {
+  if (input.amountAud == null || input.amountAud === 0) {
     if (reg.order_id) {
       await companyOs.from("event_registrations").update({ order_id: null }).eq("id", registrationId);
       await companyOs.from("orders").delete().eq("id", reg.order_id).eq("payment_method", "manual");
@@ -227,17 +227,17 @@ export async function setRegistrationPayment(
     return { ok: true };
   }
 
-  if (!Number.isFinite(input.amountUsd) || input.amountUsd < 0) {
+  if (!Number.isFinite(input.amountAud) || input.amountAud < 0) {
     return { ok: false, error: "Enter a valid amount (0 or more)." };
   }
-  const currency = (input.currency ?? "usd").toLowerCase();
-  const amountCents = Math.round(input.amountUsd * 100);
-  let amountUsdCents = amountCents;
-  if (currency !== "usd") {
+  const currency = (input.currency ?? "aud").toLowerCase();
+  const amountCents = Math.round(input.amountAud * 100);
+  let amountAudCents = amountCents;
+  if (currency !== "aud") {
     try {
-      amountUsdCents = (await convertToUsdCents(amountCents, currency)).amountUsdCents;
+      amountAudCents = (await convertToAudCents(amountCents, currency)).amountAudCents;
     } catch {
-      amountUsdCents = amountCents;
+      amountAudCents = amountCents;
     }
   }
 
@@ -247,7 +247,7 @@ export async function setRegistrationPayment(
       .update({
         amount_cents: amountCents,
         currency,
-        amount_usd_cents: amountUsdCents,
+        amount_aud_cents: amountAudCents,
         status: "paid",
         payment_method: "manual",
         updated_at: new Date().toISOString(),
@@ -264,7 +264,7 @@ export async function setRegistrationPayment(
         amount_cents: amountCents,
         tax_cents: 0,
         currency,
-        amount_usd_cents: amountUsdCents,
+        amount_aud_cents: amountAudCents,
         status: "paid",
         refunded_cents: 0,
         metadata: { via: "roster_manual_payment", event_id: eventId },

@@ -23,7 +23,7 @@ export type CockpitDeal = {
   id: string;
   title: string;
   stage: string;
-  usd: number | null;
+  aud: number | null;
   nextStep: string | null;
   gaps: string[];
 };
@@ -128,7 +128,7 @@ export function CockpitDeals({
                 <td className="admin-cell-strong">{d.title}</td>
                 <td className="admin-cell-muted">{d.stage}</td>
                 <td className="admin-cell-mono u-right">
-                  {formatCents(d.usd)}
+                  {formatCents(d.aud)}
                 </td>
                 <td>
                   <div className="u-row u-wrap">

@@ -34,8 +34,7 @@ const EMPTY: EquipmentFormValues = {
   vendor_id: "",
   vendor_name_raw: "",
   invoice_ref: "",
-  cost_vnd: "",
-  cost_usd: "",
+  cost_aud: "",
   status: "in_stock",
   condition: "",
   notes: "",
@@ -189,8 +188,7 @@ function EquipmentFields({
       </div>
 
       <div style={three}>
-        {text("cost_vnd", "Cost VND", "43,290,000")}
-        {text("cost_usd", "Cost USD", "1,700")}
+        {text("cost_aud", "Cost AUD", "2,400")}
         <div className="admin-field">
           <label className="admin-label">Condition</label>
           <select

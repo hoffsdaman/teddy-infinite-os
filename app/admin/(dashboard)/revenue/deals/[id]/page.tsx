@@ -97,7 +97,7 @@ type FullRow = {
   stage_id: string | null;
   status: string | null;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   probability: number | null;
   expected_close_date: string | null;
@@ -124,7 +124,7 @@ type FullRow = {
 };
 
 const FULL_SELECT =
-  "id, title, stage_id, status, amount_cents, amount_usd_cents, currency, probability, expected_close_date, source, person_id, company_id, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, archived_at, created_at, updated_at, closed_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name), owner:people!owner_id(full_name, email)";
+  "id, title, stage_id, status, amount_cents, amount_aud_cents, currency, probability, expected_close_date, source, person_id, company_id, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, archived_at, created_at, updated_at, closed_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name), owner:people!owner_id(full_name, email)";
 
 export default async function DealDetailPage({ params }: { params: { id: string } }) {
   const resolved = await resolveDealRef(params.id);
@@ -175,7 +175,7 @@ export default async function DealDetailPage({ params }: { params: { id: string 
     stageId: r.stage_id,
     status: r.status,
     amountCents: r.amount_cents,
-    amountUsdCents: r.amount_usd_cents,
+    amountAudCents: r.amount_aud_cents,
     currency: r.currency,
     probability: r.probability,
     expectedClose: r.expected_close_date,

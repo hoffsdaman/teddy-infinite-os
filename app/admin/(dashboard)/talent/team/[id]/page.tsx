@@ -176,7 +176,7 @@ export default async function TeamMemberPage({ params }: { params: { id: string 
 
   // Next scheduled review (informational estimate; the scheduler that actually
   // fires cycles is a later slice). Saigon "today" matches the probation cron.
-  const todayISO = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  const todayISO = new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
   const nextReview = computeNextReview({
     startDate: m.start_date ? m.start_date.slice(0, 10) : null,
     contractStartDate: cycle?.contract_start_date ? cycle.contract_start_date.slice(0, 10) : null,

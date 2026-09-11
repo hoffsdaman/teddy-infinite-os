@@ -10,10 +10,10 @@ export const dynamic = "force-dynamic";
 // before it ends. Firing on the exact-day match means one nudge per person and
 // no "already notified" state to track. Auth is the standard Vercel Cron bearer.
 const REVIEW_LEAD_DAYS = 14;
-const FOUNDER_EMAIL = "dave@edge8.ai";
+const FOUNDER_EMAIL = "hello@teddybed.com.au";
 
 function saigonToday(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
 }
 
 export async function GET(req: Request) {

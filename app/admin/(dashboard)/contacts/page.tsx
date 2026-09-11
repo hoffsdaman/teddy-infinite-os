@@ -20,7 +20,7 @@ export const metadata = {
 type Person = ContactRow;
 
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "deal_value_usd_cents", "created_at"]);
+const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "deal_value_aud_cents", "created_at"]);
 
 // Sentinel for "persona is null" — distinct from "" (no filter applied).
 const UNSET = "__unset__";
@@ -63,7 +63,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
   const [{ rows, total, pageSize, error }, summary] = await Promise.all([
     listEntity<Person>(
       "people_with_deals",
-      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_usd_cents, deal_count",
+      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count",
       {
         page,
         pageSize: PAGE_SIZE,
@@ -95,11 +95,11 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
     },
     { key: "country", header: "Country", sortable: true, cell: (r) => r.country || <span className="admin-cell-muted">—</span> },
     {
-      key: "deal_value_usd_cents",
+      key: "deal_value_aud_cents",
       header: "Deal value",
       sortable: true,
       align: "right",
-      cell: (r) => (r.deal_count ? formatCents(r.deal_value_usd_cents) : <span className="admin-cell-muted">—</span>),
+      cell: (r) => (r.deal_count ? formatCents(r.deal_value_aud_cents) : <span className="admin-cell-muted">—</span>),
     },
     { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
   ];

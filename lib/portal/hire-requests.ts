@@ -41,14 +41,14 @@ export async function createTeamRequestForActor(
     if (!found) return { ok: false, error: `Pick a role and experience level for team member ${i + 1}.` };
     const techStack = c.techStack.filter(techAllowed);
     if (techStack.length === 0) return { ok: false, error: `Pick at least one technology for team member ${i + 1}.` };
-    const monthlyMidUsd = Math.round((found.bracket.minUsd + found.bracket.maxUsd) / 2);
-    resolved.push({ position: found.position, bracket: found.bracket, techStack, monthlyMidUsd });
+    const monthlyMidAud = Math.round((found.bracket.minAud + found.bracket.maxAud) / 2);
+    resolved.push({ position: found.position, bracket: found.bracket, techStack, monthlyMidAud });
   }
 
   const count = resolved.length;
-  const grossAnnualUsd = resolved.reduce((sum, r) => sum + r.monthlyMidUsd * 12, 0);
+  const grossAnnualAud = resolved.reduce((sum, r) => sum + r.monthlyMidAud * 12, 0);
   const discounted = count >= TEAM_DISCOUNT_MIN;
-  const annualUsd = discounted ? Math.round(grossAnnualUsd * (1 - TEAM_DISCOUNT_RATE)) : grossAnnualUsd;
+  const annualAud = discounted ? Math.round(grossAnnualAud * (1 - TEAM_DISCOUNT_RATE)) : grossAnnualAud;
 
   const { data: pipeline, error: plErr } = await companyOs
     .from("pipelines")
@@ -75,10 +75,10 @@ export async function createTeamRequestForActor(
       : `${companyName}: Build a team of ${count}`;
 
   const roster = resolved
-    .map((r, i) => `${i + 1}. ${r.position.label}, ${r.bracket.label} (~$${r.monthlyMidUsd.toLocaleString()}/mo). Stack: ${r.techStack.join(", ")}`)
+    .map((r, i) => `${i + 1}. ${r.position.label}, ${r.bracket.label} (~A$${r.monthlyMidAud.toLocaleString()}/mo). Stack: ${r.techStack.join(", ")}`)
     .join("\n");
   const discountNote = discounted
-    ? ` 10% team discount applied (gross $${grossAnnualUsd.toLocaleString()}/yr).`
+    ? ` 10% team discount applied (gross A$${grossAnnualAud.toLocaleString()}/yr).`
     : "";
   const nextStep = `Portal Build Your Team request (${count} ${count === 1 ? "hire" : "hires"}).${discountNote}\n${roster}`;
 
@@ -93,8 +93,8 @@ export async function createTeamRequestForActor(
       position: stageDealCount ?? 0,
       status: "open",
       source: "portal_build_team",
-      currency: "usd",
-      amount_cents: annualUsd * 100,
+      currency: "aud",
+      amount_cents: annualAud * 100,
       next_step: nextStep,
     })
     .select("id")
@@ -102,7 +102,7 @@ export async function createTeamRequestForActor(
   if (error || !data) return { ok: false, error: "Couldn't submit your request. Please try again." };
 
   await notifyOps(
-    `👥 Build Your Team request: ${count} ${count === 1 ? "hire" : "hires"} for ${companyName}. Budget ~$${annualUsd.toLocaleString()}/yr${discounted ? " (10% team discount)" : ""}. Review: https://teddy-infinite-os.vercel.app/admin/revenue/deals?open=${data.id}`,
+    `👥 Build Your Team request: ${count} ${count === 1 ? "hire" : "hires"} for ${companyName}. Budget ~A$${annualAud.toLocaleString()}/yr${discounted ? " (10% team discount)" : ""}. Review: https://teddy-infinite-os.vercel.app/admin/revenue/deals?open=${data.id}`,
   );
 
   return { ok: true, id: data.id };

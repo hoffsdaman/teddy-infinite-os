@@ -84,7 +84,7 @@ export async function rollupContractorPayments(period: string): Promise<RollupSu
     }
     const hourlyCents = num(hourly.amount_cents);
     const overtimeCents = num(overtime?.amount_cents ?? hourly.amount_cents);
-    const currency = hourly.currency || "usd";
+    const currency = hourly.currency || "aud";
 
     // Existing payment for this person+month?
     const { data: existing } = await companyOs

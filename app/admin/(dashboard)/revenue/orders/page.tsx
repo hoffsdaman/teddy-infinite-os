@@ -22,7 +22,7 @@ type Pr = { title: string | null };
 type Order = {
   id: string;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   status: string | null;
   payment_method: string | null;
@@ -37,7 +37,7 @@ type Order = {
 
 const one = <T,>(e: T | T[] | null): T | null => (Array.isArray(e) ? e[0] ?? null : e);
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["amount_usd_cents", "status", "payment_method", "created_at"]);
+const SORTABLE = new Set(["amount_aud_cents", "status", "payment_method", "created_at"]);
 
 // Real distinct values in the table today (checked against the DB), not the full enum.
 const STATUS_OPTIONS = [
@@ -64,28 +64,28 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
   if (statusParam) filters.status = statusParam;
   if (methodParam) filters.payment_method = methodParam;
 
-  // KPI strip: revenue sums amount_usd_cents (every currency normalized to USD by
-  // company_os.set_amount_usd_cents); native currency + amount stay in the side car.
+  // KPI strip: revenue sums amount_aud_cents (every currency normalized to AUD by
+  // company_os.set_amount_aud_cents); native currency + amount stay in the side car.
   const now = new Date();
   const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
   const [{ rows, total, pageSize, error }, totalRes, revRes, paidCount, pendingCount] = await Promise.all([
     listEntity<Order>(
       "orders",
-      "id, amount_cents, amount_usd_cents, currency, status, payment_method, refunded_cents, stripe_session_id, order_number, created_at, person_id, people(full_name, email), products(title)",
+      "id, amount_cents, amount_aud_cents, currency, status, payment_method, refunded_cents, stripe_session_id, order_number, created_at, person_id, people(full_name, email), products(title)",
       { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["order_number", "stripe_session_id"], sort, dir, filters },
     ),
-    companyOs.from("orders").select("amount_usd_cents").eq("status", "paid"),
+    companyOs.from("orders").select("amount_aud_cents").eq("status", "paid"),
     companyOs
       .from("orders")
-      .select("amount_usd_cents")
+      .select("amount_aud_cents")
       .eq("status", "paid")
       .gte("created_at", monthStart),
     countEntity("orders", { status: "paid" }),
     countEntity("orders", { status: "pending" }),
   ]);
 
-  const sumCents = (res: { data: { amount_usd_cents: number | null }[] | null }) =>
-    (res.data ?? []).reduce((s, r) => s + (r.amount_usd_cents ?? 0), 0);
+  const sumCents = (res: { data: { amount_aud_cents: number | null }[] | null }) =>
+    (res.data ?? []).reduce((s, r) => s + (r.amount_aud_cents ?? 0), 0);
   const totalCollected = sumCents(totalRes);
   const revenueThisMonth = sumCents(revRes);
 
@@ -100,7 +100,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
       },
     },
     { key: "product", header: "Product", cell: (r) => one(r.products)?.title || r.order_number || <span className="admin-cell-muted">—</span> },
-    { key: "amount_usd_cents", header: "Amount", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_usd_cents, "usd") },
+    { key: "amount_aud_cents", header: "Amount (AUD)", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_aud_cents, "aud") },
     { key: "status", header: "Status", sortable: true, cell: (r) => (r.status ? <Badge tone={statusTone(r.status)}>{humanize(r.status)}</Badge> : <span className="admin-cell-muted">—</span>) },
     { key: "payment_method", header: "Method", sortable: true, cell: (r) => (r.payment_method ? humanize(r.payment_method) : <span className="admin-cell-muted">—</span>) },
     { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
@@ -112,8 +112,8 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
       {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
 
       <div className="admin-kpi-grid u-mb-5">
-        <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="USD · paid orders" />
-        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="USD · paid orders" />
+        <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="AUD · paid orders" />
+        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="AUD · paid orders" />
         <MetricCard label="Paid" value={paidCount} sub={`of ${total.toLocaleString()} orders`} />
         <MetricCard label="Pending" value={pendingCount} sub="awaiting payment" />
       </div>
@@ -152,11 +152,11 @@ export default async function OrdersPage({ searchParams }: { searchParams: Searc
                   <dd>{p?.full_name || p?.email || "—"}</dd>
                   <dt>Product</dt>
                   <dd>{one(r.products)?.title || r.order_number || "—"}</dd>
-                  <dt>Amount</dt>
-                  <dd className="admin-cell-mono">{formatCents(r.amount_usd_cents, "usd")}</dd>
-                  {(r.currency ?? "usd").toLowerCase() !== "usd" && (
+                  <dt>Amount (AUD)</dt>
+                  <dd className="admin-cell-mono">{formatCents(r.amount_aud_cents, "aud")}</dd>
+                  {(r.currency ?? "aud").toLowerCase() !== "aud" && (
                     <>
-                      <dt>Native</dt>
+                      <dt>Charged in {(r.currency ?? "").toUpperCase()}</dt>
                       <dd className="admin-cell-mono">{formatCents(r.amount_cents, r.currency ?? undefined)}</dd>
                     </>
                   )}

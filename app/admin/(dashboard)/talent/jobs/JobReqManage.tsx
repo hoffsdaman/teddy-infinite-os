@@ -54,7 +54,7 @@ const CLOSE_OUTCOMES = [
   ["cancelled", "Cancelled"],
 ] as const;
 
-const CURRENCIES = ["usd", "eur", "gbp", "aud", "sgd", "vnd"];
+const CURRENCIES = ["aud"];
 
 type JobReqFieldForm = {
   title: string;

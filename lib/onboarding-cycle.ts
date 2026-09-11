@@ -15,7 +15,7 @@ import { sendTransactionalEmail } from "@/lib/email";
 import { getSiteOrigin } from "@/lib/site-origin";
 import { recordAudit } from "@/lib/admin/audit";
 
-export const TALENT_DIRECTOR_EMAIL = "mai@edge8.ai";
+export const TALENT_DIRECTOR_EMAIL = "hello@teddybed.com.au";
 export const DAY8_SURVEY_SLUG = "onboarding-day-8-feedback";
 
 // Kanban columns, in order. `complete` renders inside the Day 180 column.
@@ -64,7 +64,7 @@ const LIVE_STATUSES = ["active", "pre_start", "on_leave", "notice"];
 // ---- date helpers (all on YYYY-MM-DD strings, Saigon-date semantics) --------
 
 export function saigonToday(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
 }
 
 function ms(iso: string): number {

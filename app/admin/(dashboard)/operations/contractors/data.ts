@@ -52,12 +52,12 @@ export async function listContractors(
     if (cErr) return { rows: [], error: cErr.message };
     for (const c of comps ?? []) {
       const cur =
-        rateByTm.get(c.team_member_id) ?? { hourly: null, overtime: null, billable: null, currency: "usd" };
+        rateByTm.get(c.team_member_id) ?? { hourly: null, overtime: null, billable: null, currency: "aud" };
       if (c.comp_type === "hourly") cur.hourly = num(c.amount_cents);
       if (c.comp_type === "overtime") cur.overtime = num(c.amount_cents);
       if (c.comp_type === "billable") cur.billable = num(c.amount_cents);
-      // billable is always usd; the roster currency reflects the internal rates
-      if (c.comp_type !== "billable") cur.currency = c.currency || "usd";
+      // billable is always aud; the roster currency reflects the internal rates
+      if (c.comp_type !== "billable") cur.currency = c.currency || "aud";
       rateByTm.set(c.team_member_id, cur);
     }
   }
@@ -80,7 +80,7 @@ export async function listContractors(
       hourly_rate_cents: rates?.hourly ?? null,
       overtime_rate_cents: rates?.overtime ?? null,
       billable_rate_cents: rates?.billable ?? null,
-      currency: rates?.currency ?? "usd",
+      currency: rates?.currency ?? "aud",
     };
   });
   return { rows, error: null };

@@ -9,7 +9,7 @@ import { Band } from "@/components/admin/Band";
 import { BarChart } from "@/components/admin/charts/BarChart";
 import { DonutChart } from "@/components/admin/charts/DonutChart";
 import { formatCents, formatDate, timeAgo } from "@/lib/admin/format";
-import { compactUsd, vsPrior, monthsThisYear, MS_DAY } from "@/lib/admin/dashboard-helpers";
+import { compactAud, vsPrior, monthsThisYear, MS_DAY } from "@/lib/admin/dashboard-helpers";
 import { getSurveyScore } from "@/lib/admin/survey-scores";
 import { getAnalyticsOverview } from "@/lib/admin/vercel-analytics";
 import { getAudienceBreakdown, getDeliverability } from "@/lib/admin/marketing";
@@ -133,7 +133,7 @@ type DealRow = {
   title: string | null;
   stage_id: string | null;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   owner_id: string | null;
   status: string | null;
@@ -181,14 +181,14 @@ type InquiryRow = {
 function dealGaps(d: DealRow): string[] {
   const gaps: string[] = [];
   if (!d.owner_id) gaps.push("Owner");
-  if (!d.amount_usd_cents) gaps.push("Value");
+  if (!d.amount_aud_cents) gaps.push("Value");
   if (!d.next_step) gaps.push("Next step");
   if (!d.next_step_date) gaps.push("Date");
   return gaps;
 }
 
 type InvoiceRow = { txn_date: string | null; amount_cents: number | null; balance_cents: number | null; status: string | null; entity: string };
-type OrderRow = { created_at: string; amount_usd_cents: number | null; status: string | null };
+type OrderRow = { created_at: string; amount_aud_cents: number | null; status: string | null };
 type FunnelDealRow = { status: string | null; created_at: string; closed_at: string | null };
 
 export default async function SalesCockpitPage() {
@@ -206,7 +206,7 @@ export default async function SalesCockpitPage() {
   let dealsQuery = companyOs
     .from("deals")
     .select(
-      "id, title, stage_id, amount_cents, amount_usd_cents, currency, owner_id, status, source, expected_close_date, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, probability, person_id, updated_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name)",
+      "id, title, stage_id, amount_cents, amount_aud_cents, currency, owner_id, status, source, expected_close_date, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, probability, person_id, updated_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name)",
     )
     .eq("status", "open")
     .is("archived_at", null)
@@ -258,14 +258,14 @@ export default async function SalesCockpitPage() {
       .lt("sla_due_at", nowIso),
     companyOs
       .from("deals")
-      .select("amount_usd_cents")
+      .select("amount_aud_cents")
       .eq("status", "won")
       .is("archived_at", null)
       .gte("closed_at", "2026-01-01")
       .lt("closed_at", "2027-01-01"),
-    // Revenue = non-voided invoices by invoice date + paid Stripe orders, all USD.
+    // Revenue = non-voided invoices by invoice date + paid Stripe orders, all AUD.
     companyOs.from("invoices").select("txn_date, amount_cents, balance_cents, status, entity").neq("status", "voided").limit(2000),
-    companyOs.from("orders").select("created_at, amount_usd_cents, status").limit(2000),
+    companyOs.from("orders").select("created_at, amount_aud_cents, status").limit(2000),
     // All deals for the 30d funnel and 90d lead→won conversion.
     companyOs.from("deals").select("status, created_at, closed_at").is("archived_at", null).limit(2000),
     companyOs.from("lead").select("created_at").gte("created_at", iso90).limit(1000),
@@ -297,8 +297,8 @@ export default async function SalesCockpitPage() {
     }));
   const inquiries = (inqRes.data as InquiryRow[] | null) ?? [];
   const slaOverdue = overdueRes.count ?? 0;
-  const dealsClosed = ((wonRes.data as { amount_usd_cents: number | null }[] | null) ?? []).reduce(
-    (s, d) => s + (d.amount_usd_cents ?? 0),
+  const dealsClosed = ((wonRes.data as { amount_aud_cents: number | null }[] | null) ?? []).reduce(
+    (s, d) => s + (d.amount_aud_cents ?? 0),
     0,
   );
   const err = stagesRes.error || dealsRes.error || leadsRes.error || inqRes.error;
@@ -314,7 +314,7 @@ export default async function SalesCockpitPage() {
   const stripeCash = (from: string, to: string) =>
     paidOrders.reduce((s, o) => {
       const d = o.created_at.slice(0, 10);
-      return d >= from && d < to ? s + (o.amount_usd_cents ?? 0) : s;
+      return d >= from && d < to ? s + (o.amount_aud_cents ?? 0) : s;
     }, 0);
   const cashBetween = (from: string, to: string) => invoiceCash(from, to) + stripeCash(from, to);
 
@@ -326,8 +326,8 @@ export default async function SalesCockpitPage() {
   const revenueYtd = cashBetween(yearStart, tomorrow);
   const entitySplit = (from: string, to: string) => (
     <>
-      <div>TeddyBed OS {compactUsd(invoiceCash(from, to, "edge8") + stripeCash(from, to))}</div>
-      <div>AIO {compactUsd(invoiceCash(from, to, "aio"))}</div>
+      <div>TeddyBed OS {compactAud(invoiceCash(from, to, "edge8") + stripeCash(from, to))}</div>
+      <div>AIO {compactAud(invoiceCash(from, to, "aio"))}</div>
     </>
   );
   const revenueByMonth = monthsThisYear(now).map(({ label, from, to }) => ({ label, value: cashBetween(from, to) }));
@@ -357,11 +357,11 @@ export default async function SalesCockpitPage() {
   // Marketing (DB-derived): audience, email opens + rate, active campaigns.
   const activeCampaigns = engine.activeCampaigns.map((c) => ({ id: c.id, title: c.name, status: String(c.status) }));
 
-  const openPipeline = deals.reduce((s, d) => s + (d.amount_usd_cents ?? 0), 0);
+  const openPipeline = deals.reduce((s, d) => s + (d.amount_aud_cents ?? 0), 0);
   const needsAttention = deals
     .map((d) => ({ d, gaps: dealGaps(d) }))
     .filter((x) => x.gaps.length > 0)
-    .sort((a, b) => (b.d.amount_usd_cents ?? 0) - (a.d.amount_usd_cents ?? 0));
+    .sort((a, b) => (b.d.amount_aud_cents ?? 0) - (a.d.amount_aud_cents ?? 0));
 
   const firstStageId = stages[0]?.id ?? "";
   const dealStages: KanbanColumn[] = stages.map((s) => ({
@@ -395,7 +395,7 @@ export default async function SalesCockpitPage() {
       referrerCompanyId: d.referrer_company_id,
       referrerCompanyName: one(d.referrer_company)?.name ?? null,
       amountCents: d.amount_cents,
-      amountUsdCents: d.amount_usd_cents,
+      amountAudCents: d.amount_aud_cents,
       currency: d.currency,
       probability: d.probability,
       status: d.status,
@@ -419,7 +419,7 @@ export default async function SalesCockpitPage() {
       id: d.id,
       title: d.title || co?.name || p?.full_name || p?.email || "Untitled deal",
       stage: d.stage_id ? stageName.get(d.stage_id) ?? "—" : "—",
-      usd: d.amount_usd_cents,
+      aud: d.amount_aud_cents,
       nextStep: d.next_step,
       gaps,
     };
@@ -443,7 +443,7 @@ export default async function SalesCockpitPage() {
         <MetricCard
           label="Revenue · 1yr"
           value={formatCents(revenue1yr)}
-          sub={vsPrior(revenue1yr, revenue1yrPrev, (n) => compactUsd(n))}
+          sub={vsPrior(revenue1yr, revenue1yrPrev, (n) => compactAud(n))}
         />
         <MetricCard label="Revenue · YTD" value={formatCents(revenueYtd)} sub={entitySplit(yearStart, tomorrow)} />
         <MetricCard label={`Won · YTD`} value={formatCents(dealsClosed)} sub={`closed deal value, ${year}`} href="/admin/revenue/deals" />
@@ -467,7 +467,7 @@ export default async function SalesCockpitPage() {
       <div className="admin-summary-grid u-mb-4">
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Revenue by month · {year}</div>
-          <BarChart data={revenueByMonth} ariaLabel="Revenue by month" formatValue={compactUsd} />
+          <BarChart data={revenueByMonth} ariaLabel="Revenue by month" formatValue={compactAud} />
         </div>
         <div className="admin-card admin-chart-card">
           <div className="admin-kpi-label">Pipeline flow · last 30 days</div>

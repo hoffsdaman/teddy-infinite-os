@@ -21,7 +21,7 @@ export const metadata = { title: "Hiring" };
 // Booked times render in Saigon: everyone reading this page is on that clock.
 function fmtWhen(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: "Australia/Sydney",
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -33,7 +33,7 @@ function fmtWhen(iso: string): string {
 // Time only, for the day strip where the date is a given.
 function fmtTime(iso: string): string {
   return new Date(iso).toLocaleTimeString("en-GB", {
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: "Australia/Sydney",
     hour: "2-digit",
     minute: "2-digit",
   });

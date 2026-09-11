@@ -450,7 +450,7 @@ function KrForm({
         </div>
         <div className="admin-field">
           <label className="admin-label">Unit</label>
-          <input className="admin-input" value={d.unit} onChange={(e) => set("unit", e.target.value)} placeholder="%, usd, deals…" />
+          <input className="admin-input" value={d.unit} onChange={(e) => set("unit", e.target.value)} placeholder="%, aud, deals…" />
         </div>
         <div className="admin-field">
           <label className="admin-label">Direction</label>

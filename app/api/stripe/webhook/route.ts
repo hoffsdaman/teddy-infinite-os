@@ -186,7 +186,7 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
   const { data: order, error: orderErr } = await companyOs
     .from("orders")
     .select(
-      "id, person_id, product_id, amount_cents, amount_usd_cents, currency, affiliate_id, products(id, title, slug, cohort_slug, tier, location, date_start, date_end, event_id), people(full_name, email)",
+      "id, person_id, product_id, amount_cents, amount_aud_cents, currency, affiliate_id, products(id, title, slug, cohort_slug, tier, location, date_start, date_end, event_id), people(full_name, email)",
     )
     .eq("stripe_session_id", session.id)
     .maybeSingle();
@@ -274,7 +274,7 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
 
   // 3. Commission ledger — only when the customer used a commission-type code
   // (discount conversions earn nothing; the discount was the compensation).
-  // gross is USD-settled when the order carries amount_usd_cents (AUD orders).
+  // gross is AUD-settled when the order carries amount_aud_cents (non-AUD orders).
   const codeType = session.metadata?.affiliate_code_type;
   if (order.affiliate_id && codeType === "commission") {
     const { data: existingCommission } = await companyOs
@@ -291,7 +291,7 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
         .eq("id", order.affiliate_id)
         .maybeSingle();
       if (aff) {
-        const grossCents = order.amount_usd_cents ?? order.amount_cents;
+        const grossCents = order.amount_aud_cents ?? order.amount_cents;
         const { error: commError } = await companyOs.from("affiliate_commissions").insert({
           affiliate_id: aff.id,
           order_id: order.id,
@@ -300,7 +300,7 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
           gross_cents: grossCents,
           rate: aff.rate,
           commission_cents: Math.round(grossCents * aff.rate),
-          notes: `Infinite Leverage ${product.title} (${order.currency.toUpperCase()} order, gross in USD).`,
+          notes: `Infinite Leverage ${product.title} (${order.currency.toUpperCase()} order, gross in AUD).`,
         });
         if (commError) console.error("[stripe/webhook] IL commission insert failed:", commError.message);
       }
@@ -310,8 +310,8 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
   // 4. Buyer confirmation + ops ping, first fulfilment only.
   if (firstFulfilment) {
     const amountLabel = `${order.currency.toUpperCase()} $${(order.amount_cents / 100).toLocaleString()}`;
-    // Day-granular label; AUD cohorts run in Australia, everything else in Vietnam.
-    const tz = order.currency === "aud" ? "Australia/Sydney" : "Asia/Ho_Chi_Minh";
+    // Day-granular label in the company's home timezone.
+    const tz = "Australia/Sydney";
     const dateLabel = product.date_start
       ? formatEventDates(product.date_start, product.date_end, tz)
       : null;
@@ -327,7 +327,7 @@ async function handleInfiniteLeveragePaid(session: Stripe.Checkout.Session) {
           <p>We'll follow up before the event with everything you need to prepare. Reply to this email any time with questions.</p>
           <p>Dave and the Infinite Leverage team</p>
         `.trim(),
-        replyTo: "dave@edge8.co",
+        replyTo: "hello@teddybed.com.au",
         logMeta: { source: "il_retreat_paid" },
       });
     }
@@ -378,7 +378,7 @@ async function handleTokenPackPaid(session: Stripe.Checkout.Session) {
         <p style="margin-top:24px;">Reply to this email any time to put them to work.</p>
         <p>Dave and the TeddyBed OS team</p>
       `.trim(),
-      replyTo: "dave@edge8.co",
+      replyTo: "hello@teddybed.com.au",
     });
   }
   if (process.env.ACCOUNTING_EMAIL) {
@@ -388,7 +388,7 @@ async function handleTokenPackPaid(session: Stripe.Checkout.Session) {
       html: `<p>${company?.name ?? "A client"} bought ${purchase.packs} human-token ${
         purchase.packs === 1 ? "pack" : "packs"
       } (${purchase.tokens} tokens) for ${amountLabel} via Stripe. Paid by ${toEmail ?? "unknown"}.</p>`,
-      replyTo: "dave@edge8.co",
+      replyTo: "hello@teddybed.com.au",
     });
   }
   await notifyOps(

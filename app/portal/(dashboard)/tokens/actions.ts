@@ -36,7 +36,7 @@ export async function purchaseTokenPacks(
       packs: n,
       tokens,
       amount_cents: amountCents,
-      currency: "usd",
+      currency: "aud",
       status: "pending",
     })
     .select("id")
@@ -52,7 +52,7 @@ export async function purchaseTokenPacks(
       person_id: actor.personId,
       payment_method: "stripe",
       amount_cents: amountCents,
-      currency: "usd",
+      currency: "aud",
       status: "pending",
       metadata: { type: "token_pack", token_purchase_id: purchase.id, company_id: companyId, packs: n },
     })
@@ -74,7 +74,7 @@ export async function purchaseTokenPacks(
         {
           quantity: n,
           price_data: {
-            currency: "usd",
+            currency: "aud",
             unit_amount: PACK_PRICE_CENTS,
             product_data: {
               name: `TeddyBed OS human-token pack (${PACK_TOKENS} tokens)`,

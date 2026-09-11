@@ -51,7 +51,7 @@ async function kr(objectiveId, k, sort) {
 // ── Company level ────────────────────────────────────────────────
 const o1 = await objective({ level: 'company', line: 'edge8', title: 'Own the renewal base', sort: 1 });
 const kr11 = await kr(o1, { title: 'Renew 4 of 4 staffing contracts (Unlock, On Target, EO, Wareease)', target: 4, current: 2, unit: 'contracts', mix: 'human' }, 1);
-const kr12 = await kr(o1, { title: 'Staffing revenue from $34k to $42k MRR', target: 42000, current: 37500, unit: 'usd', mix: 'blended', agent: 'email-marketer' }, 2);
+const kr12 = await kr(o1, { title: 'Staffing revenue from $34k to $42k MRR', target: 42000, current: 37500, unit: 'aud', mix: 'blended', agent: 'email-marketer' }, 2);
 await kr(o1, { title: 'Renewal proposal live within 48h of trigger date', target: 100, current: 100, unit: '%', mix: 'ai', agent: 'developer' }, 3);
 
 const o2 = await objective({ level: 'company', line: 'edge8', title: 'Make AI Programs the growth engine', sort: 2 });

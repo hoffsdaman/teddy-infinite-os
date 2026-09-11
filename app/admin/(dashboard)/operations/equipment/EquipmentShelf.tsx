@@ -115,11 +115,8 @@ function kv(label: string, value: ReactNode) {
   );
 }
 
-function money(vnd: number | null, usd: number | null): string {
-  const parts: string[] = [];
-  if (vnd !== null && vnd !== undefined) parts.push(`${Number(vnd).toLocaleString("en-US")} VND`);
-  if (usd !== null && usd !== undefined) parts.push(`$${Number(usd).toLocaleString("en-US")}`);
-  return parts.join(" · ");
+function money(aud: number | null): string {
+  return aud !== null && aud !== undefined ? `A$${Number(aud).toLocaleString("en-US")}` : "—";
 }
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -257,8 +254,7 @@ function EquipmentShelfBody({
               vendor_id: item.vendor_id ?? "",
               vendor_name_raw: item.vendor_name_raw ?? "",
               invoice_ref: item.invoice_ref ?? "",
-              cost_vnd: item.cost_vnd?.toString() ?? "",
-              cost_usd: item.cost_usd?.toString() ?? "",
+              cost_aud: item.cost_aud?.toString() ?? "",
               status: (item.status as EquipmentFormValues["status"]) ?? "in_stock",
               condition: item.condition ?? "",
               notes: item.notes ?? "",
@@ -295,7 +291,7 @@ function EquipmentShelfBody({
           {kv("Model year", item.model_year)}
           {kv("Vendor", item.vendor?.name ?? item.vendor_name_raw)}
           {kv("Invoice ref", item.invoice_ref)}
-          {kv("Cost", money(item.cost_vnd, item.cost_usd))}
+          {kv("Cost", money(item.cost_aud))}
         </dl>
       </section>
 

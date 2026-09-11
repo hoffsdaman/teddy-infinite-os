@@ -130,7 +130,7 @@ export async function POST(request: Request) {
     `Team size: ${teamSize}`,
     `Start date: ${startDate} (ends ${endDate})`,
     idea ? `Idea: ${idea}` : null,
-    `Expected total: $${expectedTotal.toLocaleString("en-US")} USD`,
+    `Expected total: A$${expectedTotal.toLocaleString("en-US")} AUD`,
   ].filter(Boolean) as string[];
 
   const signup = await recordRetreatSignup({
@@ -152,7 +152,7 @@ export async function POST(request: Request) {
   const pingText = [
     `🇻🇳 *Saigon Private Reserve*`,
     `*${name}* — ${label}`,
-    `Total: $${expectedTotal.toLocaleString("en-US")} USD`,
+    `Total: A$${expectedTotal.toLocaleString("en-US")} AUD`,
     `Dates: ${startDate} → ${endDate}`,
     `${email}${company ? ` · ${company}` : ""}`,
     idea ? `Idea: ${idea}` : null,
@@ -173,7 +173,7 @@ export async function POST(request: Request) {
         <ul>
           <li><strong>Duration:</strong> ${days} days</li>
           <li><strong>Team size:</strong> ${teamSize}</li>
-          <li><strong>Total:</strong> $${expectedTotal.toLocaleString("en-US")} USD</li>
+          <li><strong>Total:</strong> A$${expectedTotal.toLocaleString("en-US")} AUD</li>
           <li><strong>Name:</strong> ${escapeHtml(name)}</li>
           <li><strong>Email:</strong> ${escapeHtml(email)}</li>
           <li><strong>Company:</strong> ${escapeHtml(company ?? "")}</li>

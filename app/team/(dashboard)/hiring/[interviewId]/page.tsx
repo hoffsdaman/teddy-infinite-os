@@ -15,7 +15,7 @@ const REC_LABEL = new Map<RecommendationKey, string>(RECOMMENDATIONS.map((r) => 
 function fmtWhen(iso: string | null): string {
   if (!iso) return "Time to be booked";
   return new Date(iso).toLocaleString("en-GB", {
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: "Australia/Sydney",
     weekday: "short",
     day: "numeric",
     month: "short",

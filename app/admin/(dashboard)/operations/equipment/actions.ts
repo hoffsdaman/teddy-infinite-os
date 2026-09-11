@@ -29,8 +29,7 @@ export type EquipmentInput = {
   vendor_id?: string;
   vendor_name_raw?: string;
   invoice_ref?: string;
-  cost_vnd?: string;
-  cost_usd?: string;
+  cost_aud?: string;
   status?: EquipmentStatus;
   condition?: string;
   notes?: string;
@@ -43,8 +42,8 @@ function refresh() {
 
 // Numeric-ish fields arrive from the form as strings. Empty becomes null so a
 // cleared field doesn't persist as "" or 0, and commas/currency symbols typed
-// out of the spreadsheet ("43,290,000 ₫") are tolerated.
-const NUMERIC = new Set(["screen_size", "model_year", "cost_vnd", "cost_usd"]);
+// out of the spreadsheet ("2,400") are tolerated.
+const NUMERIC = new Set(["screen_size", "model_year", "cost_aud"]);
 
 function toNumber(raw: string): number | null {
   const cleaned = raw.replace(/[^0-9.-]/g, "");

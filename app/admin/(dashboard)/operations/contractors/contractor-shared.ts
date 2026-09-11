@@ -16,6 +16,6 @@ export type ContractorRow = {
   position: string | null;
   hourly_rate_cents: number | null;
   overtime_rate_cents: number | null;
-  billable_rate_cents: number | null; // client-facing, always USD
+  billable_rate_cents: number | null; // client-facing, always AUD
   currency: string;
 };

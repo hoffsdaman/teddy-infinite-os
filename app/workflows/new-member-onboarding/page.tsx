@@ -48,7 +48,7 @@ const NODES: LaneNode[] = [
     actor: 'human',
     actorLabel: 'Recruiter',
     title: 'Set up the Lark email',
-    desc: 'In parallel, the recruiter creates the @edge8.ai Lark account by hand and records it in TeddyBed OS. It runs alongside and never holds up the portal invite.',
+    desc: 'In parallel, the recruiter creates the @teddybed.com.au Lark account by hand and records it in TeddyBed OS. It runs alongside and never holds up the portal invite.',
   },
   {
     num: '3',
@@ -188,7 +188,7 @@ const DRIP: Touch[] = [
     actorLabel: 'System',
     body: (
       <p>
-        The logistics sweep three days out: a nudge if the form is not done, their Lark @edge8.ai credentials, the tools
+        The logistics sweep three days out: a nudge if the form is not done, their Lark @teddybed.com.au credentials, the tools
         they will need, and where to be. Everything provisioned before they walk in.
       </p>
     ),
@@ -217,7 +217,7 @@ const ELEMENTS: WorkflowElement[] = [
   {
     name: 'Inputs',
     assignment: 'both',
-    desc: 'The record the applicant built during hiring, the onboarding details only they can supply, the Lark @edge8.ai email the recruiter provisions, and the ready-made intro-to-TeddyBed OS content the drip sends.',
+    desc: 'The record the applicant built during hiring, the onboarding details only they can supply, the Lark @teddybed.com.au email the recruiter provisions, and the ready-made intro-to-TeddyBed OS content the drip sends.',
   },
   {
     name: 'Decision',
@@ -371,7 +371,7 @@ export default function NewMemberOnboardingWorkflowPage() {
             <h3>Recruiter, by hand</h3>
             <p>Run alongside the automated flow, per new hire.</p>
             <ul>
-              <li>Create the Lark @edge8.ai account and record it in TeddyBed OS</li>
+              <li>Create the Lark @teddybed.com.au account and record it in TeddyBed OS</li>
               <li>Send the Day 0 welcome, the onboarding email personalized under their name</li>
               <li>Confirm the onboarding form is submitted; chase it personally if the drip goes quiet</li>
               <li>Verify portal access and tools work before Day 1</li>

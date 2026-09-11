@@ -424,10 +424,10 @@ $$;
 
 
 --
--- Name: set_amount_usd_cents(); Type: FUNCTION; Schema: company_os; Owner: -
+-- Name: set_amount_aud_cents(); Type: FUNCTION; Schema: company_os; Owner: -
 --
 
-CREATE FUNCTION "company_os"."set_amount_usd_cents"() RETURNS "trigger"
+CREATE FUNCTION "company_os"."set_amount_aud_cents"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
     SET "search_path" TO 'company_os', 'public'
     AS $$
@@ -435,13 +435,13 @@ declare
   r numeric;
 begin
   if new.amount_cents is null then
-    new.amount_usd_cents := null;
+    new.amount_aud_cents := null;
     return new;
   end if;
-  select rate_to_usd into r
+  select rate_to_aud into r
     from company_os.fx_rates
-    where currency = lower(coalesce(new.currency, 'usd'));
-  new.amount_usd_cents := round(new.amount_cents * coalesce(r, 1));
+    where currency = lower(coalesce(new.currency, 'aud'));
+  new.amount_aud_cents := round(new.amount_cents * coalesce(r, 1));
   return new;
 end;
 $$;
@@ -604,9 +604,9 @@ CREATE TABLE "company_os"."affiliate_commissions" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "redemption_choice" "text",
     "chosen_at" timestamp with time zone,
-    "gross_usd_cents" bigint,
-    "net_usd_cents" bigint,
-    "commission_usd_cents" bigint,
+    "gross_aud_cents" bigint,
+    "net_aud_cents" bigint,
+    "commission_aud_cents" bigint,
     "fx_rate" numeric,
     CONSTRAINT "affiliate_commissions_redemption_choice_check" CHECK (("redemption_choice" = ANY (ARRAY['work_credit'::"text", 'cash'::"text"]))),
     CONSTRAINT "affiliate_commissions_source_event_check" CHECK (("source_event" = ANY (ARRAY['order_paid'::"text", 'invoice_paid'::"text", 'manual_adjustment'::"text"])))
@@ -928,12 +928,12 @@ CREATE TABLE "company_os"."bookings" (
     "end_date" "date",
     "party_size" integer,
     "amount_cents" bigint DEFAULT 0 NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text" NOT NULL,
     "metadata" "jsonb" DEFAULT '{}'::"jsonb" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "amount_usd_cents" bigint,
+    "amount_aud_cents" bigint,
     CONSTRAINT "bookings_kind_check" CHECK (("kind" = ANY (ARRAY['stay'::"text", 'car'::"text", 'private_session'::"text", 'other'::"text"]))),
     CONSTRAINT "bookings_status_check" CHECK (("status" = ANY (ARRAY['pending'::"text", 'confirmed'::"text", 'cancelled'::"text", 'completed'::"text", 'refunded'::"text"])))
 );
@@ -1472,7 +1472,7 @@ CREATE TABLE "company_os"."compensation_sensitive" (
     "team_member_id" "uuid" NOT NULL,
     "comp_type" "text" DEFAULT 'base_salary'::"text" NOT NULL,
     "amount_cents" bigint NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "pay_period" "text" DEFAULT 'annual'::"text" NOT NULL,
     "effective_from" "date" NOT NULL,
     "effective_to" "date",
@@ -1482,25 +1482,19 @@ CREATE TABLE "company_os"."compensation_sensitive" (
     "notes" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "salary_vnd" bigint,
-    "salary_usd_cents" bigint,
+    "salary_aud_cents" bigint,
     CONSTRAINT "compensation_sensitive_comp_type_check" CHECK (("comp_type" = ANY (ARRAY['base_salary'::"text", 'hourly'::"text", 'bonus'::"text", 'commission'::"text", 'equity'::"text", 'stipend'::"text", 'allowance'::"text", 'overtime'::"text", 'billable'::"text"]))),
     CONSTRAINT "compensation_sensitive_pay_period_check" CHECK (("pay_period" = ANY (ARRAY['annual'::"text", 'monthly'::"text", 'semi_monthly'::"text", 'biweekly'::"text", 'weekly'::"text", 'hourly'::"text", 'one_time'::"text"])))
 );
 
 
---
--- Name: COLUMN "compensation_sensitive"."salary_vnd"; Type: COMMENT; Schema: company_os; Owner: -
---
-
-COMMENT ON COLUMN "company_os"."compensation_sensitive"."salary_vnd" IS 'Monthly salary in whole VND (native). Paired with salary_usd_cents at a fixed 25,500 VND/USD. comp_type = salary. Dave/Mai only.';
 
 
 --
--- Name: COLUMN "compensation_sensitive"."salary_usd_cents"; Type: COMMENT; Schema: company_os; Owner: -
+-- Name: COLUMN "compensation_sensitive"."salary_aud_cents"; Type: COMMENT; Schema: company_os; Owner: -
 --
 
-COMMENT ON COLUMN "company_os"."compensation_sensitive"."salary_usd_cents" IS 'Monthly salary in USD cents, converted from salary_vnd at a fixed 25,500 VND/USD (not live fx). Dave/Mai only.';
+COMMENT ON COLUMN "company_os"."compensation_sensitive"."salary_aud_cents" IS 'Monthly salary in AUD cents. comp_type = base_salary. Dave/Mai only.';
 
 
 --
@@ -1515,7 +1509,7 @@ CREATE TABLE "company_os"."contractor_payments" (
     "total_regular_hours" numeric(8,2) DEFAULT 0 NOT NULL,
     "total_overtime_hours" numeric(8,2) DEFAULT 0 NOT NULL,
     "amount_cents" bigint DEFAULT 0 NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "summary" "text",
     "decided_by" "text",
     "decided_at" timestamp with time zone,
@@ -1893,7 +1887,7 @@ CREATE TABLE "company_os"."deals" (
     "person_id" "uuid",
     "company_id" "uuid",
     "amount_cents" bigint DEFAULT 0 NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "status" "text" DEFAULT 'open'::"text" NOT NULL,
     "probability" integer,
     "owner_id" "uuid",
@@ -1914,7 +1908,7 @@ CREATE TABLE "company_os"."deals" (
     "lost_reason" "text",
     "archived_at" timestamp with time zone,
     "archived_by" "text",
-    "amount_usd_cents" bigint,
+    "amount_aud_cents" bigint,
     "fx_rate" numeric,
     "fx_rate_fetched_at" timestamp with time zone,
     "proposal_url" "text",
@@ -2069,8 +2063,7 @@ CREATE TABLE "company_os"."equipment" (
     "vendor_id" "uuid",
     "vendor_name_raw" "text",
     "invoice_ref" "text",
-    "cost_vnd" numeric(14,2),
-    "cost_usd" numeric(12,2),
+    "cost_aud" numeric(12,2),
     "status" "text" DEFAULT 'in_stock'::"text" NOT NULL,
     "condition" "text",
     "current_holder_id" "uuid",
@@ -2194,10 +2187,10 @@ CREATE TABLE "company_os"."event_pnl_lines" (
     "staff_days" numeric(6,2),
     "estimated_cents" bigint,
     "estimated_currency" "text",
-    "estimated_usd_cents" bigint,
+    "estimated_aud_cents" bigint,
     "actual_cents" bigint,
     "actual_currency" "text",
-    "actual_usd_cents" bigint,
+    "actual_aud_cents" bigint,
     "payment_status" "text" DEFAULT 'unpaid'::"text" NOT NULL,
     "note" "text",
     "sort_order" integer DEFAULT 0 NOT NULL,
@@ -2213,7 +2206,7 @@ CREATE TABLE "company_os"."event_pnl_lines" (
 -- Name: TABLE "event_pnl_lines"; Type: COMMENT; Schema: company_os; Owner: -
 --
 
-COMMENT ON TABLE "company_os"."event_pnl_lines" IS 'Per-retreat P&L line items (revenue + expense) behind the event P&L tab. Native amount is truth; *_usd_cents is derived via fx_rates. Staff lines use a flat $150/day so real wages never leak to ops. Service-role only; hidden from the NL->SQL assistant.';
+COMMENT ON TABLE "company_os"."event_pnl_lines" IS 'Per-retreat P&L line items (revenue + expense) behind the event P&L tab. Native amount is truth; *_aud_cents is derived via fx_rates. Staff lines use a flat $150/day so real wages never leak to ops. Service-role only; hidden from the NL->SQL assistant.';
 
 
 --
@@ -2302,7 +2295,7 @@ CREATE TABLE "company_os"."expenses" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "vendor_id" "uuid",
     "amount_cents" bigint NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "category" "text",
     "incurred_on" "date",
     "description" "text",
@@ -2324,10 +2317,13 @@ CREATE TABLE "company_os"."expenses" (
 
 CREATE TABLE "company_os"."fx_rates" (
     "currency" "text" NOT NULL,
-    "rate_to_usd" numeric NOT NULL,
+    "rate_to_aud" numeric NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    CONSTRAINT "fx_rates_rate_to_usd_check" CHECK (("rate_to_usd" > (0)::numeric))
+    CONSTRAINT "fx_rates_rate_to_aud_check" CHECK (("rate_to_aud" > (0)::numeric))
 );
+
+
+COMMENT ON COLUMN "company_os"."fx_rates"."rate_to_aud" IS 'Multiply a native minor-unit amount by this to get AUD cents. aud = 1. AUD is the base reporting currency.';
 
 
 --
@@ -2582,7 +2578,7 @@ CREATE TABLE "company_os"."invoices" (
     "doc_number" "text",
     "txn_date" "date" NOT NULL,
     "due_date" "date",
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "amount_cents" bigint NOT NULL,
     "balance_cents" bigint DEFAULT 0 NOT NULL,
     "status" "text" NOT NULL,
@@ -2634,7 +2630,7 @@ CREATE TABLE "company_os"."job_requisitions" (
     "remote_policy" "text",
     "salary_min_cents" bigint,
     "salary_max_cents" bigint,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "hiring_manager_id" "uuid",
     "recruiter_id" "uuid",
     "status" "text" DEFAULT 'draft'::"text" NOT NULL,
@@ -2756,7 +2752,7 @@ CREATE TABLE "company_os"."legal_entities" (
     "legal_name" "text",
     "country" "text",
     "entity_type" "text",
-    "base_currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "base_currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "tax_id" "text",
     "active" boolean DEFAULT true NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
@@ -3017,7 +3013,7 @@ CREATE TABLE "company_os"."offers" (
     "application_id" "uuid" NOT NULL,
     "position_id" "uuid",
     "amount_cents" bigint NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "pay_period" "text" DEFAULT 'annual'::"text" NOT NULL,
     "bonus_cents" bigint,
     "equity_note" "text",
@@ -3101,7 +3097,7 @@ CREATE TABLE "company_os"."orders" (
     "stripe_customer_id" "text",
     "amount_cents" bigint DEFAULT 0 NOT NULL,
     "tax_cents" bigint DEFAULT 0 NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text" NOT NULL,
     "seat_hold_expires_at" timestamp with time zone,
     "refunded_cents" bigint DEFAULT 0 NOT NULL,
@@ -3109,10 +3105,9 @@ CREATE TABLE "company_os"."orders" (
     "metadata" "jsonb" DEFAULT '{}'::"jsonb" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "amount_usd_cents" bigint,
+    "amount_aud_cents" bigint,
     "stripe_fee_cents" bigint,
     "fx_rate" numeric,
-    "vnd_amount" bigint,
     "shopify_order_id" "text",
     "order_number" "text",
     "fulfillment_status" "text",
@@ -3196,12 +3191,12 @@ CREATE VIEW "company_os"."people_with_deals" AS
         END AS "lifecycle_stage",
     "l"."status" AS "lead_status",
     "l"."disqualified_reason",
-    COALESCE("d"."deal_value_usd_cents", (0)::numeric) AS "deal_value_usd_cents",
+    COALESCE("d"."deal_value_aud_cents", (0)::numeric) AS "deal_value_aud_cents",
     COALESCE("d"."deal_count", (0)::bigint) AS "deal_count"
    FROM (("company_os"."people" "p"
      LEFT JOIN "company_os"."lead" "l" ON (("l"."person_id" = "p"."id")))
      LEFT JOIN ( SELECT "deals"."person_id",
-            "sum"("deals"."amount_usd_cents") FILTER (WHERE ("deals"."status" = ANY (ARRAY['open'::"text", 'won'::"text"]))) AS "deal_value_usd_cents",
+            "sum"("deals"."amount_aud_cents") FILTER (WHERE ("deals"."status" = ANY (ARRAY['open'::"text", 'won'::"text"]))) AS "deal_value_aud_cents",
             "count"(*) AS "deal_count",
             "count"(*) FILTER (WHERE ("deals"."status" = 'won'::"text")) AS "won_count"
            FROM "company_os"."deals"
@@ -3396,12 +3391,12 @@ CREATE TABLE "company_os"."products" (
     "stripe_product_id" "text",
     "stripe_price_id" "text",
     "amount_cents" integer DEFAULT 0 NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "active" boolean DEFAULT true NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "service_line_id" "uuid",
-    "amount_usd_cents" bigint,
+    "amount_aud_cents" bigint,
     "event_id" "uuid",
     "sort_order" integer DEFAULT 0 NOT NULL,
     "shopify_product_id" "text",
@@ -3469,12 +3464,12 @@ CREATE VIEW "company_os"."public_retreats" AS
     "max"("pr"."date_end") AS "date_end",
     "count"(DISTINCT "pr"."id") AS "tiers",
     "bool_or"("pr"."active") AS "active",
-    "min"("pr"."amount_usd_cents") AS "from_usd_cents",
-    ( SELECT COALESCE("sum"("o"."amount_usd_cents"), (0)::numeric) AS "coalesce"
+    "min"("pr"."amount_aud_cents") AS "from_aud_cents",
+    ( SELECT COALESCE("sum"("o"."amount_aud_cents"), (0)::numeric) AS "coalesce"
            FROM (("company_os"."event_registrations" "r"
              JOIN "company_os"."products" "p2" ON (("p2"."id" = "r"."product_id")))
              LEFT JOIN "company_os"."orders" "o" ON (("o"."id" = "r"."order_id")))
-          WHERE (("p2"."cohort_slug" = "pr"."cohort_slug") AND ("r"."status" = 'confirmed'::"text"))) AS "collected_usd_cents",
+          WHERE (("p2"."cohort_slug" = "pr"."cohort_slug") AND ("r"."status" = 'confirmed'::"text"))) AS "collected_aud_cents",
     ( SELECT "count"(*) AS "count"
            FROM ("company_os"."event_registrations" "r"
              JOIN "company_os"."products" "p2" ON (("p2"."id" = "r"."product_id")))
@@ -3918,7 +3913,7 @@ CREATE TABLE "company_os"."token_purchases" (
     "packs" integer NOT NULL,
     "tokens" integer NOT NULL,
     "amount_cents" bigint NOT NULL,
-    "currency" "text" DEFAULT 'usd'::"text" NOT NULL,
+    "currency" "text" DEFAULT 'aud'::"text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text" NOT NULL,
     "stripe_session_id" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
@@ -7641,24 +7636,24 @@ CREATE TRIGGER "set_affiliates_updated_at" BEFORE UPDATE ON "company_os"."affili
 
 
 --
--- Name: bookings set_amount_usd_cents_bookings; Type: TRIGGER; Schema: company_os; Owner: -
+-- Name: bookings set_amount_aud_cents_bookings; Type: TRIGGER; Schema: company_os; Owner: -
 --
 
-CREATE TRIGGER "set_amount_usd_cents_bookings" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."bookings" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_usd_cents"();
-
-
---
--- Name: orders set_amount_usd_cents_orders; Type: TRIGGER; Schema: company_os; Owner: -
---
-
-CREATE TRIGGER "set_amount_usd_cents_orders" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."orders" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_usd_cents"();
+CREATE TRIGGER "set_amount_aud_cents_bookings" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."bookings" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_aud_cents"();
 
 
 --
--- Name: products set_amount_usd_cents_products; Type: TRIGGER; Schema: company_os; Owner: -
+-- Name: orders set_amount_aud_cents_orders; Type: TRIGGER; Schema: company_os; Owner: -
 --
 
-CREATE TRIGGER "set_amount_usd_cents_products" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."products" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_usd_cents"();
+CREATE TRIGGER "set_amount_aud_cents_orders" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."orders" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_aud_cents"();
+
+
+--
+-- Name: products set_amount_aud_cents_products; Type: TRIGGER; Schema: company_os; Owner: -
+--
+
+CREATE TRIGGER "set_amount_aud_cents_products" BEFORE INSERT OR UPDATE OF "amount_cents", "currency" ON "company_os"."products" FOR EACH ROW EXECUTE FUNCTION "company_os"."set_amount_aud_cents"();
 
 
 --
@@ -13361,10 +13356,10 @@ GRANT ALL ON FUNCTION "company_os"."return_equipment"("p_equipment_id" "uuid", "
 
 
 --
--- Name: FUNCTION "set_amount_usd_cents"(); Type: ACL; Schema: company_os; Owner: -
+-- Name: FUNCTION "set_amount_aud_cents"(); Type: ACL; Schema: company_os; Owner: -
 --
 
-GRANT ALL ON FUNCTION "company_os"."set_amount_usd_cents"() TO "service_role";
+GRANT ALL ON FUNCTION "company_os"."set_amount_aud_cents"() TO "service_role";
 
 
 --

@@ -166,7 +166,7 @@ export async function recordPrivateSessionBooking(input: {
         payment_method: "stripe",
         stripe_session_id: input.stripeSessionId,
         amount_cents: input.amountCents,
-        currency: "usd",
+        currency: "aud",
         status: "pending",
         metadata: { event: "saigon-private", inquiry_id: input.inquiryId },
       })
@@ -183,7 +183,7 @@ export async function recordPrivateSessionBooking(input: {
       end_date: input.endDate,
       party_size: input.teamSize,
       amount_cents: input.amountCents,
-      currency: "usd",
+      currency: "aud",
       status: "pending",
       metadata: { idea: input.idea, inquiry_id: input.inquiryId, days: input.days },
     });

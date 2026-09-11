@@ -69,7 +69,7 @@ export function EventManage({ event }: { event: EventRow }) {
         <dt>Location</dt>
         <dd>{event.location || "—"}</dd>
         <dt>Price</dt>
-        <dd className="admin-cell-mono">{event.tiers.length === 0 ? "Free" : `From ${formatCents(event.fromUsdCents, "usd")}`}</dd>
+        <dd className="admin-cell-mono">{event.tiers.length === 0 ? "Free" : `From ${formatCents(event.fromAudCents, "aud")}`}</dd>
         <dt>Registered</dt>
         <dd>
           {event.registeredCount} seats
@@ -77,7 +77,7 @@ export function EventManage({ event }: { event: EventRow }) {
           {event.totalCount > event.registeredCount ? ` · ${event.totalCount} total rows` : ""}
         </dd>
         <dt>Collected</dt>
-        <dd className="admin-cell-mono">{formatCents(event.collectedUsdCents, "usd")}</dd>
+        <dd className="admin-cell-mono">{formatCents(event.collectedAudCents, "aud")}</dd>
         <dt>Slug</dt>
         <dd className="admin-cell-mono">{event.slug}</dd>
       </dl>

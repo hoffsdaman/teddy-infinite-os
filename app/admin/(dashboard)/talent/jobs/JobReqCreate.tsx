@@ -21,7 +21,7 @@ const REMOTE_OPTIONS = [
   ["remote", "Remote"],
 ] as const;
 
-const CURRENCIES = ["usd", "eur", "gbp", "aud", "sgd", "vnd"];
+const CURRENCIES = ["aud"];
 
 // "New req" button + drawer form. On success we land on the req's full page
 // (hiring board + posting editor) so the recruiter can paste the JD and
@@ -38,7 +38,7 @@ export function JobReqCreate() {
   const [location, setLocation] = useState("");
   const [salaryMin, setSalaryMin] = useState("");
   const [salaryMax, setSalaryMax] = useState("");
-  const [currency, setCurrency] = useState("usd");
+  const [currency, setCurrency] = useState("aud");
   const [description, setDescription] = useState("");
 
   async function submit() {
@@ -106,7 +106,7 @@ export function JobReqCreate() {
               className="admin-input"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. Ho Chi Minh City, Vietnam"
+              placeholder="e.g. Sydney, Australia"
             />
           </div>
           <div className="u-grid-2-fixed">

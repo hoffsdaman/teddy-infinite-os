@@ -12,7 +12,7 @@ import type { CoachingGoal } from "./data";
 // Where the notice goes when the member has no manager on file (or the manager
 // has no email). Never drop the notice: an unmanaged member's goals are exactly
 // the ones nobody would otherwise see.
-const FALLBACK_EMAIL = "dave@edge8.ai";
+const FALLBACK_EMAIL = "hello@teddybed.com.au";
 
 export type GoalAction = "added" | "updated" | "deleted";
 

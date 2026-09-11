@@ -39,7 +39,7 @@ type Row = {
   stage_id: string | null;
   position: number;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   probability: number | null;
   status: string | null;
@@ -92,7 +92,7 @@ export default async function DealsPage() {
   let query = companyOs
     .from("deals")
     .select(
-      "id, title, stage_id, position, amount_cents, amount_usd_cents, currency, probability, status, expected_close_date, source, person_id, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, archived_at, updated_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name)",
+      "id, title, stage_id, position, amount_cents, amount_aud_cents, currency, probability, status, expected_close_date, source, person_id, next_step, next_step_date, proposal_url, contract_url, handoff_status, lost_reason, archived_at, updated_at, referrer_id, referrer_company_id, people!person_id(full_name, email), companies!company_id(name), referrer:people!referrer_id(full_name, email), referrer_company:companies!referrer_company_id(name)",
     )
     .order("position", { ascending: true })
     .limit(500);
@@ -118,7 +118,7 @@ export default async function DealsPage() {
       referrerCompanyId: r.referrer_company_id,
       referrerCompanyName: one(r.referrer_company)?.name ?? null,
       amountCents: r.amount_cents,
-      amountUsdCents: r.amount_usd_cents,
+      amountAudCents: r.amount_aud_cents,
       currency: r.currency,
       probability: r.probability,
       status: r.status,
@@ -138,9 +138,9 @@ export default async function DealsPage() {
   // KPIs and the board ignore archived deals; the list can opt in to show them.
   const activeCards = cards.filter((c) => !c.archivedAt);
   const openCards = activeCards.filter((c) => c.status === "open");
-  const openPipeline = openCards.reduce((s, c) => s + (c.amountUsdCents ?? 0), 0);
+  const openPipeline = openCards.reduce((s, c) => s + (c.amountAudCents ?? 0), 0);
   const weighted = openCards.reduce(
-    (s, c) => s + (c.amountUsdCents ?? 0) * ((c.probability ?? 0) / 100),
+    (s, c) => s + (c.amountAudCents ?? 0) * ((c.probability ?? 0) / 100),
     0,
   );
   const monthEnd = new Date();
@@ -148,7 +148,7 @@ export default async function DealsPage() {
   monthEnd.setHours(0, 0, 0, 0);
   const closingThisMonth = openCards
     .filter((c) => c.expectedClose && new Date(c.expectedClose) < monthEnd)
-    .reduce((s, c) => s + (c.amountUsdCents ?? 0), 0);
+    .reduce((s, c) => s + (c.amountAudCents ?? 0), 0);
   const noNextStep = openCards.filter((c) => !c.nextStepDate).length;
   const pendingHandoffs = activeCards.filter((c) => c.columnId === HANDOFF_COLUMN_ID).length;
 

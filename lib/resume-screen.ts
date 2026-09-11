@@ -50,7 +50,7 @@ const SCREEN_SCHEMA = {
     salary_expectation: {
       type: "string",
       description:
-        "Salary expectation exactly as stated anywhere in the application (e.g. '32M VND'). 'Not stated' if absent. Never guess.",
+        "Salary expectation exactly as stated anywhere in the application (e.g. 'A$95k'). 'Not stated' if absent. Never guess.",
     },
     notice_period: {
       type: "string",

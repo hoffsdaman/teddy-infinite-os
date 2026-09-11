@@ -37,7 +37,7 @@ export type ContactRow = {
   is_team_member: boolean | null;
   archived_at: string | null;
   created_at: string;
-  deal_value_usd_cents: number | null;
+  deal_value_aud_cents: number | null;
   deal_count: number | null;
 };
 
@@ -215,9 +215,9 @@ function ContactShelfBody({ row }: { row: ContactRow }) {
                 </div>
                 <div className="admin-list-aside">
                   <Badge tone={statusTone(d.status ?? "")}>{humanize(d.status ?? "") || "Open"}</Badge>
-                  {(d.amount_usd_cents ?? d.amount_cents) != null && (
+                  {(d.amount_aud_cents ?? d.amount_cents) != null && (
                     <span className="admin-cell-mono">
-                      {formatCents(d.amount_usd_cents ?? d.amount_cents, d.amount_usd_cents != null ? "usd" : d.currency ?? "usd")}
+                      {formatCents(d.amount_aud_cents ?? d.amount_cents, d.amount_aud_cents != null ? "aud" : d.currency ?? "aud")}
                     </span>
                   )}
                 </div>

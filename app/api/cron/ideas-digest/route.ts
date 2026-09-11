@@ -10,12 +10,12 @@ export const dynamic = "force-dynamic";
 // force-dynamic; opt the whole handler out so each run sees fresh rows.
 export const fetchCache = "force-no-store";
 
-// Vercel cron (see vercel.json): daily 01:00 UTC (08:00 Asia/Ho_Chi_Minh).
+// Vercel cron (see vercel.json): daily 01:00 UTC (08:00 Australia/Sydney).
 // Emails the founder and pings Lark ops with everything the team submitted to
 // the innovation backlog in the last 24h — build ideas and learnings. Sends
 // nothing when the window is empty. A rolling 24h window matched to a
 // once-daily run needs no "already notified" state to track.
-const FOUNDER_EMAIL = "dave@edge8.ai";
+const FOUNDER_EMAIL = "hello@teddybed.com.au";
 const WINDOW_HOURS = 24;
 const BACKLOG_URL = "https://teddy-infinite-os.vercel.app/admin/innovation/ideas";
 

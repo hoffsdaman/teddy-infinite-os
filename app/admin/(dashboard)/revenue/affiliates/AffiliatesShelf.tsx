@@ -109,7 +109,7 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
     <div className="admin-list-row">
       <div className="admin-list-main">
         <div className="admin-list-title">
-          {formatCents(c.grossCents, "usd")} <span className="admin-cell-muted">gross</span>
+          {formatCents(c.grossCents, "aud")} <span className="admin-cell-muted">gross</span>
         </div>
         <div className="admin-list-sub">{source}</div>
       </div>
@@ -118,7 +118,7 @@ function CommissionRow({ c, onChanged }: { c: AffiliateCommission; onChanged: ()
           <>
             <Badge tone={c.paidOut ? "ok" : "neutral"}>
               {c.redemptionChoice === "work_credit" ? "Work credit 20%" : "Cash 10%"}
-              {c.commissionCents != null ? ` · ${formatCents(c.commissionCents, "usd")}` : ""}
+              {c.commissionCents != null ? ` · ${formatCents(c.commissionCents, "aud")}` : ""}
             </Badge>
             {c.paidOut ? (
               <span className="admin-cell-muted u-sm">Paid out</span>
@@ -243,9 +243,9 @@ function AffiliateShelfBody({ row }: { row: AffiliateGroup }) {
         <div className="admin-shelf-heading">Commission</div>
         <dl className="admin-kv">
           <dt>Accrued gross</dt>
-          <dd className="admin-cell-mono">{formatCents(data?.accruedGrossCents ?? row.accruedGrossCents, "usd")}</dd>
+          <dd className="admin-cell-mono">{formatCents(data?.accruedGrossCents ?? row.accruedGrossCents, "aud")}</dd>
           <dt>Unpaid (redeemed)</dt>
-          <dd className="admin-cell-mono">{formatCents(data?.unpaidCents ?? row.unpaidCents, "usd")}</dd>
+          <dd className="admin-cell-mono">{formatCents(data?.unpaidCents ?? row.unpaidCents, "aud")}</dd>
           {(data?.pendingCount ?? row.pendingCount) > 0 && (
             <>
               <dt>Pending choice</dt>

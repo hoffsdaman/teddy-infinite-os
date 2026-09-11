@@ -436,7 +436,7 @@ export function AdminChatWidget({ canWrite = false }: { canWrite?: boolean }) {
                     <div className="admin-chat-empty">
                       <p>Ask anything about the Company OS data:</p>
                       <ul>
-                        <li>How many open deals do we have, and what is their total USD value?</li>
+                        <li>How many open deals do we have, and what is their total AUD value?</li>
                         <li>Which job requisitions are open and how many applicants each?</li>
                         <li>Who is on vacation next week?</li>
                         <li>Top 5 unpaid invoices by balance.</li>

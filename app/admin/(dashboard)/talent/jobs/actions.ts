@@ -68,7 +68,7 @@ export async function createJobReq(input: NewJobReq): Promise<{ ok: true; id: st
       remote_policy: input.remote_policy || null,
       salary_min_cents: input.salary_min == null ? null : Math.round(input.salary_min * 100),
       salary_max_cents: input.salary_max == null ? null : Math.round(input.salary_max * 100),
-      currency: input.currency?.trim().toLowerCase() || "usd",
+      currency: input.currency?.trim().toLowerCase() || "aud",
       description: input.description?.trim() || null,
       status: "open",
       opened_at: new Date().toISOString(),
