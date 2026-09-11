@@ -2,13 +2,14 @@ import './careers.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Careers at TeddyBed OS | Join the AI Frontier',
+  title: 'Careers at TeddyBed',
   description:
-    'Help founders lead AI. TeddyBed OS is looking for strategists, builders, and thinkers who want to work at the frontier of AI adoption in business.',
+    "Join the team behind Australia's premium kids bed and mattress brand. Open roles across support, operations and marketing.",
   openGraph: {
-    title: 'Careers at TeddyBed OS | Join the AI Frontier',
-    description:
-      'Help founders lead AI. Work at the frontier of AI adoption in business.',
+    title: 'Careers at TeddyBed',
+    description: "Join the team behind Australia's premium kids bed and mattress brand.",
+    url: '/careers/',
+    type: 'website',
   },
 }
 

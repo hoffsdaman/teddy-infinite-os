@@ -505,8 +505,8 @@ a.admin-office-stat:hover { border-color: var(--admin-accent); }
   color: inherit;
 }
 a.admin-pill:hover { border-color: var(--admin-accent); }
-.admin-pill.is-active { border-color: var(--admin-accent); background: var(--admin-accent); color: #fff; }
-.admin-pill.is-active .admin-pill-label, .admin-pill.is-active .admin-pill-val { color: #fff; }
+.admin-pill.is-active { border-color: var(--admin-accent); background: var(--admin-accent); color: var(--color-bg-primary); }
+.admin-pill.is-active .admin-pill-label, .admin-pill.is-active .admin-pill-val { color: var(--color-bg-primary); }
 a.admin-pill:hover .admin-pill-val { color: var(--admin-accent); }
 .admin-pill-label { font-size: 13px; color: var(--admin-muted); }
 .admin-pill-val { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--admin-ink); font-variant-numeric: tabular-nums; }
