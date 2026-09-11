@@ -1684,7 +1684,7 @@ CREATE TABLE "company_os"."people" (
     "github_login" "extensions"."citext",
     "shopify_customer_id" "text",
     CONSTRAINT "people_marketing_consent_check" CHECK (("marketing_consent" = ANY (ARRAY['subscribed'::"text", 'unsubscribed'::"text", 'never_asked'::"text"]))),
-    CONSTRAINT "people_persona_check" CHECK ((("persona" IS NULL) OR ("persona" = ANY (ARRAY['vendor'::"text", 'prospect'::"text", 'client'::"text", 'job_seeker'::"text", 'employee'::"text", 'student'::"text", 'customer'::"text"]))))
+    CONSTRAINT "people_persona_check" CHECK ((("persona" IS NULL) OR ("persona" = ANY (ARRAY['vendor'::"text", 'prospect'::"text", 'client'::"text", 'job_seeker'::"text", 'employee'::"text", 'student'::"text", 'customer'::"text", 'subscriber'::"text"]))))
 );
 
 
@@ -3185,15 +3185,17 @@ CREATE VIEW "company_os"."people_with_deals" AS
     "p"."archived_at",
     "p"."archived_by",
         CASE
-            WHEN (COALESCE("d"."won_count", (0)::bigint) > 0) THEN 'customer'::"text"
+            WHEN ((COALESCE("o"."order_count", (0)::bigint) > 0) OR (COALESCE("d"."won_count", (0)::bigint) > 0)) THEN 'customer'::"text"
             WHEN ("l"."person_id" IS NOT NULL) THEN 'lead'::"text"
             ELSE 'none'::"text"
         END AS "lifecycle_stage",
     "l"."status" AS "lead_status",
     "l"."disqualified_reason",
     COALESCE("d"."deal_value_aud_cents", (0)::numeric) AS "deal_value_aud_cents",
-    COALESCE("d"."deal_count", (0)::bigint) AS "deal_count"
-   FROM (("company_os"."people" "p"
+    COALESCE("d"."deal_count", (0)::bigint) AS "deal_count",
+    COALESCE("o"."order_total_aud_cents", (0)::numeric) AS "order_total_aud_cents",
+    COALESCE("o"."order_count", (0)::bigint) AS "order_count"
+   FROM ((("company_os"."people" "p"
      LEFT JOIN "company_os"."lead" "l" ON (("l"."person_id" = "p"."id")))
      LEFT JOIN ( SELECT "deals"."person_id",
             "sum"("deals"."amount_aud_cents") FILTER (WHERE ("deals"."status" = ANY (ARRAY['open'::"text", 'won'::"text"]))) AS "deal_value_aud_cents",
@@ -3201,7 +3203,13 @@ CREATE VIEW "company_os"."people_with_deals" AS
             "count"(*) FILTER (WHERE ("deals"."status" = 'won'::"text")) AS "won_count"
            FROM "company_os"."deals"
           WHERE (("deals"."person_id" IS NOT NULL) AND ("deals"."archived_at" IS NULL))
-          GROUP BY "deals"."person_id") "d" ON (("d"."person_id" = "p"."id")));
+          GROUP BY "deals"."person_id") "d" ON (("d"."person_id" = "p"."id")))
+     LEFT JOIN ( SELECT "orders"."person_id",
+            "sum"((COALESCE("orders"."amount_aud_cents", (0)::bigint) - COALESCE("orders"."refunded_cents", (0)::bigint))) FILTER (WHERE ("orders"."status" = ANY (ARRAY['paid'::"text", 'partial_refund'::"text"]))) AS "order_total_aud_cents",
+            "count"(*) FILTER (WHERE ("orders"."status" = ANY (ARRAY['paid'::"text", 'partial_refund'::"text"]))) AS "order_count"
+           FROM "company_os"."orders"
+          WHERE ("orders"."person_id" IS NOT NULL)
+          GROUP BY "orders"."person_id") "o" ON (("o"."person_id" = "p"."id")));
 
 
 --

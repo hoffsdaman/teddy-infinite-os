@@ -20,23 +20,20 @@ export const metadata = {
 type Person = ContactRow;
 
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "deal_value_aud_cents", "created_at"]);
+const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "order_total_aud_cents", "created_at"]);
 
 // Sentinel for "persona is null" — distinct from "" (no filter applied).
 const UNSET = "__unset__";
 
 const PERSONA_OPTIONS = [
-  { value: "job_seeker", label: "Job seeker" },
-  { value: "prospect", label: "Prospect" },
-  { value: "client", label: "Client" },
   { value: "customer", label: "Customer" },
+  { value: "subscriber", label: "Subscriber" },
   { value: "employee", label: "Employee" },
   { value: UNSET, label: "Unset" },
 ];
-const STAGE_OPTIONS = [
-  { value: "lead", label: "Lead" },
-  { value: "customer", label: "Customer" },
-  { value: "none", label: "None" },
+const ORDERS_OPTIONS = [
+  { value: "yes", label: "Has ordered" },
+  { value: "no", label: "Never ordered" },
 ];
 const TEAM_OPTIONS = [
   { value: "true", label: "Team only" },
@@ -47,23 +44,25 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
   const page = Math.max(1, Number(firstParam(searchParams.page) ?? "1") || 1);
   const q = firstParam(searchParams.q) ?? "";
   const sortParam = firstParam(searchParams.sort);
-  const sort = sortParam && SORTABLE.has(sortParam) ? sortParam : "created_at";
-  const dir = firstParam(searchParams.dir) === "asc" ? "asc" : "desc";
+  // Alphabetical by default; only an explicit ?dir= flips it.
+  const sort = sortParam && SORTABLE.has(sortParam) ? sortParam : "full_name";
+  const dirParam = firstParam(searchParams.dir);
+  const dir = dirParam === "asc" || dirParam === "desc" ? dirParam : "asc";
   const showArchived = firstParam(searchParams.archived) === "1";
 
   const personaParam = firstParam(searchParams.persona);
-  const stageParam = firstParam(searchParams.stage);
+  const ordersParam = firstParam(searchParams.orders);
   const teamParam = firstParam(searchParams.team);
 
   const filters: Record<string, string | number | boolean | null> = {};
   if (personaParam) filters.persona = personaParam === UNSET ? null : personaParam;
-  if (stageParam) filters.lifecycle_stage = stageParam;
+  if (ordersParam === "yes" || ordersParam === "no") filters.lifecycle_stage = ordersParam === "yes" ? "customer" : "none";
   if (teamParam === "true" || teamParam === "false") filters.is_team_member = teamParam === "true";
 
   const [{ rows, total, pageSize, error }, summary] = await Promise.all([
     listEntity<Person>(
       "people_with_deals",
-      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count",
+      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count, order_total_aud_cents, order_count",
       {
         page,
         pageSize: PAGE_SIZE,
@@ -83,7 +82,8 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
       key: "full_name",
       header: "Name",
       sortable: true,
-      cell: (r) => <span className="admin-cell-strong">{r.full_name || "(no name)"}</span>,
+      // Shopify has no name for mailing-list signups; show the email, as Shopify does.
+      cell: (r) => <span className="admin-cell-strong">{r.full_name || r.email || "(no name)"}</span>,
     },
     { key: "email", header: "Email", sortable: true, cell: (r) => <span className="admin-cell-muted">{r.email}</span> },
     { key: "phone", header: "Phone", sortable: true, cell: (r) => r.phone || <span className="admin-cell-muted">—</span> },
@@ -95,11 +95,12 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
     },
     { key: "country", header: "Country", sortable: true, cell: (r) => r.country || <span className="admin-cell-muted">—</span> },
     {
-      key: "deal_value_aud_cents",
-      header: "Deal value",
+      key: "order_total_aud_cents",
+      header: "Order total",
       sortable: true,
       align: "right",
-      cell: (r) => (r.deal_count ? formatCents(r.deal_value_aud_cents) : <span className="admin-cell-muted">—</span>),
+      className: "admin-cell-mono",
+      cell: (r) => (r.order_count ? formatCents(r.order_total_aud_cents) : <span className="admin-cell-muted">—</span>),
     },
     { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
   ];
@@ -122,12 +123,12 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
               <span className="admin-pill-val">{summary.total.toLocaleString()}</span>
             </div>
             <div className="admin-pill">
-              <span className="admin-pill-label">Prospects</span>
-              <span className="admin-pill-val">{summary.prospects.toLocaleString()}</span>
+              <span className="admin-pill-label">Customers</span>
+              <span className="admin-pill-val">{summary.customers.toLocaleString()}</span>
             </div>
             <div className="admin-pill">
-              <span className="admin-pill-label">Clients</span>
-              <span className="admin-pill-val">{summary.clients.toLocaleString()}</span>
+              <span className="admin-pill-label">Subscribers</span>
+              <span className="admin-pill-val">{summary.subscribers.toLocaleString()}</span>
             </div>
           </div>
           <div className="admin-summary-grid">
@@ -187,7 +188,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
               searchParams={searchParams}
               filters={[
                 { key: "persona", label: "Persona", options: PERSONA_OPTIONS },
-                { key: "stage", label: "Stage", options: STAGE_OPTIONS },
+                { key: "orders", label: "Orders", options: ORDERS_OPTIONS },
                 { key: "team", label: "Team", options: TEAM_OPTIONS },
               ]}
             />
