@@ -3193,6 +3193,7 @@ CREATE VIEW "company_os"."people_with_deals" AS
     "p"."archived_at",
     "p"."archived_by",
     "p"."shopify_created_at",
+    COALESCE("p"."shopify_created_at", "p"."created_at") AS "added_at",
         CASE
             WHEN ((COALESCE("o"."order_count", (0)::bigint) > 0) OR (COALESCE("d"."won_count", (0)::bigint) > 0)) THEN 'customer'::"text"
             WHEN ("l"."person_id" IS NOT NULL) THEN 'lead'::"text"

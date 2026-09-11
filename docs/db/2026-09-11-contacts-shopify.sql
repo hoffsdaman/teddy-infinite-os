@@ -63,4 +63,7 @@ commit;
 -- nameless signups (a bot burst). An earlier version also flagged
 -- name+digits email addresses; that caught real subscribers and was
 -- removed the same day (migration `contacts_spam_bucket_burst_only`).
+-- added_at = coalesce(shopify_created_at, created_at): when the person
+-- actually joined, not when the sync imported them (migration
+-- `contacts_added_at`).
 -- See supabase/01-schema.sql for the full view definition.

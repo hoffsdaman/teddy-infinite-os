@@ -21,7 +21,7 @@ export const metadata = {
 type Person = ContactRow;
 
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "order_total_aud_cents", "created_at"]);
+const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "order_total_aud_cents", "added_at"]);
 
 // Sentinel for "persona is null" — distinct from "" (no filter applied).
 const UNSET = "__unset__";
@@ -68,7 +68,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
   const [{ rows, total, pageSize, error }, summary] = await Promise.all([
     listEntity<Person>(
       "people_with_deals",
-      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count, order_total_aud_cents, order_count, contact_bucket",
+      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count, order_total_aud_cents, order_count, contact_bucket, added_at",
       {
         page,
         pageSize: PAGE_SIZE,
@@ -108,7 +108,8 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
       className: "admin-cell-mono",
       cell: (r) => (r.order_count ? formatCents(r.order_total_aud_cents) : <span className="admin-cell-muted">—</span>),
     },
-    { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
+    // Shopify signup date for synced people; our own created_at otherwise.
+    { key: "added_at", header: "Added", sortable: true, cell: (r) => formatDate(r.added_at) },
   ];
 
   return (
