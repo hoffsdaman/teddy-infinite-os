@@ -5,14 +5,6 @@ import { companyOs } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/admin-auth";
 import { recordAudit } from "@/lib/admin/audit";
 import { archiveRecord, guardedDelete, restoreRecord, type Result } from "@/lib/admin/mutations";
-import { getPerson360, type Person360 } from "@/lib/admin/contacts";
-
-// Lazy loader for the contacts list shelf — related data (companies, deals) is
-// fetched on row open, never preloaded per row.
-export async function getPersonShelf(id: string): Promise<Person360 | null> {
-  await requireAdmin();
-  return getPerson360(id);
-}
 
 export async function updatePerson(
   id: string,

@@ -9,7 +9,7 @@ import { getContactsSummary } from "@/lib/admin/contacts-summary";
 import { formatDate, formatCents, humanize } from "@/lib/admin/format";
 import { firstParam, mergeQuery, type SearchParamsObj } from "@/lib/admin/url";
 import Link from "next/link";
-import { ContactsShelfProvider, ContactShelfRow, type ContactRow } from "./ContactsShelf";
+import { ContactLinkRow } from "./ContactLinkRow";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +18,25 @@ export const metadata = {
   description: "Every person in the Company Database, one searchable contact spine.",
 };
 
-type Person = ContactRow;
+type Person = {
+  id: string;
+  full_name: string | null;
+  email: string;
+  phone: string | null;
+  persona: string | null;
+  country: string | null;
+  source: string | null;
+  do_not_contact: boolean | null;
+  is_team_member: boolean | null;
+  archived_at: string | null;
+  created_at: string;
+  deal_value_aud_cents: number | null;
+  deal_count: number | null;
+  order_total_aud_cents: number | null;
+  order_count: number | null;
+  contact_bucket: string | null;
+  added_at: string;
+};
 
 const PAGE_SIZE = 25;
 const SORTABLE = new Set(["full_name", "email", "phone", "persona", "country", "order_total_aud_cents", "added_at"]);
@@ -186,32 +204,30 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
           {error}
         </div>
       )}
-      <ContactsShelfProvider>
-        <DataTable
-          columns={columns}
-          rows={rows}
-          total={total}
-          page={page}
-          pageSize={pageSize}
-          sort={sort}
-          dir={dir}
-          basePath="/admin/contacts"
-          searchParams={searchParams}
-          searchPlaceholder="Search name, email, or phone…"
-          emptyText="No contacts match."
-          filterBar={
-            <FilterBar
-              basePath="/admin/contacts"
-              searchParams={searchParams}
-              filters={[
-                { key: "persona", label: "Persona", options: PERSONA_OPTIONS },
-                { key: "team", label: "Team", options: TEAM_OPTIONS },
-              ]}
-            />
+    <DataTable
+        columns={columns}
+        rows={rows}
+        total={total}
+        page={page}
+        pageSize={pageSize}
+        sort={sort}
+        dir={dir}
+        basePath="/admin/contacts"
+        searchParams={searchParams}
+        searchPlaceholder="Search name, email, or phone…"
+        emptyText="No contacts match."
+        filterBar={
+          <FilterBar
+            basePath="/admin/contacts"
+            searchParams={searchParams}
+            filters={[
+              { key: "persona", label: "Persona", options: PERSONA_OPTIONS },
+              { key: "team", label: "Team", options: TEAM_OPTIONS },
+            ]}
+          />
           }
-          renderRow={(row, cells) => <ContactShelfRow row={row}>{cells}</ContactShelfRow>}
+          renderRow={(row, cells) => <ContactLinkRow id={row.id}>{cells}</ContactLinkRow>}
         />
-      </ContactsShelfProvider>
     </>
   );
 }
