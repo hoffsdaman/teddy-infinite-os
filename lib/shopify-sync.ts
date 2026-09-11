@@ -90,6 +90,7 @@ type CustomerNode = {
   lastName: string | null;
   phone: string | null;
   numberOfOrders: string | null;
+  createdAt: string;
   updatedAt: string;
   emailMarketingConsent: { marketingState: string | null; consentUpdatedAt: string | null } | null;
   defaultAddress: { city: string | null; provinceCode: string | null; countryCodeV2: string | null; phone: string | null } | null;
@@ -112,6 +113,7 @@ function personRow(c: CustomerNode) {
     marketing_consent_at: c.emailMarketingConsent?.consentUpdatedAt ?? null,
     marketing_consent_source: "shopify",
     source: "shopify",
+    shopify_created_at: c.createdAt,
     // Someone who has never ordered is a mailing-list signup, not a customer.
     persona: Number(c.numberOfOrders ?? 0) > 0 ? "customer" : "subscriber",
     updated_at: new Date().toISOString(),
@@ -127,7 +129,7 @@ async function syncCustomers(full: boolean): Promise<EntityResult> {
       (after) => ({
         query: `query($after: String) {
           customers(first: ${PAGE}, after: $after, sortKey: UPDATED_AT, query: "updated_at:>'${since}'") {
-            edges { node { id email firstName lastName phone numberOfOrders updatedAt
+            edges { node { id email firstName lastName phone numberOfOrders createdAt updatedAt
               emailMarketingConsent { marketingState consentUpdatedAt }
               defaultAddress { city provinceCode countryCodeV2 phone } } }
             pageInfo { hasNextPage endCursor } } }`,

@@ -1683,6 +1683,7 @@ CREATE TABLE "company_os"."people" (
     "marketing_consent_source" "text",
     "github_login" "extensions"."citext",
     "shopify_customer_id" "text",
+    "shopify_created_at" timestamp with time zone,
     CONSTRAINT "people_marketing_consent_check" CHECK (("marketing_consent" = ANY (ARRAY['subscribed'::"text", 'unsubscribed'::"text", 'never_asked'::"text"]))),
     CONSTRAINT "people_persona_check" CHECK ((("persona" IS NULL) OR ("persona" = ANY (ARRAY['vendor'::"text", 'prospect'::"text", 'client'::"text", 'job_seeker'::"text", 'employee'::"text", 'student'::"text", 'customer'::"text", 'subscriber'::"text"]))))
 );
@@ -3158,6 +3159,13 @@ COMMENT ON TABLE "company_os"."people_sensitive" IS 'Restricted legal/payroll PI
 --
 
 CREATE VIEW "company_os"."people_with_deals" AS
+ WITH "burst_days" AS (
+         SELECT (("people"."shopify_created_at" AT TIME ZONE 'Australia/Sydney'))::"date" AS "d"
+           FROM "company_os"."people"
+          WHERE (("people"."shopify_customer_id" IS NOT NULL) AND ("people"."full_name" IS NULL) AND ("people"."shopify_created_at" IS NOT NULL))
+          GROUP BY (("people"."shopify_created_at" AT TIME ZONE 'Australia/Sydney'))::"date"
+         HAVING ("count"(*) >= 100)
+        )
  SELECT "p"."id",
     "p"."email",
     "p"."full_name",
@@ -3184,6 +3192,7 @@ CREATE VIEW "company_os"."people_with_deals" AS
     "p"."metadata",
     "p"."archived_at",
     "p"."archived_by",
+    "p"."shopify_created_at",
         CASE
             WHEN ((COALESCE("o"."order_count", (0)::bigint) > 0) OR (COALESCE("d"."won_count", (0)::bigint) > 0)) THEN 'customer'::"text"
             WHEN ("l"."person_id" IS NOT NULL) THEN 'lead'::"text"
@@ -3194,7 +3203,12 @@ CREATE VIEW "company_os"."people_with_deals" AS
     COALESCE("d"."deal_value_aud_cents", (0)::numeric) AS "deal_value_aud_cents",
     COALESCE("d"."deal_count", (0)::bigint) AS "deal_count",
     COALESCE("o"."order_total_aud_cents", (0)::numeric) AS "order_total_aud_cents",
-    COALESCE("o"."order_count", (0)::bigint) AS "order_count"
+    COALESCE("o"."order_count", (0)::bigint) AS "order_count",
+        CASE
+            WHEN ((COALESCE("o"."order_count", (0)::bigint) > 0) OR ("p"."persona" = 'customer'::"text")) THEN 'customer'::"text"
+            WHEN (("p"."full_name" IS NULL) AND (("p"."email" ~* '^[a-z]+[._]?[a-z]+[._]?[0-9]{2,4}@'::"text") OR ((("p"."shopify_created_at" AT TIME ZONE 'Australia/Sydney'))::"date" IN ( SELECT "burst_days"."d" FROM "burst_days")))) THEN 'potential_spam'::"text"
+            ELSE 'subscriber'::"text"
+        END AS "contact_bucket"
    FROM ((("company_os"."people" "p"
      LEFT JOIN "company_os"."lead" "l" ON (("l"."person_id" = "p"."id")))
      LEFT JOIN ( SELECT "deals"."person_id",

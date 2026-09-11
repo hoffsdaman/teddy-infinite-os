@@ -7,7 +7,8 @@ import { FilterBar } from "@/components/admin/FilterBar";
 import { DonutChart } from "@/components/admin/charts/DonutChart";
 import { getContactsSummary } from "@/lib/admin/contacts-summary";
 import { formatDate, formatCents, humanize } from "@/lib/admin/format";
-import { firstParam, type SearchParamsObj } from "@/lib/admin/url";
+import { firstParam, mergeQuery, type SearchParamsObj } from "@/lib/admin/url";
+import Link from "next/link";
 import { ContactsShelfProvider, ContactShelfRow, type ContactRow } from "./ContactsShelf";
 
 export const dynamic = "force-dynamic";
@@ -31,10 +32,14 @@ const PERSONA_OPTIONS = [
   { value: "employee", label: "Employee" },
   { value: UNSET, label: "Unset" },
 ];
-const ORDERS_OPTIONS = [
-  { value: "yes", label: "Has ordered" },
-  { value: "no", label: "Never ordered" },
-];
+// The three sections of the list. Computed by the people_with_deals view:
+// customer = has ordered; potential_spam = nameless signup with a bot-pattern
+// email or from a 100+/day signup burst; subscriber = everyone else.
+const BUCKETS = [
+  { value: "customer", label: "Customers" },
+  { value: "subscriber", label: "Subscribers" },
+  { value: "potential_spam", label: "Potential spam" },
+] as const;
 const TEAM_OPTIONS = [
   { value: "true", label: "Team only" },
   { value: "false", label: "Non-team" },
@@ -51,18 +56,19 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
   const showArchived = firstParam(searchParams.archived) === "1";
 
   const personaParam = firstParam(searchParams.persona);
-  const ordersParam = firstParam(searchParams.orders);
+  const bucketParam = firstParam(searchParams.bucket);
+  const bucket = BUCKETS.some((b) => b.value === bucketParam) ? bucketParam : "";
   const teamParam = firstParam(searchParams.team);
 
   const filters: Record<string, string | number | boolean | null> = {};
   if (personaParam) filters.persona = personaParam === UNSET ? null : personaParam;
-  if (ordersParam === "yes" || ordersParam === "no") filters.lifecycle_stage = ordersParam === "yes" ? "customer" : "none";
+  if (bucket) filters.contact_bucket = bucket;
   if (teamParam === "true" || teamParam === "false") filters.is_team_member = teamParam === "true";
 
   const [{ rows, total, pageSize, error }, summary] = await Promise.all([
     listEntity<Person>(
       "people_with_deals",
-      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count, order_total_aud_cents, order_count",
+      "id, full_name, email, phone, persona, country, source, do_not_contact, is_team_member, archived_at, created_at, deal_value_aud_cents, deal_count, order_total_aud_cents, order_count, contact_bucket",
       {
         page,
         pageSize: PAGE_SIZE,
@@ -118,18 +124,28 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
       {summary && (
         <div className="admin-summary">
           <div className="admin-summary-pills">
-            <div className="admin-pill">
-              <span className="admin-pill-label">Contacts</span>
+            <Link
+              href={"/admin/contacts" + mergeQuery(searchParams, { bucket: null, page: 1 })}
+              className={`admin-pill${bucket ? "" : " is-active"}`}
+              aria-current={bucket ? undefined : "page"}
+            >
+              <span className="admin-pill-label">All</span>
               <span className="admin-pill-val">{summary.total.toLocaleString()}</span>
-            </div>
-            <div className="admin-pill">
-              <span className="admin-pill-label">Customers</span>
-              <span className="admin-pill-val">{summary.customers.toLocaleString()}</span>
-            </div>
-            <div className="admin-pill">
-              <span className="admin-pill-label">Subscribers</span>
-              <span className="admin-pill-val">{summary.subscribers.toLocaleString()}</span>
-            </div>
+            </Link>
+            {BUCKETS.map((b) => {
+              const n = b.value === "customer" ? summary.customers : b.value === "subscriber" ? summary.subscribers : summary.potentialSpam;
+              return (
+                <Link
+                  key={b.value}
+                  href={"/admin/contacts" + mergeQuery(searchParams, { bucket: b.value, page: 1 })}
+                  className={`admin-pill${bucket === b.value ? " is-active" : ""}`}
+                  aria-current={bucket === b.value ? "page" : undefined}
+                >
+                  <span className="admin-pill-label">{b.label}</span>
+                  <span className="admin-pill-val">{n.toLocaleString()}</span>
+                </Link>
+              );
+            })}
           </div>
           <div className="admin-summary-grid">
             <div className="admin-card admin-chart-card">
@@ -188,7 +204,6 @@ export default async function ContactsPage({ searchParams }: { searchParams: Sea
               searchParams={searchParams}
               filters={[
                 { key: "persona", label: "Persona", options: PERSONA_OPTIONS },
-                { key: "orders", label: "Orders", options: ORDERS_OPTIONS },
                 { key: "team", label: "Team", options: TEAM_OPTIONS },
               ]}
             />
