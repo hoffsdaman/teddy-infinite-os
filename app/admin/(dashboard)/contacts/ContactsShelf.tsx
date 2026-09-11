@@ -42,6 +42,7 @@ export type ContactRow = {
   order_total_aud_cents: number | null;
   order_count: number | null;
   contact_bucket: string | null;
+  added_at: string;
 };
 
 const ShelfContext = createContext<{ open: (row: ContactRow) => void } | null>(null);

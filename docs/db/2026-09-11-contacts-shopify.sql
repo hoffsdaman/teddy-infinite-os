@@ -59,6 +59,11 @@ commit;
 -- Applied via Supabase MCP migration `contacts_spam_bucket`.
 -- people.shopify_created_at (from Shopify customers.createdAt) and a
 -- contact_bucket column on the view: customer / subscriber / potential_spam.
--- potential_spam = no orders, no name, and either a bot-pattern email
--- (name+name+digits) or created on a day with 100+ nameless signups.
+-- potential_spam = no orders, no name, and created on a day with 100+
+-- nameless signups (a bot burst). An earlier version also flagged
+-- name+digits email addresses; that caught real subscribers and was
+-- removed the same day (migration `contacts_spam_bucket_burst_only`).
+-- added_at = coalesce(shopify_created_at, created_at): when the person
+-- actually joined, not when the sync imported them (migration
+-- `contacts_added_at`).
 -- See supabase/01-schema.sql for the full view definition.
