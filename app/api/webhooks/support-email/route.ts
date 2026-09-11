@@ -1,15 +1,7 @@
 import { NextResponse } from "next/server";
 import { recordRoutineRun } from "@/lib/audit/routine-runs";
-import { companyOs } from "@/lib/supabase";
 import { readSvixHeaders, verifySvixSignature } from "@/lib/svix";
-import {
-  ensureSupportBoard,
-  createSupportTicket,
-  findTicketByNo,
-  findOpenTicketByEmail,
-  appendEmailReply,
-  messageAlreadyProcessed,
-} from "@/lib/support";
+import { ingestInboundEmail } from "@/lib/support";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -64,16 +56,6 @@ function parseMessageId(data: Record<string, unknown>): string | null {
   );
 }
 
-async function personIdForEmail(email: string): Promise<string | null> {
-  const { data } = await companyOs
-    .from("people")
-    .select("id")
-    .eq("email", email.toLowerCase())
-    .is("archived_at", null)
-    .maybeSingle();
-  return (data as { id: string } | null)?.id ?? null;
-}
-
 async function handle(request: Request) {
   const secret = process.env.SUPPORT_EMAIL_WEBHOOK_SECRET;
   if (!secret) {
@@ -113,47 +95,14 @@ async function handle(request: Request) {
     return NextResponse.json({ received: true, ignored: "no message id" });
   }
 
-  const board = await ensureSupportBoard();
-
-  // Idempotency: a retry of the same message must be a no-op.
-  if (await messageAlreadyProcessed(board.id, messageId)) {
-    return NextResponse.json({ received: true, duplicate: true });
+  const res = await ingestInboundEmail({ email, name, subject, body, messageId });
+  if (!res.ok) {
+    console.error(`${LOG} ingest failed: ${res.error}`);
+    return NextResponse.json({ error: res.error }, { status: 500 });
   }
-
-  // 1) Explicit [TD-xxxx] token in the subject.
-  const token = subject.match(/\bTD-(\d+)\b/i);
-  let target = token ? await findTicketByNo(board.id, `TD-${token[1]}`) : null;
-
-  // 2) Otherwise, an open ticket from the same customer.
-  if (!target) {
-    const open = await findOpenTicketByEmail(board.id, email);
-    if (open) target = { id: open.id, personId: null };
-  }
-
-  if (target) {
-    const authorPersonId = target.personId ?? (await personIdForEmail(email));
-    const res = await appendEmailReply({ taskId: target.id, body, messageId, authorEmail: email, authorPersonId });
-    if (!res.ok) {
-      console.error(`${LOG} append reply failed: ${res.error}`);
-      return NextResponse.json({ error: res.error }, { status: 500 });
-    }
-    return NextResponse.json({ received: true, threaded: target.id });
-  }
-
-  // 3) New ticket.
-  const created = await createSupportTicket({
-    channel: "email",
-    customerEmail: email,
-    customerName: name,
-    subject,
-    message: body,
-    sourceMessageId: messageId,
-  });
-  if (!created.ok) {
-    console.error(`${LOG} ticket create failed: ${created.error}`);
-    return NextResponse.json({ error: created.error }, { status: 500 });
-  }
-  return NextResponse.json({ received: true, ticketNo: created.ticketNo });
+  if (res.outcome === "duplicate") return NextResponse.json({ received: true, duplicate: true });
+  if (res.outcome === "threaded") return NextResponse.json({ received: true, threaded: res.taskId });
+  return NextResponse.json({ received: true, ticketNo: res.ticketNo });
 }
 
 // Every inbound email is one run of the "Support Email Sync" routine on the

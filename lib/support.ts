@@ -460,3 +460,65 @@ export async function appendEmailReply(input: {
   }
   return { ok: true };
 }
+
+// ── Inbound email → ticket (shared by the Resend webhook and the Gmail poll) ──
+//
+// Threading rules, in order:
+//   • subject carries a [TD-1042] token          -> comment on that ticket
+//   • else an OPEN ticket from the same address  -> comment on that ticket
+//   • else                                        -> new ticket (channel "email")
+// Idempotent on messageId (provider id / Gmail id), so re-delivery is a no-op.
+export type InboundEmailInput = {
+  email: string;
+  name: string | null;
+  subject: string;
+  body: string;
+  messageId: string;
+};
+export type InboundEmailResult =
+  | { ok: true; outcome: "duplicate" | "threaded" | "created"; taskId?: string; ticketNo?: string }
+  | { ok: false; error: string };
+
+async function personIdForEmail(email: string): Promise<string | null> {
+  const { data } = await companyOs
+    .from("people")
+    .select("id")
+    .eq("email", email.toLowerCase())
+    .is("archived_at", null)
+    .maybeSingle();
+  return (data as { id: string } | null)?.id ?? null;
+}
+
+export async function ingestInboundEmail(input: InboundEmailInput): Promise<InboundEmailResult> {
+  const email = input.email.trim().toLowerCase();
+  const subject = input.subject.trim() || "(no subject)";
+  const body = input.body.trim() || "(empty message)";
+  const board = await ensureSupportBoard();
+
+  if (await messageAlreadyProcessed(board.id, input.messageId)) return { ok: true, outcome: "duplicate" };
+
+  const token = subject.match(/\bTD-(\d+)\b/i);
+  let target = token ? await findTicketByNo(board.id, `TD-${token[1]}`) : null;
+  if (!target) {
+    const open = await findOpenTicketByEmail(board.id, email);
+    if (open) target = { id: open.id, personId: null };
+  }
+
+  if (target) {
+    const authorPersonId = target.personId ?? (await personIdForEmail(email));
+    const res = await appendEmailReply({ taskId: target.id, body, messageId: input.messageId, authorEmail: email, authorPersonId });
+    if (!res.ok) return res;
+    return { ok: true, outcome: "threaded", taskId: target.id };
+  }
+
+  const created = await createSupportTicket({
+    channel: "email",
+    customerEmail: email,
+    customerName: input.name,
+    subject,
+    message: body,
+    sourceMessageId: input.messageId,
+  });
+  if (!created.ok) return created;
+  return { ok: true, outcome: "created", taskId: created.taskId, ticketNo: created.ticketNo };
+}
