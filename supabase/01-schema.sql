@@ -3206,7 +3206,7 @@ CREATE VIEW "company_os"."people_with_deals" AS
     COALESCE("o"."order_count", (0)::bigint) AS "order_count",
         CASE
             WHEN ((COALESCE("o"."order_count", (0)::bigint) > 0) OR ("p"."persona" = 'customer'::"text")) THEN 'customer'::"text"
-            WHEN (("p"."full_name" IS NULL) AND (("p"."email" ~* '^[a-z]+[._]?[a-z]+[._]?[0-9]{2,4}@'::"text") OR ((("p"."shopify_created_at" AT TIME ZONE 'Australia/Sydney'))::"date" IN ( SELECT "burst_days"."d" FROM "burst_days")))) THEN 'potential_spam'::"text"
+            WHEN (("p"."full_name" IS NULL) AND ((("p"."shopify_created_at" AT TIME ZONE 'Australia/Sydney'))::"date" IN ( SELECT "burst_days"."d" FROM "burst_days"))) THEN 'potential_spam'::"text"
             ELSE 'subscriber'::"text"
         END AS "contact_bucket"
    FROM ((("company_os"."people" "p"

@@ -33,8 +33,8 @@ const PERSONA_OPTIONS = [
   { value: UNSET, label: "Unset" },
 ];
 // The three sections of the list. Computed by the people_with_deals view:
-// customer = has ordered; potential_spam = nameless signup with a bot-pattern
-// email or from a 100+/day signup burst; subscriber = everyone else.
+// customer = has ordered; potential_spam = nameless signup created on a day
+// with 100+ nameless signups (a bot burst); subscriber = everyone else.
 const BUCKETS = [
   { value: "customer", label: "Customers" },
   { value: "subscriber", label: "Subscribers" },
