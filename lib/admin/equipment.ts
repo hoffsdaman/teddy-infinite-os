@@ -111,18 +111,18 @@ export async function equipmentSummary(): Promise<{
   total: number;
   inUse: number;
   inStock: number;
-  valueVnd: number;
+  valueAud: number;
 }> {
   const { data } = await companyOs
     .from("equipment")
-    .select("status, cost_vnd")
+    .select("status, cost_aud")
     .is("archived_at", null);
 
-  const rows = (data ?? []) as { status: string; cost_vnd: number | null }[];
+  const rows = (data ?? []) as { status: string; cost_aud: number | null }[];
   return {
     total: rows.length,
     inUse: rows.filter((r) => r.status === "in_use").length,
     inStock: rows.filter((r) => r.status === "in_stock").length,
-    valueVnd: rows.reduce((sum, r) => sum + Number(r.cost_vnd ?? 0), 0),
+    valueAud: rows.reduce((sum, r) => sum + Number(r.cost_aud ?? 0), 0),
   };
 }

@@ -44,11 +44,11 @@ as "active" unless the user asks about archived records.
   4 Contract Sent (awaiting payment, ~90% probability), 5 Won (is_won),
   6 Lost (is_lost). Join deals.stage_id -> pipeline_stages.id.
 - deals — id, title, pipeline_id, stage_id, person_id, company_id,
-  amount_cents + currency, amount_usd_cents + fx_rate (USD-normalized value),
+  amount_cents + currency, amount_aud_cents + fx_rate (AUD-normalized value),
   status (open|won|lost), probability, owner_id, service_line_id, source,
   expected_close_date, closed_at, lost_reason, next_step, next_step_date,
   handoff_status, proposal_url, contract_url, archived_at, created_at.
-  Prefer amount_usd_cents when comparing/aggregating deal value across currencies.
+  Prefer amount_aud_cents when comparing/aggregating deal value across currencies.
 - inquiries — inbound contact-form / partner messages: person_id, type, subject,
   message, source, source_site, status (new|read|...), deal_id, created_at.
 - service_lines — business units / offerings: slug, name, business_unit,
@@ -59,9 +59,9 @@ as "active" unless the user asks about archived records.
 
 ### Commerce & finance (all amounts in *_cents)
 - products — sellable items/events/programs: type, slug, title, amount_cents +
-  currency, amount_usd_cents, service_line_id, event_id, active, capacity, tier.
+  currency, amount_aud_cents, service_line_id, event_id, active, capacity, tier.
 - orders — purchases: person_id, product_id, payment_method, amount_cents,
-  amount_usd_cents, tax_cents, refunded_cents, currency, status, affiliate_id,
+  amount_aud_cents, tax_cents, refunded_cents, currency, status, affiliate_id,
   stripe_* ids, created_at.
 - subscriptions — recurring (currently empty).
 - invoices — QuickBooks-synced customer invoices: company_id, customer_name,
@@ -72,7 +72,7 @@ as "active" unless the user asks about archived records.
   incurred_on, description, paid (bool), source (e.g. qbo), lines (jsonb).
 - vendors — suppliers: name, type, status, price_range, primary_contact_*,
   rating, tax_id, archived_at. Referenced by expenses.vendor_id.
-- fx_rates — currency, rate_to_usd, updated_at (used to derive *_usd_cents).
+- fx_rates — currency, rate_to_aud, updated_at (used to derive *_aud_cents; aud = 1).
 
 ### Recruiting / ATS
 - job_requisitions — open roles: title, client_company_id -> companies.id,

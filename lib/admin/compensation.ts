@@ -1,22 +1,19 @@
 // Server-only data layer for confidential employee salaries
 // (company_os.compensation, comp_type = 'base_salary'). CONFIDENTIAL: callers
 // MUST gate on canViewSensitive() before invoking any of this — authorization
-// is the caller's job. Salary is stored in BOTH native VND (salary_vnd, whole
-// VND) and USD (salary_usd_cents), converted at a FIXED 25,500 VND/USD (not live
-// fx). History is append-only: a change closes the current row and inserts a new
+// is the caller's job. Salary is monthly AUD cents (salary_aud_cents). History is append-only: a change closes the current row and inserts a new
 // one; rows are never mutated in place, so the full wage history is preserved.
 
 import { companyOs } from "@/lib/supabase";
 import { COMP_TYPE_SALARY, type SalaryRow, type SalaryChangeInput } from "./compensation-shared";
 
-// Pure types + the fixed-rate conversion live in ./compensation-shared
+// Pure types live in ./compensation-shared
 // (client-safe) and are re-exported here so server callers keep one import.
 export * from "./compensation-shared";
 
 type Row = {
   id: string;
-  salary_vnd: number | string | null;
-  salary_usd_cents: number | string | null;
+  salary_aud_cents: number | string | null;
   effective_from: string | null;
   effective_to: string | null;
   is_current: boolean;
@@ -30,8 +27,7 @@ const num = (v: number | string | null): number | null =>
 function mapRow(r: Row): SalaryRow {
   return {
     id: r.id,
-    salaryVnd: num(r.salary_vnd),
-    salaryUsdCents: num(r.salary_usd_cents),
+    salaryAudCents: num(r.salary_aud_cents),
     effectiveFrom: r.effective_from,
     effectiveTo: r.effective_to,
     isCurrent: r.is_current,
@@ -41,7 +37,7 @@ function mapRow(r: Row): SalaryRow {
 }
 
 const SALARY_COLS =
-  "id, salary_vnd, salary_usd_cents, effective_from, effective_to, is_current, change_reason, created_at";
+  "id, salary_aud_cents, effective_from, effective_to, is_current, change_reason, created_at";
 
 export async function getCurrentSalary(teamMemberId: string): Promise<SalaryRow | null> {
   const { data, error } = await companyOs
@@ -99,12 +95,11 @@ export async function saveSalaryChange(
       team_member_id: teamMemberId,
       comp_type: COMP_TYPE_SALARY,
       pay_period: "monthly",
-      // Generic columns kept consistent (USD) so non-salary readers see a value.
-      amount_cents: input.salaryUsdCents,
-      currency: "usd",
-      // Dedicated dual-currency salary columns (the record of truth).
-      salary_vnd: input.salaryVnd,
-      salary_usd_cents: input.salaryUsdCents,
+      // Generic columns kept consistent (AUD) so non-salary readers see a value.
+      amount_cents: input.salaryAudCents,
+      currency: "aud",
+      // Dedicated salary column (the record of truth).
+      salary_aud_cents: input.salaryAudCents,
       effective_from: input.effectiveFrom,
       is_current: true,
       change_reason: input.changeReason ?? null,

@@ -71,14 +71,14 @@ async function flagManual(
       to: ACCOUNTING_EMAIL,
       subject: `Manual invoice needed: ${req.title}`,
       html: lines.map((l) => `<p>${l}</p>`).join("\n"),
-      replyTo: "dave@edge8.co",
+      replyTo: "hello@teddybed.com.au",
     });
   }
   await notifyOps(`⚠️ Client invoicing ${status === "failed" ? "failed" : "needs manual handling"}: "${req.title}" — ${reason}`);
   return { status, reason };
 }
 
-// Resolve the contractor's current client-billable rate (USD cents) via
+// Resolve the contractor's current client-billable rate (AUD cents) via
 // team_members → compensation.
 async function billableRateCents(personId: string): Promise<number | null> {
   const { data: tm } = await companyOs

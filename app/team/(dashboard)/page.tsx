@@ -33,7 +33,7 @@ const CORE_TEACHING_SLUG = "the-other-50-percent-of-leadership";
 // confirmed (for review/demo). Keyed on the stable person_id like the rest of
 // /team, never on email (see lib/team-auth's identity model).
 const START_HERE_PREVIEW_PERSON_IDS = new Set<string>([
-  "a8bf026f-8c20-49c5-8a55-6fc5c580af64", // Dave Hajdu (dave@edge8.ai)
+  "a8bf026f-8c20-49c5-8a55-6fc5c580af64", // Dave Hajdu (hello@teddybed.com.au)
 ]);
 
 export const dynamic = "force-dynamic";
@@ -139,13 +139,13 @@ export default async function TeamHome() {
   // rather than showing the wrong day to everyone at 6am.
   const now = new Date();
   const dateLine = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: "Australia/Sydney",
     weekday: "long",
     day: "numeric",
     month: "long",
   }).format(now);
   const hour = Number(
-    new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Ho_Chi_Minh", hour: "numeric", hour12: false }).format(now),
+    new Intl.DateTimeFormat("en-GB", { timeZone: "Australia/Sydney", hour: "numeric", hour12: false }).format(now),
   );
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const heroSub =
@@ -330,7 +330,7 @@ export default async function TeamHome() {
         <div className="u-grow u-min-0">
           <h2 className="admin-card-title u-mb-1">Get Certified</h2>
           <p className="admin-page-sub u-m-0">
-            Become a certified AI Officer on AIOlabz. Sign up with your <b>@edge8.ai</b> email and
+            Become a certified AI Officer on AIOlabz. Sign up with your <b>@teddybed.com.au</b> email and
             work through the challenge-based program.
           </p>
         </div>

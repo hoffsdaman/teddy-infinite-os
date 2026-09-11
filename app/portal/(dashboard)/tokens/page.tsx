@@ -47,7 +47,7 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
       <PageHead
         eyebrow="Client Portal"
         title="Human Tokens"
-        sub={`1 token = 1 hour of skilled work. A pack is ${PACK_TOKENS} tokens for ${formatCents(PACK_PRICE_CENTS, "usd")}.`}
+        sub={`1 token = 1 hour of skilled work. A pack is ${PACK_TOKENS} tokens for ${formatCents(PACK_PRICE_CENTS, "aud")}.`}
       />
 
       {justPaid && (
@@ -154,7 +154,7 @@ export default async function PortalTokensPage({ searchParams }: { searchParams:
                     {p.packs} {p.packs === 1 ? "pack" : "packs"} · {p.tokens} tokens
                   </div>
                   <div className="admin-list-sub">
-                    {formatCents(p.amountCents, "usd")} · {formatDate(p.paidAt ?? p.createdAt)}
+                    {formatCents(p.amountCents, "aud")} · {formatDate(p.paidAt ?? p.createdAt)}
                   </div>
                 </div>
                 <div className="admin-list-aside">

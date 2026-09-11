@@ -82,7 +82,7 @@ export default async function JobsPage() {
     remotePolicy: r.remote_policy,
     salaryMinCents: r.salary_min_cents,
     salaryMaxCents: r.salary_max_cents,
-    currency: r.currency ?? "usd",
+    currency: r.currency ?? "aud",
     openedAt: r.opened_at,
     closedAt: r.closed_at,
     description: r.description,

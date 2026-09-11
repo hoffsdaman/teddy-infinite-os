@@ -52,7 +52,7 @@ export const WRITE_TOOL: Anthropic.Tool = {
 export const EMAIL_TOOL: Anthropic.Tool = {
   name: "send_email",
   description:
-    "Send an email to one recipient from notifications@edge8.ai (replies go to " +
+    "Send an email to one recipient from hello@teddybed.com.au (replies go to " +
     "the admin). The full email is shown to the admin, who must approve it " +
     "before it sends — draft it in conversation first. Plain text only: blank " +
     "lines separate paragraphs. One recipient per call, no bulk sends; look " +

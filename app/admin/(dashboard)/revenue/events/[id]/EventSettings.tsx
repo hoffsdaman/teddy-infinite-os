@@ -539,7 +539,7 @@ function TiersSection({
     setError(null);
     const r = await addEventTier(eventId, {
       title,
-      amountUsd: Number(price) || 0,
+      amountAud: Number(price) || 0,
       capacity: capacity.trim() === "" ? null : Number(capacity),
       description: description || null,
     });
@@ -587,7 +587,7 @@ function TiersSection({
           </div>
           <div className="u-grid-2 u-gap-3">
             <div className="admin-field">
-              <label className="admin-label">Price (USD)</label>
+              <label className="admin-label">Price (AUD)</label>
               <input className="admin-input" type="number" min={0} step="1" value={price} onChange={(e) => setPrice(e.target.value)} />
               <div className="admin-hint">0 = free ticket</div>
             </div>

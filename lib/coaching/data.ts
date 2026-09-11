@@ -96,7 +96,7 @@ async function loadCommitmentCards(ids: string[]): Promise<Record<string, Commit
 // ---- date helpers (YYYY-MM-DD, Saigon-date semantics, onboarding-cycle's) ---
 
 export function saigonToday(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
 }
 
 function ms(iso: string): number {

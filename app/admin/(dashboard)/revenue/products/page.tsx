@@ -24,14 +24,14 @@ type Product = {
   location: string | null;
   date_start: string | null;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   active: boolean | null;
   created_at: string;
 };
 
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["title", "type", "tier", "location", "date_start", "amount_usd_cents", "active", "created_at"]);
+const SORTABLE = new Set(["title", "type", "tier", "location", "date_start", "amount_aud_cents", "active", "created_at"]);
 
 // Real distinct values in the table today (checked against the DB). Tier is omitted
 // deliberately: its values are dirty (mixed naming schemes), so it makes a poor filter.
@@ -58,7 +58,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
   const [{ rows, total, pageSize, error }, activeCount, upcomingRes] = await Promise.all([
     listEntity<Product>(
       "products",
-      "id, title, type, tier, location, date_start, amount_cents, amount_usd_cents, currency, active, created_at",
+      "id, title, type, tier, location, date_start, amount_cents, amount_aud_cents, currency, active, created_at",
       { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["title"], sort, dir, filters },
     ),
     countEntity("products", { active: true }),
@@ -77,7 +77,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
     { key: "tier", header: "Tier", sortable: true, cell: (r) => r.tier || <span className="admin-cell-muted">—</span> },
     { key: "location", header: "Location", sortable: true, cell: (r) => r.location || <span className="admin-cell-muted">—</span> },
     { key: "date_start", header: "Starts", sortable: true, cell: (r) => (r.date_start ? formatDate(r.date_start) : <span className="admin-cell-muted">—</span>) },
-    { key: "amount_usd_cents", header: "Price", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_usd_cents, "usd") },
+    { key: "amount_aud_cents", header: "Price", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_aud_cents, "aud") },
     { key: "active", header: "Active", sortable: true, cell: (r) => (r.active ? <Badge tone="ok">Active</Badge> : <Badge tone="neutral">Inactive</Badge>) },
     { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
   ];
@@ -125,8 +125,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
               <dt>Starts</dt>
               <dd>{r.date_start ? formatDate(r.date_start) : "—"}</dd>
               <dt>Price</dt>
-              <dd className="admin-cell-mono">{formatCents(r.amount_usd_cents, "usd")}</dd>
-              {(r.currency ?? "usd").toLowerCase() !== "usd" && (
+              <dd className="admin-cell-mono">{formatCents(r.amount_aud_cents, "aud")}</dd>
+              {(r.currency ?? "aud").toLowerCase() !== "aud" && (
                 <>
                   <dt>Native</dt>
                   <dd className="admin-cell-mono">{formatCents(r.amount_cents, r.currency ?? undefined)}</dd>

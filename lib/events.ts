@@ -101,7 +101,7 @@ export type EventTier = {
   tier: string | null;
   description: string | null;
   amount_cents: number;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string;
   capacity: number | null;
   sort_order: number;

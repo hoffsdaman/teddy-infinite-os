@@ -43,7 +43,7 @@ export type DealCard = {
   personName: string | null;
   companyName: string | null;
   amountCents: number | null;
-  amountUsdCents: number | null;
+  amountAudCents: number | null;
   currency: string | null;
   probability: number | null;
   status: string | null;
@@ -63,7 +63,7 @@ export type DealCard = {
   referrerCompanyName: string | null;
 };
 
-const CURRENCIES = ["usd", "eur", "gbp", "aud", "sgd", "vnd"];
+const CURRENCIES = ["aud"];
 
 const LOST_REASONS = [
   ["price", "Price"],
@@ -107,7 +107,7 @@ function dealSortValue(c: DealCard, key: string, stageLabelMap: Map<string, stri
     case "stage":
       return c.columnId === HANDOFF_COLUMN_ID ? "new from sdr" : (stageLabelMap.get(c.columnId) ?? "").toLowerCase();
     case "amount":
-      return c.amountUsdCents;
+      return c.amountAudCents;
     case "prob":
       return c.probability;
     case "nextstep":
@@ -455,7 +455,7 @@ export function DealsBoard({
 
       {pendingWon && (
         <div className="admin-alert u-row u-wrap u-mb-3">
-          <span>Final deal amount ({(cards.find((c) => c.id === pendingWon.cardId)?.currency ?? "usd").toUpperCase()})</span>
+          <span>Final deal amount ({(cards.find((c) => c.id === pendingWon.cardId)?.currency ?? "aud").toUpperCase()})</span>
           <input
             className="admin-input u-max-2"
             type="number"
@@ -496,7 +496,7 @@ export function DealsBoard({
               <div className="admin-kanban-card-sub">{c.companyName || c.personName || "—"}</div>
               <NextStepLine card={c} />
               <div className="admin-kanban-card-meta">
-                <Badge tone="info">{formatCents(c.amountUsdCents, "usd")}</Badge>
+                <Badge tone="info">{formatCents(c.amountAudCents, "aud")}</Badge>
                 {c.probability != null && <span className="admin-kanban-card-sub">{c.probability}%</span>}
                 {(() => {
                   const d = idleDays(c.updatedAt);
@@ -546,9 +546,9 @@ export function DealsBoard({
             </>
           )}
           columnFooter={(_col, colCards) => {
-            const total = colCards.reduce((s, c) => s + (c.amountUsdCents ?? 0), 0);
+            const total = colCards.reduce((s, c) => s + (c.amountAudCents ?? 0), 0);
             const weighted = colCards.reduce(
-              (s, c) => s + (c.amountUsdCents ?? 0) * ((c.probability ?? 0) / 100),
+              (s, c) => s + (c.amountAudCents ?? 0) * ((c.probability ?? 0) / 100),
               0,
             );
             return (
@@ -715,7 +715,7 @@ export function DealDetail({
     {
       title: card.title ?? "",
       amount: card.amountCents != null ? (card.amountCents / 100).toString() : "",
-      currency: (card.currency ?? "usd").toLowerCase(),
+      currency: (card.currency ?? "aud").toLowerCase(),
       probability: card.probability != null ? String(card.probability) : "",
       expectedClose: card.expectedClose ?? "",
       source: card.source ?? "",
@@ -1312,7 +1312,7 @@ function DealsList({
             stageLabel.get(c.columnId) ?? "—"
           )}
         </td>
-        <td className="u-right">{formatCents(c.amountUsdCents, "usd")}</td>
+        <td className="u-right">{formatCents(c.amountAudCents, "aud")}</td>
         <td className="u-right">{c.probability != null ? `${c.probability}%` : "—"}</td>
         <td>
           {c.status !== "open" ? (

@@ -95,3 +95,50 @@ placeholder.
 Do not report success on a green build alone. Step 7 has the checks that
 matter. In particular: if `/admin` renders while signed out, treat that as a
 security problem and stop rather than working around it.
+
+## Day-to-day work in this repo (after setup)
+
+Read this section whenever the platform is already set up and the operator is
+asking for changes, data checks, or debugging.
+
+### Start by reading `.env.local`
+
+- `.env.local` at the repo root is gitignored and holds the real credentials.
+  Read it first, before asking the operator anything.
+- **Database:** the Supabase project ref is the subdomain of `SUPABASE_URL`
+  (`https://<ref>.supabase.co`). Write access from scripts goes through
+  `SUPABASE_URL` + `SUPABASE_SECRET_KEY` with `@supabase/supabase-js` on the
+  `company_os` schema, exactly as `scripts/shopify/backfill.ts` does. The
+  Supabase MCP connection can read and run SQL but cannot run DDL or writes;
+  schema changes go through the SQL editor or `psql` with the database password.
+- **Shopify:** `SHOPIFY_SHOP` + `SHOPIFY_ADMIN_TOKEN` (the token starts
+  `shpat_`). Client is `lib/shopify.ts`; the store admin is
+  https://admin.shopify.com/store/teddybed-au.
+- **Production:** `NEXT_PUBLIC_SITE_URL` is the live site. The Vercel project is
+  https://vercel.com/teddy-bed-daniel-david/teddy-infinite-os. Its `CRON_SECRET` differs
+  from the local one, so the local file cannot trigger production crons.
+- If a variable is duplicated in `.env.local`, the first occurrence wins in
+  every loader. Say so and fix it rather than working around it.
+
+### Give full, clickable links
+
+Whenever you hand the operator something to do, link the exact page, not the
+product. Examples:
+
+- a pull request: `https://github.com/hoffsdaman/teddy-infinite-os/pull/<n>`
+- Vercel env vars: https://vercel.com/teddy-bed-daniel-david/teddy-infinite-os/settings/environment-variables
+- Vercel deployments: https://vercel.com/teddy-bed-daniel-david/teddy-infinite-os/deployments
+- Supabase SQL editor: `https://supabase.com/dashboard/project/<ref>/sql/new`
+- Shopify custom apps: https://admin.shopify.com/store/teddybed-au/settings/apps/development
+- a production page: the full URL, e.g. `https://teddy-infinite-os.vercel.app/admin/revenue/orders`
+
+Never write "go to the Vercel dashboard" without the URL.
+
+### Speak plain English
+
+- Short sentences, no jargon the operator has not used first, no acronyms
+  without expanding them the first time.
+- Say what you found, what you did, and what is left, in that order.
+- End every piece of work with a brief summary: three to six lines that stand
+  on their own for someone who did not watch you work. Put the links and any
+  action the operator must take in that summary.

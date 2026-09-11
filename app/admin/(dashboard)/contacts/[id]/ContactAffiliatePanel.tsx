@@ -27,12 +27,12 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
       </div>
 
       <div className={`admin-kpi-grid ${affiliate.referredDeals.length || affiliate.commissions.length ? "u-mb-4" : "u-mb-0"}`}>
-        <MetricCard label="Pipeline" value={formatCents(pipelineCents, "usd")} sub="open referrals" />
-        <MetricCard label="Converted" value={formatCents(affiliate.accruedGrossCents, "usd")} sub="referred revenue paid" />
+        <MetricCard label="Pipeline" value={formatCents(pipelineCents, "aud")} sub="open referrals" />
+        <MetricCard label="Converted" value={formatCents(affiliate.accruedGrossCents, "aud")} sub="referred revenue paid" />
         <MetricCard
           label="Commissions"
-          value={formatCents(affiliate.realizedCents, "usd")}
-          sub={affiliate.unpaidCents > 0 ? `${formatCents(affiliate.unpaidCents, "usd")} unpaid` : "awarded"}
+          value={formatCents(affiliate.realizedCents, "aud")}
+          sub={affiliate.unpaidCents > 0 ? `${formatCents(affiliate.unpaidCents, "aud")} unpaid` : "awarded"}
         />
       </div>
 
@@ -72,7 +72,7 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
               <div className="admin-list-row" key={c.id}>
                 <div className="admin-list-main">
                   <div className="admin-list-title">
-                    {formatCents(c.grossCents, "usd")} <span className="admin-cell-muted">gross</span>
+                    {formatCents(c.grossCents, "aud")} <span className="admin-cell-muted">gross</span>
                   </div>
                   <div className="admin-list-sub">{c.sourceRef ? `${humanize(c.sourceEvent)} · ${c.sourceRef}` : humanize(c.sourceEvent)}</div>
                 </div>
@@ -80,7 +80,7 @@ export function ContactAffiliatePanel({ affiliate }: { affiliate: Affiliate360 }
                   {c.redemptionChoice ? (
                     <Badge tone={c.paidOut ? "ok" : "neutral"}>
                       {c.redemptionChoice === "work_credit" ? "Work credit" : "Cash"}
-                      {c.commissionCents != null ? ` · ${formatCents(c.commissionCents, "usd")}` : ""}
+                      {c.commissionCents != null ? ` · ${formatCents(c.commissionCents, "aud")}` : ""}
                     </Badge>
                   ) : (
                     <Badge tone="warn">Pending</Badge>

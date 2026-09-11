@@ -21,7 +21,7 @@ import { ensureJourney } from "@/lib/onboarding-cycle";
 import type { SurveyFieldRow } from "@/lib/admin/surveys";
 import { PALETTE as P } from "@/lib/design/palette";
 
-const OPS_EMAIL = "mai@edge8.ai";
+const OPS_EMAIL = "hello@teddybed.com.au";
 
 // Onboarding collects bank details as one free-text line, usually
 // "<account> - <bank> - <branch>" (sometimes newline-separated, or just

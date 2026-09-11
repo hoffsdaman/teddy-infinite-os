@@ -16,7 +16,7 @@ export const metadata = {
 const REVIEW_WINDOW_DAYS = 14;
 
 function saigonToday(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
 }
 
 export default async function ProbationPage() {

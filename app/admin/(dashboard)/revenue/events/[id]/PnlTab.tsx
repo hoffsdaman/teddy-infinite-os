@@ -12,17 +12,17 @@ import {
   REVENUE_CLASSIFICATIONS,
   CLASSIFICATION_LABELS,
   PAYMENT_STATUS_LABELS,
-  STAFF_DAY_RATE_USD_CENTS,
+  STAFF_DAY_RATE_AUD_CENTS,
   summarizePnl,
 } from "@/lib/admin/event-pnl-shared";
 import { addPnlLine, editPnlLine, removePnlLine } from "./pnl-actions";
 import { PersonSelect } from "@/components/admin/PersonSelect";
 
-const CURRENCIES = ["usd", "vnd", "aud"] as const;
+const CURRENCIES = ["aud"] as const;
 
 type PeopleOption = { id: string; name: string };
 
-// Empty form state. Amounts are entered as major units (dollars / whole VND);
+// Empty form state. Amounts are entered as major units (dollars);
 // converted to cents (major x 100) on save to match the storage convention.
 type FormState = {
   side: PnlSide;
@@ -44,9 +44,9 @@ const emptyForm = (side: PnlSide): FormState => ({
   personId: "",
   staffDays: "",
   estimatedAmount: "",
-  estimatedCurrency: "usd",
+  estimatedCurrency: "aud",
   actualAmount: "",
-  actualCurrency: "usd",
+  actualCurrency: "aud",
   paymentStatus: "unpaid",
 });
 
@@ -58,20 +58,20 @@ const toCents = (major: string): number | null => {
 };
 const fromCents = (cents: number | null): string => (cents == null ? "" : String(cents / 100));
 
-function diffUsd(line: PnlLine): number | null {
-  if (line.estimatedUsdCents == null || line.actualUsdCents == null) return null;
-  return line.actualUsdCents - line.estimatedUsdCents;
+function diffAud(line: PnlLine): number | null {
+  if (line.estimatedAudCents == null || line.actualAudCents == null) return null;
+  return line.actualAudCents - line.estimatedAudCents;
 }
 
 export function PnlTab({
   eventId,
   lines,
-  autoRevenueUsdCents,
+  autoRevenueAudCents,
   people,
 }: {
   eventId: string;
   lines: PnlLine[];
-  autoRevenueUsdCents: number;
+  autoRevenueAudCents: number;
   people: PeopleOption[];
 }) {
   const router = useRouter();
@@ -80,7 +80,7 @@ export function PnlTab({
   const [form, setForm] = useState<FormState | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const summary = summarizePnl(lines, autoRevenueUsdCents);
+  const summary = summarizePnl(lines, autoRevenueAudCents);
   const revenue = lines.filter((l) => l.side === "revenue");
   const expenses = lines.filter((l) => l.side === "expense");
   const classificationOptions = form?.side === "revenue" ? REVENUE_CLASSIFICATIONS : EXPENSE_CLASSIFICATIONS;
@@ -102,9 +102,9 @@ export function PnlTab({
       personId: line.personId ?? "",
       staffDays: line.staffDays == null ? "" : String(line.staffDays),
       estimatedAmount: fromCents(line.estimatedCents),
-      estimatedCurrency: line.estimatedCurrency ?? "usd",
+      estimatedCurrency: line.estimatedCurrency ?? "aud",
       actualAmount: fromCents(line.actualCents),
-      actualCurrency: line.actualCurrency ?? "usd",
+      actualCurrency: line.actualCurrency ?? "aud",
       paymentStatus: line.paymentStatus,
     });
   }
@@ -116,15 +116,15 @@ export function PnlTab({
   }
 
   // For staff cost lines: entering days fills the actual amount at $150/day
-  // (USD), overridable.
+  // (AUD), overridable.
   function onStaffDaysChange(value: string) {
     setForm((f) => {
       if (!f) return f;
       const days = Number(value.trim());
       const next = { ...f, staffDays: value };
       if (f.classification === "staff_cost" && Number.isFinite(days) && days > 0) {
-        next.actualAmount = String((days * STAFF_DAY_RATE_USD_CENTS) / 100);
-        next.actualCurrency = "usd";
+        next.actualAmount = String((days * STAFF_DAY_RATE_AUD_CENTS) / 100);
+        next.actualCurrency = "aud";
       }
       return next;
     });
@@ -171,7 +171,7 @@ export function PnlTab({
   }
 
   const nativeCell = (cents: number | null, currency: string | null) =>
-    cents == null ? "—" : formatCents(cents, currency ?? "usd");
+    cents == null ? "—" : formatCents(cents, currency ?? "aud");
 
   function lineRows(rows: PnlLine[]) {
     if (rows.length === 0) {
@@ -184,7 +184,7 @@ export function PnlTab({
       );
     }
     return rows.map((l) => {
-      const d = diffUsd(l);
+      const d = diffAud(l);
       return (
         <tr key={l.id}>
           <td>
@@ -203,10 +203,10 @@ export function PnlTab({
             {nativeCell(l.actualCents, l.actualCurrency)}
           </td>
           <td className="admin-cell-mono u-right">
-            {formatCents(l.actualUsdCents, "usd")}
+            {formatCents(l.actualAudCents, "aud")}
           </td>
           <td className="admin-cell-mono u-right">
-            {d == null ? "—" : formatCents(d, "usd")}
+            {d == null ? "—" : formatCents(d, "aud")}
           </td>
           <td>{PAYMENT_STATUS_LABELS[l.paymentStatus]}</td>
           <td className="u-right u-nowrap">
@@ -230,27 +230,27 @@ export function PnlTab({
           <thead>
             <tr>
               <th></th>
-              <th className="u-right">Estimated (USD)</th>
-              <th className="u-right">Actual (USD)</th>
+              <th className="u-right">Estimated (AUD)</th>
+              <th className="u-right">Actual (AUD)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Total revenue</td>
               <td className="admin-cell-mono u-right">
-                {formatCents(summary.revenueEstimatedUsd, "usd")}
+                {formatCents(summary.revenueEstimatedAud, "aud")}
               </td>
               <td className="admin-cell-mono u-right">
-                {formatCents(summary.revenueActualUsd, "usd")}
+                {formatCents(summary.revenueActualAud, "aud")}
               </td>
             </tr>
             <tr>
               <td>Total expenses</td>
               <td className="admin-cell-mono u-right">
-                {formatCents(summary.expenseEstimatedUsd, "usd")}
+                {formatCents(summary.expenseEstimatedAud, "aud")}
               </td>
               <td className="admin-cell-mono u-right">
-                {formatCents(summary.expenseActualUsd, "usd")}
+                {formatCents(summary.expenseActualAud, "aud")}
               </td>
             </tr>
             <tr>
@@ -258,10 +258,10 @@ export function PnlTab({
                 <strong>Profit / (Loss)</strong>
               </td>
               <td className="admin-cell-mono u-right">
-                <strong>{formatCents(summary.profitEstimatedUsd, "usd")}</strong>
+                <strong>{formatCents(summary.profitEstimatedAud, "aud")}</strong>
               </td>
               <td className="admin-cell-mono u-right">
-                <strong>{formatCents(summary.profitActualUsd, "usd")}</strong>
+                <strong>{formatCents(summary.profitActualAud, "aud")}</strong>
               </td>
             </tr>
           </tbody>
@@ -288,8 +288,8 @@ export function PnlTab({
               <th>Line</th>
               <th className="u-right">Estimated</th>
               <th className="u-right">Actual</th>
-              <th className="u-right">Actual (USD)</th>
-              <th className="u-right">Diff (USD)</th>
+              <th className="u-right">Actual (AUD)</th>
+              <th className="u-right">Diff (AUD)</th>
               <th>Payment</th>
               <th></th>
             </tr>
@@ -300,13 +300,13 @@ export function PnlTab({
                 Stripe registrations <span className="admin-cell-muted">(auto)</span>
               </td>
               <td className="admin-cell-mono u-right">
-                {formatCents(autoRevenueUsdCents, "usd")}
+                {formatCents(autoRevenueAudCents, "aud")}
               </td>
               <td className="admin-cell-mono u-right">
-                {formatCents(autoRevenueUsdCents, "usd")}
+                {formatCents(autoRevenueAudCents, "aud")}
               </td>
               <td className="admin-cell-mono u-right">
-                {formatCents(autoRevenueUsdCents, "usd")}
+                {formatCents(autoRevenueAudCents, "aud")}
               </td>
               <td className="u-right">—</td>
               <td>Paid</td>
@@ -331,8 +331,8 @@ export function PnlTab({
               <th>Line</th>
               <th className="u-right">Estimated</th>
               <th className="u-right">Actual</th>
-              <th className="u-right">Actual (USD)</th>
-              <th className="u-right">Diff (USD)</th>
+              <th className="u-right">Actual (AUD)</th>
+              <th className="u-right">Diff (AUD)</th>
               <th>Payment</th>
               <th></th>
             </tr>

@@ -1,14 +1,14 @@
 // Server-only data layer for the retreat P&L tab (company_os.event_pnl_lines).
 // Authorization is the caller's job — every server action wraps these with
 // requireAdmin(). Money is integer cents (major x 100) in the native currency;
-// *_usd_cents is derived via fx_rates so revenue and expenses sum in one
+// *_aud_cents is derived via fx_rates so revenue and expenses sum in one
 // currency. Staff lines use a flat $150/day so real wages never leak to ops.
 //
 // Pure types/constants/totals live in ./event-pnl-shared (client-safe) and are
 // re-exported here so server callers keep a single import.
 
 import { companyOs } from "@/lib/supabase";
-import { convertToUsdCents } from "@/lib/admin/fx";
+import { convertToAudCents } from "@/lib/admin/fx";
 import type { PnlLine, PnlLineInput } from "./event-pnl-shared";
 
 export * from "./event-pnl-shared";
@@ -24,10 +24,10 @@ type Row = {
   staff_days: number | string | null;
   estimated_cents: number | string | null;
   estimated_currency: string | null;
-  estimated_usd_cents: number | string | null;
+  estimated_aud_cents: number | string | null;
   actual_cents: number | string | null;
   actual_currency: string | null;
-  actual_usd_cents: number | string | null;
+  actual_aud_cents: number | string | null;
   payment_status: PnlLine["paymentStatus"];
   note: string | null;
   sort_order: number;
@@ -48,10 +48,10 @@ function mapRow(r: Row): PnlLine {
     staffDays: num(r.staff_days),
     estimatedCents: num(r.estimated_cents),
     estimatedCurrency: r.estimated_currency,
-    estimatedUsdCents: num(r.estimated_usd_cents),
+    estimatedAudCents: num(r.estimated_aud_cents),
     actualCents: num(r.actual_cents),
     actualCurrency: r.actual_currency,
-    actualUsdCents: num(r.actual_usd_cents),
+    actualAudCents: num(r.actual_aud_cents),
     paymentStatus: r.payment_status,
     note: r.note,
     sortOrder: r.sort_order,
@@ -73,27 +73,27 @@ export async function getEventPnlLines(eventId: string): Promise<PnlLine[]> {
   return (data as Row[]).map(mapRow);
 }
 
-// Best-effort native -> USD. USD short-circuits (rate 1). On a flaky FX lookup
-// we keep the native amount and leave USD null rather than block the save; the
+// Best-effort native -> AUD. AUD short-circuits (rate 1). On a flaky FX lookup
+// we keep the native amount and leave AUD null rather than block the save; the
 // fx_rates cache is refreshed opportunistically so cross-currency sums stay
 // close. Never throws.
-async function deriveUsdCents(cents: number | null, currency: string | null): Promise<number | null> {
+async function deriveAudCents(cents: number | null, currency: string | null): Promise<number | null> {
   if (cents === null) return null;
-  const cur = (currency ?? "usd").toLowerCase();
+  const cur = (currency ?? "aud").toLowerCase();
   try {
-    const fx = await convertToUsdCents(cents, cur);
-    if (cur !== "usd") {
+    const fx = await convertToAudCents(cents, cur);
+    if (cur !== "aud") {
       await companyOs
         .from("fx_rates")
         .upsert(
-          { currency: cur, rate_to_usd: fx.rate, updated_at: new Date().toISOString() },
+          { currency: cur, rate_to_aud: fx.rate, updated_at: new Date().toISOString() },
           { onConflict: "currency" },
         );
     }
-    return fx.amountUsdCents;
+    return fx.amountAudCents;
   } catch (err) {
-    console.error("deriveUsdCents failed:", (err as Error).message);
-    return cur === "usd" ? cents : null;
+    console.error("deriveAudCents failed:", (err as Error).message);
+    return cur === "aud" ? cents : null;
   }
 }
 
@@ -106,9 +106,9 @@ function normalizeInput(input: PnlLineInput) {
     attendees: input.attendees ?? null,
     staff_days: input.staffDays ?? null,
     estimated_cents: input.estimatedCents ?? null,
-    estimated_currency: input.estimatedCents == null ? null : (input.estimatedCurrency ?? "usd").toLowerCase(),
+    estimated_currency: input.estimatedCents == null ? null : (input.estimatedCurrency ?? "aud").toLowerCase(),
     actual_cents: input.actualCents ?? null,
-    actual_currency: input.actualCents == null ? null : (input.actualCurrency ?? "usd").toLowerCase(),
+    actual_currency: input.actualCents == null ? null : (input.actualCurrency ?? "aud").toLowerCase(),
     payment_status: input.paymentStatus ?? "unpaid",
     note: input.note ?? null,
     sort_order: input.sortOrder ?? 0,
@@ -120,17 +120,17 @@ export async function insertPnlLine(
   input: PnlLineInput,
 ): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const base = normalizeInput(input);
-  const [estimatedUsd, actualUsd] = await Promise.all([
-    deriveUsdCents(base.estimated_cents, base.estimated_currency),
-    deriveUsdCents(base.actual_cents, base.actual_currency),
+  const [estimatedAud, actualAud] = await Promise.all([
+    deriveAudCents(base.estimated_cents, base.estimated_currency),
+    deriveAudCents(base.actual_cents, base.actual_currency),
   ]);
   const { data, error } = await companyOs
     .from("event_pnl_lines")
     .insert({
       event_id: eventId,
       ...base,
-      estimated_usd_cents: estimatedUsd,
-      actual_usd_cents: actualUsd,
+      estimated_aud_cents: estimatedAud,
+      actual_aud_cents: actualAud,
     })
     .select("id")
     .single();
@@ -143,13 +143,13 @@ export async function updatePnlLine(
   input: PnlLineInput,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const base = normalizeInput(input);
-  const [estimatedUsd, actualUsd] = await Promise.all([
-    deriveUsdCents(base.estimated_cents, base.estimated_currency),
-    deriveUsdCents(base.actual_cents, base.actual_currency),
+  const [estimatedAud, actualAud] = await Promise.all([
+    deriveAudCents(base.estimated_cents, base.estimated_currency),
+    deriveAudCents(base.actual_cents, base.actual_currency),
   ]);
   const { error } = await companyOs
     .from("event_pnl_lines")
-    .update({ ...base, estimated_usd_cents: estimatedUsd, actual_usd_cents: actualUsd })
+    .update({ ...base, estimated_aud_cents: estimatedAud, actual_aud_cents: actualAud })
     .eq("id", id);
   if (error) return { ok: false, error: error.message };
   return { ok: true };

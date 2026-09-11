@@ -195,7 +195,7 @@ export function BroadcastEditor({
               className="admin-input"
               value={replyTo}
               disabled={!isDraft}
-              placeholder="dave@edge8.ai"
+              placeholder="hello@teddybed.com.au"
               onChange={(e) => setReplyTo(e.target.value)}
             />
           </div>

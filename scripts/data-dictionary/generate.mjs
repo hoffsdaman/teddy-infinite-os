@@ -197,8 +197,8 @@ const USAGE = ${JSON.stringify(USAGE)};
   const CONV = { id: 'Primary key.', created_at: 'Row creation time.', updated_at: 'Last modification time.',
     archived_at: 'Soft-delete timestamp; null means live (house rule 5).', archived_by: 'Who archived the row.',
     metadata: 'JSONB escape hatch for experimental attributes.', currency: 'ISO currency of the money columns on this row.',
-    amount_cents: 'Money in minor units (house rule 4 - never floats).', amount_usd_cents: 'USD-normalized amount in cents.',
-    fx_rate: 'FX rate used for the USD normalization.', synced_at: 'Last sync from the external system of record.',
+    amount_cents: 'Money in minor units (house rule 4 - never floats).', amount_aud_cents: 'AUD-normalized amount in cents (AUD is the base currency).',
+    fx_rate: 'FX rate used for the AUD normalization.', synced_at: 'Last sync from the external system of record.',
     external_id: 'Id of this record in the external system of record.', notes: 'Free-text notes.' };
   const colsOf = (e) => (e.k && DATA.tables[e.k] ? DATA.tables[e.k].cols : []);
   const short = (f) => f.split('/').slice(-2).join('/');

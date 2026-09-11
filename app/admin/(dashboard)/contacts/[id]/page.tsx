@@ -151,7 +151,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
                 <div className="admin-list-sub">{timeAgo(d.created_at)}</div>
               </div>
               <div className="admin-list-aside">
-                <strong className="admin-cell-mono">{formatCents(d.amount_usd_cents, "usd")}</strong>
+                <strong className="admin-cell-mono">{formatCents(d.amount_aud_cents, "aud")}</strong>
                 <Badge tone={statusTone(d.status)}>{humanize(d.status)}</Badge>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
           {orders.map((o) => (
             <div className="admin-list-row" key={o.id}>
               <div className="admin-list-main">
-                <div className="admin-list-title">{formatCents(o.amount_usd_cents, "usd")}</div>
+                <div className="admin-list-title">{formatCents(o.amount_aud_cents, "aud")}</div>
                 <div className="admin-list-sub">
                   {humanize(o.payment_method)} · {formatDate(o.created_at)}
                 </div>
@@ -201,7 +201,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
                 </div>
               </div>
               <div className="admin-list-aside">
-                <strong className="admin-cell-mono">{formatCents(b.amount_usd_cents, "usd")}</strong>
+                <strong className="admin-cell-mono">{formatCents(b.amount_aud_cents, "aud")}</strong>
                 <Badge tone={statusTone(b.status)}>{humanize(b.status)}</Badge>
               </div>
             </div>

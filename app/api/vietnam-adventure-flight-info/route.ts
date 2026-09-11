@@ -65,11 +65,11 @@ export async function POST(req: NextRequest) {
     if (apiKey) {
       try {
         const resend = new Resend(apiKey)
-        const to = (process.env.TRIP_NOTIFY_EMAIL ?? 'accounting@edge8.ai')
+        const to = (process.env.TRIP_NOTIFY_EMAIL ?? 'hello@teddybed.com.au')
           .split(',').map((e: string) => e.trim()).filter(Boolean)
 
         await resend.emails.send({
-          from: 'TeddyBed OS Adventures <contact@edge8.ai>',
+          from: 'TeddyBed OS Adventures <hello@teddybed.com.au>',
           to,
           replyTo: contact_email,
           subject: `Vietnam Adventure flight info — ${family_name}`,

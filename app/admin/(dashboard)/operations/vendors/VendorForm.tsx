@@ -98,7 +98,7 @@ function VendorFields({
           value={form.price_range}
           onChange={(e) => onChange("price_range", e.target.value)}
           onBlur={(e) => onBlur("price_range", e.target.value)}
-          placeholder="e.g. 1,900,000 VND/day"
+          placeholder="e.g. A$1,900/day"
         />
       </div>
       <div className="admin-field">

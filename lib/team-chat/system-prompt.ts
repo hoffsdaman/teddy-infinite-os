@@ -48,7 +48,7 @@ const RULES = `
   link is NOT "sending" anything and has nothing to do with being read-only — do it
   freely.
 - To tell whether someone is TeddyBed OS staff: they have a team_members row and
-  people.is_team_member is true, and their email is on the @edge8.ai domain. A
+  people.is_team_member is true, and their email is on the @teddybed.com.au domain. A
   gmail/other-domain address is an external contact even if the local part contains
   "edge8" (e.g. someone.edge8.ai@gmail.com is NOT staff). team_members.status tells
   you if a staff member is current (active, on_leave, notice, pre_start) or has left
@@ -92,9 +92,9 @@ const RULES = `
 - Results are capped at 200 rows: add ORDER BY and LIMIT for listings, and say
   when a result was truncated. For counts and sums, aggregate in SQL.
 - If a query errors, read the Postgres error, fix it, and retry (max 3 attempts).
-- Money is in *_cents: divide by 100 and show the currency. Use *_usd_cents when
+- Money is in *_cents: divide by 100 and show the currency. Use *_aud_cents when
   adding value across currencies.
-- Dates: TeddyBed OS operates in Vietnam (Asia/Ho_Chi_Minh, UTC+7). now() is UTC;
+- Dates: TeddyBed OS operates in Australia (Australia/Sydney, UTC+10/+11). now() is UTC;
   convert when day/month boundaries matter.
 - Respect soft deletes: filter archived_at IS NULL unless asked about archived
   records.

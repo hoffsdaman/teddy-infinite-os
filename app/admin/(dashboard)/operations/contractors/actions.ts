@@ -46,8 +46,7 @@ export async function listContractorWorkRequests(personId: string): Promise<Cont
 // the current compensation rows are superseded (is_current=false,
 // effective_to=today), never mutated, so rate history stays queryable.
 // Billable (what the client is invoiced per hour, default 100% markup) is
-// always USD — client invoicing runs in USD via Talent Edge LLC — even when
-// the internal rates are VND.
+// always AUD, like every other rate in the system.
 export async function updateContractorRates(input: {
   teamMemberId: string;
   hourlyRateCents: number;
@@ -71,8 +70,8 @@ export async function updateContractorRates(input: {
     return { ok: false, error: "Overtime rate must be greater than zero." };
   if (!Number.isFinite(billable) || billable <= 0)
     return { ok: false, error: "Billable rate must be greater than zero." };
-  const currency = (input.currency || "usd").toLowerCase();
-  if (!["usd", "vnd"].includes(currency)) return { ok: false, error: "Currency must be USD or VND." };
+  const currency = (input.currency || "aud").toLowerCase();
+  if (currency !== "aud") return { ok: false, error: "Currency must be AUD." };
 
   const today = new Date().toISOString().slice(0, 10);
   const reason = input.changeReason?.trim() || "Rate update via admin";
@@ -90,7 +89,7 @@ export async function updateContractorRates(input: {
   const rows = [
     { comp_type: "hourly", amount_cents: hourly, currency },
     { comp_type: "overtime", amount_cents: overtime, currency },
-    { comp_type: "billable", amount_cents: billable, currency: "usd" },
+    { comp_type: "billable", amount_cents: billable, currency: "aud" },
   ].map((r) => ({
     team_member_id: input.teamMemberId,
     comp_type: r.comp_type,

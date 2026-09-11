@@ -98,23 +98,21 @@ export async function saveSensitiveDetails(
 // effective date) but NEVER the amount, so salaries never leak via audit_log.
 export async function saveSalaryChange(
   teamMemberId: string,
-  input: { salaryVnd: number; salaryUsdCents: number; effectiveFrom: string; changeReason?: string | null },
+  input: { salaryAudCents: number; effectiveFrom: string; changeReason?: string | null },
 ): Promise<Result> {
   const admin = await requireAdmin();
   if (!(await canViewSensitive(admin.email))) {
     return { ok: false, error: "Not authorized." };
   }
-  const salaryVnd = Math.round(Number(input.salaryVnd));
-  const salaryUsdCents = Math.round(Number(input.salaryUsdCents));
-  if (!Number.isFinite(salaryVnd) || salaryVnd < 0 || !Number.isFinite(salaryUsdCents) || salaryUsdCents < 0) {
+  const salaryAudCents = Math.round(Number(input.salaryAudCents));
+  if (!Number.isFinite(salaryAudCents) || salaryAudCents < 0) {
     return { ok: false, error: "Enter a valid salary amount." };
   }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(input.effectiveFrom)) {
     return { ok: false, error: "Enter a valid effective date." };
   }
   const res = await recordSalaryChange(teamMemberId, {
-    salaryVnd,
-    salaryUsdCents,
+    salaryAudCents,
     effectiveFrom: input.effectiveFrom,
     changeReason: input.changeReason?.trim() || null,
   });
@@ -180,7 +178,7 @@ export async function sendReviewNow(
 
   // One cycle per member per month per type: a stable, human-readable label.
   const monthTag = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: "Australia/Sydney",
     year: "numeric",
     month: "2-digit",
   })

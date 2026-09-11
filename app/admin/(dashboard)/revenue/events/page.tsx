@@ -46,7 +46,7 @@ type TierDbRow = {
   tier: string | null;
   description: string | null;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   capacity: number | null;
   active: boolean;
@@ -62,7 +62,7 @@ type RegDbRow = {
   checked_in_at: string | null;
   people: { full_name: string | null; email: string } | { full_name: string | null; email: string }[] | null;
   products: { tier: string | null } | { tier: string | null }[] | null;
-  orders: { amount_usd_cents: number | null } | { amount_usd_cents: number | null }[] | null;
+  orders: { amount_aud_cents: number | null } | { amount_aud_cents: number | null }[] | null;
 };
 
 const one = <T,>(e: T | T[] | null): T | null => (Array.isArray(e) ? e[0] ?? null : e);
@@ -85,18 +85,18 @@ export default async function EventsPage() {
       .order("starts_at", { ascending: false, nullsFirst: false }),
     companyOs
       .from("products")
-      .select("id, event_id, title, tier, description, amount_cents, amount_usd_cents, currency, capacity, active")
+      .select("id, event_id, title, tier, description, amount_cents, amount_aud_cents, currency, capacity, active")
       .not("event_id", "is", null)
       .order("amount_cents", { ascending: true }),
     companyOs
       .from("event_registrations")
       .select(
-        "event_id, status, attendee_name, attendee_email, person_id, guest_count, checked_in_at, people(full_name, email), products(tier), orders(amount_usd_cents)"
+        "event_id, status, attendee_name, attendee_email, person_id, guest_count, checked_in_at, people(full_name, email), products(tier), orders(amount_aud_cents)"
       )
       .not("event_id", "is", null),
     companyOs
       .from("event_registrations")
-      .select("orders!inner(amount_usd_cents, created_at)")
+      .select("orders!inner(amount_aud_cents, created_at)")
       .not("event_id", "is", null)
       .in("status", ["registered", "attended", "confirmed"])
       .gte("orders.created_at", monthStart),
@@ -107,8 +107,8 @@ export default async function EventsPage() {
 
   const error = eventsRes.error?.message ?? tiersRes.error?.message ?? regsRes.error?.message ?? null;
 
-  const revenueThisMonth = ((monthRevenueRes.data ?? []) as { orders: { amount_usd_cents: number | null } | { amount_usd_cents: number | null }[] | null }[]).reduce(
-    (s, r) => s + (one(r.orders)?.amount_usd_cents ?? 0),
+  const revenueThisMonth = ((monthRevenueRes.data ?? []) as { orders: { amount_aud_cents: number | null } | { amount_aud_cents: number | null }[] | null }[]).reduce(
+    (s, r) => s + (one(r.orders)?.amount_aud_cents ?? 0),
     0
   );
 
@@ -122,7 +122,7 @@ export default async function EventsPage() {
       tier: t.tier,
       description: t.description,
       amountCents: t.amount_cents ?? 0,
-      currency: t.currency ?? "usd",
+      currency: t.currency ?? "aud",
       capacity: t.capacity,
       active: t.active,
     });
@@ -130,7 +130,7 @@ export default async function EventsPage() {
   }
 
   const attendeesByEvent = new Map<string, EventAttendee[]>();
-  const countsByEvent = new Map<string, { registered: number; total: number; collectedUsdCents: number }>();
+  const countsByEvent = new Map<string, { registered: number; total: number; collectedAudCents: number }>();
   for (const r of (regsRes.data ?? []) as RegDbRow[]) {
     if (!r.event_id) continue;
     const status = normalizeRegistrationStatus(r.status ?? "registered");
@@ -150,11 +150,11 @@ export default async function EventsPage() {
     });
     attendeesByEvent.set(r.event_id, list);
 
-    const counts = countsByEvent.get(r.event_id) ?? { registered: 0, total: 0, collectedUsdCents: 0 };
+    const counts = countsByEvent.get(r.event_id) ?? { registered: 0, total: 0, collectedAudCents: 0 };
     counts.total += 1;
     if (COUNTED_STATUSES.has(status)) {
       counts.registered += 1 + (r.guest_count ?? 0);
-      counts.collectedUsdCents += order?.amount_usd_cents ?? 0;
+      counts.collectedAudCents += order?.amount_aud_cents ?? 0;
     }
     countsByEvent.set(r.event_id, counts);
   }
@@ -163,7 +163,7 @@ export default async function EventsPage() {
     const tiers = tiersByEvent.get(e.id) ?? [];
     const activeTiers = tiers.filter((t) => t.active);
     const fromCents = activeTiers.length > 0 ? Math.min(...activeTiers.map((t) => t.amountCents)) : 0;
-    const counts = countsByEvent.get(e.id) ?? { registered: 0, total: 0, collectedUsdCents: 0 };
+    const counts = countsByEvent.get(e.id) ?? { registered: 0, total: 0, collectedAudCents: 0 };
     return {
       id: e.id,
       slug: e.slug,
@@ -183,15 +183,15 @@ export default async function EventsPage() {
       effectiveAttendees: e.attendee_count_override ?? counts.registered,
       registeredCount: e.registered_count_override ?? counts.registered,
       totalCount: counts.total,
-      fromUsdCents: fromCents,
-      collectedUsdCents: counts.collectedUsdCents,
+      fromAudCents: fromCents,
+      collectedAudCents: counts.collectedAudCents,
     };
   });
 
   const activeRows = rows.filter((r) => !r.archivedAt);
   const openEvents = activeRows.filter((r) => r.status === "open").length;
   const totalRegistered = activeRows.reduce((s, r) => s + r.registeredCount, 0);
-  const totalCollected = activeRows.reduce((s, r) => s + r.collectedUsdCents, 0);
+  const totalCollected = activeRows.reduce((s, r) => s + r.collectedAudCents, 0);
 
   return (
     <>
@@ -208,8 +208,8 @@ export default async function EventsPage() {
       )}
 
       <div className="admin-kpi-grid u-mb-5">
-        <MetricCard label="Total Collected" value={formatCents(totalCollected, "usd")} sub="USD · registered+" />
-        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth, "usd")} sub="USD · registered+" />
+        <MetricCard label="Total Collected" value={formatCents(totalCollected, "aud")} sub="AUD · registered+" />
+        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth, "aud")} sub="AUD · registered+" />
         <MetricCard label="Open events" value={openEvents} sub={`of ${activeRows.length} scheduled`} />
         <MetricCard label="Registered" value={totalRegistered} sub="seats incl. guests" />
         <MetricCard

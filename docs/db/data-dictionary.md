@@ -15,7 +15,7 @@ Read these before creating any table.
 1. Search this dictionary's index by business term and synonyms before designing a new table. If an existing table has the same entity at the same grain, extend it (columns, or `metadata` jsonb for experiments); do not create a sibling.
 2. Never write to a table marked "superseded" or "dead" below. Use the named replacement.
 3. Anything involving a human references `people.id`. Anything involving an organization references `companies.id`. Do not store names, emails, or org names as plain text columns in new tables.
-4. Money columns follow the house pattern: `amount_cents` (int8) + `currency` + `amount_usd_cents` + `fx_rate` where FX applies. Never floats, never a bare `amount`.
+4. Money columns follow the house pattern: `amount_cents` (int8) + `currency` + `amount_aud_cents` + `fx_rate` where FX applies (AUD is the base reporting currency). Never floats, never a bare `amount`.
 5. Soft delete via `archived_at` / `archived_by`. No hard deletes of business records.
 6. Sensitive personal data goes in a dedicated `_sensitive` table with its own lockdown (RLS on, no policies, service-role only, revoked from the chatbot reader roles, app-gated by canViewSensitive), never as columns on the main entity. Precedents: `people_sensitive`, `candidate_sensitive`, `compensation_sensitive`.
 7. Data owned by an external system (QuickBooks, Stripe, AIO Labs) is mirrored, not mastered: carry `source`, `external_id`, `synced_at`, and treat the external system as truth.
@@ -172,8 +172,8 @@ Columns:
 - title: Short deal label, e.g. "<person name> - SDR handoff" for handoff-created deals.
 - person_id: FK to people; the primary contact on the deal.
 - company_id: FK to companies; the account the revenue belongs to.
-- amount_cents: Deal value in minor units with currency; amount_usd_cents/fx_rate carry the normalized figure.
-- currency: ISO currency code of amount_cents, stored lowercase (e.g. usd).
+- amount_cents: Deal value in minor units with currency; amount_aud_cents/fx_rate carry the AUD-normalized figure.
+- currency: ISO currency code of amount_cents, stored lowercase (e.g. aud).
 - status: Deal outcome, derived from the stage on every move (is_won stage -> won, is_lost -> lost, else open). Valid values: [open, won, lost].
 - probability: Forecast percentage 0-100; entering the Contract Sent stage sets it to 90 once, later manual overrides stick.
 - owner_id: FK to people; the team member who owns/closes the deal.
@@ -194,8 +194,8 @@ Columns:
 - lost_reason: Why a lost deal was lost; filled on close-lost only.
 - archived_at: Soft-archive timestamp; null means active.
 - archived_by: Email of the admin who archived the deal.
-- amount_usd_cents: USD-normalized deal value in cents, computed from amount_cents via FX conversion; prefer this when aggregating across currencies.
-- fx_rate: Currency-to-USD rate used to compute amount_usd_cents; also upserted into the shared fx_rates table on save.
+- amount_aud_cents: AUD-normalized deal value in cents, computed from amount_cents via FX conversion; prefer this when aggregating across currencies.
+- fx_rate: Currency-to-AUD rate used to compute amount_aud_cents; also upserted into the shared fx_rates table on save.
 - fx_rate_fetched_at: When the FX rate was fetched.
 - proposal_url: Link to the proposal document for this deal.
 - contract_url: Link to the contract document for this deal.
@@ -328,8 +328,8 @@ Columns:
 - id: Primary key.
 - team_member_id: FK to team_members; whose pay arrangement this row is.
 - comp_type: What kind of pay the row records; `base_salary` rows are employee salaries, `hourly`/`overtime`/`billable` are contractor rates. Valid values: [base_salary, hourly, bonus, commission, equity, stipend, allowance, overtime, billable].
-- amount_cents: Generic amount in minor units of `currency`; for salary rows it mirrors `salary_usd_cents` so non-salary readers still see a value.
-- currency: ISO-ish currency code of `amount_cents` (e.g. `usd`).
+- amount_cents: Generic amount in minor units of `currency`; for salary rows it mirrors `salary_aud_cents` so non-salary readers still see a value.
+- currency: ISO-ish currency code of `amount_cents` (e.g. `aud`).
 - pay_period: How often the amount is paid. Valid values: [annual, monthly, semi_monthly, biweekly, weekly, hourly, one_time].
 - effective_from: Start date of this comp arrangement; history is kept as rows, not overwrites.
 - effective_to: End date of the arrangement; a salary change closes the old row by setting this to the new row's `effective_from`.
@@ -339,8 +339,7 @@ Columns:
 - notes: Free-text notes on the arrangement.
 - created_at: Row creation time.
 - updated_at: Last modification time.
-- salary_vnd: Salary in whole VND; with `salary_usd_cents` this dual-currency pair is the record of truth for base salaries.
-- salary_usd_cents: Salary in USD cents, converted from VND at a fixed 25,500 VND/USD rate (not live fx).
+- salary_aud_cents: Salary in AUD cents, monthly base salary.
 Evidence: rows 37 · reads 461 · inserts 37 (stamped 28 Aug 2026)
 
 ---
@@ -837,7 +836,7 @@ Columns:
 - doc_number: Invoice document number as shown in QuickBooks.
 - txn_date: Invoice transaction date from QuickBooks.
 - due_date: Payment due date from QuickBooks; a positive balance past this date derives `overdue` status.
-- currency: Lowercase ISO currency code of the invoice, default `usd`.
+- currency: Lowercase ISO currency code of the invoice, default `aud`.
 - amount_cents: Invoice total in minor units.
 - balance_cents: Outstanding balance in minor units; zero derives `paid` status.
 - status: Derived at sync time from the memo, balance, and due date, never stored back to QBO. Valid values: [paid, open, overdue, voided].
@@ -877,10 +876,9 @@ Columns:
 - metadata: JSONB context stamped by the checkout flow (e.g. `type` of `event_registration` or `token_pack`, `registration_id`, `token_purchase_id`); the webhook deliberately never overwrites it.
 - created_at: Row creation time.
 - updated_at: Last modification time; doubles as paid-at on the webhook's status flip.
-- amount_usd_cents: USD-normalized total derived via FX at write time so cross-currency sums are safe; commission gross uses it when set.
+- amount_aud_cents: AUD-normalized total derived via FX at write time so cross-currency sums are safe; commission gross uses it when set.
 - stripe_fee_cents: Stripe processing fee in minor units; no reads or writes anywhere in this codebase (legacy aio-website column). TODO(owner): confirm whether anything still populates it.
-- fx_rate: Native-to-USD conversion rate; no reads or writes anywhere in this codebase (legacy aio-website column). TODO(owner): confirm whether anything still populates it.
-- vnd_amount: Order amount in Vietnamese dong; no reads or writes anywhere in this codebase (legacy aio-website column for `offline_vn` payments). TODO(owner): confirm whether anything still populates it.
+- fx_rate: Native-to-AUD conversion rate; no reads or writes anywhere in this codebase (legacy aio-website column). TODO(owner): confirm whether anything still populates it.
 Evidence: rows 8 · reads 3,682 · inserts 17 (stamped 28 Aug 2026)
 
 ### company_os.subscriptions
@@ -934,7 +932,7 @@ Columns:
 - created_at: Row creation time.
 - updated_at: Last modification time.
 - service_line_id: FK to service_lines; categorizes the product under a business offering.
-- amount_usd_cents: USD-normalized price used for cross-currency display and sorting (admin products list, retreat "from" price).
+- amount_aud_cents: AUD-normalized price used for cross-currency display and sorting (admin products list, retreat "from" price).
 - event_id: FK to events; set on `type = 'event'` rows to mark the tier as belonging to that event.
 - sort_order: Display order of tiers within an event.
 Evidence: rows 28 · reads 3,807 · inserts 31 (stamped 28 Aug 2026)
@@ -957,7 +955,7 @@ Columns:
 Evidence: rows 8 · reads 506 · inserts 8 (stamped 28 Aug 2026)
 
 ### company_os.fx_rates
-One row is: one currency's current rate to USD.
+One row is: one currency's current rate to AUD (aud = 1).
 Bucket: master · Reference & rules
 Tier: 2 stage engine
 Status: active
@@ -965,7 +963,7 @@ Origin: rate refresh job. TODO(owner): confirm refresh cadence and source.
 Usage: FX normalization on deals and orders.
 Columns:
 - currency: Primary key; lowercase ISO currency code.
-- rate_to_usd: Multiplier converting one unit of the currency to USD, used to derive `*_usd_cents` reporting values; refreshed opportunistically from the Frankfurter API when event P&L lines and deals are saved.
+- rate_to_aud: Multiplier converting one unit of the currency to AUD, used to derive `*_aud_cents` reporting values; refreshed opportunistically from the Frankfurter API when event P&L lines and deals are saved.
 - updated_at: When the cached rate was last refreshed.
 Evidence: rows 3 · reads 178 · inserts 3 (stamped 28 Aug 2026)
 

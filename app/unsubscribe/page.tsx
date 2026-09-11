@@ -41,7 +41,7 @@ export default function UnsubscribePage({
             ) : (
               <p>
                 This unsubscribe link is missing or is no longer valid. Email{' '}
-                <a href="mailto:hello@edge8.ai">hello@edge8.ai</a> and we will remove you from the
+                <a href="mailto:hello@teddybed.com.au">hello@teddybed.com.au</a> and we will remove you from the
                 list by hand.
               </p>
             )}

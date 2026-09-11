@@ -11,13 +11,13 @@ export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "
 export type Embedded<T> = T | T[] | null;
 export const one = <T,>(e: Embedded<T>): T | null => (Array.isArray(e) ? e[0] ?? null : e);
 
-// Compact money for chart direct labels and tight tiles ("$84.2k" beats
-// "$84,203" in 12px type). Input is cents.
-export function compactUsd(cents: number): string {
+// Compact money for chart direct labels and tight tiles ("A$84.2k" beats
+// "A$84,203" in 12px type). Input is AUD cents.
+export function compactAud(cents: number): string {
   const d = cents / 100;
-  if (d >= 100_000) return `$${Math.round(d / 1000)}k`;
-  if (d >= 1000) return `$${(d / 1000).toFixed(1)}k`;
-  return `$${Math.round(d)}`;
+  if (d >= 100_000) return `A$${Math.round(d / 1000)}k`;
+  if (d >= 1000) return `A$${(d / 1000).toFixed(1)}k`;
+  return `A$${Math.round(d)}`;
 }
 
 // Delta sub-line for rolling-30-day tiles.

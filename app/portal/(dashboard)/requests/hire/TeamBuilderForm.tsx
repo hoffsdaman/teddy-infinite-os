@@ -12,7 +12,7 @@ import {
 } from "@/lib/portal/hire-catalog";
 import { submitTeamRequest } from "../actions";
 
-const usd = (n: number) => `$${n.toLocaleString()}`;
+const aud = (n: number) => `A$${n.toLocaleString()}`;
 
 type Candidate = {
   key: number;
@@ -76,7 +76,7 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
     const grossAnnual = candidates.reduce((sum, c) => {
       const found = findBracket(c.positionId, c.bracketId);
       if (!found) return sum;
-      const monthlyMid = Math.round((found.bracket.minUsd + found.bracket.maxUsd) / 2);
+      const monthlyMid = Math.round((found.bracket.minAud + found.bracket.maxAud) / 2);
       return sum + monthlyMid * 12;
     }, 0);
     const discounted = candidates.length >= TEAM_DISCOUNT_MIN;
@@ -188,7 +188,7 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
 
             {found && (
               <div className="admin-alert admin-alert--ok u-m-0">
-                {usd(found.bracket.minUsd)} to {usd(found.bracket.maxUsd)}/month
+                {aud(found.bracket.minAud)} to {aud(found.bracket.maxAud)}/month
               </div>
             )}
 
@@ -227,11 +227,11 @@ export function TeamBuilderForm({ companies }: { companies: { id: string; name: 
       >
         <div className="u-row u-gap-3 u-between u-lg">
           <span>Team of {candidates.length} · estimated budget</span>
-          <strong>{usd(totals.netAnnual)}/year</strong>
+          <strong>{aud(totals.netAnnual)}/year</strong>
         </div>
         {totals.discounted ? (
           <div className="u-accent">
-            10% team discount applied. You save {usd(totals.savings)}/year.
+            10% team discount applied. You save {aud(totals.savings)}/year.
           </div>
         ) : (
           <div className="u-sm u-muted">

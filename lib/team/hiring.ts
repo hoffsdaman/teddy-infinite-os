@@ -164,7 +164,7 @@ const CLOSED_CAP = 25;
 
 // The clock everyone on this team reads. "Today" and the in-progress window are
 // judged in Saigon time, not the server's UTC.
-const SAIGON_TZ = "Asia/Ho_Chi_Minh";
+const SAIGON_TZ = "Australia/Sydney";
 
 // YYYY-MM-DD for a moment, as seen in Saigon. en-CA formats ISO-style.
 function saigonDateKey(d: Date): string {

@@ -52,7 +52,7 @@ export function createGitHubClients(): GitHubClient[] {
 // The central service-account email: the identity that owns GH_PAT and the
 // fallback author for PRs with no resolvable authorship block.
 export function getCentralEmail(): string {
-  return process.env.CENTRAL_EMAIL ?? "human-tokens@edge8.co";
+  return process.env.CENTRAL_EMAIL ?? "hello@teddybed.com.au";
 }
 
 async function ghJson<T>(client: GitHubClient, path: string): Promise<T> {

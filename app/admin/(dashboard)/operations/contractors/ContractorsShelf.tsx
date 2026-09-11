@@ -161,7 +161,7 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
   const [hourly, setHourly] = useState(toDollars(row.hourly_rate_cents));
   const [overtime, setOvertime] = useState(toDollars(row.overtime_rate_cents));
   const [billable, setBillable] = useState(toDollars(row.billable_rate_cents));
-  const [currency, setCurrency] = useState(row.currency || "usd");
+  const [currency, setCurrency] = useState(row.currency || "aud");
   const [reason, setReason] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -171,15 +171,14 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
     setHourly(toDollars(row.hourly_rate_cents));
     setOvertime(toDollars(row.overtime_rate_cents));
     setBillable(toDollars(row.billable_rate_cents));
-    setCurrency(row.currency || "usd");
+    setCurrency(row.currency || "aud");
     setReason("");
     setError(null);
   }, [row]);
 
-  // Default 100% markup: prefill billable at 2x hourly when unset (USD only —
-  // billable is always billed in USD, so a VND hourly can't derive it).
+  // Default 100% markup: prefill billable at 2x hourly when unset.
   function startEditing() {
-    if (!billable && hourly && currency === "usd") {
+    if (!billable && hourly && currency === "aud") {
       setBillable(String(Number(hourly) * 2));
     }
     setEditing(true);
@@ -261,14 +260,7 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
               />
             </label>
             <label className="admin-field">
-              <span>Currency</span>
-              <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                <option value="usd">USD</option>
-                <option value="vnd">VND</option>
-              </select>
-            </label>
-            <label className="admin-field">
-              <span>Billable rate — what clients are invoiced (USD)</span>
+              <span>Billable rate — what clients are invoiced (AUD)</span>
               <input
                 type="number"
                 min="0"
@@ -300,7 +292,7 @@ function ContractorShelfBody({ row, canSeePay }: { row: ContractorRow; canSeePay
             )}
             {kv(
               "Billable (client)",
-              row.billable_rate_cents !== null ? `${formatCents(row.billable_rate_cents, "usd")}/h` : "Not set",
+              row.billable_rate_cents !== null ? `${formatCents(row.billable_rate_cents, "aud")}/h` : "Not set",
             )}
           </dl>
         )}

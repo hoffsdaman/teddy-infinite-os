@@ -6,7 +6,7 @@ import { notifyOps } from '@/lib/lark'
 import { NextRequest, NextResponse } from 'next/server'
 import { PALETTE as P } from "@/lib/design/palette";
 
-const FROM = 'TeddyBed OS <contact@edge8.ai>'
+const FROM = 'TeddyBed OS <hello@teddybed.com.au>'
 
 // ── Spam gate ──────────────────────────────────────────────────────────────
 // The honeypot below catches naive bots. This catches the form-spam wave that
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Recipients — split ADMIN_EMAILS CSV or fall back
-    const to = (process.env.ADMIN_EMAILS ?? 'dave@edge8.ai')
+    const to = (process.env.ADMIN_EMAILS ?? 'hello@teddybed.com.au')
       .split(',').map((e: string) => e.trim()).filter(Boolean)
 
     // 1️⃣ Save to company_os (people + inquiries). `company` has no column on

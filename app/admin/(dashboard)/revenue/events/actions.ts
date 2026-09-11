@@ -112,7 +112,7 @@ export async function createEvent(input: CreateEventInput): Promise<Result & { i
 
 export type AddTierInput = {
   title: string;
-  amountUsd: number; // whole dollars from the form; 0 = free
+  amountAud: number; // whole AUD dollars from the form; 0 = free
   capacity?: number | null;
   description?: string | null;
 };
@@ -122,13 +122,13 @@ export async function addEventTier(eventId: string, input: AddTierInput): Promis
 
   const title = input.title?.trim();
   if (!title) return { ok: false, error: "Tier name is required." };
-  if (!Number.isFinite(input.amountUsd) || input.amountUsd < 0) {
+  if (!Number.isFinite(input.amountAud) || input.amountAud < 0) {
     return { ok: false, error: "Price must be 0 (free) or a positive amount." };
   }
   if (input.capacity != null && (!Number.isFinite(input.capacity) || input.capacity < 1)) {
     return { ok: false, error: "Tier capacity must be at least 1, or blank for uncapped." };
   }
-  const amountCents = Math.round(input.amountUsd * 100);
+  const amountCents = Math.round(input.amountAud * 100);
 
   const { data: event, error: evErr } = await companyOs
     .from("events")
@@ -164,7 +164,7 @@ export async function addEventTier(eventId: string, input: AddTierInput): Promis
       tier: slugify(title).replace(/-/g, "_"),
       description: input.description?.trim() || null,
       amount_cents: amountCents,
-      currency: "usd",
+      currency: "aud",
       capacity: input.capacity ?? null,
       sort_order: count ?? 0,
       active: true,

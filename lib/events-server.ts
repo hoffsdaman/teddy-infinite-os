@@ -54,7 +54,7 @@ export async function getEventTiers(
   let query = companyOs
     .from("products")
     .select(
-      "id, event_id, title, tier, description, amount_cents, amount_usd_cents, currency, capacity, sort_order, active"
+      "id, event_id, title, tier, description, amount_cents, amount_aud_cents, currency, capacity, sort_order, active"
     )
     .eq("event_id", eventId)
     .order("sort_order", { ascending: true })

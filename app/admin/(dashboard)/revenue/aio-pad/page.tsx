@@ -26,7 +26,7 @@ type Booking = {
   end_date: string | null;
   party_size: number | null;
   amount_cents: number | null;
-  amount_usd_cents: number | null;
+  amount_aud_cents: number | null;
   currency: string | null;
   status: string | null;
   created_at: string;
@@ -37,7 +37,7 @@ type Booking = {
 
 const one = <T,>(e: T | T[] | null): T | null => (Array.isArray(e) ? e[0] ?? null : e);
 const PAGE_SIZE = 25;
-const SORTABLE = new Set(["start_date", "kind", "party_size", "amount_usd_cents", "status", "created_at"]);
+const SORTABLE = new Set(["start_date", "kind", "party_size", "amount_aud_cents", "status", "created_at"]);
 
 // Real distinct values in the table today (checked against the DB). Kind is omitted
 // deliberately: every booking is currently a "stay", so it makes a single-value filter.
@@ -64,22 +64,22 @@ export default async function AioPadPage({ searchParams }: { searchParams: Searc
   const [{ rows, total, pageSize, error }, upcomingRes, confirmedCount, totalRes, revRes] = await Promise.all([
     listEntity<Booking>(
       "bookings",
-      "id, kind, start_date, end_date, party_size, amount_cents, amount_usd_cents, currency, status, created_at, person_id, people(full_name, email), products(title)",
+      "id, kind, start_date, end_date, party_size, amount_cents, amount_aud_cents, currency, status, created_at, person_id, people(full_name, email), products(title)",
       { page, pageSize: PAGE_SIZE, search: q, searchColumns: ["kind"], sort, dir, filters },
     ),
     companyOs.from("bookings").select("*", { count: "exact", head: true }).gte("start_date", today),
     countEntity("bookings", { status: "confirmed" }),
-    companyOs.from("bookings").select("amount_usd_cents").eq("status", "confirmed"),
+    companyOs.from("bookings").select("amount_aud_cents").eq("status", "confirmed"),
     companyOs
       .from("bookings")
-      .select("amount_usd_cents")
+      .select("amount_aud_cents")
       .eq("status", "confirmed")
       .gte("created_at", monthStart),
   ]);
 
   const upcomingCount = upcomingRes.count ?? 0;
-  const sumCents = (res: { data: { amount_usd_cents: number | null }[] | null }) =>
-    (res.data ?? []).reduce((s, r) => s + (r.amount_usd_cents ?? 0), 0);
+  const sumCents = (res: { data: { amount_aud_cents: number | null }[] | null }) =>
+    (res.data ?? []).reduce((s, r) => s + (r.amount_aud_cents ?? 0), 0);
   const totalCollected = sumCents(totalRes);
   const revenueThisMonth = sumCents(revRes);
 
@@ -107,7 +107,7 @@ export default async function AioPadPage({ searchParams }: { searchParams: Searc
         ),
     },
     { key: "party_size", header: "Party", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => r.party_size ?? <span className="admin-cell-muted">—</span> },
-    { key: "amount_usd_cents", header: "Amount", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_usd_cents, "usd") },
+    { key: "amount_aud_cents", header: "Amount", sortable: true, align: "right", className: "admin-cell-mono", cell: (r) => formatCents(r.amount_aud_cents, "aud") },
     { key: "status", header: "Status", sortable: true, cell: (r) => (r.status ? <Badge tone={statusTone(r.status)}>{humanize(r.status)}</Badge> : <span className="admin-cell-muted">—</span>) },
     { key: "created_at", header: "Added", sortable: true, cell: (r) => formatDate(r.created_at) },
   ];
@@ -118,8 +118,8 @@ export default async function AioPadPage({ searchParams }: { searchParams: Searc
       {error && <div className="admin-alert admin-alert--err u-mb-4">{error}</div>}
 
       <div className="admin-kpi-grid u-mb-5">
-        <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="USD · confirmed bookings" />
-        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="USD · confirmed bookings" />
+        <MetricCard label="Total Collected" value={formatCents(totalCollected)} sub="AUD · confirmed bookings" />
+        <MetricCard label="Revenue this Month" value={formatCents(revenueThisMonth)} sub="AUD · confirmed bookings" />
         <MetricCard label="Upcoming" value={upcomingCount} sub="start date today or later" />
         <MetricCard label="Confirmed" value={confirmedCount} sub={`of ${total.toLocaleString()} bookings`} />
       </div>
@@ -168,8 +168,8 @@ export default async function AioPadPage({ searchParams }: { searchParams: Searc
                   <dt>Party</dt>
                   <dd className="admin-cell-mono">{r.party_size ?? "—"}</dd>
                   <dt>Amount</dt>
-                  <dd className="admin-cell-mono">{formatCents(r.amount_usd_cents, "usd")}</dd>
-                  {(r.currency ?? "usd").toLowerCase() !== "usd" && (
+                  <dd className="admin-cell-mono">{formatCents(r.amount_aud_cents, "aud")}</dd>
+                  {(r.currency ?? "aud").toLowerCase() !== "aud" && (
                     <>
                       <dt>Native</dt>
                       <dd className="admin-cell-mono">{formatCents(r.amount_cents, r.currency ?? undefined)}</dd>

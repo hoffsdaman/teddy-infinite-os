@@ -41,10 +41,10 @@ export function Redeem({
       <div className="u-stack u-items-end">
         <div className="u-row u-end u-wrap">
           <button type="button" className="admin-btn admin-btn--primary" disabled={pending} onClick={() => pick("work_credit")}>
-            Take {formatCents(workCreditCents, "usd")} work credit
+            Take {formatCents(workCreditCents, "aud")} work credit
           </button>
           <button type="button" className="admin-btn" disabled={pending} onClick={() => pick("cash")}>
-            Take {formatCents(cashCents, "usd")} cash
+            Take {formatCents(cashCents, "aud")} cash
           </button>
         </div>
         {err && <span className="u-sm u-err">{err}</span>}
@@ -57,7 +57,7 @@ export function Redeem({
   return (
     <div className="u-stack u-items-end u-gap-1">
       <button type="button" className="admin-btn admin-btn--sm" disabled={pending} onClick={() => pick(other)}>
-        Switch to {other === "cash" ? `${formatCents(otherAmt, "usd")} cash` : `${formatCents(otherAmt, "usd")} work credit`}
+        Switch to {other === "cash" ? `${formatCents(otherAmt, "aud")} cash` : `${formatCents(otherAmt, "aud")} work credit`}
       </button>
       {err && <span className="u-sm u-err">{err}</span>}
     </div>

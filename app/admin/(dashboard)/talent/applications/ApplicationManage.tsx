@@ -79,10 +79,10 @@ export type AppManageData = {
 };
 
 // A stored timestamp -> the YYYY-MM-DD a <input type="date"> expects. The org
-// operates in Vietnam, so read the instant as its Ho Chi Minh calendar day; a
+// operates in Australia, so read the instant as its Sydney calendar day; a
 // plain UTC slice shows the wrong day for timestamps near midnight. The fixed
 // timezone also keeps SSR and client hydration in agreement.
-const APP_TZ = "Asia/Ho_Chi_Minh";
+const APP_TZ = "Australia/Sydney";
 const toDateInput = (v: string | null): string => {
   if (!v) return "";
   const d = new Date(v);
@@ -1041,7 +1041,7 @@ function ResumeField({ applicationId, resumeDocumentId }: { applicationId: strin
   );
 }
 
-const SALARY_CURRENCIES = ["VND", "USD", "EUR", "GBP", "AUD", "SGD"];
+const SALARY_CURRENCIES = ["AUD"];
 
 function SalaryField({
   personId,
@@ -1055,7 +1055,7 @@ function SalaryField({
   aiFallback: string | null;
 }) {
   const [amount, setAmount] = useState(cents != null ? String(Math.round(cents / 100)) : "");
-  const [cur, setCur] = useState(currency || "VND");
+  const [cur, setCur] = useState(currency || "AUD");
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 

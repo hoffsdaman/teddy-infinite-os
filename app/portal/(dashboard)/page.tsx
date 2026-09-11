@@ -95,7 +95,7 @@ export default async function PortalHome() {
 
   const openInvoices = invoices.filter((inv) => inv.balanceCents > 0);
   const openTotal = openInvoices.reduce((sum, inv) => sum + inv.balanceCents, 0);
-  const openCurrency = openInvoices[0]?.currency ?? "usd";
+  const openCurrency = openInvoices[0]?.currency ?? "aud";
 
   const upcomingEvents = events
     .filter((e) => e.startsAt && e.startsAt.slice(0, 10) >= today && e.status !== "cancelled")

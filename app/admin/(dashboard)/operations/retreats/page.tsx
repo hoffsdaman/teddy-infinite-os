@@ -25,8 +25,8 @@ type EventRow = {
   starts_at: string | null;
   ends_at: string | null;
 };
-type PnlRow = { event_id: string; side: string; actual_usd_cents: number | string | null };
-type OrderEmbed = { amount_usd_cents: number | string | null };
+type PnlRow = { event_id: string; side: string; actual_aud_cents: number | string | null };
+type OrderEmbed = { amount_aud_cents: number | string | null };
 type RegRow = { event_id: string; status: string; orders: OrderEmbed | OrderEmbed[] | null };
 
 const n = (v: number | string | null | undefined): number =>
@@ -44,12 +44,12 @@ export default async function RetreatsPage() {
 
   const [pnlRes, regRes] = await Promise.all([
     ids.length
-      ? companyOs.from("event_pnl_lines").select("event_id, side, actual_usd_cents").in("event_id", ids)
+      ? companyOs.from("event_pnl_lines").select("event_id, side, actual_aud_cents").in("event_id", ids)
       : Promise.resolve({ data: [] }),
     ids.length
       ? companyOs
           .from("event_registrations")
-          .select("event_id, status, orders(amount_usd_cents)")
+          .select("event_id, status, orders(amount_aud_cents)")
           .in("event_id", ids)
       : Promise.resolve({ data: [] }),
   ]);
@@ -58,11 +58,11 @@ export default async function RetreatsPage() {
 
   const rows = events.map((e) => {
     const lines = pnl.filter((l) => l.event_id === e.id);
-    const manualRevenue = lines.filter((l) => l.side === "revenue").reduce((s, l) => s + n(l.actual_usd_cents), 0);
-    const expense = lines.filter((l) => l.side === "expense").reduce((s, l) => s + n(l.actual_usd_cents), 0);
+    const manualRevenue = lines.filter((l) => l.side === "revenue").reduce((s, l) => s + n(l.actual_aud_cents), 0);
+    const expense = lines.filter((l) => l.side === "expense").reduce((s, l) => s + n(l.actual_aud_cents), 0);
     const autoRevenue = regs
       .filter((r) => r.event_id === e.id && COUNTED_STATUSES.has(r.status))
-      .reduce((s, r) => s + n(one(r.orders)?.amount_usd_cents), 0);
+      .reduce((s, r) => s + n(one(r.orders)?.amount_aud_cents), 0);
     const revenue = manualRevenue + autoRevenue;
     return { ev: e, revenue, expense, profit: revenue - expense, lineCount: lines.length };
   });
@@ -77,7 +77,7 @@ export default async function RetreatsPage() {
       <PageHead
         eyebrow="Operations"
         title="Retreats"
-        sub={`${events.length} ${events.length === 1 ? "retreat" : "retreats"} · profit ${formatCents(totals.profit, "usd")} · open a retreat to edit its P&L`}
+        sub={`${events.length} ${events.length === 1 ? "retreat" : "retreats"} · profit ${formatCents(totals.profit, "aud")} · open a retreat to edit its P&L`}
       />
 
       <div className="admin-table-wrap">
@@ -125,13 +125,13 @@ export default async function RetreatsPage() {
                     <Badge tone={statusTone(ev.status)}>{humanize(ev.status)}</Badge>
                   </td>
                   <td className="admin-cell-mono u-right">
-                    {formatCents(revenue, "usd")}
+                    {formatCents(revenue, "aud")}
                   </td>
                   <td className="admin-cell-mono u-right">
-                    {formatCents(expense, "usd")}
+                    {formatCents(expense, "aud")}
                   </td>
                   <td className="admin-cell-mono u-right">
-                    {formatCents(profit, "usd")}
+                    {formatCents(profit, "aud")}
                   </td>
                   <td className="admin-cell-mono u-right">
                     {lineCount || "—"}
@@ -147,13 +147,13 @@ export default async function RetreatsPage() {
                   <strong>Total</strong>
                 </td>
                 <td className="admin-cell-mono u-right">
-                  <strong>{formatCents(totals.revenue, "usd")}</strong>
+                  <strong>{formatCents(totals.revenue, "aud")}</strong>
                 </td>
                 <td className="admin-cell-mono u-right">
-                  <strong>{formatCents(totals.expense, "usd")}</strong>
+                  <strong>{formatCents(totals.expense, "aud")}</strong>
                 </td>
                 <td className="admin-cell-mono u-right">
-                  <strong>{formatCents(totals.profit, "usd")}</strong>
+                  <strong>{formatCents(totals.profit, "aud")}</strong>
                 </td>
                 <td />
               </tr>

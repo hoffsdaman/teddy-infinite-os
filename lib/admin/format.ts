@@ -1,29 +1,16 @@
 // Shared formatters for the admin CRM. Money is always stored as integer cents
 // (bigint columns) — never do float arithmetic on it; format only at the edge.
+// The default currency is AUD, the system base currency (derived *_aud_cents).
 
-export function formatCents(cents: number | string | null | undefined, currency = "usd"): string {
+export function formatCents(cents: number | string | null | undefined, currency = "aud"): string {
   if (cents === null || cents === undefined || cents === "") return "—";
   const n = typeof cents === "string" ? Number(cents) : cents;
   if (!Number.isFinite(n)) return "—";
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: (currency || "usd").toUpperCase(),
+    currency: (currency || "aud").toUpperCase(),
     maximumFractionDigits: 0,
   }).format(n / 100);
-}
-
-// Whole VND (NOT cents). VND is a zero-decimal currency; salary_vnd stores the
-// actual dong amount, so it must not go through formatCents (which divides by
-// 100). e.g. 45000000 -> "₫45,000,000".
-export function formatVndWhole(vnd: number | string | null | undefined): string {
-  if (vnd === null || vnd === undefined || vnd === "") return "—";
-  const n = typeof vnd === "string" ? Number(vnd) : vnd;
-  if (!Number.isFinite(n)) return "—";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "VND",
-    maximumFractionDigits: 0,
-  }).format(n);
 }
 
 export function formatDate(iso: string | null | undefined): string {

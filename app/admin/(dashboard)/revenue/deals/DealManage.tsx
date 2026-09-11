@@ -31,7 +31,7 @@ import {
 } from "./actions";
 import { DealCommunications, ReferrerCompanyField, ReferrerField } from "./DealFields";
 
-const CURRENCIES = ["usd", "eur", "gbp", "aud", "sgd", "vnd"];
+const CURRENCIES = ["aud"];
 
 const LOST_REASONS = [
   ["price", "Price"],
@@ -63,7 +63,7 @@ export type DealManageData = {
   stageId: string | null;
   status: string | null;
   amountCents: number | null;
-  amountUsdCents: number | null;
+  amountAudCents: number | null;
   currency: string | null;
   probability: number | null;
   expectedClose: string | null;
@@ -116,8 +116,8 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
   const isOpen = status === "open";
   const closed = status === "won" || status === "lost";
 
-  const currency = (deal.currency ?? "usd").toLowerCase();
-  const weightedUsd = (deal.amountUsdCents ?? 0) * ((deal.probability ?? 0) / 100);
+  const currency = (deal.currency ?? "aud").toLowerCase();
+  const weightedAud = (deal.amountAudCents ?? 0) * ((deal.probability ?? 0) / 100);
 
   // One inline-edit save: persist through updateDeal, refresh the server data so
   // the header money / forecast recompute, and report the outcome in place.
@@ -244,8 +244,8 @@ export function DealManage({ deal, stages }: { deal: DealManageData; stages: Dea
                 {formatCents(deal.amountCents, currency)}
               </div>
               <div className="admin-cell-muted u-sm u-mt-1 u-tabular">
-                {formatCents(deal.amountUsdCents, "usd")} forecast
-                {deal.probability != null && ` · ${formatCents(Math.round(weightedUsd), "usd")} weighted · ${deal.probability}%`}
+                {formatCents(deal.amountAudCents, "aud")} forecast
+                {deal.probability != null && ` · ${formatCents(Math.round(weightedAud), "aud")} weighted · ${deal.probability}%`}
               </div>
             </div>
             <div className="admin-deal-head-btns">

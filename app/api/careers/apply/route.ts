@@ -15,8 +15,8 @@ import { CAREERS_PUBLIC } from '@/lib/talent-module'
 
 export const runtime = 'nodejs'
 
-const FROM = 'TeddyBed OS Careers <contact@edge8.ai>'
-const DEFAULT_RECIPIENTS = ['mai@edge8.ai']
+const FROM = 'TeddyBed OS Careers <hello@teddybed.com.au>'
+const DEFAULT_RECIPIENTS = ['hello@teddybed.com.au']
 const MAX_RESUME_BYTES = 10 * 1024 * 1024
 const MAX_TEXT_CHARS = 10_000
 

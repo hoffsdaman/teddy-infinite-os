@@ -8,7 +8,7 @@ export type PnlPaymentStatus = "unpaid" | "to_be_paid" | "paid";
 
 // Flat v1 staff rate. The leak guard: retreat cost lines must never expose real
 // wages, so staff cost is a fixed $150/day, not the compensation table.
-export const STAFF_DAY_RATE_USD_CENTS = 15000; // $150/day
+export const STAFF_DAY_RATE_AUD_CENTS = 15000; // A$150/day
 
 export const EXPENSE_CLASSIFICATIONS = [
   "accommodation",
@@ -58,10 +58,10 @@ export type PnlLine = {
   staffDays: number | null;
   estimatedCents: number | null;
   estimatedCurrency: string | null;
-  estimatedUsdCents: number | null;
+  estimatedAudCents: number | null;
   actualCents: number | null;
   actualCurrency: string | null;
-  actualUsdCents: number | null;
+  actualAudCents: number | null;
   paymentStatus: PnlPaymentStatus;
   note: string | null;
   sortOrder: number;
@@ -83,37 +83,37 @@ export type PnlLineInput = {
   sortOrder?: number;
 };
 
-// Pure totals (all in USD cents). `autoRevenueUsdCents` is the read-only Stripe
+// Pure totals (all in AUD cents). `autoRevenueAudCents` is the read-only Stripe
 // revenue already captured via orders, added to the manual revenue lines.
 export type PnlSummary = {
-  revenueEstimatedUsd: number;
-  revenueActualUsd: number;
-  expenseEstimatedUsd: number;
-  expenseActualUsd: number;
-  profitEstimatedUsd: number;
-  profitActualUsd: number;
+  revenueEstimatedAud: number;
+  revenueActualAud: number;
+  expenseEstimatedAud: number;
+  expenseActualAud: number;
+  profitEstimatedAud: number;
+  profitActualAud: number;
 };
 
-export function summarizePnl(lines: PnlLine[], autoRevenueUsdCents = 0): PnlSummary {
-  let revEst = autoRevenueUsdCents;
-  let revAct = autoRevenueUsdCents;
+export function summarizePnl(lines: PnlLine[], autoRevenueAudCents = 0): PnlSummary {
+  let revEst = autoRevenueAudCents;
+  let revAct = autoRevenueAudCents;
   let expEst = 0;
   let expAct = 0;
   for (const l of lines) {
     if (l.side === "revenue") {
-      revEst += l.estimatedUsdCents ?? 0;
-      revAct += l.actualUsdCents ?? 0;
+      revEst += l.estimatedAudCents ?? 0;
+      revAct += l.actualAudCents ?? 0;
     } else {
-      expEst += l.estimatedUsdCents ?? 0;
-      expAct += l.actualUsdCents ?? 0;
+      expEst += l.estimatedAudCents ?? 0;
+      expAct += l.actualAudCents ?? 0;
     }
   }
   return {
-    revenueEstimatedUsd: revEst,
-    revenueActualUsd: revAct,
-    expenseEstimatedUsd: expEst,
-    expenseActualUsd: expAct,
-    profitEstimatedUsd: revEst - expEst,
-    profitActualUsd: revAct - expAct,
+    revenueEstimatedAud: revEst,
+    revenueActualAud: revAct,
+    expenseEstimatedAud: expEst,
+    expenseActualAud: expAct,
+    profitEstimatedAud: revEst - expEst,
+    profitActualAud: revAct - expAct,
   };
 }

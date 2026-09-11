@@ -27,8 +27,8 @@ export type EventRow = {
   effectiveAttendees: number;
   registeredCount: number;
   totalCount: number;
-  fromUsdCents: number;
-  collectedUsdCents: number;
+  fromAudCents: number;
+  collectedAudCents: number;
 };
 
 const PAGE_SIZES = [25, 50, 100];
@@ -69,9 +69,9 @@ function sortValue(r: EventRow, k: SortKey): string | number {
     case "attendees":
       return r.effectiveAttendees;
     case "from":
-      return r.tiers.length === 0 ? 0 : r.fromUsdCents;
+      return r.tiers.length === 0 ? 0 : r.fromAudCents;
     case "collected":
-      return r.collectedUsdCents;
+      return r.collectedAudCents;
     case "status":
       return r.status;
   }
@@ -278,10 +278,10 @@ export function EventsTable({ rows }: { rows: EventRow[] }) {
                       {r.effectiveAttendees > 0 ? r.effectiveAttendees : <span className="admin-cell-muted">—</span>}
                     </td>
                     <td className="admin-cell-mono u-right">
-                      {r.tiers.length === 0 ? "Free" : formatCents(r.fromUsdCents, "usd")}
+                      {r.tiers.length === 0 ? "Free" : formatCents(r.fromAudCents, "aud")}
                     </td>
                     <td className="admin-cell-mono u-right">
-                      {formatCents(r.collectedUsdCents, "usd")}
+                      {formatCents(r.collectedAudCents, "aud")}
                     </td>
                     <td>{eventStatusBadge(r.status, r.archivedAt)}</td>
                   </tr>

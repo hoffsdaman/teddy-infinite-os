@@ -154,7 +154,7 @@ export function StartHerePanel({ coreTeaching, recentPosts, roleBucket }: Props)
           </span>
           <ol className="admin-start-cta-steps">
             <li>
-              Sign up at <b>aiolabz.com</b> using your <b>@edge8.ai</b> company email.
+              Sign up at <b>aiolabz.com</b> using your <b>@teddybed.com.au</b> company email.
             </li>
             <li>
               Complete the <b>AI Officer Generative AI</b> certification during your probation.

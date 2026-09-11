@@ -69,14 +69,9 @@ Add to the Vercel project (Production, and Preview if you want it there too):
 sees the new vars. Until they are set, the cron is a safe no-op
 (`{ ok:false, skipped:"Shopify not configured" }`).
 
-Optional but recommended for correct USD reporting: add an AUD row to
-`company_os.fx_rates` (else `amount_usd_cents` equals the AUD cents, because the
-`set_amount_usd_cents` trigger falls back to a rate of 1):
-
-```sql
-insert into company_os.fx_rates (currency, rate_to_usd) values ('aud', 0.66)
-  on conflict (currency) do update set rate_to_usd = excluded.rate_to_usd;
-```
+AUD is the base reporting currency (since `docs/db/2026-09-11-aud-base-currency.sql`),
+so Shopify's AUD orders land in `amount_aud_cents` at rate 1 — no FX row is
+needed for them. Other currencies convert via `company_os.fx_rates.rate_to_aud`.
 
 ## Step 4 — Run the backfill
 

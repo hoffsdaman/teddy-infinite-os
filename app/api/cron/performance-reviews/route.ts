@@ -16,7 +16,7 @@ export async function GET(req: Request) {
 
   // ?dry=1 previews the day's volume without opening cycles or sending mail.
   const dryRun = new URL(req.url).searchParams.get("dry") === "1";
-  const todayISO = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  const todayISO = new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
   const result = await runReviewScheduler(todayISO, { dryRun });
   return NextResponse.json({
     dryRun,

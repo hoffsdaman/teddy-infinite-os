@@ -34,7 +34,7 @@ export const metadata = {
 };
 
 const PAGE_SIZES = [25, 50, 100];
-const SORTABLE = new Set(["asset_tag", "name", "type", "status", "purchase_date", "cost_vnd", "holder"]);
+const SORTABLE = new Set(["asset_tag", "name", "type", "status", "purchase_date", "cost_aud", "holder"]);
 
 // "Assigned to" is a joined column, so it sorts through PostgREST's embedded
 // ordering on the aliased embed rather than a column on equipment itself. The
@@ -125,12 +125,12 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Se
       cell: (r) => (r.purchase_date ? formatDate(r.purchase_date) : <span className="admin-cell-muted">—</span>),
     },
     {
-      key: "cost_vnd",
-      header: "Cost",
+      key: "cost_aud",
+      header: "Cost (AUD)",
       sortable: true,
       cell: (r) =>
-        r.cost_vnd !== null && r.cost_vnd !== undefined ? (
-          <span className="admin-cell-mono">{Number(r.cost_vnd).toLocaleString("en-US")}</span>
+        r.cost_aud !== null && r.cost_aud !== undefined ? (
+          <span className="admin-cell-mono">A${Number(r.cost_aud).toLocaleString("en-US")}</span>
         ) : (
           <span className="admin-cell-muted">—</span>
         ),
@@ -140,7 +140,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Se
   const sub =
     `${total.toLocaleString()} ${total === 1 ? "item" : "items"}` +
     ` · ${summary.inUse} in use · ${summary.inStock} in stock` +
-    ` · ${summary.valueVnd.toLocaleString("en-US")} VND on the register` +
+    ` · A$${summary.valueAud.toLocaleString("en-US")} on the register` +
     (showArchived ? " · showing archived" : "");
 
   return (

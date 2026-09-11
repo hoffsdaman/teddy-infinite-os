@@ -35,7 +35,7 @@ export default async function PortalReferralsPage() {
           <div className="u-mt-4">
             <a
               className="admin-btn admin-btn--primary"
-              href="mailto:hello@edge8.ai?subject=Referral%20program%20sign-up"
+              href="mailto:hello@teddybed.com.au?subject=Referral%20program%20sign-up"
             >
               Contact us to sign up
             </a>
@@ -61,9 +61,9 @@ export default async function PortalReferralsPage() {
       </div>
 
       <div className="admin-kpi-grid u-mb-5">
-        <MetricCard label="Work credit" value={formatCents(data.workCreditTotalCents, "usd")} sub="chosen as credit" />
-        <MetricCard label="Cash" value={formatCents(data.cashTotalCents, "usd")} sub="chosen as cash" />
-        <MetricCard label="Awaiting payment" value={formatCents(data.unpaidCents, "usd")} sub="redeemed, not yet paid" />
+        <MetricCard label="Work credit" value={formatCents(data.workCreditTotalCents, "aud")} sub="chosen as credit" />
+        <MetricCard label="Cash" value={formatCents(data.cashTotalCents, "aud")} sub="chosen as cash" />
+        <MetricCard label="Awaiting payment" value={formatCents(data.unpaidCents, "aud")} sub="redeemed, not yet paid" />
         <MetricCard label="Awaiting your choice" value={data.pendingCount} sub="commissions to redeem" />
       </div>
 
@@ -77,7 +77,7 @@ export default async function PortalReferralsPage() {
               <div className="admin-list-row" key={c.id}>
                 <div className="admin-list-main">
                   <div className="admin-list-title">
-                    {formatCents(c.grossCents, "usd")} <span className="admin-cell-muted">referral value</span>
+                    {formatCents(c.grossCents, "aud")} <span className="admin-cell-muted">referral value</span>
                   </div>
                   <div className="admin-list-sub">
                     {c.sourceLabel}
@@ -85,7 +85,7 @@ export default async function PortalReferralsPage() {
                       <>
                         {" · "}
                         <strong>
-                          {c.redemptionChoice === "work_credit" ? "Work credit" : "Cash"} {formatCents(c.commissionCents, "usd")}
+                          {c.redemptionChoice === "work_credit" ? "Work credit" : "Cash"} {formatCents(c.commissionCents, "aud")}
                         </strong>
                         {c.paidOut ? " · paid" : " · awaiting payment"}
                       </>

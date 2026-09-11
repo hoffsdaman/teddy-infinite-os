@@ -85,7 +85,7 @@ export default async function CompanyDetailPage({
         ? { href: "/admin/revenue/clients", label: "← Clients" }
         : { href: "/admin/revenue/companies", label: "← Companies" };
 
-  const dealValueCents = deals.reduce((s, d) => s + (d.amount_usd_cents ?? d.amount_cents ?? 0), 0);
+  const dealValueCents = deals.reduce((s, d) => s + (d.amount_aud_cents ?? d.amount_cents ?? 0), 0);
   const affiliateContacts = people.filter((p) => p.affiliateActive);
   const showAffiliateCard = !!companyAffiliate?.active || affiliateContacts.length > 0;
 
@@ -131,9 +131,9 @@ export default async function CompanyDetailPage({
                       <div className="admin-cell-muted u-mb-1 u-sm">This company is an affiliate</div>
                       <div className="u-row u-wrap">
                         {companyAffiliate.code && <Badge tone="ok">{companyAffiliate.code}</Badge>}
-                        <span className="admin-cell-strong">{formatCents(companyAffiliate.realizedCents, "usd")} earned</span>
+                        <span className="admin-cell-strong">{formatCents(companyAffiliate.realizedCents, "aud")} earned</span>
                         {companyAffiliate.unpaidCents > 0 && (
-                          <span className="admin-cell-muted">· {formatCents(companyAffiliate.unpaidCents, "usd")} unpaid</span>
+                          <span className="admin-cell-muted">· {formatCents(companyAffiliate.unpaidCents, "aud")} unpaid</span>
                         )}
                       </div>
                     </div>
@@ -479,7 +479,7 @@ export default async function CompanyDetailPage({
         )}
         <span className="admin-cell-muted u-sm">
           {deals.length} {deals.length === 1 ? "deal" : "deals"}
-          {dealValueCents ? ` · ${formatCents(dealValueCents, "usd")} total` : ""} ·{" "}
+          {dealValueCents ? ` · ${formatCents(dealValueCents, "aud")} total` : ""} ·{" "}
           <Link href={`/admin/revenue/deals?company=${company.id}`}>Open in CRM →</Link>
         </span>
       </div>

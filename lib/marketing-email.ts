@@ -15,11 +15,11 @@ import { PALETTE as P } from "@/lib/design/palette";
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-const DEFAULT_FROM = process.env.MARKETING_EMAIL_FROM || "TeddyBed OS <hello@edge8.ai>";
+const DEFAULT_FROM = process.env.MARKETING_EMAIL_FROM || "TeddyBed OS <hello@teddybed.com.au>";
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://teddy-infinite-os.vercel.app").replace(/\/$/, "");
 
 // CAN-SPAM requires a physical postal address on commercial email.
-const POSTAL_ADDRESS = process.env.MARKETING_POSTAL_ADDRESS || "TeddyBed OS, Ho Chi Minh City, Vietnam";
+const POSTAL_ADDRESS = process.env.MARKETING_POSTAL_ADDRESS || "TeddyBed OS, Sydney, Australia";
 
 // ------------------------------------------------------------------- tokens
 

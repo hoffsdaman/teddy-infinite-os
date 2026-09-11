@@ -43,7 +43,7 @@ export function TokenPurchaseCard() {
         ))}
       </div>
       <div className="u-sm">
-        {packs * PACK_TOKENS} tokens · <strong>{formatCents(packs * PACK_PRICE_CENTS, "usd")}</strong>
+        {packs * PACK_TOKENS} tokens · <strong>{formatCents(packs * PACK_PRICE_CENTS, "aud")}</strong>
       </div>
       {err && <div className="admin-alert admin-alert--err">{err}</div>}
       <div>

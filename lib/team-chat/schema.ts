@@ -11,7 +11,7 @@ You can read the tables listed below and NOTHING else. All tables live in the
 "company_os" schema; the connection's search_path is company_os, so unqualified
 names resolve. Timestamps are timestamptz. IDs are uuid. Money is stored in
 *_cents (bigint minor units) with a sibling "currency" column; divide by 100 for
-a display amount, and prefer *_usd_cents columns when adding value across
+a display amount, and prefer *_aud_cents columns when adding value across
 currencies. Many tables have archived_at (soft delete) — treat archived_at IS
 NULL as "active" unless asked about archived records.
 
@@ -38,16 +38,16 @@ NULL as "active" unless asked about archived records.
 - pipelines + pipeline_stages — stages in order (0 New, 1 Contacted, 2 Discovery,
   3 Proposal, 4 Won [is_won], 5 Lost [is_lost]). Join deals.stage_id.
 - deals — id, title, pipeline_id, stage_id, person_id, company_id, amount_cents +
-  currency, amount_usd_cents + fx_rate, status (open|won|lost), probability,
+  currency, amount_aud_cents + fx_rate, status (open|won|lost), probability,
   owner_id, service_line_id, expected_close_date, closed_at, archived_at.
-  Prefer amount_usd_cents when comparing/aggregating deal value.
+  Prefer amount_aud_cents when comparing/aggregating deal value.
 - inquiries — inbound contact-form / partner messages.
 - service_lines — business units / offerings (e.g. staffing, AI program).
 - affiliates + affiliate_commissions + affiliate_payouts — referral program.
 
 ### Commerce & finance (all amounts in *_cents)
 - products — sellable items/events/programs.
-- orders — purchases: person_id, product_id, amount_cents, amount_usd_cents,
+- orders — purchases: person_id, product_id, amount_cents, amount_aud_cents,
   tax_cents, refunded_cents, currency, status, created_at.
 - subscriptions — recurring (currently empty).
 - invoices — QuickBooks-synced customer invoices: company_id, customer_name,
@@ -55,7 +55,7 @@ NULL as "active" unless asked about archived records.
   (paid|open|overdue|voided), lines (jsonb). Recognized revenue lives here.
 - expenses — costs: vendor_id, amount_cents, currency, category, txn_type,
   incurred_on, description, paid, lines (jsonb).
-- vendors — suppliers. fx_rates — currency, rate_to_usd.
+- vendors — suppliers. fx_rates — currency, rate_to_aud.
 
 ### People & org
 - team_members — employment record, one per staff person: person_id -> people.id,
