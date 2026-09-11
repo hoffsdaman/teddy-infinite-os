@@ -5,11 +5,12 @@ import './globals.css'
 import './styles/site-components.css'
 import './styles/utilities.css'
 import SiteFrame from '@/components/SiteFrame'
-import { getSiteOrigin } from '@/lib/site-origin'
 
 export const metadata: Metadata = {
   // Social-image and canonical URLs resolve against THIS app, not the shop.
-  metadataBase: new URL(getSiteOrigin()),
+  // Read the env directly: metadata is evaluated at build time, where the
+  // request-scoped getSiteOrigin() (it reads headers()) is not available.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://teddy-infinite-os.vercel.app'),
   title: { default: 'TeddyBed OS', template: '%s · TeddyBed OS' },
   description:
     "The single sign-in for everyone who runs Australia's premium kids bed & mattress brand.",
