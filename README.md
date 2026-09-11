@@ -196,6 +196,7 @@ must match exactly; the app reads them directly.
 | `SUPABASE_SECRET_KEY` | Supabase → service-role key. **Server-only.** Never prefix with `NEXT_PUBLIC_` |
 | `SUPABASE_URL` | same value as `NEXT_PUBLIC_SUPABASE_URL` |
 | `CRON_SECRET` | generate: `openssl rand -hex 32` |
+| `CHATBOT_DB_URL` | the admin assistant's read-only database connection. Give the `chatbot_reader` role a password (`alter role chatbot_reader with login password '<generated>'`), then use the **transaction pooler** URL: `postgresql://chatbot_reader.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres`. Without it the assistant answers every question with "database connection isn't available" |
 | `ANTHROPIC_API_KEY` | **the operator pastes this themselves — see [Step 8](#step-8--hand-over-to-the-operator)** |
 
 `CRON_SECRET` is **not** optional. Every cron route refuses to run without it
@@ -378,6 +379,7 @@ not.
 | `/admin` renders while signed out | auth misconfigured — investigate, do not work around |
 | Assistant returns 503 | `ANTHROPIC_API_KEY` missing |
 | Assistant returns a permission error on every query | schema applied without the `chatbot_reader` role and its grants |
+| Assistant says the database connection isn't available | `CHATBOT_DB_URL` unset, or `chatbot_reader` has no login/password |
 | Cron routes return 401 | `CRON_SECRET` unset. They fail closed on purpose |
 | Emails silently do nothing | `RESEND_API_KEY` unset; sends are skipped and logged |
 | Checkout 503 on webhook | `STRIPE_WEBHOOK_SECRET` unset; verification fails closed |
