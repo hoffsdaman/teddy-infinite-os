@@ -8,9 +8,10 @@ import { signOut } from "@/app/admin/(dashboard)/actions";
 // Nav is data-driven. `enabled: false` items render muted with a "soon" tag and
 // are not navigable — flip them to `true` (and build the route) as each phase
 // ships, so the shell always looks complete without dead 404 links.
-type NavItem = { label: string; href: string; ico: string; enabled?: boolean; superAdmin?: boolean };
-// `superAdmin: true` restricts a subsection (or a top-level item) to super
-// admins (Dave & Mai). It is hidden for everyone else; the routes are gated
+type NavItem = { label: string; href: string; ico: string; enabled?: boolean; superAdmin?: boolean; tracksTime?: boolean };
+// `tracksTime: true` shows an item only to admins who log their hours
+// (admins.tracks_time). `superAdmin: true` restricts a subsection (or a
+// top-level item) to super admins. It is hidden for everyone else; the routes are gated
 // server-side regardless (ATS route layouts + action gates), so this is a nav
 // convenience, not the boundary.
 type NavSubsection = { subheading: string; items: NavItem[]; superAdmin?: boolean };
@@ -51,6 +52,8 @@ const NAV: NavSection[] = [
           { label: "Contacts", href: "/admin/contacts", ico: "⚇", enabled: true },
           { label: "Support", href: "/admin/support", ico: "☎", enabled: true },
           { label: "Orders", href: "/admin/revenue/orders", ico: "⛁", enabled: true },
+          { label: "My time", href: "/admin/time", ico: "◷", enabled: true, tracksTime: true },
+          { label: "Team time", href: "/admin/time/team", ico: "◶", enabled: true, superAdmin: true },
         ],
       },
       {
@@ -135,16 +138,22 @@ function initials(email: string): string {
   return raw.toUpperCase();
 }
 
-// Support-role admins are contained to /admin/support (enforced in middleware).
-// Their sidebar shows only that surface — the full NAV is not just hidden but
-// never rendered for them.
+// Support-role admins are contained to Support, Contacts, Orders and their own
+// time log (enforced in middleware). Support comes first because it is where
+// they land — they have no Dashboard. The full NAV is not just hidden but never
+// rendered for them.
 const SUPPORT_ONLY_NAV: NavSection[] = [
   {
     section: null,
     groups: [
       {
         label: null,
-        items: [{ label: "Support", href: "/admin/support", ico: "☎", enabled: true }],
+        items: [
+          { label: "Support", href: "/admin/support", ico: "☎", enabled: true },
+          { label: "Contacts", href: "/admin/contacts", ico: "⚇", enabled: true },
+          { label: "Orders", href: "/admin/revenue/orders", ico: "⛁", enabled: true },
+          { label: "My time", href: "/admin/time", ico: "◷", enabled: true, tracksTime: true },
+        ],
       },
     ],
   },
@@ -156,12 +165,14 @@ export function AdminSidebar({
   canSwitchToTeam,
   isSuperAdmin,
   isSupportOnly = false,
+  tracksTime = false,
 }: {
   user: { email: string };
   avatarUrl: string | null;
   canSwitchToTeam: boolean;
   isSuperAdmin: boolean;
   isSupportOnly?: boolean;
+  tracksTime?: boolean;
 }) {
   const nav = isSupportOnly ? SUPPORT_ONLY_NAV : NAV;
   const pathname = usePathname() ?? "";
@@ -405,7 +416,7 @@ export function AdminSidebar({
                   ? entry.superAdmin && !isSuperAdmin
                     ? null
                     : renderSubsection(entry, label)
-                  : entry.superAdmin && !isSuperAdmin
+                  : (entry.superAdmin && !isSuperAdmin) || (entry.tracksTime && !tracksTime)
                     ? null
                     : renderItem(entry, false),
               )}

@@ -210,6 +210,51 @@ export async function updateAdmin(
   return { ok: true, message: "Admin updated." };
 }
 
+// Log Time settings: whether this admin logs shifts, and the timezone they're
+// shown in. Separate from updateAdmin so the Level/Name edit keeps working
+// before docs/db/2026-10-26-time-log.sql adds the columns.
+export async function updateAdminTimeTracking(
+  id: string,
+  fields: { tracksTime: boolean; timeZone: string },
+): Promise<Result> {
+  const admin = await requireAdmin();
+
+  try {
+    new Intl.DateTimeFormat("en", { timeZone: fields.timeZone });
+  } catch {
+    return { ok: false, error: "Pick a valid timezone." };
+  }
+
+  const { data: row, error: rErr } = await companyOs
+    .from("admins")
+    .select("id, person_id, tracks_time, time_zone")
+    .eq("id", id)
+    .maybeSingle();
+  if (rErr) return { ok: false, error: "Time tracking isn't set up yet — run docs/db/2026-10-26-time-log.sql first." };
+  if (!row) return { ok: false, error: "Admin not found." };
+  if (fields.tracksTime && !row.person_id) {
+    return { ok: false, error: "This admin isn't linked to an employee record, so they can't log time." };
+  }
+  if (row.tracks_time === fields.tracksTime && row.time_zone === fields.timeZone) return { ok: true };
+
+  const { error } = await companyOs
+    .from("admins")
+    .update({ tracks_time: fields.tracksTime, time_zone: fields.timeZone })
+    .eq("id", id);
+  if (error) return { ok: false, error: error.message };
+
+  await recordAudit({
+    table: "admins",
+    recordId: id,
+    operation: "update",
+    actor: admin.email,
+    oldData: { tracks_time: row.tracks_time, time_zone: row.time_zone },
+    newData: { tracks_time: fields.tracksTime, time_zone: fields.timeZone },
+  });
+  refresh();
+  return { ok: true };
+}
+
 export async function resendAccessLink(id: string): Promise<Result> {
   await requireAdmin();
   const { data: row, error } = await companyOs

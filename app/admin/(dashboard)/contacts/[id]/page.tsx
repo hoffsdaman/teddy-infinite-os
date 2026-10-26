@@ -136,29 +136,9 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
         </div>
       ),
     },
-    {
-      key: "deals",
-      label: "Deals",
-      count: deals.length,
-      content: deals.length === 0 ? (
-        <Empty text="No deals." />
-      ) : (
-        <div className="admin-list">
-          {deals.map((d) => (
-            <div className="admin-list-row" key={d.id}>
-              <div className="admin-list-main">
-                <div className="admin-list-title">{d.title || "Untitled deal"}</div>
-                <div className="admin-list-sub">{timeAgo(d.created_at)}</div>
-              </div>
-              <div className="admin-list-aside">
-                <strong className="admin-cell-mono">{formatCents(d.amount_aud_cents, "aud")}</strong>
-                <Badge tone={statusTone(d.status)}>{humanize(d.status)}</Badge>
-              </div>
-            </div>
-          ))}
-        </div>
-      ),
-    },
+    // Deals and companies aren't used at TeddyBed, so the profile doesn't show
+    // them (no Deals tab, no Company row). The data is still read: isCustomer
+    // and the Assume / Client portal controls depend on it.
     {
       key: "orders",
       label: "Orders",
@@ -363,17 +343,6 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
             <dl className="admin-kv">
               <dt>Email</dt>
               <dd>{person.email}</dd>
-              <dt>Company</dt>
-              <dd>
-                {primaryCompany ? (
-                  <Link href={`/admin/revenue/companies/${primaryCompany.company_id}`}>
-                    {primaryCompany.name || "—"}
-                  </Link>
-                ) : (
-                  "—"
-                )}
-                {primaryCompany?.title ? ` · ${primaryCompany.title}` : ""}
-              </dd>
               <dt>Location</dt>
               <dd>{location || "—"}</dd>
               <dt>Timezone</dt>
