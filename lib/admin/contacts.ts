@@ -73,12 +73,15 @@ export async function getPerson360(id: string): Promise<Person360 | null> {
   // Fire the person lookup in the SAME batch as the related reads: none of them
   // depend on the person row (they all key on the same `id`), so serializing the
   // person query first was one wasted round-trip wave. Null-check after.
-  const [personRes, leadRows, profileRows, inquiries, deals, orders, bookings, applicationRows, documents, surveyResponses, interactions, participantRows, transitions, companyLinks] =
+  const [personRes, leadRows, profileRows, inquiryRows, supportRows, deals, orders, bookings, applicationRows, documents, surveyResponses, interactions, participantRows, transitions, companyLinks] =
     await Promise.all([
       companyOs.from("people").select("*").eq("id", id).maybeSingle(),
       safe(companyOs.from("lead").select("status, sla_due_at, attempt_count, disqualified_reason").eq("person_id", id)),
       safe(companyOs.from("candidate_profile").select("headline, current_title, portfolio_url, do_not_hire, pool_status").eq("person_id", id)),
       safe(companyOs.from("inquiries").select("id, type, subject, status, source, created_at, deal_id").eq("person_id", id).order("created_at", { ascending: false })),
+      // Support tickets are tasks on the "support" board (see lib/support.ts),
+      // linked to the person via subject_id. They show under Inquiries too.
+      safe(companyOs.from("tasks").select("id, title, created_at, metadata, boards!inner(slug), board_columns(name)").eq("subject_type", "person").eq("subject_id", id).eq("boards.slug", "support").is("parent_task_id", null).is("archived_at", null)),
       safe(companyOs.from("deals").select("id, title, amount_cents, amount_aud_cents, currency, status, stage_id, created_at").eq("person_id", id).order("created_at", { ascending: false })),
       safe(companyOs.from("orders").select("id, amount_cents, amount_aud_cents, currency, status, payment_method, created_at").eq("person_id", id).order("created_at", { ascending: false })),
       safe(companyOs.from("bookings").select("id, kind, start_date, end_date, party_size, amount_cents, amount_aud_cents, currency, status, created_at").eq("person_id", id).order("created_at", { ascending: false })),
@@ -123,7 +126,21 @@ export async function getPerson360(id: string): Promise<Person360 | null> {
     person,
     lead: (leadRows[0] as PersonLead | undefined) ?? null,
     candidateProfile: (profileRows[0] as CandidateProfile | undefined) ?? null,
-    inquiries: inquiries as Person360["inquiries"],
+    inquiries: [
+      ...(inquiryRows as Person360["inquiries"]),
+      ...(supportRows as Array<{ id: string; title: string; created_at: string; metadata: { ticket_no?: string; channel?: string } | null; board_columns: { name: string } | Array<{ name: string }> | null }>).map((t) => {
+        const col = Array.isArray(t.board_columns) ? t.board_columns[0] : t.board_columns;
+        return {
+          id: t.id,
+          type: "support_ticket",
+          subject: t.metadata?.ticket_no ? `${t.metadata.ticket_no} · ${t.title}` : t.title,
+          status: col?.name ?? null,
+          source: t.metadata?.channel ?? null,
+          created_at: t.created_at,
+          deal_id: null,
+        };
+      }),
+    ].sort((a, b) => b.created_at.localeCompare(a.created_at)),
     deals: deals as Person360["deals"],
     orders: orders as Person360["orders"],
     bookings: bookings as Person360["bookings"],
