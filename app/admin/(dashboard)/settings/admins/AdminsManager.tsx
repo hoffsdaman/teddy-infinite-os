@@ -7,7 +7,10 @@ import { ConfirmButton } from "@/components/admin/ConfirmButton";
 import { PersonSelect } from "@/components/admin/PersonSelect";
 import { formatDate } from "@/lib/admin/format";
 import type { AdminEmployeeOption, AdminListRow } from "@/lib/admin/admins";
-import { addAdmin, deleteAdmin, resendAccessLink, updateAdmin } from "./actions";
+import { addAdmin, deleteAdmin, resendAccessLink, updateAdmin, updateAdminTimeTracking } from "./actions";
+
+// Zones offered for Log Time. The admin's current zone is added if it isn't here.
+const TIME_ZONES = ["Asia/Manila", "Asia/Ho_Chi_Minh", "Australia/Sydney"];
 
 type ActionResult = { ok: true; message?: string } | { ok: false; error: string };
 
@@ -21,10 +24,12 @@ export function AdminsManager({
   rows,
   employees,
   currentEmail,
+  timeTrackingReady,
 }: {
   rows: AdminListRow[];
   employees: AdminEmployeeOption[];
   currentEmail: string;
+  timeTrackingReady: boolean;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -34,9 +39,13 @@ export function AdminsManager({
   const [newSuperAdmin, setNewSuperAdmin] = useState(false);
 
   // Row being edited in the modal, with its draft field values.
-  const [editing, setEditing] = useState<{ id: string; name: string; superAdmin: boolean } | null>(
-    null,
-  );
+  const [editing, setEditing] = useState<{
+    id: string;
+    name: string;
+    superAdmin: boolean;
+    tracksTime: boolean;
+    timeZone: string;
+  } | null>(null);
 
   const employeeOptions = useMemo(
     () => employees.map((e) => ({ value: e.personId, label: e.name })),
@@ -71,7 +80,15 @@ export function AdminsManager({
     e.preventDefault();
     if (!editing) return;
     run(
-      () => updateAdmin(editing.id, { displayName: editing.name, canViewSensitive: editing.superAdmin }),
+      async () => {
+        const res = await updateAdmin(editing.id, { displayName: editing.name, canViewSensitive: editing.superAdmin });
+        if (!res.ok || !timeTrackingReady) return res;
+        const timeRes = await updateAdminTimeTracking(editing.id, {
+          tracksTime: editing.tracksTime,
+          timeZone: editing.timeZone,
+        });
+        return timeRes.ok ? res : timeRes;
+      },
       "Admin updated.",
       () => setEditing(null),
     );
@@ -174,6 +191,7 @@ export function AdminsManager({
                         {r.displayName && <div className="admin-cell-muted">{r.email}</div>}
                         <div className="u-row u-gap-2 u-mt-1">
                           {isSelf && <Badge tone="info">You</Badge>}
+                          {r.tracksTime && <Badge tone="ok">Tracks time</Badge>}
                           {r.id && !r.personId && (
                             <span title="This admin isn't linked to an employee record. New admins are added from the employee list.">
                               <Badge tone="warn">Unlinked</Badge>
@@ -206,6 +224,8 @@ export function AdminsManager({
                                   id: r.id!,
                                   name: r.displayName ?? "",
                                   superAdmin: r.canViewSensitive,
+                                  tracksTime: r.tracksTime,
+                                  timeZone: r.timeZone,
                                 })
                               }
                             >
@@ -303,6 +323,38 @@ export function AdminsManager({
                   Super Admins can view and edit wages and PII. Plain Admins cannot.
                 </p>
               </div>
+              {timeTrackingReady && (
+                <>
+                  <label className="u-row u-gap-2">
+                    <input
+                      type="checkbox"
+                      checked={editing.tracksTime}
+                      onChange={(e) => setEditing({ ...editing, tracksTime: e.target.checked })}
+                    />
+                    <span className="admin-label">Tracks time</span>
+                  </label>
+                  {editing.tracksTime && (
+                    <div className="admin-field">
+                      <label className="admin-label" htmlFor="edit-tz">Timezone</label>
+                      <select
+                        id="edit-tz"
+                        className="admin-select"
+                        value={editing.timeZone}
+                        onChange={(e) => setEditing({ ...editing, timeZone: e.target.value })}
+                      >
+                        {[...new Set([editing.timeZone, ...TIME_ZONES])].map((tz) => (
+                          <option key={tz} value={tz}>
+                            {tz}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="admin-cell-muted u-m-0 u-mt-2 u-sm">
+                        They get the shift pill and My time. Their shifts are shown in this timezone.
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
               <div className="admin-modal-actions">
                 <button
                   type="button"

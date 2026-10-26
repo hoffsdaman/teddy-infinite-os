@@ -1,6 +1,7 @@
 import { supabase, companyOs } from "@/lib/supabase";
 import { envAllowlist } from "@/lib/admin-auth";
 import { byFirstName, personName } from "@/lib/people-name";
+import { DEFAULT_TIME_ZONE } from "@/lib/time-log-format";
 
 // Data layer for Settings → Admins. Emails are stored lowercase (unique on
 // lower(email)); every write path must normalize before hitting the table.
@@ -13,6 +14,8 @@ export type AdminListRow = {
   displayName: string | null;
   personId: string | null; // linked employee (company_os.people); null for env/owner rows
   canViewSensitive: boolean; // true = Super Admin (wages + PII)
+  tracksTime: boolean; // Log Time: gets the shift pill + My time
+  timeZone: string; // Log Time: zone their shifts are shown in
   createdAt: string | null;
   createdBy: string | null;
   source: AdminSource;
@@ -63,12 +66,24 @@ type AdminDbRow = {
 };
 
 // DB rows plus env-only entries, each enriched with login status.
-export async function listAdmins(): Promise<{ rows: AdminListRow[]; error: string | null }> {
+// timeTrackingReady is false until docs/db/2026-10-26-time-log.sql adds the
+// tracks_time / time_zone columns; read separately so the page still loads
+// without them.
+export async function listAdmins(): Promise<{
+  rows: AdminListRow[];
+  error: string | null;
+  timeTrackingReady: boolean;
+}> {
   const { data, error } = await companyOs
     .from("admins")
     .select("id, email, display_name, person_id, can_view_sensitive, created_at, created_by")
     .order("created_at", { ascending: true });
-  if (error) return { rows: [], error: error.message };
+  if (error) return { rows: [], error: error.message, timeTrackingReady: false };
+
+  const { data: timeData, error: timeError } = await companyOs.from("admins").select("id, tracks_time, time_zone");
+  const timeById = new Map(
+    ((timeData ?? []) as { id: string; tracks_time: boolean; time_zone: string }[]).map((r) => [r.id, r]),
+  );
 
   const dbRows = (data ?? []) as AdminDbRow[];
   const dbEmails = new Set(dbRows.map((r) => r.email.toLowerCase()));
@@ -88,6 +103,8 @@ export async function listAdmins(): Promise<{ rows: AdminListRow[]; error: strin
         displayName: r.display_name,
         personId: r.person_id,
         canViewSensitive: r.can_view_sensitive,
+        tracksTime: Boolean(timeById.get(r.id)?.tracks_time),
+        timeZone: timeById.get(r.id)?.time_zone || DEFAULT_TIME_ZONE,
         createdAt: r.created_at,
         createdBy: r.created_by,
         source: envEmails.has(r.email.toLowerCase()) ? "both" : "db",
@@ -104,13 +121,15 @@ export async function listAdmins(): Promise<{ rows: AdminListRow[]; error: strin
           // env-only admins can't be leveled from the UI; the SENSITIVE_VIEWERS
           // env var is their separate break-glass path to sensitive data.
           canViewSensitive: false,
+          tracksTime: false,
+          timeZone: DEFAULT_TIME_ZONE,
           createdAt: null,
           createdBy: null,
           source: "env",
         }),
       ),
   ];
-  return { rows, error: null };
+  return { rows, error: null, timeTrackingReady: !timeError };
 }
 
 // ── Adding an admin: the employee picker ───────────────────────────────────

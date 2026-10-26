@@ -5103,3 +5103,24 @@ a.admin-list-row { text-decoration: none; color: inherit; }
 
 /* A block of code or log output (a run result, a captured log): wraps long lines so the page never scrolls sideways. */
 .admin-code--block { display: block; font-weight: 500; padding: 12px; white-space: pre-wrap; word-break: break-word; overflow-x: auto; max-height: 480px; overflow-y: auto; }
+
+/* ─── Log Time shift pill ─────────────────────────── */
+/* Sits above every admin page's content, right-aligned, for admins who track
+   time. In the page flow (not fixed) so it never covers a page-head action. */
+.admin-shiftbar { display: flex; justify-content: flex-end; margin: -12px 0 12px; }
+.admin-shiftpill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 6px 4px 12px; min-height: 32px;
+  border: 1px solid var(--admin-line); border-radius: 999px;
+  background: var(--admin-surface); color: var(--admin-ink);
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+button.admin-shiftpill { padding-right: 14px; }
+button.admin-shiftpill:hover { border-color: var(--admin-muted); }
+.admin-shiftpill-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--admin-muted); }
+.admin-shiftpill.is-on { border-color: var(--admin-ok-bg); cursor: default; }
+.admin-shiftpill.is-on .admin-shiftpill-dot { background: var(--admin-ok-ink); border-color: var(--admin-ok-ink); }
+.admin-shiftpill-label { color: var(--admin-ink); text-decoration: none; }
+.admin-shiftpill-label:hover { text-decoration: underline; }
+.admin-shiftpill-btn { padding: 2px 12px; min-height: 24px; border-radius: 999px; font-size: 12px; }
+@media (max-width: 900px) { .admin-shiftbar { margin-top: 0; } }

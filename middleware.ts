@@ -70,12 +70,16 @@ export async function middleware(request: NextRequest) {
     }
 
     // Support-role containment: an admin listed in SUPPORT_ADMINS is confined to
-    // /admin/support. Enforced here at the edge so it covers RSC loads AND
+    // Support, Contacts, Orders and their own time log (not the super-admin
+    // Team time view). Enforced here at the edge so it covers RSC loads AND
     // server-action POSTs (which target the current path), not just hidden nav
     // links. Env-only so it needs no schema change; the durable admins.role form
     // is honoured server-side by isSupportOnlyAdmin() for the nav. Non-/admin
     // surfaces (/team, /portal) are unaffected.
-    if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/support")) {
+    const supportAllowed =
+      SUPPORT_ALLOWED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`)) &&
+      !pathname.startsWith("/admin/time/team");
+    if (pathname.startsWith("/admin") && !supportAllowed) {
       const email = user.email?.toLowerCase();
       const supportOnly = new Set(
         (process.env.SUPPORT_ADMINS ?? "")
@@ -103,6 +107,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 }
+
+// The only /admin areas a support-only admin may open.
+const SUPPORT_ALLOWED_PREFIXES = ["/admin/support", "/admin/contacts", "/admin/revenue/orders", "/admin/time"];
 
 export const config = {
   matcher: ["/admin/:path*", "/team/:path*", "/portal/:path*"],

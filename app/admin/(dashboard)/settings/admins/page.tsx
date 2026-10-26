@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminsPage() {
   const admin = await requireAdmin();
-  const [{ rows, error }, employeeOptions] = await Promise.all([
+  const [{ rows, error, timeTrackingReady }, employeeOptions] = await Promise.all([
     listAdmins(),
     listAdminEmployeeOptions(),
   ]);
@@ -27,7 +27,12 @@ export default async function AdminsPage() {
 
       {error && <div className="admin-alert admin-alert--err">{error}</div>}
 
-      <AdminsManager rows={rows} employees={employeeOptions} currentEmail={admin.email} />
+      <AdminsManager
+        rows={rows}
+        employees={employeeOptions}
+        currentEmail={admin.email}
+        timeTrackingReady={timeTrackingReady}
+      />
     </>
   );
 }
