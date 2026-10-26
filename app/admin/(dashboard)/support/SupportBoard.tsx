@@ -39,7 +39,11 @@ function columnTone(col: SupportColumn | undefined): BadgeTone {
 
 type View = "board" | "list";
 type Sort = "oldest" | "newest";
-type MoveFn = (ticketId: string, toColumnId: string) => Promise<{ ok: boolean; error?: string }>;
+type MoveFn = (ticketId: string, toColumnId: string, reason?: string) => Promise<{ ok: boolean; error?: string }>;
+type PendingReopen = { ticketId: string; toColumnId: string };
+
+// Matches REOPEN_REASON_MIN in actions.ts.
+const REOPEN_REASON_MIN = 5;
 type CommentFn = (ticketId: string, body: string, asEmail: boolean) => Promise<{ ok: boolean; error?: string }>;
 type Card = SupportTicket & { columnId: string };
 
@@ -72,11 +76,63 @@ function CardFace({ t }: { t: SupportTicket }) {
   );
 }
 
+// ── Reopen prompt ────────────────────────────────────────────────────────────
+// Moving a ticket out of Resolved waits here for a reason; Cancel leaves it put.
+function ReopenPrompt({
+  ticket,
+  column,
+  onConfirm,
+  onCancel,
+}: {
+  ticket: SupportTicket | undefined;
+  column: SupportColumn | undefined;
+  onConfirm: (reason: string) => Promise<void>;
+  onCancel: () => void;
+}) {
+  const [reason, setReason] = useState("");
+  const [busy, setBusy] = useState(false);
+  const ready = reason.trim().length >= REOPEN_REASON_MIN;
+  return (
+    <form
+      className="admin-alert u-stack u-gap-2 u-mb-3"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        if (!ready) return;
+        setBusy(true);
+        await onConfirm(reason.trim());
+        setBusy(false);
+      }}
+    >
+      <strong>
+        Why are you reopening {ticket?.ticketNo ?? "this ticket"}
+        {column ? ` to ${column.name}` : ""}?
+      </strong>
+      <textarea
+        className="admin-input"
+        rows={2}
+        autoFocus
+        value={reason}
+        placeholder="e.g. Customer says the replacement is also faulty"
+        onChange={(e) => setReason(e.target.value)}
+      />
+      <div className="u-row u-wrap">
+        <button type="submit" className="admin-btn admin-btn--primary" disabled={busy || !ready}>
+          {busy ? "Reopening…" : "Reopen"}
+        </button>
+        <button type="button" className="admin-btn" disabled={busy} onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
 // ── Drawer: the whole ticket ─────────────────────────────────────────────────
 function TicketDrawer({
   ticket,
   columns,
   currentUserLabel,
+  reopenPrompt,
   onMove,
   onComment,
   onClose,
@@ -84,6 +140,7 @@ function TicketDrawer({
   ticket: SupportTicket | null;
   columns: SupportColumn[];
   currentUserLabel: string;
+  reopenPrompt: React.ReactNode;
   onMove: MoveFn;
   onComment: CommentFn;
   onClose: () => void;
@@ -172,6 +229,8 @@ function TicketDrawer({
             ))}
           </select>
         </div>
+
+        {reopenPrompt}
 
         {body && (
           <div className="admin-card admin-section-card u-stack u-gap-2">
@@ -275,6 +334,7 @@ export function SupportBoard({
   const [query, setQuery] = useState("");
   const [channel, setChannel] = useState<string>("");
   const [banner, setBanner] = useState<string | null>(null);
+  const [pendingReopen, setPendingReopen] = useState<PendingReopen | null>(null);
 
   useEffect(() => {
     setTickets(initial);
@@ -301,10 +361,17 @@ export function SupportBoard({
   }
 
   // Optimistic move: the card lands at once, persists in the background, reverts on failure.
-  const onMove: MoveFn = async (ticketId, toColumnId) => {
+  // Leaving Resolved for an open column parks the move until a reason is given.
+  const onMove: MoveFn = async (ticketId, toColumnId, reason) => {
     const col = columns.find((c) => c.id === toColumnId);
     const prev = tickets;
     setBanner(null);
+    const current = tickets.find((t) => t.id === ticketId);
+    if (current?.isResolved && !col?.is_done && !reason) {
+      setPendingReopen({ ticketId, toColumnId });
+      return { ok: true };
+    }
+    setPendingReopen(null);
     setTickets((ts) =>
       ts.map((t) =>
         t.id === ticketId
@@ -317,7 +384,7 @@ export function SupportBoard({
           : t,
       ),
     );
-    const res = await moveTicket(ticketId, toColumnId);
+    const res = await moveTicket(ticketId, toColumnId, reason);
     if (!res.ok) {
       setTickets(prev);
       setBanner(`Couldn't move ticket: ${res.error}`);
@@ -368,6 +435,19 @@ export function SupportBoard({
 
   const boardColumns: KanbanColumn[] = columns.map((c) => ({ id: c.id, label: c.name }));
   const openTicket = tickets.find((t) => t.id === openId) ?? null;
+  const reopenPrompt = pendingReopen && (
+    <ReopenPrompt
+      key={`${pendingReopen.ticketId}:${pendingReopen.toColumnId}`}
+      ticket={tickets.find((t) => t.id === pendingReopen.ticketId)}
+      column={columns.find((c) => c.id === pendingReopen.toColumnId)}
+      onConfirm={async (reason) => {
+        await onMove(pendingReopen.ticketId, pendingReopen.toColumnId, reason);
+      }}
+      onCancel={() => setPendingReopen(null)}
+    />
+  );
+  // The prompt shows in the drawer when that ticket is open, else above the board.
+  const promptInDrawer = !!pendingReopen && pendingReopen.ticketId === openId;
   const channels = Array.from(new Set(tickets.map((t) => t.channel).filter(Boolean))) as string[];
 
   const toolbar = (
@@ -439,6 +519,7 @@ export function SupportBoard({
     <>
       {toolbar}
       {banner && <div className="admin-alert admin-alert--err u-mb-3">{banner}</div>}
+      {!promptInDrawer && reopenPrompt}
       {view === "board" ? (
         <KanbanBoard<Card>
           columns={boardColumns}
@@ -467,6 +548,7 @@ export function SupportBoard({
         ticket={openTicket}
         columns={columns}
         currentUserLabel={currentUserLabel}
+        reopenPrompt={promptInDrawer ? reopenPrompt : null}
         onMove={onMove}
         onComment={onComment}
         onClose={() => setOpenId(null)}
