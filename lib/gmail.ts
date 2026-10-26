@@ -1,7 +1,8 @@
 // Server-only. Polls the support Gmail inbox and files each new customer email
 // as a ticket through the same path as the inbound webhook (ingestInboundEmail
-// in lib/support.ts). Read-only against Gmail: nothing is labelled, moved or
-// marked as read.
+// in lib/support.ts), and each reply the team sent from the mailbox as a comment
+// on its ticket (ingestStaffEmail). Read-only against Gmail: nothing is
+// labelled, moved or marked as read.
 //
 // Env (an OAuth client for the support mailbox; the refresh token never expires
 // unless revoked):
@@ -13,7 +14,7 @@
 // deduped on its Gmail id, so overlapping windows never double-file.
 
 import { companyOs } from "@/lib/supabase";
-import { ingestInboundEmail } from "@/lib/support";
+import { ingestInboundEmail, ingestStaffEmail } from "@/lib/support";
 
 const ENTITY = "gmail_support";
 const API = "https://gmail.googleapis.com/gmail/v1/users/me";
@@ -88,6 +89,7 @@ type Message = {
   id: string;
   threadId: string;
   internalDate: string;
+  labelIds?: string[];
   payload?: Part & { headers?: Header[] };
 };
 
@@ -132,7 +134,8 @@ function bodyText(part: Part | undefined): string {
 // Cut the quoted history off a reply so the ticket shows what the customer
 // actually wrote this time.
 function stripQuoted(text: string): string {
-  const markers = [/^On .{5,200} wrote:\s*$/m, /^-{2,}\s*Original Message\s*-{2,}$/mi, /^From: .+$/m, /^>+ ?/m];
+  // Gmail wraps a long "On <date>, <name> <address>" line, leaving "wrote:" alone.
+  const markers = [/^On [^\n]{5,200}(\n[^\n]{0,120})?\s*wrote:\s*$/m, /^-{2,}\s*Original Message\s*-{2,}$/mi, /^From: .+$/m, /^>+ ?/m];
   let cut = text.length;
   for (const m of markers) {
     const i = text.search(m);
@@ -140,6 +143,21 @@ function stripQuoted(text: string): string {
   }
   const out = text.slice(0, cut).trim();
   return out || text.trim();
+}
+
+// Every address in a To / Cc header.
+function parseAddresses(raw: string | null): string[] {
+  return (raw?.match(/[^\s<>,;"']+@[^\s<>,;"']+/g) ?? []).map((e) => e.toLowerCase());
+}
+
+// Our replies end in the shop's signature block and confidentiality notice;
+// keep the sign-off and the name under it, drop the rest.
+const SIGN_OFF = /^\s*(kind regards|warm regards|best regards|regards|many thanks|cheers),?\s*$/im;
+export function stripSignature(text: string): string {
+  const m = SIGN_OFF.exec(text);
+  if (!m) return text.trim();
+  const after = text.slice(m.index + m[0].length).split("\n").map((l) => l.trim()).filter(Boolean);
+  return `${text.slice(0, m.index).trim()}\n\n${m[0].trim()}\n${after[0] ?? ""}`.trim();
 }
 
 function parseFrom(raw: string | null): { email: string | null; name: string | null } {
@@ -176,19 +194,27 @@ export type GmailSyncResult = {
   threaded: number;
   duplicates: number;
   ignored: number;
+  // Our own replies sent from the mailbox: filed on a ticket, or matching none.
+  sentThreaded: number;
+  sentUnmatched: number;
   highWater: string | null;
   error?: string;
   // dryRun only: what would have been filed.
   preview?: Array<{ at: string; from: string; subject: string }>;
 };
 
-// Pull inbound mail newer than the high-water mark (or `days` back when given
-// or when no mark exists yet) and file each one as a ticket or a reply.
-export async function syncSupportInbox(opts: { days?: number; dryRun?: boolean } = {}): Promise<GmailSyncResult> {
+// Pull mail newer than the high-water mark (or `days` back when given or when
+// no mark exists yet): inbound mail becomes a ticket or a reply, mail we sent
+// becomes a comment on its ticket. `sentOnly` + a larger `max` backfills our
+// replies without touching inbound mail.
+export async function syncSupportInbox(
+  opts: { days?: number; dryRun?: boolean; sentOnly?: boolean; max?: number } = {},
+): Promise<GmailSyncResult> {
   const now = new Date();
   const fallback = new Date(now.getTime() - (opts.days ?? 1) * 86_400_000);
   const since = opts.days ? fallback : ((await readState()) ?? fallback);
-  const result: GmailSyncResult = { ok: false, since: since.toISOString(), fetched: 0, created: 0, threaded: 0, duplicates: 0, ignored: 0, highWater: null };
+  const result: GmailSyncResult = { ok: false, since: since.toISOString(), fetched: 0, created: 0, threaded: 0, duplicates: 0, ignored: 0, sentThreaded: 0, sentUnmatched: 0, highWater: null };
+  const maxPerRun = opts.max ?? MAX_PER_RUN;
   let highWater: Date | null = null;
   if (opts.dryRun) result.preview = [];
   try {
@@ -198,7 +224,7 @@ export async function syncSupportInbox(opts: { days?: number; dryRun?: boolean }
     // Gmail's `after:` is second-granular; overlap by a minute and rely on the
     // per-message dedupe.
     const after = Math.floor(since.getTime() / 1000) - 60;
-    const q = encodeURIComponent(`after:${after} -from:me -in:spam -in:trash -in:drafts`);
+    const q = encodeURIComponent(`after:${after} ${opts.sentOnly ? "in:sent " : ""}-in:spam -in:trash -in:drafts`);
     const ids: string[] = [];
     let pageToken: string | undefined;
     do {
@@ -208,7 +234,7 @@ export async function syncSupportInbox(opts: { days?: number; dryRun?: boolean }
       );
       ids.push(...(page.messages ?? []).map((m) => m.id));
       pageToken = page.nextPageToken;
-    } while (pageToken && ids.length < MAX_PER_RUN);
+    } while (pageToken && ids.length < maxPerRun);
     result.fetched = ids.length;
 
     // Oldest first so ticket numbers follow arrival order.
@@ -225,6 +251,33 @@ export async function syncSupportInbox(opts: { days?: number; dryRun?: boolean }
       const from = parseFrom(header(msg, "From"));
       const fromRaw = header(msg, "From") ?? "";
       const subject = header(msg, "Subject") ?? "(no subject)";
+      if (msg.labelIds?.includes("SENT") || from.email === self) {
+        // Our own mail: a reply to a customer, or operations mail to staff and
+        // partners (no customer recipient), which is skipped.
+        const recipients = [...parseAddresses(header(msg, "To")), ...parseAddresses(header(msg, "Cc"))].filter(
+          (e) => e !== self && !isIgnoredSender(e, e),
+        );
+        if (!recipients.length || AUTO_SUBJECT.test(subject) || opts.dryRun) {
+          if (opts.dryRun && recipients.length) result.preview!.push({ at: at.toISOString(), from: `me → ${recipients.join(", ")}`, subject });
+          else result.ignored++;
+          continue;
+        }
+        const thread = await gmailGet<{ messages?: { id: string }[] }>(token, `/threads/${msg.threadId}?format=minimal`);
+        const res = await ingestStaffEmail({
+          messageId: `gmail:${msg.id}`,
+          threadMessageIds: (thread.messages ?? []).map((m) => `gmail:${m.id}`),
+          subject,
+          recipients,
+          body: stripSignature(stripQuoted(bodyText(msg.payload))),
+          sentAt: at.toISOString(),
+          sender: from.email ?? self,
+        });
+        if (!res.ok) throw new Error(`${subject}: ${res.error}`);
+        if (res.outcome === "threaded") result.sentThreaded++;
+        else if (res.outcome === "unmatched") result.sentUnmatched++;
+        else result.duplicates++;
+        continue;
+      }
       if (!from.email || from.email === self || isIgnoredSender(from.email, fromRaw) || AUTO_SUBJECT.test(subject)) {
         result.ignored++;
         continue;
@@ -242,10 +295,11 @@ export async function syncSupportInbox(opts: { days?: number; dryRun?: boolean }
     }
     result.ok = true;
     result.highWater = (highWater ?? since).toISOString();
-    if (!opts.dryRun) await writeState(highWater ?? since, true);
+    // A sent-only backfill reads an older window; it must not move the mark.
+    if (!opts.dryRun && !opts.sentOnly) await writeState(highWater ?? since, true);
   } catch (err) {
     result.error = err instanceof Error ? err.message : "unknown";
-    if (!opts.dryRun) await writeState(highWater, false, result.error);
+    if (!opts.dryRun && !opts.sentOnly) await writeState(highWater, false, result.error);
   }
   return result;
 }
