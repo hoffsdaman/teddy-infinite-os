@@ -7,11 +7,14 @@ import { recordAudit } from "@/lib/admin/audit";
 import { type Result } from "@/lib/admin/mutations";
 import { createSupportTicket, ensureSupportBoard } from "@/lib/support";
 import { sendTransactionalEmail } from "@/lib/email";
+import { sendResolvedEmail } from "@/lib/support/resolved-email";
 
 // Both full and support-role admins work tickets, so these gate on requireAdmin
 // (the support-only role is a containment concern handled in middleware, not an
 // extra permission). Every action re-derives the Support board so a caller can
 // never move a card onto a column that isn't on it.
+
+const REOPEN_REASON_MIN = 5;
 
 function refresh() {
   revalidatePath("/admin/support");
@@ -40,7 +43,7 @@ export async function createManualTicket(input: {
   return { ok: true, ticketNo: res.ticketNo };
 }
 
-export async function moveTicket(taskId: string, toColumnId: string): Promise<Result> {
+export async function moveTicket(taskId: string, toColumnId: string, reason?: string): Promise<Result> {
   const admin = await requireAdmin();
   const board = await ensureSupportBoard();
   const column = board.columns.find((c) => c.id === toColumnId);
@@ -54,6 +57,14 @@ export async function moveTicket(taskId: string, toColumnId: string): Promise<Re
   const t = task as { id: string; board_id: string; board_column_id: string | null } | null;
   if (!t || t.board_id !== board.id) return { ok: false, error: "Ticket not found on the Support board." };
   if (t.board_column_id === toColumnId) return { ok: true };
+
+  // Reopening a resolved ticket needs a reason, so accidental drags get caught
+  // and the history says why it came back.
+  const reopening = !!board.columns.find((c) => c.id === t.board_column_id)?.is_done && !column.is_done;
+  const why = reason?.trim() ?? "";
+  if (reopening && why.length < REOPEN_REASON_MIN) {
+    return { ok: false, error: "Say why you're reopening this ticket." };
+  }
 
   // Resolution timestamp is the whole point of the metric: stamp completed_at
   // when the card lands on a done column, clear it when it moves back out.
@@ -72,9 +83,19 @@ export async function moveTicket(taskId: string, toColumnId: string): Promise<Re
     to_column_id: toColumnId,
     kind: "move",
     moved_by: null,
-    note: null,
+    note: reopening ? `reopened: ${why}` : null,
   });
+  if (reopening) {
+    await companyOs.from("task_comments").insert({
+      task_id: taskId,
+      author_person_id: null,
+      author_label: admin.email,
+      body: `Reopened to ${column.name}. Reason: ${why}`,
+    });
+  }
   await recordAudit({ table: "tasks", recordId: taskId, operation: "update", actor: admin.email, newData: updates });
+  const wasResolved = !!board.columns.find((c) => c.id === t.board_column_id)?.is_done;
+  if (column.is_done && !wasResolved) await sendResolvedEmail(taskId);
   refresh();
   return { ok: true };
 }

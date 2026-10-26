@@ -8,6 +8,8 @@ import { type Result } from "@/lib/admin/mutations";
 import { boardActorFor } from "@/lib/boards/access";
 import { notifyBoardAssignee } from "@/lib/boards/notify";
 import { TASK_PRIORITIES, SUBJECT_COMMITMENT, SUBJECT_BACKLOG_ITEM, type TaskPriority } from "@/lib/boards/types";
+import { SUPPORT_BOARD_SLUG } from "@/lib/support";
+import { sendResolvedEmail } from "@/lib/support/resolved-email";
 
 const DENIED = "You do not have access to this board.";
 
@@ -140,6 +142,22 @@ export async function moveCard(taskId: string, toColumnId: string, boardSlug: st
   const isDone = (col as { is_done: boolean }).is_done;
   if (t.board_column_id === toColumnId) return { ok: true };
 
+  // Support tickets crossing the Resolved line get special handling: reopening
+  // happens only from the Support page (which asks for a reason), and resolving
+  // emails the customer.
+  const { data: fromCol } = t.board_column_id
+    ? await companyOs.from("board_columns").select("is_done").eq("id", t.board_column_id).maybeSingle()
+    : { data: null };
+  const wasDone = !!(fromCol as { is_done: boolean } | null)?.is_done;
+  let isSupport = false;
+  if (wasDone !== isDone) {
+    const { data: board } = await companyOs.from("boards").select("slug").eq("id", t.board_id).maybeSingle();
+    isSupport = (board as { slug: string } | null)?.slug === SUPPORT_BOARD_SLUG;
+  }
+  if (isSupport && wasDone) {
+    return { ok: false, error: "Reopen support tickets from the Support page so a reason is recorded." };
+  }
+
   const updates = {
     board_column_id: toColumnId,
     position: await endPosition(t.board_id, toColumnId),
@@ -169,6 +187,7 @@ export async function moveCard(taskId: string, toColumnId: string, boardSlug: st
   }
 
   await recordAudit({ table: "tasks", recordId: taskId, operation: "update", actor: actor.label, newData: updates });
+  if (isSupport && isDone) await sendResolvedEmail(taskId);
   refresh(boardSlug);
   return { ok: true };
 }
