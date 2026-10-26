@@ -1,7 +1,7 @@
 -- Log Time — shift logging for admins who track their hours.
 -- See public/plans/log-time.html. Additive only.
 --
--- Status: REQUIRED before the Log Time UI does anything. Until this is applied
+-- Status: APPLIED to the live project 2026-10-26. Before it is applied
 -- the app treats every admin as "does not track time" (the tracks_time read
 -- fails closed), so nothing breaks — the pill and pages simply stay hidden.
 --
