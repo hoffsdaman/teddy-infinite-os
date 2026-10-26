@@ -7,7 +7,14 @@ import { ConfirmButton } from "@/components/admin/ConfirmButton";
 import { PersonSelect } from "@/components/admin/PersonSelect";
 import { formatDate } from "@/lib/admin/format";
 import type { AdminEmployeeOption, AdminListRow } from "@/lib/admin/admins";
-import { addAdmin, deleteAdmin, resendAccessLink, updateAdmin, updateAdminTimeTracking } from "./actions";
+import {
+  addAdmin,
+  addContractorAdmin,
+  deleteAdmin,
+  resendAccessLink,
+  updateAdmin,
+  updateAdminTimeTracking,
+} from "./actions";
 
 // Zones offered for Log Time. The admin's current zone is added if it isn't here.
 const TIME_ZONES = ["Asia/Manila", "Asia/Ho_Chi_Minh", "Australia/Sydney"];
@@ -35,7 +42,12 @@ export function AdminsManager({
   const [pending, startTransition] = useTransition();
   const [banner, setBanner] = useState<{ tone: "ok" | "err"; text: string } | null>(null);
 
+  // "employee" picks an existing employee; "contractor" adds someone new by
+  // email, who is created as a contractor team member.
+  const [addMode, setAddMode] = useState<"employee" | "contractor">("employee");
   const [newPersonId, setNewPersonId] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newName, setNewName] = useState("");
   const [newSuperAdmin, setNewSuperAdmin] = useState(false);
 
   // Row being edited in the modal, with its draft field values.
@@ -69,12 +81,23 @@ export function AdminsManager({
 
   function submitAdd(e: React.FormEvent) {
     e.preventDefault();
-    if (!newPersonId) return;
-    run(() => addAdmin(newPersonId, newSuperAdmin), "Admin added.", () => {
+    const reset = () => {
       setNewPersonId("");
+      setNewEmail("");
+      setNewName("");
       setNewSuperAdmin(false);
-    });
+    };
+    if (addMode === "contractor") {
+      if (!newEmail.trim() || !newName.trim()) return;
+      run(() => addContractorAdmin(newEmail, newName, newSuperAdmin), "Admin added.", reset);
+      return;
+    }
+    if (!newPersonId) return;
+    run(() => addAdmin(newPersonId, newSuperAdmin), "Admin added.", reset);
   }
+
+  const canSubmitAdd =
+    addMode === "contractor" ? Boolean(newEmail.trim() && newName.trim()) : Boolean(newPersonId);
 
   function submitEdit(e: React.FormEvent) {
     e.preventDefault();
@@ -108,20 +131,68 @@ export function AdminsManager({
 
       <div className="admin-card admin-section-card u-mb-5">
         <h2 className="admin-card-title">Add an admin</h2>
+        <div className="admin-viewtoggle u-mb-3" role="group" aria-label="Who to add">
+          <button
+            type="button"
+            className={addMode === "employee" ? "is-active" : ""}
+            aria-pressed={addMode === "employee"}
+            onClick={() => setAddMode("employee")}
+          >
+            Existing employee
+          </button>
+          <button
+            type="button"
+            className={addMode === "contractor" ? "is-active" : ""}
+            aria-pressed={addMode === "contractor"}
+            onClick={() => setAddMode("contractor")}
+          >
+            New contractor
+          </button>
+        </div>
         <form className="admin-form" onSubmit={submitAdd}>
           <div className="u-row u-wrap u-items-end u-gap-3">
-            <div className="admin-field u-flex-2 u-mb-0">
-              <label className="admin-label" htmlFor="adm-person">Employee</label>
-              <PersonSelect
-                id="adm-person"
-                value={newPersonId}
-                onChange={setNewPersonId}
-                options={employeeOptions}
-                placeholder="Search an employee…"
-                ariaLabel="Employee to grant admin access"
-                disabled={pending || employeeOptions.length === 0}
-              />
-            </div>
+            {addMode === "employee" ? (
+              <div className="admin-field u-flex-2 u-mb-0">
+                <label className="admin-label" htmlFor="adm-person">Employee</label>
+                <PersonSelect
+                  id="adm-person"
+                  value={newPersonId}
+                  onChange={setNewPersonId}
+                  options={employeeOptions}
+                  placeholder="Search an employee…"
+                  ariaLabel="Employee to grant admin access"
+                  disabled={pending || employeeOptions.length === 0}
+                />
+              </div>
+            ) : (
+              <>
+                <div className="admin-field u-flex-2 u-mb-0">
+                  <label className="admin-label" htmlFor="adm-email">Email</label>
+                  <input
+                    id="adm-email"
+                    type="email"
+                    className="admin-input"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    autoComplete="off"
+                    disabled={pending}
+                  />
+                </div>
+                <div className="admin-field u-flex-2 u-mb-0">
+                  <label className="admin-label" htmlFor="adm-name">Name</label>
+                  <input
+                    id="adm-name"
+                    className="admin-input"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    placeholder="Given and family name"
+                    autoComplete="off"
+                    disabled={pending}
+                  />
+                </div>
+              </>
+            )}
             <div className="admin-field u-flex-fixed u-mb-0">
               <label className="admin-label" htmlFor="adm-level">Level</label>
               <select
@@ -138,14 +209,22 @@ export function AdminsManager({
             <button
               type="submit"
               className="admin-btn admin-btn--primary"
-              disabled={pending || !newPersonId}
+              disabled={pending || !canSubmitAdd}
             >
               {pending ? "Working…" : "Add & send invite"}
             </button>
           </div>
         </form>
         <p className="admin-cell-muted u-mt-3 u-mb-0">
-          {employeeOptions.length === 0 ? (
+          {addMode === "contractor" ? (
+            <>
+              Adds them to the team as an active contractor (or reuses their record if the email is
+              already known), then sends an email link to set their password.{" "}
+              {newSuperAdmin
+                ? "Super Admins can view wages and PII."
+                : "Admins cannot view wages or PII."}
+            </>
+          ) : employeeOptions.length === 0 ? (
             "Every active employee already has admin access."
           ) : selectedEmployee ? (
             <>
