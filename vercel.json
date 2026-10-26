@@ -5,6 +5,10 @@
       "schedule": "0 16 * * *"
     },
     {
+      "path": "/api/cron/support-email/",
+      "schedule": "*/5 * * * *"
+    },
+    {
       "path": "/api/trip-passport-cleanup/",
       "schedule": "0 3 * * *"
     },

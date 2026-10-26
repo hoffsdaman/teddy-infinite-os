@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WorkflowHero, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'Monthly Expense Entry | Edge8 Workflows'
+const title = 'Monthly Expense Entry | TeddyBed Workflows'
 const description =
   'Bank transactions become a categorized finance sheet, the sheet becomes QuickBooks entries, and the P&L confirms the month. Every expense entered, every pass-through billed.'
 

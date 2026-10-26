@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'How many make it through each loop, how often the AI and the recruiter disagree, the time from opening a role to hiring, and how often the pool, not a job board, fills the role.' },
 ]
 
-const title = 'Recruitment: Three Loops, One Pool | Edge8 Workflows'
+const title = 'Recruitment: Three Loops, One Pool | TeddyBed Workflows'
 const description =
   'Our recruitment process is not a pipeline. Three loops run continuously (demand, sourcing, selection) around one candidate pool that never forgets. Backward moves are normal, and every exit is a pool entry.'
 

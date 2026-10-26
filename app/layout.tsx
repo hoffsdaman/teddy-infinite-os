@@ -4,40 +4,42 @@ import './globals.css'
 import SiteFrame from '@/components/SiteFrame'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.edge8.ai'),
-  title: 'Edge8 | AI Leadership, Automation & Global Talent Solutions',
-  description: 'Edge8 helps organizations become Tech-Forward through AI Leadership, AI Programs, and Global Talent Staffing. Achieve 8x efficiency.',
+  metadataBase: new URL('https://teddybed.com.au'),
+  title: 'TeddyBed OS',
+  description:
+    "The single sign-in for everyone who runs Australia's premium kids bed & mattress brand.",
   openGraph: {
-    title: 'Edge8 | AI Leadership, Automation & Global Talent Solutions',
-    description: 'Edge8 helps organizations become Tech-Forward through AI Leadership, AI Programs, and Global Talent Staffing. Achieve 8x efficiency.',
-    url: 'https://www.edge8.ai',
-    siteName: 'Edge8',
+    title: 'TeddyBed OS',
+    description:
+      "The single sign-in for everyone who runs Australia's premium kids bed & mattress brand.",
+    url: 'https://teddybed.com.au',
+    siteName: 'TeddyBed OS',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Edge8 | AI Leadership, Automation & Global Talent Solutions',
-    description: 'Edge8 helps organizations become Tech-Forward through AI Leadership, AI Programs, and Global Talent Staffing. Achieve 8x efficiency.',
+    title: 'TeddyBed OS',
+    description:
+      "The single sign-in for everyone who runs Australia's premium kids bed & mattress brand.",
   },
 }
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Edge8',
-  alternateName: 'Edge8 AI',
-  url: 'https://www.edge8.ai',
-  logo: 'https://www.edge8.ai/logo.png',
+  name: 'TeddyBed',
+  alternateName: 'Teddy',
+  url: 'https://teddybed.com.au',
+  logo: 'https://teddybed.com.au/logo.png',
   description:
-    'Edge8 helps founders be Tech-Forward through AI Programs, fractional CAIO leadership, AI Officer Certification, and global AI talent staffing.',
-  founder: { '@type': 'Person', name: 'Dave Hajdu' },
-  sameAs: ['https://www.linkedin.com/company/edge8ai/'],
+    "Australia's premium kids bed & mattress brand. Mattresses and bed bases designed by sleep specialists, backed by a 120-night sleep trial.",
   contactPoint: [
     {
       '@type': 'ContactPoint',
-      contactType: 'sales',
-      email: 'hello@edge8.ai',
-      areaServed: ['US', 'VN', 'SG', 'MY'],
+      contactType: 'customer support',
+      email: 'support@teddybed.com.au',
+      telephone: '+61485855867',
+      areaServed: ['AU'],
       availableLanguage: ['English'],
     },
   ],

@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'both', desc: 'Paid versus due on the 20th. Anything past due becomes an escalation list, never a shrug.' },
 ]
 
-const title = 'Monthly Invoicing | Edge8 Workflows'
+const title = 'Monthly Invoicing | TeddyBed Workflows'
 const description =
   'One billing cycle, four dates, zero chasing. Invoices are created on the 31st, dated to the 1st, due on the 20th, and escalated the moment they slip.'
 

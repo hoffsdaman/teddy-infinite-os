@@ -134,7 +134,7 @@ export async function saveSalaryChange(
 // admin may trigger it — it carries no salary/PII. Creates the self + manager
 // rows via openReviewCycle, then emails the employee and their manager a link
 // to their side. Idempotent per cycle label, so a double click is harmless.
-const SITE_ORIGIN = "https://www.edge8.ai";
+const SITE_ORIGIN = "https://teddy-infinite-os.vercel.app";
 const REVIEW_TYPE_NAMES: Record<string, string> = {
   probation: "Probation review",
   midyear: "Mid-year check-in",
@@ -475,7 +475,7 @@ function siteOrigin(): string {
   const origin = h.get("origin");
   if (origin) return origin;
   const host = h.get("host");
-  return host ? `https://${host}` : "https://www.edge8.ai";
+  return host ? `https://${host}` : "https://teddy-infinite-os.vercel.app";
 }
 
 // Find an existing auth user by email (case-insensitive). Small org, so scanning

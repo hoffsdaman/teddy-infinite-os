@@ -92,7 +92,7 @@ export function JobPostingEditor({ reqId, posting }: { reqId: string; posting: P
               <input className="admin-input" value={slug} onChange={(e) => setSlug(e.target.value)} />
               {live && slug && (
                 <div className="admin-hint" style={{ marginTop: 4 }}>
-                  <a href={`https://www.edge8.ai/careers/${slug}/apply`} target="_blank" rel="noreferrer">
+                  <a href={`https://teddy-infinite-os.vercel.app/careers/${slug}/apply`} target="_blank" rel="noreferrer">
                     edge8.ai/careers/{slug}/apply ↗
                   </a>
                 </div>

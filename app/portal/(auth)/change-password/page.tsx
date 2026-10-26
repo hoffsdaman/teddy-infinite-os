@@ -10,7 +10,7 @@ export default async function PortalChangePasswordPage() {
     <main className="admin-auth">
       <div className="admin-auth-card">
         <div className="admin-auth-brand">
-          8 Edges Client Portal
+          TeddyBed Client Portal
         </div>
         <p className="admin-auth-sub">
           Choose a new password for your account to continue.

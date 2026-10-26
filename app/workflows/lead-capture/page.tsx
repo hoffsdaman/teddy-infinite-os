@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'Lead stages and conversion through the funnel, read live from the CRM, never assembled by hand.' },
 ]
 
-const title = 'Lead Capture to CRM | Edge8 Workflows'
+const title = 'Lead Capture to CRM | TeddyBed Workflows'
 const description =
   'From a form submission to a customer record: a spam gate filters the noise automatically, and every real inquiry becomes a tracked lead in the CRM.'
 

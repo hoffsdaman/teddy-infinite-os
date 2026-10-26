@@ -242,7 +242,7 @@ export async function createWorkRequestForActor(
 
   const companyName = actor.memberships.find((m) => m.companyId === input.companyId)?.companyName ?? "client";
   await pingOps(
-    `🧑‍💼 Client work request: "${title}" — ${companyName} → ${person?.full_name ?? "contractor"}. Review: https://www.edge8.ai/admin/operations/contractor-requests?open=${data.id}`,
+    `🧑‍💼 Client work request: "${title}" — ${companyName} → ${person?.full_name ?? "contractor"}. Review: https://teddy-infinite-os.vercel.app/admin/operations/contractor-requests?open=${data.id}`,
   );
 
   return { ok: true, id: data.id };
@@ -382,7 +382,7 @@ export async function createPortalInquiryForActor(
 
   const companyName = actor.memberships[0]?.companyName ?? "client";
   await notifyOps(
-    `🧑‍💼 Portal general request from ${actor.displayName} (${companyName}): "${subject}". Review: https://www.edge8.ai/admin/revenue/inquiries`,
+    `🧑‍💼 Portal general request from ${actor.displayName} (${companyName}): "${subject}". Review: https://teddy-infinite-os.vercel.app/admin/revenue/inquiries`,
   );
   return { ok: true };
 }

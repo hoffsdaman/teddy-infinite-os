@@ -9,6 +9,7 @@
 
 import { companyOs } from "@/lib/supabase";
 import { getOrCreatePerson } from "@/lib/company-os";
+import { parseSupportEmail } from "@/lib/support-email-parse";
 
 // The Support board's identity + column names. New → In Progress → Waiting on
 // Customer → Resolved (Resolved is the only is_done column). Renaming a column
@@ -35,7 +36,23 @@ export type SupportMeta = {
   // Idempotency key for email intake — the Resend/provider message id, so a
   // retried webhook does not create a duplicate ticket.
   source_message_id?: string;
+  // Fields distilled from the email by the parser (lib/support-email-parse.ts).
+  // The card shows the summary as the description; these give the agent the
+  // structured handles without re-reading the raw body.
+  order_number?: string | null;
+  category?: string | null;
+  // The original email body, retained for reference but kept off the card.
+  email_raw?: string;
 };
+
+// How long after a ticket is resolved an emailed reply still threads back onto
+// it (reopening it) instead of being re-triaged as a brand-new email. Customer
+// replies routinely land a few days or weeks after we marked a ticket done —
+// and, crucially, a reply whose subject carries no [TD-####] token (because the
+// agent answered from the mailbox, not the dashboard) can otherwise be dropped
+// by the non-support classifier. Threading it onto the prior ticket keeps the
+// conversation whole and never loses a genuine reply.
+export const REPLY_REOPEN_WINDOW_DAYS = 120;
 
 export type SupportColumn = { id: string; name: string; position: number; is_done: boolean };
 export type SupportBoard = { id: string; slug: string; name: string; columns: SupportColumn[] };
@@ -142,6 +159,11 @@ export type CreateTicketInput = {
   message?: string | null;
   sourceMessageId?: string | null;
   createdByLabel?: string | null; // audit label for manual intake
+  // Optional parser output (email channel): structured fields + the raw body,
+  // stored in metadata. message carries the human summary shown on the card.
+  orderNumber?: string | null;
+  category?: string | null;
+  rawBody?: string | null;
 };
 
 export type CreateTicketResult =
@@ -175,6 +197,9 @@ export async function createSupportTicket(input: CreateTicketInput): Promise<Cre
     customer_name: input.customerName?.trim() || null,
     ticket_no: ticketNo,
     ...(input.sourceMessageId ? { source_message_id: input.sourceMessageId } : {}),
+    ...(input.orderNumber ? { order_number: input.orderNumber } : {}),
+    ...(input.category ? { category: input.category } : {}),
+    ...(input.rawBody ? { email_raw: input.rawBody } : {}),
   };
 
   // Position at the end of the intake column.
@@ -208,9 +233,129 @@ export async function createSupportTicket(input: CreateTicketInput): Promise<Cre
   return { ok: true, taskId: (data as { id: string }).id, ticketNo, personId };
 }
 
+// One inbound email → the right ticket action, shared by every email intake
+// transport (the Resend inbound webhook and the Gmail poller). Applies the
+// threading rules in one place so the two transports never drift:
+//   1) subject carries [TD-####]              -> comment on that ticket
+//   2) else an OPEN ticket with the same email -> comment on that ticket
+//   3) else                                     -> new ticket (channel "email")
+// Idempotent on the provider message id: a message already processed (as a
+// ticket origin or an appended reply) is a no-op. Callers pass a stable
+// messageId (svix id for Resend, Gmail message id for the poller).
+export type IntakeInboundEmailInput = {
+  email: string;
+  name: string | null;
+  subject: string;
+  body: string;
+  messageId: string;
+};
+
+export type IntakeInboundEmailResult =
+  | { ok: true; action: "duplicate" }
+  | { ok: true; action: "threaded"; taskId: string }
+  | { ok: true; action: "created"; taskId: string; ticketNo: string }
+  // Classified as non-support (marketing / automated / vendor). No ticket made;
+  // the caller should still mark the message processed so it is not re-scanned.
+  | { ok: true; action: "skipped_non_support" }
+  | { ok: false; error: string };
+
+export async function intakeInboundEmail(input: IntakeInboundEmailInput): Promise<IntakeInboundEmailResult> {
+  const email = input.email.trim().toLowerCase();
+  if (!email || !email.includes("@")) return { ok: false, error: "Inbound email missing a valid sender." };
+  const subject = input.subject?.trim() || "(no subject)";
+  const body = input.body?.trim() || "(empty message)";
+
+  const board = await ensureSupportBoard();
+
+  // Idempotency: a retry of the same message must be a no-op.
+  if (await messageAlreadyProcessed(board.id, input.messageId)) {
+    return { ok: true, action: "duplicate" };
+  }
+
+  // 1) Explicit [TD-####] token in the subject.
+  const token = subject.match(/\bTD-(\d+)\b/i);
+  let target = token ? await findTicketByNo(board.id, `TD-${token[1]}`) : null;
+
+  // 2) Otherwise, thread onto the customer's most recent ticket — open, or
+  // resolved within the reopen window (appendEmailReply reopens it). This is
+  // what catches a reply with no [TD-####] token: without it the message falls
+  // through to the classifier below and a short, polite reply on a thin subject
+  // ("Re: Delivered", "Thanks…") gets dropped as non-support.
+  if (!target) {
+    const recent = await findThreadableTicketByEmail(board.id, email, REPLY_REOPEN_WINDOW_DAYS);
+    if (recent) target = { id: recent.id, personId: null };
+  }
+
+  if (target) {
+    const authorPersonId = target.personId ?? (await personIdForEmail(email));
+    const res = await appendEmailReply({
+      taskId: target.id,
+      body,
+      messageId: input.messageId,
+      authorEmail: email,
+      authorPersonId,
+    });
+    if (!res.ok) return { ok: false, error: res.error };
+    return { ok: true, action: "threaded", taskId: target.id };
+  }
+
+  // 3) New ticket. Parse the email into a clean summary + structured fields
+  // instead of storing the raw body, and drop non-support mail (marketing,
+  // notifications, auto-replies) rather than filing it as a ticket. If the
+  // parser is unavailable (no API key / model error), fall back to the raw body
+  // so an LLM outage never loses a genuine email.
+  const parse = await parseSupportEmail({ from: email, name: input.name, subject, body });
+  if (parse.ok && !parse.parsed.is_support) {
+    return { ok: true, action: "skipped_non_support" };
+  }
+  const p = parse.ok ? parse.parsed : null;
+
+  const created = await createSupportTicket({
+    channel: "email",
+    customerEmail: email,
+    customerName: p?.customer_name ?? input.name,
+    subject: p?.subject ?? subject,
+    message: p?.summary ?? body,
+    sourceMessageId: input.messageId,
+    orderNumber: p?.order_number ?? null,
+    category: p?.category ?? null,
+    rawBody: body,
+  });
+  if (!created.ok) return { ok: false, error: created.error };
+  return { ok: true, action: "created", taskId: created.taskId, ticketNo: created.ticketNo };
+}
+
+// The people-row id for an email, if one exists (used to attribute an emailed
+// reply to its CRM person). Get-or-create lives in createSupportTicket; this is
+// a pure lookup for the threading path.
+async function personIdForEmail(email: string): Promise<string | null> {
+  const { data } = await companyOs
+    .from("people")
+    .select("id")
+    .eq("email", email.toLowerCase())
+    .is("archived_at", null)
+    .maybeSingle();
+  return (data as { id: string } | null)?.id ?? null;
+}
+
 // A support ticket as the admin view needs it: the underlying task plus the
 // customer link, the comment thread, and the two timestamps the metric reads.
 export type SupportComment = { id: string; author: string; body: string; createdAt: string };
+
+// The Shopify order(s) already synced for the ticket's linked person, surfaced
+// so an agent sees "this is a real customer, order #1234" without leaving the
+// board. Read straight from company_os.orders (populated by the daily Shopify
+// sync) via the ticket's person link — no Shopify API call.
+export type SupportShopifyOrder = {
+  orderNumber: string | null;
+  shopifyOrderId: string;
+  status: string;
+  fulfillmentStatus: string | null;
+  amountCents: number;
+  currency: string;
+  createdAt: string;
+};
+
 export type SupportTicket = {
   id: string;
   ticketNo: string | null;
@@ -225,6 +370,7 @@ export type SupportTicket = {
   createdAt: string;
   completedAt: string | null; // set when the card lands on Resolved
   comments: SupportComment[];
+  shopifyOrders: SupportShopifyOrder[]; // matched from the linked person, newest first
 };
 
 export type SupportBoardData = {
@@ -280,7 +426,7 @@ export async function getSupportBoardData(windowDays = 30): Promise<SupportBoard
   const taskIds = tasks.map((t) => t.id);
   const personIds = [...new Set(tasks.map((t) => t.subject_id).filter(Boolean))] as string[];
 
-  const [commentsRes, peopleRes] = await Promise.all([
+  const [commentsRes, peopleRes, ordersRes] = await Promise.all([
     taskIds.length
       ? companyOs
           .from("task_comments")
@@ -291,6 +437,26 @@ export async function getSupportBoardData(windowDays = 30): Promise<SupportBoard
     personIds.length
       ? companyOs.from("people").select("id, full_name, display_name, email").in("id", personIds)
       : Promise.resolve({ data: [] as { id: string; full_name: string | null; display_name: string | null; email: string }[] }),
+    // Shopify orders for the linked people (only rows that came from Shopify).
+    personIds.length
+      ? companyOs
+          .from("orders")
+          .select("person_id, shopify_order_id, order_number, status, fulfillment_status, amount_cents, currency, created_at")
+          .in("person_id", personIds)
+          .not("shopify_order_id", "is", null)
+          .order("created_at", { ascending: false })
+      : Promise.resolve({
+          data: [] as {
+            person_id: string;
+            shopify_order_id: string;
+            order_number: string | null;
+            status: string;
+            fulfillment_status: string | null;
+            amount_cents: number;
+            currency: string;
+            created_at: string;
+          }[],
+        }),
   ]);
 
   const commentsByTask = new Map<string, SupportComment[]>();
@@ -305,6 +471,31 @@ export async function getSupportBoardData(windowDays = 30): Promise<SupportBoard
       p,
     ]),
   );
+
+  // Group the matched Shopify orders by person (newest first, preserved from the query order).
+  const ordersByPerson = new Map<string, SupportShopifyOrder[]>();
+  for (const o of (ordersRes.data ?? []) as {
+    person_id: string;
+    shopify_order_id: string;
+    order_number: string | null;
+    status: string;
+    fulfillment_status: string | null;
+    amount_cents: number;
+    currency: string;
+    created_at: string;
+  }[]) {
+    const list = ordersByPerson.get(o.person_id) ?? [];
+    list.push({
+      orderNumber: o.order_number,
+      shopifyOrderId: o.shopify_order_id,
+      status: o.status,
+      fulfillmentStatus: o.fulfillment_status,
+      amountCents: o.amount_cents,
+      currency: o.currency,
+      createdAt: o.created_at,
+    });
+    ordersByPerson.set(o.person_id, list);
+  }
 
   const tickets: SupportTicket[] = tasks.map((t) => {
     const person = t.subject_id ? personById.get(t.subject_id) : undefined;
@@ -322,6 +513,7 @@ export async function getSupportBoardData(windowDays = 30): Promise<SupportBoard
       createdAt: t.created_at,
       completedAt: t.completed_at,
       comments: commentsByTask.get(t.id) ?? [],
+      shopifyOrders: t.subject_type === "person" && t.subject_id ? ordersByPerson.get(t.subject_id) ?? [] : [],
     };
   });
 
@@ -364,6 +556,40 @@ export async function findOpenTicketByEmail(boardId: string, email: string): Pro
   for (const t of (data ?? []) as { id: string; status: string; board_column_id: string | null }[]) {
     const resolved = t.board_column_id ? doneColumnIds.has(t.board_column_id) : t.status === "done";
     if (!resolved) return { id: t.id };
+  }
+  return null;
+}
+
+// The ticket an emailed reply should thread onto: the customer's most recent
+// ticket that is either still open, or resolved within `resolvedWindowDays`.
+// Newest first, so a reply lands on the latest conversation; a stale ticket
+// resolved long ago is left alone and the reply starts fresh instead. Unlike
+// findOpenTicketByEmail this deliberately reaches into recently-done tickets,
+// which appendEmailReply then reopens.
+export async function findThreadableTicketByEmail(
+  boardId: string,
+  email: string,
+  resolvedWindowDays: number,
+): Promise<{ id: string } | null> {
+  const norm = email.trim().toLowerCase();
+  const { data } = await companyOs
+    .from("tasks")
+    .select("id, status, board_column_id, completed_at")
+    .eq("board_id", boardId)
+    .is("archived_at", null)
+    .eq("metadata->>customer_email", norm)
+    .order("created_at", { ascending: false });
+  const board = await ensureSupportBoard();
+  const doneColumnIds = new Set(board.columns.filter((c) => c.is_done).map((c) => c.id));
+  const windowStart = Date.now() - resolvedWindowDays * 86_400_000;
+  for (const t of (data ?? []) as { id: string; status: string; board_column_id: string | null; completed_at: string | null }[]) {
+    const resolved = t.board_column_id ? doneColumnIds.has(t.board_column_id) : t.status === "done";
+    if (!resolved) return { id: t.id };
+    // Resolved: thread onto it only if it was closed recently. completed_at is
+    // stamped on the move to a done column; if it is missing (older data) fall
+    // back to treating the ticket as threadable so a reply is never lost.
+    const done = t.completed_at ? new Date(t.completed_at).getTime() : null;
+    if (done === null || (Number.isFinite(done) && done >= windowStart)) return { id: t.id };
   }
   return null;
 }

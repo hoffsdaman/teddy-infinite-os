@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WorkflowHero, FlowRail, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'Challenge-Based Certification | Edge8 Workflows'
+const title = 'Challenge-Based Certification | TeddyBed Workflows'
 const description =
   'Certification earned through submitted proof of real work, challenge by challenge. The certificate certifies something that exists: a shipped AI program.'
 

@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'Balances and usage across the team, correct at all times because they were never manual.' },
 ]
 
-const title = 'Time Off | Edge8 Workflows'
+const title = 'Time Off | TeddyBed Workflows'
 const description =
   'Leave requests move from the team portal to an admin decision to an updated balance without a single chat message.'
 

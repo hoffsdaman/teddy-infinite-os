@@ -22,7 +22,7 @@ export function siteOrigin(): string {
   const origin = h.get("origin");
   if (origin) return origin;
   const host = h.get("host");
-  return host ? `https://${host}` : "https://www.edge8.ai";
+  return host ? `https://${host}` : "https://teddy-infinite-os.vercel.app";
 }
 
 export async function findAuthUserByEmail(email: string): Promise<{ id: string } | null> {

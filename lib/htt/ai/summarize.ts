@@ -100,7 +100,7 @@ async function generateViaOpenRouter(
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
       // Attribution headers OpenRouter asks apps to send.
-      "HTTP-Referer": "https://www.edge8.ai",
+      "HTTP-Referer": "https://teddy-infinite-os.vercel.app",
       "X-Title": "Edge8 AI Programs",
     },
     body: JSON.stringify({

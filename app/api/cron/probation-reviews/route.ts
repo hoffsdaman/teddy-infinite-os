@@ -29,7 +29,7 @@ export async function GET(req: Request) {
   let sent = 0;
   for (const r of due) {
     const recipients = [...new Set([r.managerEmail, FOUNDER_EMAIL].filter((e): e is string => !!e))];
-    const link = `https://www.edge8.ai/admin/talent/team/${r.teamMemberId}`;
+    const link = `https://teddy-infinite-os.vercel.app/admin/talent/team/${r.teamMemberId}`;
     const ok = await sendTransactionalEmail({
       to: recipients,
       subject: `Probation review due in 2 weeks: ${r.name}`,

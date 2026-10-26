@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Badge, type BadgeTone } from "@/components/admin/Badge";
 import { timeAgo } from "@/lib/admin/format";
 import type { SupportColumn, SupportTicket } from "@/lib/support";
-import { moveTicket, commentOnTicket } from "./actions";
+import { moveTicket, commentOnTicket, replyToCustomer } from "./actions";
 
 // Human duration for the resolve-time metric: "3d 4h", "2h 10m", "just now".
 // Passive reporting only — no targets, no colour-coded breach.
@@ -23,6 +23,17 @@ function humanDuration(ms: number): string {
 
 const CHANNEL_LABEL: Record<string, string> = { web_form: "Web form", email: "Email", manual: "Manual" };
 
+// "$129.00", "A$129.00" — cents → display, best-effort by currency code.
+function money(cents: number, currency: string): string {
+  try {
+    return new Intl.NumberFormat(undefined, { style: "currency", currency: (currency || "USD").toUpperCase() }).format(
+      cents / 100,
+    );
+  } catch {
+    return `${(cents / 100).toFixed(2)} ${currency.toUpperCase()}`;
+  }
+}
+
 function columnTone(col: SupportColumn | undefined): BadgeTone {
   if (!col) return "neutral";
   if (col.is_done) return "ok";
@@ -36,6 +47,7 @@ function TicketCard({ ticket, columns }: { ticket: SupportTicket; columns: Suppo
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reply, setReply] = useState("");
+  const [emailCustomer, setEmailCustomer] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const col = columns.find((c) => c.id === ticket.columnId);
@@ -61,7 +73,11 @@ function TicketCard({ ticket, columns }: { ticket: SupportTicket; columns: Suppo
     if (!reply.trim()) return;
     setSaving(true);
     setError(null);
-    const res = await commentOnTicket(ticket.id, reply);
+    // "Email the customer" sends outbound via Resend (PR5); otherwise it's an
+    // internal note on the thread.
+    const res = emailCustomer
+      ? await replyToCustomer(ticket.id, reply)
+      : await commentOnTicket(ticket.id, reply);
     setSaving(false);
     if (!res.ok) {
       setError(res.error);
@@ -109,9 +125,35 @@ function TicketCard({ ticket, columns }: { ticket: SupportTicket; columns: Suppo
       </div>
 
       {ticket.description && (
-        <p className="admin-list-sub" style={{ whiteSpace: "pre-wrap", margin: 0 }}>
+        <p
+          className="admin-list-sub"
+          style={{
+            whiteSpace: "pre-wrap",
+            margin: 0,
+            // Cap the preview so a long email body (e.g. a newsletter) can't
+            // blow the card up to full-page height and bury other tickets.
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
           {ticket.description}
         </p>
+      )}
+
+      {ticket.shopifyOrders.length > 0 && (
+        <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+          <Badge tone="ok">Shopify customer</Badge>
+          {ticket.shopifyOrders.slice(0, 3).map((o) => (
+            <span key={o.shopifyOrderId} className="admin-cell-muted" title={`${o.status}${o.fulfillmentStatus ? ` · ${o.fulfillmentStatus}` : ""} · ${o.createdAt}`}>
+              {o.orderNumber ? `#${o.orderNumber}` : "Order"} · {money(o.amountCents, o.currency)}
+            </span>
+          ))}
+          {ticket.shopifyOrders.length > 3 && (
+            <span className="admin-cell-muted">+{ticket.shopifyOrders.length - 3} more</span>
+          )}
+        </div>
       )}
 
       <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
@@ -163,13 +205,26 @@ function TicketCard({ ticket, columns }: { ticket: SupportTicket; columns: Suppo
               className="admin-input"
               rows={3}
               value={reply}
-              placeholder="Add an internal note or reply…"
+              placeholder={emailCustomer ? "Write the email to the customer…" : "Add an internal note…"}
               onChange={(e) => setReply(e.target.value)}
             />
-            <div>
+            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
               <button type="submit" className="admin-btn admin-btn--primary" disabled={saving || !reply.trim()}>
-                {saving ? "Saving…" : "Add reply"}
+                {saving ? "Saving…" : emailCustomer ? "Send email" : "Add note"}
               </button>
+              <label
+                className="admin-cell-muted"
+                style={{ display: "inline-flex", gap: 6, alignItems: "center", cursor: ticket.customerEmail ? "pointer" : "not-allowed" }}
+                title={ticket.customerEmail ? `Email ${ticket.customerEmail}` : "No customer email on this ticket"}
+              >
+                <input
+                  type="checkbox"
+                  checked={emailCustomer}
+                  disabled={!ticket.customerEmail}
+                  onChange={(e) => setEmailCustomer(e.target.checked)}
+                />
+                Email the customer
+              </label>
             </div>
           </form>
         </div>

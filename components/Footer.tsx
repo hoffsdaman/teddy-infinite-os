@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -8,17 +7,29 @@ export default function Footer() {
         <div className="footer-top">
           <div>
             <div className="footer-logo">
-              <Image src="/logo-white.png" alt="Edge8" width={100} height={32} style={{ width: 'auto', height: '32px' }} />
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '26px',
+                  fontWeight: 400,
+                  color: 'var(--white)',
+                  letterSpacing: '-0.5px',
+                }}
+              >
+                TeddyBed
+              </span>
             </div>
             <p className="footer-desc">
-              AI Leadership, Automation &amp; Global Talent Solutions. Helping organizations become Tech-Forward and achieve 8x efficiency.
+              Australia&rsquo;s premium kids bed &amp; mattress brand. Mattresses and bed bases designed by sleep specialists, backed by a 120-night sleep trial.
             </p>
             <div className="footer-social">
-              <a href="https://www.linkedin.com/company/edge8ai/" target="_blank" rel="noopener noreferrer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              <a href="https://teddybed.com.au" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                 </svg>
-                LinkedIn
+                teddybed.com.au
               </a>
             </div>
           </div>
@@ -42,7 +53,7 @@ export default function Footer() {
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
-                <a href="mailto:dave@edge8.ai">dave@edge8.ai</a>
+                <a href="mailto:support@teddybed.com.au">support@teddybed.com.au</a>
               </div>
               <div className="footer-contact-item">
                 <div className="footer-contact-icon">
@@ -51,8 +62,8 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div>+84 90 995 8581</div>
-                  <div>+1 206 395 8872</div>
+                  <div>0485 855 867</div>
+                  <div>2A/149 McCredie Rd, Smithfield NSW 2164</div>
                 </div>
               </div>
             </div>
@@ -60,7 +71,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-copy">© 2026 by Edge8. All rights reserved.</div>
+          <div className="footer-copy">© 2026 TeddyBed AU, Smithfield NSW. All rights reserved.</div>
           <div className="footer-bottom-links">
             <Link href="/legal/privacy">Privacy Policy</Link>
             <Link href="/legal/eula">Terms of Service</Link>

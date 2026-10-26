@@ -18,7 +18,7 @@ function siteOrigin(): string {
   const origin = h.get("origin");
   if (origin) return origin;
   const host = h.get("host");
-  return host ? `https://${host}` : "https://www.edge8.ai";
+  return host ? `https://${host}` : "https://teddy-infinite-os.vercel.app";
 }
 
 // Send the right email for the account's state: no login yet → Supabase invite

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './workflows.css'
 
-const title = 'Workflows | Edge8'
+const title = 'Workflows | TeddyBed'
 const description =
   'The operating workflows we run Edge8 on. Real systems documented end to end: who does what, when it happens, and where AI does the heavy lifting.'
 

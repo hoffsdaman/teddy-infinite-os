@@ -1,14 +1,6 @@
 import { NextResponse } from "next/server";
-import { companyOs } from "@/lib/supabase";
 import { readSvixHeaders, verifySvixSignature } from "@/lib/svix";
-import {
-  ensureSupportBoard,
-  createSupportTicket,
-  findTicketByNo,
-  findOpenTicketByEmail,
-  appendEmailReply,
-  messageAlreadyProcessed,
-} from "@/lib/support";
+import { intakeInboundEmail } from "@/lib/support";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,11 +13,10 @@ export const fetchCache = "force-no-store";
 // The TRAILING SLASH is required (next.config trailingSlash: true; a slashless
 // URL answers 308 and Resend does not follow redirects).
 //
-// Threading:
-//   • subject carries a [TD-1042] token         -> comment on that ticket
-//   • else an OPEN ticket with the same email   -> comment on that ticket
-//   • else                                       -> new ticket (channel "email")
-// Idempotent on the provider message id, so a retried webhook never duplicates.
+// This route only verifies the Resend signature and normalises the payload; the
+// threading rules (reply token / open ticket / new ticket) and message-id
+// idempotency live in intakeInboundEmail() (lib/support.ts), shared with the
+// Gmail poller (app/api/cron/support-email) so the two transports never drift.
 
 const LOG = "[webhooks/support-email]";
 
@@ -61,16 +52,6 @@ function parseMessageId(data: Record<string, unknown>): string | null {
     str((data.headers as Record<string, unknown> | undefined)?.["message-id"]) ??
     str(data.id)
   );
-}
-
-async function personIdForEmail(email: string): Promise<string | null> {
-  const { data } = await companyOs
-    .from("people")
-    .select("id")
-    .eq("email", email.toLowerCase())
-    .is("archived_at", null)
-    .maybeSingle();
-  return (data as { id: string } | null)?.id ?? null;
 }
 
 export async function POST(request: Request) {
@@ -112,45 +93,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: true, ignored: "no message id" });
   }
 
-  const board = await ensureSupportBoard();
-
-  // Idempotency: a retry of the same message must be a no-op.
-  if (await messageAlreadyProcessed(board.id, messageId)) {
-    return NextResponse.json({ received: true, duplicate: true });
+  const result = await intakeInboundEmail({ email, name, subject, body, messageId });
+  if (!result.ok) {
+    console.error(`${LOG} intake failed: ${result.error}`);
+    return NextResponse.json({ error: result.error }, { status: 500 });
   }
-
-  // 1) Explicit [TD-xxxx] token in the subject.
-  const token = subject.match(/\bTD-(\d+)\b/i);
-  let target = token ? await findTicketByNo(board.id, `TD-${token[1]}`) : null;
-
-  // 2) Otherwise, an open ticket from the same customer.
-  if (!target) {
-    const open = await findOpenTicketByEmail(board.id, email);
-    if (open) target = { id: open.id, personId: null };
-  }
-
-  if (target) {
-    const authorPersonId = target.personId ?? (await personIdForEmail(email));
-    const res = await appendEmailReply({ taskId: target.id, body, messageId, authorEmail: email, authorPersonId });
-    if (!res.ok) {
-      console.error(`${LOG} append reply failed: ${res.error}`);
-      return NextResponse.json({ error: res.error }, { status: 500 });
-    }
-    return NextResponse.json({ received: true, threaded: target.id });
-  }
-
-  // 3) New ticket.
-  const created = await createSupportTicket({
-    channel: "email",
-    customerEmail: email,
-    customerName: name,
-    subject,
-    message: body,
-    sourceMessageId: messageId,
-  });
-  if (!created.ok) {
-    console.error(`${LOG} ticket create failed: ${created.error}`);
-    return NextResponse.json({ error: created.error }, { status: 500 });
-  }
-  return NextResponse.json({ received: true, ticketNo: created.ticketNo });
+  if (result.action === "duplicate") return NextResponse.json({ received: true, duplicate: true });
+  if (result.action === "skipped_non_support") return NextResponse.json({ received: true, skipped: "non_support" });
+  if (result.action === "threaded") return NextResponse.json({ received: true, threaded: result.taskId });
+  return NextResponse.json({ received: true, ticketNo: result.ticketNo });
 }

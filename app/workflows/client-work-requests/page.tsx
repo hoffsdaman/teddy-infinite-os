@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WorkflowHero, FlowRail, StepCards, SevenElements, DetailFooter, type WorkflowElement } from '../ui'
 
-const title = 'Client Work Requests | Edge8 Workflows'
+const title = 'Client Work Requests | TeddyBed Workflows'
 const description =
   'Clients brief a contractor in the portal, approve the estimate, and accept the finished work. The invoice sends itself the moment they do.'
 

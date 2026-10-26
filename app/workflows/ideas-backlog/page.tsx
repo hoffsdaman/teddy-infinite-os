@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WorkflowHero, ActorChip, StepCards, SevenElements, DetailFooter, type Actor, type WorkflowElement } from '../ui'
 
-const title = 'Ideas Backlog | Edge8 Workflows'
+const title = 'Ideas Backlog | TeddyBed Workflows'
 const description =
   'Anyone on the team submits an idea through the 5D framework, AI turns it into a full product plan, and admins triage a backlog that arrives pre-thought.'
 

@@ -3,7 +3,7 @@ import { allWorkflows } from '@/lib/workflowsData'
 import { getActiveJobs } from '@/lib/jobs'
 import { getAllPublishedPosts } from '@/lib/blog'
 
-const BASE = 'https://www.edge8.ai'
+const BASE = 'https://teddy-infinite-os.vercel.app'
 
 // Site uses trailingSlash: true in next.config.mjs, so every canonical URL
 // must end in '/'. Without this, Google does a 308 hop on every URL and

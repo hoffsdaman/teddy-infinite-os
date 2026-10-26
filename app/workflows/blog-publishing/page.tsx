@@ -11,7 +11,7 @@ const ELEMENTS: WorkflowElement[] = [
   { name: 'Measurement', assignment: 'machine', desc: 'The publish log: slug, images, commit hash, and issues, one entry per post, forever traceable.' },
 ]
 
-const title = 'How We Publish | Edge8 Workflows'
+const title = 'How We Publish | TeddyBed Workflows'
 const description =
   'The four-stage pipeline behind every post on this site. A human creates and approves the content, Claude builds, checks, and logs the rest.'
 

@@ -16,7 +16,7 @@ export const fetchCache = "force-no-store";
 // once-daily run needs no "already notified" state to track.
 const FOUNDER_EMAIL = "dave@edge8.ai";
 const WINDOW_HOURS = 24;
-const BACKLOG_URL = "https://www.edge8.ai/admin/innovation/ideas";
+const BACKLOG_URL = "https://teddy-infinite-os.vercel.app/admin/innovation/ideas";
 
 type DigestRow = {
   id: string;

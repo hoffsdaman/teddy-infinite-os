@@ -16,7 +16,7 @@ import {
 // Both are stateless: opening is idempotent on the deterministic cycle label,
 // reminders fire on a day-count cadence (no "last nudged" column to maintain).
 
-const SITE_ORIGIN = "https://www.edge8.ai";
+const SITE_ORIGIN = "https://teddy-infinite-os.vercel.app";
 // How late a moment can be and still auto-open. Covers a missed cron run or a
 // contract date filled in a few days late, without retro-opening old moments.
 const OPEN_GRACE_DAYS = 21;

@@ -36,7 +36,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
   ]);
   if (!data) notFound();
 
-  const { person, lead, candidateProfile, inquiries, deals, orders, bookings, applications, documents, surveyResponses, interactions, meetings, transitions, companies } = data;
+  const { person, lead, inquiries, deals, orders, applications, documents, surveyResponses, companies } = data;
   const isAffiliate = !!affiliate && affiliate.codes.length > 0;
   const membershipByCompany = new Map(
     portalMemberships.filter((m) => m.company_id).map((m) => [m.company_id as string, m]),
@@ -51,67 +51,7 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
   const name = person.full_name || person.preferred_name || person.email;
   const location = [person.city, person.state_province, person.country].filter(Boolean).join(", ");
 
-  // One merged activity stream: interactions, meetings, and lifecycle
-  // transitions, newest first. This is the relationship history in one place.
-  type ActivityItem = { key: string; at: string; title: string; sub: string; badge?: string };
-  const activity: ActivityItem[] = [
-    ...interactions.map((i) => ({
-      key: `i-${i.id}`,
-      at: i.occurred_at ?? i.created_at,
-      title: i.subject || humanize(i.kind) || "Interaction",
-      sub: i.body ? (i.body.length > 140 ? `${i.body.slice(0, 140)}…` : i.body) : humanize(i.kind),
-      badge: humanize(i.kind ?? "note"),
-    })),
-    ...meetings.map((m) => ({
-      key: `m-${m.id}`,
-      at: m.started_at ?? "",
-      title: m.title || "Meeting",
-      sub: [humanize(m.meeting_type), m.source ? `via ${m.source}` : null].filter(Boolean).join(" · "),
-      badge: "Meeting",
-    })),
-    ...transitions.map((t) => ({
-      key: `t-${t.id}`,
-      at: t.occurred_at,
-      title: `Lifecycle: ${humanize(t.from_stage ?? "—")} → ${humanize(t.to_stage ?? "—")}`,
-      sub: [
-        t.from_status || t.to_status
-          ? `${humanize(t.from_status ?? "—")} → ${humanize(t.to_status ?? "—")}`
-          : null,
-        t.reason ? humanize(t.reason) : null,
-        t.note,
-      ]
-        .filter(Boolean)
-        .join(" · "),
-      badge: "Stage change",
-    })),
-  ]
-    .filter((a) => a.at)
-    .sort((a, b) => b.at.localeCompare(a.at));
-
   const tabs: TabDef[] = [
-    {
-      key: "activity",
-      label: "Activity",
-      count: activity.length,
-      content: activity.length === 0 ? (
-        <Empty text="No activity yet." />
-      ) : (
-        <div className="admin-list">
-          {activity.map((a) => (
-            <div className="admin-list-row" key={a.key}>
-              <div className="admin-list-main">
-                <div className="admin-list-title">{a.title}</div>
-                <div className="admin-list-sub">{a.sub || "—"}</div>
-              </div>
-              <div className="admin-list-aside">
-                {a.badge && <Badge>{a.badge}</Badge>}
-                <span className="admin-cell-muted">{timeAgo(a.at)}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      ),
-    },
     {
       key: "inquiries",
       label: "Inquiries",
@@ -130,29 +70,6 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
               </div>
               <div className="admin-list-aside">
                 <Badge tone={statusTone(iq.status)}>{humanize(iq.status)}</Badge>
-              </div>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-    {
-      key: "deals",
-      label: "Deals",
-      count: deals.length,
-      content: deals.length === 0 ? (
-        <Empty text="No deals." />
-      ) : (
-        <div className="admin-list">
-          {deals.map((d) => (
-            <div className="admin-list-row" key={d.id}>
-              <div className="admin-list-main">
-                <div className="admin-list-title">{d.title || "Untitled deal"}</div>
-                <div className="admin-list-sub">{timeAgo(d.created_at)}</div>
-              </div>
-              <div className="admin-list-aside">
-                <strong className="admin-cell-mono">{formatCents(d.amount_usd_cents, "usd")}</strong>
-                <Badge tone={statusTone(d.status)}>{humanize(d.status)}</Badge>
               </div>
             </div>
           ))}
@@ -180,92 +97,6 @@ export default async function ContactDetailPage({ params }: { params: { id: stri
               </div>
             </div>
           ))}
-        </div>
-      ),
-    },
-    {
-      key: "bookings",
-      label: "AIO Pad",
-      count: bookings.length,
-      content: bookings.length === 0 ? (
-        <Empty text="No bookings." />
-      ) : (
-        <div className="admin-list">
-          {bookings.map((b) => (
-            <div className="admin-list-row" key={b.id}>
-              <div className="admin-list-main">
-                <div className="admin-list-title">{humanize(b.kind)}</div>
-                <div className="admin-list-sub">
-                  {formatDate(b.start_date)} → {formatDate(b.end_date)}
-                  {b.party_size ? ` · party of ${b.party_size}` : ""}
-                </div>
-              </div>
-              <div className="admin-list-aside">
-                <strong className="admin-cell-mono">{formatCents(b.amount_usd_cents, "usd")}</strong>
-                <Badge tone={statusTone(b.status)}>{humanize(b.status)}</Badge>
-              </div>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-    {
-      key: "recruiting",
-      label: "Recruiting",
-      count: applications.length,
-      content: applications.length === 0 && !candidateProfile?.headline && !candidateProfile?.do_not_hire ? (
-        <Empty text="No applications." />
-      ) : (
-        <div>
-          {(candidateProfile?.headline || candidateProfile?.do_not_hire) && (
-            <div className="admin-list-row">
-              <div className="admin-list-main">
-                <div className="admin-list-title">{candidateProfile?.headline || candidateProfile?.current_title || "Applicant"}</div>
-                <div className="admin-list-sub">
-                  {person.linkedin_url ? (
-                    <a href={person.linkedin_url} target="_blank" rel="noreferrer">
-                      LinkedIn
-                    </a>
-                  ) : (
-                    "—"
-                  )}
-                </div>
-              </div>
-              {candidateProfile?.do_not_hire && (
-                <div className="admin-list-aside">
-                  <Badge tone="err">Do not hire</Badge>
-                </div>
-              )}
-            </div>
-          )}
-          {applications.length === 0 ? (
-            <Empty text="No applications." />
-          ) : (
-            <div className="admin-list" style={{ marginTop: 8 }}>
-              {applications.map((a) => (
-                <div className="admin-list-row" key={a.id}>
-                  <div className="admin-list-main">
-                    <div className="admin-list-title">{a.job_title || "Application"}</div>
-                    <div className="admin-list-sub">
-                      Applied {formatDate(a.applied_at ?? a.created_at)}
-                      {a.rating ? ` · ★ ${a.rating}` : ""}
-                      {a.resume_document_id ? (
-                        <>
-                          {" · "}
-                          <a href={`/admin/talent/resume/${a.resume_document_id}`} target="_blank" rel="noreferrer">
-                            Resume ↗
-                          </a>
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="admin-list-aside">
-                    <Badge tone={statusTone(a.status)}>{humanize(a.status)}</Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       ),
     },

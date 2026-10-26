@@ -10,7 +10,7 @@ import {
   type WorkflowElement,
 } from '../ui'
 
-const title = 'New Member Onboarding | Edge8 Workflows'
+const title = 'New Member Onboarding | TeddyBed Workflows'
 const description =
   'A recruiter marks an applicant hired, and the paperwork and the welcome start together: a self-serve form promotes the same record to pre-boarding while a 30-day nurture drip introduces Edge8, landing the new member at Day 1 with a portal account waiting.'
 
