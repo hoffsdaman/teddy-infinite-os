@@ -120,6 +120,30 @@ function personRow(c: CustomerNode) {
   };
 }
 
+// A contact can exist before Shopify knows them (a support email, a web form).
+// people.email is unique and case-insensitive (citext), so inserting the Shopify
+// customer as a new row would clash; claim the existing unlinked row instead so
+// the upsert on shopify_customer_id updates it.
+async function linkExistingPeopleByEmail(customers: { id: string; email: string | null }[]): Promise<void> {
+  const gidByEmail = new Map<string, string>();
+  for (const c of customers) if (c.email) gidByEmail.set(c.email.toLowerCase(), c.id);
+  const emails = [...gidByEmail.keys()];
+  for (const batch of chunk(emails, 200)) {
+    const { data, error } = await companyOs
+      .from("people")
+      .select("id, email")
+      .in("email", batch)
+      .is("shopify_customer_id", null);
+    if (error) throw new Error(`match people by email: ${error.message}`);
+    for (const p of (data ?? []) as Array<{ id: string; email: string }>) {
+      const gid = gidByEmail.get(p.email.toLowerCase());
+      if (!gid) continue;
+      const { error: uerr } = await companyOs.from("people").update({ shopify_customer_id: gid }).eq("id", p.id);
+      if (uerr) throw new Error(`link ${p.email}: ${uerr.message}`);
+    }
+  }
+}
+
 async function syncCustomers(full: boolean): Promise<EntityResult> {
   const since = await getSince("customers", full);
   const nodes: CustomerNode[] = [];
@@ -142,6 +166,7 @@ async function syncCustomers(full: boolean): Promise<EntityResult> {
       if (!highWater || node.updatedAt > highWater) highWater = node.updatedAt;
     }
 
+    await linkExistingPeopleByEmail(nodes);
     let written = 0;
     for (const batch of chunk(nodes, CHUNK)) {
       const { error, count } = await companyOs
@@ -346,6 +371,10 @@ async function syncOrders(full: boolean): Promise<EntityResult> {
 
     // Resolve person_id for every order; create a minimal person for any
     // customer not already synced (orders.person_id is NOT NULL).
+    const unsynced = orders
+      .map((o) => o.customer)
+      .filter((c): c is { id: string; email: string | null } => !!c?.id && !personByGid.has(c.id));
+    await linkExistingPeopleByEmail(unsynced);
     for (const o of orders) {
       const gid = o.customer?.id;
       if (gid && !personByGid.has(gid)) {

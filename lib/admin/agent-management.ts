@@ -228,22 +228,6 @@ export function loadAgentManagement(): AgentManagementView {
     };
   });
 
-  // Not a cron: fires on every inbound support email (Google Workspace forwarding
-  // rule → Resend inbound → this webhook), so it never appears in vercel.json.
-  // It records each run through recordRoutineRun, so it shows beside the crons.
-  vercel.push({
-    id: "/api/webhooks/support-email/",
-    name: "Support Email Sync",
-    description:
-      "Turns each email to the support inbox into a ticket on the Support board, or threads a reply onto the matching open ticket ([TD-1042] token or same customer).",
-    host: "vercel",
-    hostLabel: "Vercel",
-    schedule: "On every inbound support email",
-    content: ["Support inbox"],
-    skill: "app/api/webhooks/support-email/route.ts",
-    apps: ["Google Workspace", "Resend", "Supabase"],
-  });
-
   const macMini = MAC_MINI_ROUTINES;
   return { routines: [...vercel, ...macMini], vercel, macMini };
 }
