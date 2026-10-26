@@ -522,3 +522,118 @@ export async function ingestInboundEmail(input: InboundEmailInput): Promise<Inbo
   if (!created.ok) return created;
   return { ok: true, outcome: "created", taskId: created.taskId, ticketNo: created.ticketNo };
 }
+
+// ── Our own reply, sent from the support mailbox → ticket comment ────────────
+//
+// Replies typed straight into Gmail never pass through the app, so the poll
+// files them here. Matching rules, in order:
+//   • the Gmail thread already holds a message filed on a ticket -> that ticket
+//   • subject carries a [TD-1042] token                            -> that ticket
+//   • else an OPEN ticket for one of the recipients                -> that ticket
+//   • else                                                          -> skipped (never a new ticket)
+// The comment is dated when the email was sent, so a backfill lands in order.
+// A reply newer than everything else on an open ticket moves it to Waiting, as
+// a reply from the app does. Idempotent on messageId.
+export type StaffEmailInput = {
+  messageId: string;
+  threadMessageIds: string[];
+  subject: string;
+  recipients: string[];
+  body: string;
+  sentAt: string;
+  sender: string;
+};
+
+async function findTicketByMessageIds(boardId: string, messageIds: string[]): Promise<string | null> {
+  if (!messageIds.length) return null;
+  const { data: origin } = await companyOs
+    .from("tasks")
+    .select("id")
+    .eq("board_id", boardId)
+    .is("archived_at", null)
+    .in("metadata->>source_message_id", messageIds)
+    .limit(1)
+    .maybeSingle();
+  if (origin) return (origin as { id: string }).id;
+  for (const id of messageIds) {
+    const { data } = await companyOs
+      .from("tasks")
+      .select("id")
+      .eq("board_id", boardId)
+      .is("archived_at", null)
+      .contains("metadata", { email_message_ids: [id] })
+      .limit(1)
+      .maybeSingle();
+    if (data) return (data as { id: string }).id;
+  }
+  return null;
+}
+
+export async function ingestStaffEmail(
+  input: StaffEmailInput,
+): Promise<{ ok: true; outcome: "duplicate" | "threaded" | "unmatched"; taskId?: string } | { ok: false; error: string }> {
+  const board = await ensureSupportBoard();
+  if (await messageAlreadyProcessed(board.id, input.messageId)) return { ok: true, outcome: "duplicate" };
+
+  let taskId = await findTicketByMessageIds(board.id, input.threadMessageIds.filter((id) => id !== input.messageId));
+  if (!taskId) {
+    const token = input.subject.match(/\bTD-(\d+)\b/i);
+    taskId = token ? (await findTicketByNo(board.id, `TD-${token[1]}`))?.id ?? null : null;
+  }
+  for (const r of input.recipients) {
+    if (taskId) break;
+    taskId = (await findOpenTicketByEmail(board.id, r))?.id ?? null;
+  }
+  if (!taskId) return { ok: true, outcome: "unmatched" };
+
+  const { data: taskData } = await companyOs
+    .from("tasks")
+    .select("id, board_column_id, metadata")
+    .eq("id", taskId)
+    .maybeSingle();
+  const task = taskData as { id: string; board_column_id: string | null; metadata: Record<string, unknown> } | null;
+  if (!task) return { ok: false, error: "Ticket not found." };
+
+  const { data: lastComment } = await companyOs
+    .from("task_comments")
+    .select("created_at")
+    .eq("task_id", taskId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const newest = !lastComment || (lastComment as { created_at: string }).created_at < input.sentAt;
+
+  const { error: commentErr } = await companyOs.from("task_comments").insert({
+    task_id: taskId,
+    author_person_id: null,
+    author_label: `${input.sender} → customer (Gmail)`,
+    body: input.body.trim() || "(empty message)",
+    created_at: input.sentAt,
+  });
+  if (commentErr) return { ok: false, error: commentErr.message };
+
+  const existingIds = Array.isArray((task.metadata as { email_message_ids?: unknown }).email_message_ids)
+    ? (task.metadata as { email_message_ids: string[] }).email_message_ids
+    : [];
+  const updates: Record<string, unknown> = {
+    metadata: { ...task.metadata, email_message_ids: [...new Set([...existingIds, input.messageId])] },
+  };
+  const doneColumnIds = new Set(board.columns.filter((c) => c.is_done).map((c) => c.id));
+  const resolved = task.board_column_id ? doneColumnIds.has(task.board_column_id) : false;
+  const waiting = board.columns.find((c) => /waiting/i.test(c.name));
+  const moveToWaiting = newest && !resolved && waiting && task.board_column_id !== waiting.id;
+  if (moveToWaiting) updates.board_column_id = waiting.id;
+  const { error: updateErr } = await companyOs.from("tasks").update(updates).eq("id", taskId);
+  if (updateErr) console.error("[support] staff reply metadata update failed:", updateErr.message);
+  if (moveToWaiting && !updateErr) {
+    await companyOs.from("task_stage_log").insert({
+      task_id: taskId,
+      from_column_id: task.board_column_id,
+      to_column_id: waiting.id,
+      kind: "move",
+      moved_by: null,
+      note: "replied to customer from Gmail",
+    });
+  }
+  return { ok: true, outcome: "threaded", taskId };
+}
