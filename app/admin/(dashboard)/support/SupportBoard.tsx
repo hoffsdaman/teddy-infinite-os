@@ -38,6 +38,7 @@ function columnTone(col: SupportColumn | undefined): BadgeTone {
 
 
 type View = "board" | "list";
+type Sort = "oldest" | "newest";
 type MoveFn = (ticketId: string, toColumnId: string) => Promise<{ ok: boolean; error?: string }>;
 type CommentFn = (ticketId: string, body: string, asEmail: boolean) => Promise<{ ok: boolean; error?: string }>;
 type Card = SupportTicket & { columnId: string };
@@ -269,6 +270,7 @@ export function SupportBoard({
   const router = useRouter();
   const [tickets, setTickets] = useState<SupportTicket[]>(initial);
   const [view, setView] = useState<View>("board");
+  const [sort, setSort] = useState<Sort>("oldest");
   const [openId, setOpenId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [channel, setChannel] = useState<string>("");
@@ -281,12 +283,20 @@ export function SupportBoard({
     try {
       const v = localStorage.getItem("support-view");
       if (v === "list" || v === "board") setView(v);
+      const s = localStorage.getItem("support-sort");
+      if (s === "oldest" || s === "newest") setSort(s);
     } catch {}
   }, []);
   function chooseView(v: View) {
     setView(v);
     try {
       localStorage.setItem("support-view", v);
+    } catch {}
+  }
+  function chooseSort(s: Sort) {
+    setSort(s);
+    try {
+      localStorage.setItem("support-sort", s);
     } catch {}
   }
 
@@ -331,8 +341,9 @@ export function SupportBoard({
     return { ok: true };
   };
 
-  // Search + channel filter, then: open columns oldest-first (longest wait on top),
-  // Resolved newest-first and only the last RESOLVED_DAYS_ON_BOARD days.
+  // Search + channel filter, then: open columns oldest-first by default (longest wait
+  // on top) or newest-first if chosen, Resolved always newest-first and only the
+  // last RESOLVED_DAYS_ON_BOARD days.
   const visible = useMemo<Card[]>(() => {
     const q = query.trim().toLowerCase();
     const cutoff = Date.now() - RESOLVED_DAYS_ON_BOARD * 86400_000;
@@ -351,9 +362,9 @@ export function SupportBoard({
         if (a.isResolved !== b.isResolved) return a.isResolved ? 1 : -1;
         const ta = new Date(a.createdAt).getTime();
         const tb = new Date(b.createdAt).getTime();
-        return a.isResolved ? tb - ta : ta - tb;
+        return a.isResolved || sort === "newest" ? tb - ta : ta - tb;
       });
-  }, [tickets, query, channel]);
+  }, [tickets, query, channel, sort]);
 
   const boardColumns: KanbanColumn[] = columns.map((c) => ({ id: c.id, label: c.name }));
   const openTicket = tickets.find((t) => t.id === openId) ?? null;
@@ -387,6 +398,19 @@ export function SupportBoard({
         </div>
       )}
       <div className="u-row u-clip admin-box u-ml-auto">
+        {(["oldest", "newest"] as Sort[]).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => chooseSort(s)}
+            className={`admin-btn admin-seg-btn${sort === s ? " is-on" : ""}`}
+            aria-pressed={sort === s}
+          >
+            {s === "oldest" ? "Oldest first" : "Newest first"}
+          </button>
+        ))}
+      </div>
+      <div className="u-row u-clip admin-box">
         {(["board", "list"] as View[]).map((v) => (
           <button
             key={v}
