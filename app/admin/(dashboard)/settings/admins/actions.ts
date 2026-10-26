@@ -53,9 +53,18 @@ export async function addAdmin(personId: string, canViewSensitive: boolean): Pro
   if (!employee) {
     return { ok: false, error: "Pick an active employee from the list (contractors and current admins are excluded)." };
   }
-  const email = employee.email; // already normalized lowercase
-  const displayName = employee.name;
+  return grantAdmin(employee.email, employee.name, personId, canViewSensitive, admin.email);
+}
 
+// Insert the admins row for an already-resolved person, audit it, and send the
+// access email. Shared by both Add paths.
+async function grantAdmin(
+  email: string, // already normalized lowercase
+  displayName: string,
+  personId: string,
+  canViewSensitive: boolean,
+  actor: string,
+): Promise<Result> {
   const { data: row, error } = await companyOs
     .from("admins")
     .insert({
@@ -63,7 +72,7 @@ export async function addAdmin(personId: string, canViewSensitive: boolean): Pro
       display_name: displayName,
       person_id: personId,
       can_view_sensitive: canViewSensitive,
-      created_by: admin.email,
+      created_by: actor,
     })
     .select("id")
     .single();
@@ -73,7 +82,7 @@ export async function addAdmin(personId: string, canViewSensitive: boolean): Pro
     table: "admins",
     recordId: row.id,
     operation: "insert",
-    actor: admin.email,
+    actor,
     newData: { email, display_name: displayName, person_id: personId, can_view_sensitive: canViewSensitive },
   });
 
@@ -87,6 +96,81 @@ export async function addAdmin(personId: string, canViewSensitive: boolean): Pro
     };
   }
   return { ok: true, message: `${email} added. ${sent.message}` };
+}
+
+// Adds someone who isn't on the team yet: makes sure they exist as a person
+// and as an active contractor team member, then grants admin. This is the only
+// way a contractor becomes an admin — the employee picker still excludes them.
+// An existing person with the same email (e.g. a contact) is reused, and an
+// existing team member record is left untouched.
+export async function addContractorAdmin(
+  rawEmail: string,
+  rawName: string,
+  canViewSensitive: boolean,
+): Promise<Result> {
+  const admin = await requireAdmin();
+
+  const email = rawEmail.trim().toLowerCase();
+  const name = rawName.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ok: false, error: "Enter a valid email address." };
+  if (!name) return { ok: false, error: "Enter their name." };
+
+  const { data: existingAdmin } = await companyOs
+    .from("admins")
+    .select("id")
+    .eq("email", email)
+    .maybeSingle();
+  if (existingAdmin) return { ok: false, error: `${email} is already an admin.` };
+
+  // people.email is citext + unique, so this match is case-insensitive.
+  const { data: found, error: fErr } = await companyOs
+    .from("people")
+    .select("id, archived_at")
+    .eq("email", email)
+    .maybeSingle();
+  if (fErr) return { ok: false, error: fErr.message };
+  if (found?.archived_at) {
+    return { ok: false, error: `${email} belongs to an archived person. Restore them first.` };
+  }
+
+  let personId = found?.id as string | undefined;
+  if (personId) {
+    const { error } = await companyOs.from("people").update({ is_team_member: true }).eq("id", personId);
+    if (error) return { ok: false, error: error.message };
+  } else {
+    const newPerson = {
+      email,
+      full_name: name,
+      display_name: name,
+      persona: "employee",
+      is_team_member: true,
+      source: "admin_settings",
+    };
+    const { data, error } = await companyOs.from("people").insert(newPerson).select("id").single();
+    if (error || !data) return { ok: false, error: error?.message ?? "Could not create the person." };
+    personId = data.id as string;
+    await recordAudit({ table: "people", recordId: personId, operation: "insert", actor: admin.email, newData: newPerson });
+  }
+
+  const { data: tm } = await companyOs
+    .from("team_members")
+    .select("id")
+    .eq("person_id", personId)
+    .limit(1)
+    .maybeSingle();
+  if (!tm) {
+    const newMember = {
+      person_id: personId,
+      employment_type: "contract",
+      status: "active",
+      start_date: new Date().toISOString().slice(0, 10),
+    };
+    const { data, error } = await companyOs.from("team_members").insert(newMember).select("id").single();
+    if (error || !data) return { ok: false, error: error?.message ?? "Could not create the team member." };
+    await recordAudit({ table: "team_members", recordId: data.id, operation: "insert", actor: admin.email, newData: newMember });
+  }
+
+  return grantAdmin(email, name, personId, canViewSensitive, admin.email);
 }
 
 // Edits the display name and the level (Super Admin => can_view_sensitive).
