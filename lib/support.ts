@@ -39,6 +39,14 @@ export type SupportMeta = {
   source_message_id?: string;
 };
 
+// How long after a ticket is resolved an emailed reply still threads back onto
+// it (reopening it) instead of opening a fresh ticket. Customer replies
+// routinely land days or weeks after we marked a ticket done; without this a
+// reply whose subject carries no [TD-####] token (because the agent answered
+// from the mailbox, not the app) spawns a duplicate ticket and splits the
+// conversation. Threading it onto the prior ticket keeps the thread whole.
+export const REPLY_REOPEN_WINDOW_DAYS = 120;
+
 export type SupportColumn = { id: string; name: string; position: number; is_done: boolean };
 export type SupportBoard = { id: string; slug: string; name: string; columns: SupportColumn[] };
 
@@ -374,6 +382,40 @@ export async function findOpenTicketByEmail(boardId: string, email: string): Pro
   return null;
 }
 
+// The ticket an emailed reply should thread onto: the customer's most recent
+// ticket that is either still open, or resolved within `resolvedWindowDays`.
+// Newest first, so a reply lands on the latest conversation; a ticket resolved
+// long ago is left alone and the reply starts fresh instead. Unlike
+// findOpenTicketByEmail this deliberately reaches into recently-done tickets,
+// which appendEmailReply then reopens.
+export async function findThreadableTicketByEmail(
+  boardId: string,
+  email: string,
+  resolvedWindowDays: number,
+): Promise<{ id: string } | null> {
+  const norm = email.trim().toLowerCase();
+  const { data } = await companyOs
+    .from("tasks")
+    .select("id, status, board_column_id, completed_at")
+    .eq("board_id", boardId)
+    .is("archived_at", null)
+    .eq("metadata->>customer_email", norm)
+    .order("created_at", { ascending: false });
+  const board = await ensureSupportBoard();
+  const doneColumnIds = new Set(board.columns.filter((c) => c.is_done).map((c) => c.id));
+  const windowStart = Date.now() - resolvedWindowDays * 86_400_000;
+  for (const t of (data ?? []) as { id: string; status: string; board_column_id: string | null; completed_at: string | null }[]) {
+    const resolved = t.board_column_id ? doneColumnIds.has(t.board_column_id) : t.status === "done";
+    if (!resolved) return { id: t.id };
+    // Resolved: thread onto it only if it was closed recently. completed_at is
+    // stamped on the move to a done column; if it is missing (older data) fall
+    // back to treating the ticket as threadable so a reply is never lost.
+    const done = t.completed_at ? new Date(t.completed_at).getTime() : null;
+    if (done === null || (Number.isFinite(done) && done >= windowStart)) return { id: t.id };
+  }
+  return null;
+}
+
 // True if any task on the board already recorded this provider message id
 // (email idempotency) — either as the ticket's originating message, or in the
 // list of reply message ids appended to a ticket. task_comments has no metadata
@@ -500,8 +542,11 @@ export async function ingestInboundEmail(input: InboundEmailInput): Promise<Inbo
   const token = subject.match(/\bTD-(\d+)\b/i);
   let target = token ? await findTicketByNo(board.id, `TD-${token[1]}`) : null;
   if (!target) {
-    const open = await findOpenTicketByEmail(board.id, email);
-    if (open) target = { id: open.id, personId: null };
+    // Thread onto the customer's most recent ticket — open, or resolved within
+    // the reopen window (appendEmailReply reopens it). Without this a reply with
+    // no [TD-####] token lands as a brand-new ticket and splits the thread.
+    const recent = await findThreadableTicketByEmail(board.id, email, REPLY_REOPEN_WINDOW_DAYS);
+    if (recent) target = { id: recent.id, personId: null };
   }
 
   if (target) {
